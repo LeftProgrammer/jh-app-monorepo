@@ -1,0 +1,22 @@
+{
+  "name": "jh-app-simple-example",
+  "version": "1.0.0",
+  "description": "JH App 框架简单示例",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@jh-app/app": "workspace:*",
+    "vue": "^3.4.21"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.0",
+    "typescript": "~5.8.0",
+    "vite": "5.2.8",
+    "vue-tsc": "^3.0.6"
+  }
+}

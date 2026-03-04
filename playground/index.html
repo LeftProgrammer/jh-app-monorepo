@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JH App 框架示例</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>{{ message }}</h1>
+        <button @click="testFramework">测试框架</button>
+        <p>框架状态: {{ status }}</p>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        // 模拟 JH App 框架
+        function createJhApp(config = {}) {
+            return {
+                install(app) {
+                    app.config.globalProperties.$config = config;
+                    console.log('JH App 框架已安装', config);
+                }
+            };
+        }
+
+        const app = createApp({
+            data() {
+                return {
+                    message: 'JH App 框架示例',
+                    status: '未初始化'
+                };
+            },
+            methods: {
+                testFramework() {
+                    this.status = '框架运行正常!';
+                    console.log('框架测试成功');
+                }
+            }
+        });
+
+        const jhApp = createJhApp({
+            baseURL: 'https://api.example.com',
+            timeout: 10000
+        });
+
+        app.use(jhApp);
+        app.mount('#app');
+    </script>
+</body>
+</html>

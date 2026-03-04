@@ -1,0 +1,44 @@
+{
+  "name": "@jh-app/template",
+  "version": "1.0.0",
+  "description": "JH App 框架项目模板",
+  "main": "src/main.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "uni",
+    "build:h5": "uni build --platform h5",
+    "build:mp-weixin": "uni build --platform mp-weixin",
+    "build:app": "uni build --platform app",
+    "type-check": "vue-tsc --noEmit",
+    "lint": "eslint src --ext .ts,.vue",
+    "lint:fix": "eslint src --ext .ts,.vue --fix"
+  },
+  "dependencies": {
+    "@jh-app/app": "workspace:*",
+    "@dcloudio/uni-app": "3.0.0-4070620250821001",
+    "vue": "^3.4.21",
+    "pinia": "2.0.36"
+  },
+  "devDependencies": {
+    "@dcloudio/types": "^3.4.8",
+    "@dcloudio/uni-automator": "3.0.0-4070620250821001",
+    "@dcloudio/uni-cli-shared": "3.0.0-4070620250821001",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^9.31.0",
+    "typescript": "~5.8.0",
+    "vue-tsc": "^3.0.6"
+  },
+  "uni-app": {
+    "scripts": {}
+  },
+  "keywords": [
+    "uni-app",
+    "vue3",
+    "template",
+    "mobile",
+    "framework"
+  ],
+  "author": "jh-app-team",
+  "license": "MIT"
+}
