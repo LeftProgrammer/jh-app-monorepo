@@ -15,14 +15,8 @@ export * from './api'
 // 路由管理
 export * from './router'
 
-// 类型定义
-export * from './types'
-
 // 组合函数
 export * from './hooks'
-
-// 样式文件
-export * from './style'
 
 // 版本信息
 export const version = '1.0.0'
