@@ -14,34 +14,34 @@ function getMode() {
       ? "production"
       : "development"; // 默认 development
 }
-// 获取环境变量的范例
+
+// 获取环境变量，如果不存在则使用默认值
 const env = loadEnv(getMode(), path.resolve(process.cwd(), "env"));
 const {
-  VITE_APP_TITLE,
-  VITE_UNI_APPID,
-  VITE_WX_APPID,
-  VITE_APP_PUBLIC_BASE,
-  VITE_FALLBACK_LOCALE,
+  VITE_APP_TITLE = "JH App Framework",
+  VITE_UNI_APPID = "",
+  VITE_WX_APPID = "",
+  VITE_APP_PUBLIC_BASE = "/",
+  VITE_FALLBACK_LOCALE = "zh-Hans",
 } = env;
-// console.log('manifest.config.ts env:', env)
 
-export default defineManifestConfig({
-  name: VITE_APP_TITLE,
-  appid: VITE_UNI_APPID,
-  description: "",
-  versionName: "1.0.3",
-  versionCode: "103",
+// JH App 框架基础配置
+const baseConfig = {
+  description: "JH App 移动端开发框架",
+  versionName: "1.0.0",
+  versionCode: "100",
   transformPx: false,
-  locale: VITE_FALLBACK_LOCALE, // 'zh-Hans'
+  locale: VITE_FALLBACK_LOCALE,
+  
   h5: {
     router: {
       base: VITE_APP_PUBLIC_BASE,
     },
   },
-  /* 5+App特有相关 */
+  
   "app-plus": {
     usingComponents: true,
-    nvueStyleCompiler: "uni-app",
+    nvueStyleCompiler: "uni-app" as any, // 修复类型问题
     compilerVersion: 3,
     compatible: {
       ignoreVersion: true,
@@ -52,39 +52,34 @@ export default defineManifestConfig({
       autoclose: true,
       delay: 0,
     },
-    /* 模块配置 */
     modules: {},
-    /* 应用发布信息 */
     distribute: {
-      /* android打包配置 */
       android: {
         minSdkVersion: 21,
         targetSdkVersion: 30,
         abiFilters: ["armeabi-v7a", "arm64-v8a"],
         permissions: [
+          '<uses-permission android:name="android.permission.INTERNET"/>',
+          '<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>',
+          '<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>',
+          '<uses-permission android:name="android.permission.CAMERA"/>',
+          '<uses-permission android:name="android.permission.VIBRATE"/>',
           '<uses-permission android:name="android.permission.CALL_PHONE"/>',
           '<uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>',
           '<uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>',
-          '<uses-permission android:name="android.permission.VIBRATE"/>',
           '<uses-permission android:name="android.permission.READ_LOGS"/>',
-          '<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>',
-          '<uses-feature android:name="android.hardware.camera.autofocus"/>',
-          '<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>',
-          '<uses-permission android:name="android.permission.CAMERA"/>',
           '<uses-permission android:name="android.permission.GET_ACCOUNTS"/>',
           '<uses-permission android:name="android.permission.READ_PHONE_STATE"/>',
           '<uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>',
           '<uses-permission android:name="android.permission.WAKE_LOCK"/>',
           '<uses-permission android:name="android.permission.FLASHLIGHT"/>',
-          '<uses-feature android:name="android.hardware.camera"/>',
           '<uses-permission android:name="android.permission.WRITE_SETTINGS"/>',
+          '<uses-feature android:name="android.hardware.camera.autofocus"/>',
+          '<uses-feature android:name="android.hardware.camera"/>',
         ],
       },
-      /* ios打包配置 */
       ios: {},
-      /* SDK配置 */
       sdkConfigs: {},
-      /* 图标配置 */
       icons: {
         android: {
           hdpi: "static/app/icons/72x72.png",
@@ -119,34 +114,29 @@ export default defineManifestConfig({
       },
     },
   },
-  /* 快应用特有相关 */
+  
   quickapp: {},
-  /* 小程序特有相关 */
+  
   "mp-weixin": {
     appid: VITE_WX_APPID,
     setting: {
       urlCheck: false,
-      // 是否启用 ES6 转 ES5
       es6: true,
       minified: true,
     },
     optimization: {
       subPackages: true,
     },
-    // 是否合并组件虚拟节点外层属性，uni-app 3.5.1+ 开始支持。目前仅支持 style、class 属性。
-    // 默认不开启（undefined），这里设置为开启。
     mergeVirtualHostAttributes: true,
-    // styleIsolation: 'shared',
     usingComponents: true,
-    // __usePrivacyCheck__: true,
   },
+  
   "mp-alipay": {
     usingComponents: true,
     styleIsolation: "shared",
     optimization: {
       subPackages: true,
     },
-    // 解决支付宝小程序开发工具报错 【globalThis is not defined】
     compileOptions: {
       globalObjectMode: "enable",
       transpile: {
@@ -156,14 +146,27 @@ export default defineManifestConfig({
       },
     },
   },
+  
   "mp-baidu": {
     usingComponents: true,
   },
+  
   "mp-toutiao": {
     usingComponents: true,
   },
+  
   uniStatistics: {
     enable: false,
   },
+  
   vueVersion: "3",
+};
+
+// 导出配置，外部环境变量可以覆盖基础配置
+export const defaultManifest = baseConfig;
+
+export default defineManifestConfig({
+  ...baseConfig,
+  name: VITE_APP_TITLE,
+  appid: VITE_UNI_APPID,
 });

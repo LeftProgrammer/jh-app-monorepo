@@ -12,7 +12,25 @@ import {
   transformerVariantGroup,
 } from "unocss";
 
-export default defineConfig({
+/**
+ * JH App 框架默认 UnoCSS 配置
+ * 使用方式：
+ * import { defaultUnoConfig } from '@jh-app/app/config'
+ * 
+ * // 在外部项目的 uno.config.ts 中：
+ * import { defineConfig } from "unocss";
+ * import { defaultUnoConfig } from '@jh-app/app/config'
+ * 
+ * export default defineConfig({
+ *   ...defaultUnoConfig,
+ *   theme: {
+ *     colors: {
+ *       primary: "#1890ff",
+ *     }
+ *   }
+ * })
+ */
+export const defaultUnoConfig = {
   presets: [
     presetUni({
       attributify: false,
@@ -49,7 +67,6 @@ export default defineConfig({
         ),
       },
     }),
-    // TODO: check 是否会有别的影响
     // 处理低端安卓机的样式问题
     // 将颜色函数 (rgb()和hsl()) 从空格分隔转换为逗号分隔，更好的兼容性app端，example：
     // `rgb(255 0 0)` -> `rgb(255, 0, 0)`
@@ -57,7 +74,6 @@ export default defineConfig({
     presetLegacyCompat({
       commaStyleColorFunction: true,
       legacyColorSpace: true, // by QQ4群-量子蔷薇
-      // @菲鸽 unocss 配置中，建议在 presetLegacyCompat 中添加 legacyColorSpace: true，以去除生成的颜色样式中的 in oklch 关键字，现在发现有些渐变色生成不符合预期
     }) as Preset,
   ],
   transformers: [
@@ -103,26 +119,7 @@ export default defineConfig({
       "3xs": ["18rpx", "26rpx"],
     },
   },
-  // windows 系统会报错：[plugin:unocss:transformers:pre] Cannot overwrite a zero-length range - use append Left or prependRight instead.
-  // 去掉下面的就正常了
-  // content: {
-  //   /**
-  //    * 解决小程序报错 `./app.wxss(78:2814): unexpected unexpected at pos 5198`
-  //    * 为什么同时使用include和exclude？虽然看起来多余，但同时配置两者是一种常见的 `防御性编程` 做法。
-  //      1. 结构变化保障 : 如果未来项目结构发生变化，某些排除目录可能被移动到包含路径下，exclude配置可以确保它们仍被排除
-  //      2. 明确性 : 明确列出要排除的目录使配置意图更加清晰
-  //      3. 性能优化 : 避免处理不必要的文件，提高构建性能
-  //      4. 防止冲突 : 排除第三方库和构建输出目录，避免潜在的CSS冲突
-  //    */
-  //   pipeline: {
-  //     exclude: [
-  //       'node_modules/**/*',
-  //       'public/**/*',
-  //       'dist/**/*',
-  //     ],
-  //     include: [
-  //       './src/**/*',
-  //     ],
-  //   },
-  // },
-});
+};
+
+// 导出 UnoCSS 配置
+export default defineConfig(defaultUnoConfig);
