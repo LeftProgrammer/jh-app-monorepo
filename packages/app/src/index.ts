@@ -2,12 +2,27 @@
 import { createPinia, setActivePinia } from 'pinia'
 import { createPersistedState } from 'pinia-plugin-persistedstate'
 
-// 导出类型定义
-export * from './types'
+// 导入 uni-app 类型声明
+import './types/uni-app'
 
-// 导出 HTTP 相关
-export * from './http/types'
-export * from './http/index'
+// 导出类型定义（避免重复导出）
+export type {
+  JhAppConfig,
+  HttpResponse,
+  PaginationParams,
+  PaginationResponse,
+  RouteMeta,
+  UserInfo
+} from './types'
+
+// 导出 HTTP 相关（避免重复导出）
+export type {
+  CustomRequestOptions,
+  RequestInterceptor,
+  ResponseInterceptor,
+  ErrorInterceptor
+} from './http/types'
+export { HttpClient } from './http/index'
 export { requestInterceptor } from './http/interceptor'
 
 // 导出路由相关
@@ -22,15 +37,15 @@ export * from './store/index'
 export * from './utils'
 export * from './utils/encrypt'
 export * from './utils/date'
-export * from './utils/storage'
-export * from './utils/device'
-export * from './utils/validation'
+// export * from './utils/storage' // 暂时注释，后续创建
+// export * from './utils/device' // 暂时注释，后续创建
+// export * from './utils/validation' // 暂时注释，后续创建
 
 // 导出配置管理
 export * from './config'
 
-// 导出组件
-export * from './components'
+// 组件模块暂时注释，后续创建
+// export * from './components'
 
 /**
  * 创建 JH App 应用
@@ -43,8 +58,8 @@ export function createJhApp(config: any = {}) {
   store.use(
     createPersistedState({
       storage: {
-        getItem: (key: string) => uni.getStorageSync(key),
-        setItem: (key: string, value: string) => uni.setStorageSync(key, value),
+        getItem: (key: string) => (globalThis as any).uni?.getStorageSync(key),
+        setItem: (key: string, value: string) => (globalThis as any).uni?.setStorageSync(key, value),
       },
     }),
   )
@@ -56,8 +71,13 @@ export function createJhApp(config: any = {}) {
   return {
     install(app: any) {
       app.use(store)
-      app.use(routeInterceptor)
-      app.use(requestInterceptor)
+      // 动态导入拦截器，避免循环依赖
+      import('./router/interceptor').then(({ routeInterceptor }) => {
+        app.use(routeInterceptor)
+      })
+      import('./http/interceptor').then(({ requestInterceptor }) => {
+        app.use(requestInterceptor)
+      })
     },
     store,
     config,
@@ -72,8 +92,8 @@ export function createAppStore() {
   store.use(
     createPersistedState({
       storage: {
-        getItem: (key: string) => uni.getStorageSync(key),
-        setItem: (key: string, value: string) => uni.setStorageSync(key, value),
+        getItem: (key: string) => (globalThis as any).uni?.getStorageSync(key),
+        setItem: (key: string, value: string) => (globalThis as any).uni?.setStorageSync(key, value),
       },
     }),
   )

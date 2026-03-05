@@ -138,11 +138,16 @@ export const useAppStore = defineStore('app', {
     // 初始化应用信息
     async initApp() {
       try {
-        const systemInfo = await uni.getSystemInfo();
-        this.setSystemInfo(systemInfo);
-        this.setPlatform(systemInfo.platform);
+        const systemInfo = await new Promise<any>((resolve, reject) => {
+          uni.getSystemInfo({
+            success: resolve,
+            fail: reject,
+          })
+        })
+        this.setSystemInfo(systemInfo)
+        this.setPlatform(systemInfo.platform)
       } catch (error) {
-        console.error('Failed to get system info:', error);
+        console.error('Failed to get system info:', error)
       }
     },
   },

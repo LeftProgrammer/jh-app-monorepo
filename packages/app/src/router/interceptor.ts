@@ -1,18 +1,18 @@
 import { isMp } from '../utils'
 import { useTokenStore } from '../store/token'
-import { getAllPages, getLastPage, HOME_PAGE, parseUrlToObj } from '../utils'
-import { EXCLUDE_LOGIN_PATH_LIST, isNeedLoginMode, LOGIN_PAGE, LOGIN_PAGE_ENABLE_IN_MP, NOT_FOUND_PAGE } from './config'
+import { getAllPages, getLastPage, parseUrlToObj } from '../utils'
+import { HOME_PAGE, EXCLUDE_LOGIN_PATH_LIST, isNeedLoginMode, LOGIN_PAGE, LOGIN_PAGE_ENABLE_IN_MP, NOT_FOUND_PAGE } from './config'
 
 export const FG_LOG_ENABLE = false
 
 let excludeListInited = false // 标记 EXCLUDE_LOGIN_PATH_LIST 是否已经根据 getAllPages('excludeLoginPath') 做过一次性补充（仅非开发环境）
 
 export function judgeIsExcludePath(path: string) {
-  const isDev = import.meta.env.DEV
+  const isDev = (import.meta as any).env?.DEV || false
   if (!isDev) {
     // 非开发环境下，只初始化一次
     if (!excludeListInited) {
-      const pages = getAllPages('excludeLoginPath')
+      const pages = getAllPages()
       pages.forEach((page) => {
         if (!EXCLUDE_LOGIN_PATH_LIST.includes(page.path)) {
           EXCLUDE_LOGIN_PATH_LIST.push(page.path)
@@ -22,7 +22,7 @@ export function judgeIsExcludePath(path: string) {
     }
     return EXCLUDE_LOGIN_PATH_LIST.includes(path)
   }
-  const allExcludeLoginPages = getAllPages('excludeLoginPath') // dev 环境下，需要每次都重新获取，否则新配置就不会生效
+  const allExcludeLoginPages = getAllPages() // dev 环境下，需要每次都重新获取，否则新配置就不会生效
   return EXCLUDE_LOGIN_PATH_LIST.includes(path) || (isDev && allExcludeLoginPages.some(page => page.path === path))
 }
 
@@ -64,7 +64,7 @@ export const navigateToInterceptor = {
     }
 
     // 小程序里面使用平台自带的登录，则不走下面的逻辑
-    if (isMp && !LOGIN_PAGE_ENABLE_IN_MP) {
+    if (isMp() && !LOGIN_PAGE_ENABLE_IN_MP) {
       return true // 明确表示允许路由继续执行
     }
 

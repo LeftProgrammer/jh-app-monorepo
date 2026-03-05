@@ -1,12 +1,13 @@
 import type { CustomRequestOptions } from './types'
-import { useTokenStore, useUserStore } from '../store'
+import { useTokenStore } from '../store/token'
+import { useUserStore } from '../store/index'
 import { getEnvBaseUrl } from '../utils'
 import { ApiEncrypt } from '../utils/encrypt'
 import { stringifyQuery } from './tools/queryString'
 
 // 请求基准地址
 const baseUrl = getEnvBaseUrl()
-const tenantEnable = import.meta.env.VITE_APP_TENANT_ENABLE
+const tenantEnable = (import.meta as any).env?.VITE_APP_TENANT_ENABLE
 
 const whiteList: string[] = [
   '/login',
@@ -31,9 +32,9 @@ const httpInterceptor = {
     // 非 http 开头需拼接地址
     if (!options.url.startsWith('http')) {
       // #ifdef H5
-      if (JSON.parse(import.meta.env.VITE_APP_PROXY_ENABLE)) {
+      if (JSON.parse((import.meta as any).env?.VITE_APP_PROXY_ENABLE || 'false')) {
         // 自动拼接代理前缀
-        options.url = import.meta.env.VITE_APP_PROXY_PREFIX + options.url
+        options.url = (import.meta as any).env?.VITE_APP_PROXY_PREFIX + options.url
       }
       else {
         options.url = baseUrl + options.url
@@ -54,7 +55,7 @@ const httpInterceptor = {
     // 3. 添加 token 请求头标识
     const tokenStore = useTokenStore()
     const token = tokenStore.validToken
-    let isToken = (options!.header || {}).isToken === false
+    let isToken = ((options!.header || {}).isToken as unknown as boolean) === false
 
     for (const v of whiteList) {
       if (options.url && options.url.includes(v)) {

@@ -1,4 +1,8 @@
 import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+
+// 扩展 dayjs 插件
+dayjs.extend(relativeTime)
 
 /**
  * 格式化日期

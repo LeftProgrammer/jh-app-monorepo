@@ -1,10 +1,15 @@
 // HTTP 请求配置
-export interface CustomRequestOptions extends UniApp.RequestOptions {
-  // 自定义配置
+export interface CustomRequestOptions {
+  url: string
+  method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
+  data?: any
+  params?: Record<string, any>
   query?: Record<string, any>
+  header?: Record<string, string>
+  timeout?: number
+  responseType?: 'text' | 'arraybuffer'
   isToken?: boolean // 是否需要 token，默认 true
   isEncrypt?: boolean // 是否加密请求
-  header?: Record<string, string>
 }
 
 // HTTP 响应配置

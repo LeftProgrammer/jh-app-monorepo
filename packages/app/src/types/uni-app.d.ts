@@ -5,7 +5,7 @@ declare global {
     request(options: any): any
     uploadFile(options: any): any
     downloadFile(options: any): any
-    
+
     // 存储相关
     getStorageSync(key: string): any
     setStorageSync(key: string, data: any): void
@@ -16,7 +16,7 @@ declare global {
       currentSize: number
       limitSize: number
     }
-    
+
     // 路由相关
     navigateTo(options: any): void
     redirectTo(options: any): void
@@ -24,15 +24,15 @@ declare global {
     switchTab(options: any): void
     navigateBack(options?: any): void
     getCurrentPages(): any[]
-    
+
     // 系统信息
     getSystemInfo(options: any): void
     getSystemInfoSync(): any
     getNetworkType(options: any): void
-    
+
     // 拦截器
     addInterceptor(name: string, interceptor: any): void
-    
+
     // 其他
     showToast(options: any): void
     showModal(options: any): void
@@ -50,6 +50,12 @@ declare const importMeta: {
     PROD: boolean
     [key: string]: any
   }
+}
+
+// crypto-js 模块声明
+declare module 'crypto-js' {
+  const CryptoJS: any
+  export default CryptoJS
 }
 
 export {}

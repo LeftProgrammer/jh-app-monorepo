@@ -4,7 +4,7 @@
  * 获取环境变量中的基础URL
  */
 export function getEnvBaseUrl(): string {
-  return import.meta.env.VITE_APP_BASE_URL || 'https://api.example.com'
+  return (import.meta as any).env?.VITE_APP_BASE_URL || 'https://api.example.com'
 }
 
 /**
@@ -29,7 +29,7 @@ export function parseUrlToObj(url: string) {
 /**
  * 获取所有页面
  */
-export function getAllPages(type?: string) {
+export function getAllPages() {
   // 这里应该从 pages.json 获取页面列表
   // 临时返回默认页面
   return [

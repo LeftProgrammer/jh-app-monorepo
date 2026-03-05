@@ -18,15 +18,16 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "vue": "^3.4.21",
+    "crypto-js": "^4.2.0",
+    "dayjs": "1.11.10",
+    "jsencrypt": "^3.5.4",
     "pinia": "2.0.36",
     "pinia-plugin-persistedstate": "^3.2.0",
-    "vue-router": "4.5.1",
-    "dayjs": "1.11.10",
-    "crypto-js": "^4.2.0",
-    "jsencrypt": "^3.5.4"
+    "vue": "^3.4.21",
+    "vue-router": "4.5.1"
   },
   "devDependencies": {
+    "@types/crypto-js": "^4.2.2",
     "@types/node": "^20.17.9",
     "@vitejs/plugin-vue": "^5.0.0",
     "typescript": "~5.8.0",
