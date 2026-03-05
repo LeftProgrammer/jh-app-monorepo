@@ -1,8 +1,8 @@
 import type { CustomRequestOptions, IResponse } from './types'
-import { useTokenStore } from '../store/token'
-import { getLastPage, isDoubleTokenMode } from '../utils'
-import { ApiEncrypt } from '../utils/encrypt'
-import { toLoginPage } from '../router/interceptor'
+import { useTokenStore } from '@/store/token'
+import { getLastPage, isDoubleTokenMode } from '@/utils'
+import { ApiEncrypt } from '@/utils/encrypt'
+import { toLoginPage } from '@/router/interceptor'
 import { ResultEnum } from './tools/enum'
 
 // 刷新 token 状态管理

@@ -1,8 +1,9 @@
+/* eslint-disable brace-style */ // 原因：unibest 官方维护的代码，尽量不要大概，避免难以合并
 import type { CustomRequestOptions } from './types'
-import { useTokenStore } from '../store/token'
-import { useUserStore } from '../store/index'
-import { getEnvBaseUrl } from '../utils'
-import { ApiEncrypt } from '../utils/encrypt'
+import { useTokenStore } from '@/store/token'
+import { useUserStore } from '@/store'
+import { getEnvBaseUrl } from '@/utils'
+import { ApiEncrypt } from '@/utils/encrypt'
 import { stringifyQuery } from './tools/queryString'
 
 // 请求基准地址

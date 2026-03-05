@@ -1,38 +1,29 @@
 /**
- * 将对象转换为查询字符串
+ * 将对象序列化为URL查询字符串，用于替代第三方的 qs 库，节省宝贵的体积
+ * 支持基本类型值和数组，不支持嵌套对象
+ * @param obj 要序列化的对象
+ * @returns 序列化后的查询字符串
  */
-export function stringifyQuery(query: Record<string, any>): string {
-  return Object.keys(query)
-    .map(key => {
-      const value = query[key]
-      if (value === undefined || value === null) {
-        return ''
-      }
-      if (typeof value === 'object') {
-        return `${encodeURIComponent(key)}=${encodeURIComponent(JSON.stringify(value))}`
-      }
-      return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
-    })
-    .filter(Boolean)
-    .join('&')
-}
+export function stringifyQuery(obj: Record<string, any>): string {
+  if (!obj || typeof obj !== 'object' || Array.isArray(obj))
+    return ''
 
-/**
- * 将查询字符串解析为对象
- */
-export function parseQuery(queryString: string): Record<string, string> {
-  const query: Record<string, string> = {}
-  
-  if (queryString.startsWith('?')) {
-    queryString = queryString.slice(1)
-  }
-  
-  queryString.split('&').forEach(item => {
-    const [key, value] = item.split('=')
-    if (key) {
-      query[decodeURIComponent(key)] = decodeURIComponent(value || '')
-    }
-  })
-  
-  return query
+  return Object.entries(obj)
+    .filter(([_, value]) => value !== undefined && value !== null)
+    .map(([key, value]) => {
+      // 对键进行编码
+      const encodedKey = encodeURIComponent(key)
+
+      // 处理数组类型
+      if (Array.isArray(value)) {
+        return value
+          .filter(item => item !== undefined && item !== null)
+          .map(item => `${encodedKey}=${encodeURIComponent(item)}`)
+          .join('&')
+      }
+
+      // 处理基本类型
+      return `${encodedKey}=${encodeURIComponent(value)}`
+    })
+    .join('&')
 }
