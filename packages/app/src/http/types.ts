@@ -1,18 +1,53 @@
-// HTTP 请求配置
-export interface CustomRequestOptions {
+/**
+ * 在 uniapp 的 RequestOptions 基础上，添加自定义参数
+ */
+export type CustomRequestOptions = {
   url: string
   method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
   data?: any
-  params?: Record<string, any>
-  query?: Record<string, any>
   header?: Record<string, string>
   timeout?: number
   responseType?: 'text' | 'arraybuffer'
-  isToken?: boolean // 是否需要 token，默认 true
-  isEncrypt?: boolean // 是否加密请求
+  query?: Record<string, any>
+  /** 出错时是否隐藏错误提示 */
+  hideErrorToast?: boolean
+  /** 是否返回原始数据 add by panda 25.12.10 */
+  original?: boolean
+  /** 是否API加密 add by panda 25.12.24 */
+  isEncrypt?: boolean
+  // 上传文件相关属性
+  filePath?: string
+  name?: string
+  formData?: Record<string, any>
 }
 
-// HTTP 响应配置
+// 通用响应格式（兼容 msg + message 字段）
+export type IResponse<T = any> = {
+  code: number
+  data: T
+  message: string
+  [key: string]: any // 允许额外属性
+} | {
+  code: number
+  data: T
+  msg: string
+  [key: string]: any // 允许额外属性
+}
+
+/** 分页参数 */
+export interface PageParam {
+  pageNo: number
+  pageSize: number
+  [key: string]: any // 允许额外属性
+}
+
+/** 分页结果 */
+export interface PageResult<T> {
+  list: T[]
+  total: number
+}
+
+// HTTP 响应配置（保持向后兼容）
 export interface HttpResponse<T = any> {
   code: number
   data: T

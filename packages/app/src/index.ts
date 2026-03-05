@@ -22,7 +22,7 @@ export type {
   ResponseInterceptor,
   ErrorInterceptor
 } from './http/types'
-export { HttpClient } from './http/index'
+export { http, httpGet, httpPost, httpPut, httpDelete } from './http/index'
 export { requestInterceptor } from './http/interceptor'
 
 // 导出路由相关

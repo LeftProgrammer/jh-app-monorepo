@@ -2,8 +2,8 @@
 declare global {
   const uni: {
     // 请求相关
-    request(options: any): any
-    uploadFile(options: any): any
+    request(options: UniApp.RequestOptions): any
+    uploadFile(options: UniApp.UploadFileOptions): any
     downloadFile(options: any): any
 
     // 存储相关
@@ -57,5 +57,30 @@ declare module 'crypto-js' {
   const CryptoJS: any
   export default CryptoJS
 }
+
+// uni-app 命名空间类型
+declare namespace UniApp {
+  export interface RequestOptions {
+    url: string
+    method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
+    data?: any
+    header?: Record<string, string>
+    timeout?: number
+    responseType?: 'text' | 'arraybuffer'
+    [key: string]: any
+  }
+
+  export interface UploadFileOptions {
+    url: string
+    filePath: string
+    name: string
+    header?: Record<string, string>
+    formData?: Record<string, any>
+    [key: string]: any
+  }
+}
+
+// uni-app 上传文件选项类型
+interface IUniUploadFileOptions extends UniApp.UploadFileOptions {}
 
 export {}

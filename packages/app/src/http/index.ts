@@ -1,140 +1,205 @@
-import type { JhAppConfig, HttpResponse } from '../types'
+import type { CustomRequestOptions, IResponse } from './types'
+import { useTokenStore } from '../store/token'
+import { getLastPage, isDoubleTokenMode } from '../utils'
+import { ApiEncrypt } from '../utils/encrypt'
+import { toLoginPage } from '../router/interceptor'
+import { ResultEnum } from './tools/enum'
 
-// HTTP 请求配置
-export interface RequestOptions {
-  url: string;
-  method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
-  data?: any;
-  params?: Record<string, any>;
-  headers?: Record<string, string>;
-  timeout?: number;
-  responseType?: 'text' | 'arraybuffer';
+// 刷新 token 状态管理
+let refreshing = false // 防止重复刷新 token 标识
+let taskQueue: (() => void)[] = [] // 刷新 token 请求队列
+
+/**
+ * 核心 HTTP 函数 - 与原始 mzcx-app 保持一致
+ */
+export function http<T>(options: CustomRequestOptions) {
+  // 1. 返回 Promise 对象
+  return new Promise<T>((resolve, reject) => {
+    uni.request({
+      ...options,
+      dataType: 'json',
+      // #ifndef MP-WEIXIN
+      responseType: 'json',
+      // #endif
+      // 响应成功
+      success: async (res) => {
+        let responseData = res.data as IResponse<T>
+        // add by panda：检查是否需要解密响应数据
+        const encryptHeader = ApiEncrypt.getEncryptHeader()
+        const isEncryptResponse = res.header[encryptHeader] === 'true' || res.header[encryptHeader.toLowerCase()] === 'true'
+        if (isEncryptResponse && typeof responseData === 'string') {
+          try {
+            // 解密响应数据
+            responseData = ApiEncrypt.decryptResponse(responseData)
+          } catch (error) {
+            console.error('响应数据解密失败:', error)
+            throw new Error(`响应数据解密失败: ${(error as Error).message}`)
+          }
+        }
+
+        const { code } = responseData
+        // 检查是否是401错误（包括HTTP状态码401或业务码401）
+        const isTokenExpired = res.statusCode === 401 || code === 401
+
+        if (isTokenExpired) {
+          const tokenStore = useTokenStore()
+          if (!isDoubleTokenMode()) {
+            // 未启用双token策略，清理用户信息，跳转到登录页
+            tokenStore.logout()
+            toLoginPage()
+            return reject(res)
+          }
+
+          /* -------- 无感刷新 token ----------- */
+          const { refreshToken } = tokenStore.tokenInfo || {}
+          // token 失效的，且有刷新 token 的，才放到请求队列里
+          if (refreshToken) {
+            taskQueue.push(() => {
+              resolve(http<T>(options))
+            })
+          }
+
+          // 如果有 refreshToken 且未在刷新中，发起刷新 token 请求
+          if (refreshToken && !refreshing) {
+            refreshing = true
+            try {
+              // 发起刷新 token 请求（使用 store 的 refreshToken 方法）
+              await tokenStore.refreshToken()
+              // 刷新 token 成功
+              refreshing = false
+              // 将任务队列的所有任务重新请求
+              taskQueue.forEach(task => task())
+            } catch (refreshErr) {
+              console.error('刷新 token 失败:', refreshErr)
+              refreshing = false
+              // 刷新 token 失败，跳转到登录页
+              // 关闭其他弹窗
+              uni.hideToast()
+              uni.showToast({
+                title: '登录已过期，请重新登录',
+                icon: 'none',
+              })
+              // 清除用户信息
+              await tokenStore.logout()
+              // 跳转到登录页
+              setTimeout(() => {
+                // 优化 by 芋艿：跳转登录页时，携带上次浏览的页面地址，登录成功后可以跳回去
+                const lastPage = getLastPage()
+                let queryString = ''
+                if (lastPage) {
+                  const fullPath = lastPage.$page?.fullPath || `/${lastPage.route}`
+                  queryString = `?redirect=${encodeURIComponent(fullPath)}`
+                }
+                toLoginPage({ queryString })
+              }, 2000)
+            } finally {
+              // 不管刷新 token 成功与否，都清空任务队列
+              taskQueue = []
+            }
+          }
+
+          return reject(res)
+        }
+
+        // 处理其他成功状态（HTTP状态码200-299）
+        if (res.statusCode >= 200 && res.statusCode < 300) {
+          // add by panda 25.12.10：如果设置了 original 为 true，则返回原始数据。例如说：滑块验证码，有自己的返回格式
+          if (options.original) {
+            return resolve(responseData as unknown as T)
+          }
+          // 处理业务逻辑错误
+          if (code !== ResultEnum.Success0 && code !== ResultEnum.Success200) {
+            // add by 芋艿：后端返回的 msg 提示
+            !options.hideErrorToast
+            && uni.showToast({
+              icon: 'none',
+              title: responseData.msg || responseData.message || '请求错误',
+            })
+            // add by 芋艿：reject 替代原本的 resolve，避免调用的地方以为请求成功
+            return reject(responseData)
+          }
+          return resolve(responseData.data)
+        }
+
+        // 处理其他错误
+        !options.hideErrorToast
+        && uni.showToast({
+          icon: 'none',
+          title: (res.data as any).msg || '请求错误',
+        })
+        reject(res)
+      },
+      // 响应失败
+      fail(err) {
+        uni.showToast({
+          icon: 'none',
+          title: '网络错误，换个网络试试',
+        })
+        reject(err)
+      },
+    })
+  })
 }
 
-// 请求拦截器类型
-export type RequestInterceptor = (config: RequestOptions) => RequestOptions;
-export type ResponseInterceptor = (response: any) => any;
-export type ErrorInterceptor = (error: any) => any;
-
-class HttpClient {
-  private config: JhAppConfig;
-  private requestInterceptors: RequestInterceptor[] = [];
-  private responseInterceptors: ResponseInterceptor[] = [];
-  private errorInterceptors: ErrorInterceptor[] = [];
-
-  constructor() {
-    this.config = {
-      baseURL: '',
-      timeout: 10000,
-      platform: 'h5'
-    };
-  }
-
-  // 添加请求拦截器
-  addRequestInterceptor(interceptor: RequestInterceptor) {
-    this.requestInterceptors.push(interceptor);
-  }
-
-  // 添加响应拦截器
-  addResponseInterceptor(interceptor: ResponseInterceptor) {
-    this.responseInterceptors.push(interceptor);
-  }
-
-  // 添加错误拦截器
-  addErrorInterceptor(interceptor: ErrorInterceptor) {
-    this.errorInterceptors.push(interceptor);
-  }
-
-  // 执行请求拦截器
-  private async processRequest(config: RequestOptions): Promise<RequestOptions> {
-    let processedConfig = { ...config };
-    for (const interceptor of this.requestInterceptors) {
-      processedConfig = await interceptor(processedConfig);
-    }
-    return processedConfig;
-  }
-
-  // 执行响应拦截器
-  private async processResponse(response: any): Promise<any> {
-    let processedResponse = response;
-    for (const interceptor of this.responseInterceptors) {
-      processedResponse = await interceptor(processedResponse);
-    }
-    return processedResponse;
-  }
-
-  // 执行错误拦截器
-  private async processError(error: any): Promise<any> {
-    let processedError = error;
-    for (const interceptor of this.errorInterceptors) {
-      processedError = await interceptor(processedError);
-    }
-    throw processedError;
-  }
-
-  // 基础请求方法
-  private async request<T = any>(options: RequestOptions): Promise<HttpResponse<T>> {
-    try {
-      const config = await this.processRequest(options);
-
-      const response = await uni.request({
-        url: config.url,
-        method: config.method || 'GET',
-        data: config.data,
-        header: config.headers,
-        timeout: config.timeout || this.config.timeout,
-      });
-
-      const processedResponse = await this.processResponse(response);
-
-      return processedResponse as HttpResponse<T>;
-    } catch (error) {
-      return this.processError(error);
-    }
-  }
-
-  // GET 请求
-  async get<T = any>(url: string, params?: Record<string, any>, options?: Partial<RequestOptions>): Promise<HttpResponse<T>> {
-    const queryString = params ? '?' + new URLSearchParams(params).toString() : '';
-    return this.request<T>({
-      url: url + queryString,
-      method: 'GET',
-      ...options,
-    });
-  }
-
-  // POST 请求
-  async post<T = any>(url: string, data?: any, options?: Partial<RequestOptions>): Promise<HttpResponse<T>> {
-    return this.request<T>({
-      url,
-      method: 'POST',
-      data,
-      ...options,
-    });
-  }
-
-  // PUT 请求
-  async put<T = any>(url: string, data?: any, options?: Partial<RequestOptions>): Promise<HttpResponse<T>> {
-    return this.request<T>({
-      url,
-      method: 'PUT',
-      data,
-      ...options,
-    });
-  }
-
-  // DELETE 请求
-  async delete<T = any>(url: string, options?: Partial<RequestOptions>): Promise<HttpResponse<T>> {
-    return this.request<T>({
-      url,
-      method: 'DELETE',
-      ...options,
-    });
-  }
+/**
+ * GET 请求
+ */
+export function httpGet<T>(url: string, query?: Record<string, any>, header?: Record<string, any>, options?: Partial<CustomRequestOptions>) {
+  return http<T>({
+    url,
+    query,
+    method: 'GET',
+    header,
+    ...options,
+  })
 }
 
-// 创建默认实例
-export const httpClient = new HttpClient();
+/**
+ * POST 请求
+ */
+export function httpPost<T>(url: string, data?: Record<string, any>, query?: Record<string, any>, header?: Record<string, any>, options?: Partial<CustomRequestOptions>) {
+  return http<T>({
+    url,
+    query,
+    data,
+    method: 'POST',
+    header,
+    ...options,
+  })
+}
 
-// 导出类型
-export { HttpClient };
+/**
+ * PUT 请求
+ */
+export function httpPut<T>(url: string, data?: Record<string, any>, query?: Record<string, any>, header?: Record<string, any>, options?: Partial<CustomRequestOptions>) {
+  return http<T>({
+    url,
+    data,
+    query,
+    method: 'PUT',
+    header,
+    ...options,
+  })
+}
+
+/**
+ * DELETE 请求
+ */
+export function httpDelete<T>(url: string, data?: Record<string, any>, query?: Record<string, any>, header?: Record<string, any>, options?: Partial<CustomRequestOptions>) {
+  return http<T>({
+    url,
+    data,
+    query,
+    method: 'DELETE',
+    header,
+    ...options,
+  })
+}
+
+// 支持与 axios 类似的API调用
+;(http as any).get = httpGet
+;(http as any).post = httpPost
+;(http as any).put = httpPut
+;(http as any).delete = httpDelete
+
+export default http

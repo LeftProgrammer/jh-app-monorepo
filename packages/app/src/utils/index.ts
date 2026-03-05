@@ -18,7 +18,7 @@ export function parseUrlToObj(url: string) {
     queryStr.split('&').forEach(item => {
       const [key, value] = item.split('=')
       if (key) {
-        query[decodeURIComponent(key)] = decodeURIComponent(value || '')
+        query[key] = decodeURIComponent(value || '')
       }
     })
   }
@@ -43,7 +43,7 @@ export function getAllPages() {
  */
 export function getLastPage() {
   const pages = getCurrentPages()
-  return pages[pages.length - 1]
+  return pages[pages.length - 1] || null
 }
 
 /**
@@ -57,32 +57,29 @@ export function isMp(): boolean {
 }
 
 /**
- * 深度克隆对象
+ * 检查是否启用双Token模式
+ */
+export function isDoubleTokenMode(): boolean {
+  return (import.meta as any).env?.VITE_APP_DOUBLE_TOKEN_ENABLE === 'true'
+}
+
+/**
+ * 深度克隆
  */
 export function deepClone<T>(obj: T): T {
-  if (obj === null || typeof obj !== 'object') {
-    return obj;
-  }
-
-  if (obj instanceof Date) {
-    return new Date(obj.getTime()) as T;
-  }
-
-  if (obj instanceof Array) {
-    return obj.map(item => deepClone(item)) as T;
-  }
-
+  if (obj === null || typeof obj !== 'object') return obj
+  if (obj instanceof Date) return new Date(obj.getTime()) as unknown as T
+  if (obj instanceof Array) return obj.map(item => deepClone(item)) as unknown as T
   if (typeof obj === 'object') {
-    const cloned = {} as T;
+    const clonedObj = {} as any
     for (const key in obj) {
       if (obj.hasOwnProperty(key)) {
-        cloned[key] = deepClone(obj[key]);
+        clonedObj[key] = deepClone(obj[key])
       }
     }
-    return cloned;
+    return clonedObj
   }
-
-  return obj;
+  return obj
 }
 
 /**
