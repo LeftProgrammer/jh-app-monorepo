@@ -5,7 +5,7 @@ import { createPersistedState } from 'pinia-plugin-persistedstate'
 // 导入 uni-app 类型声明
 import './types/uni-app'
 
-// 导出类型定义（避免重复导出）
+// 导出类型定义
 export type {
   JhAppConfig,
   HttpResponse,
@@ -15,7 +15,14 @@ export type {
   UserInfo
 } from './types'
 
-// 导出 HTTP 相关（避免重复导出）
+// 按模块导出 - 命名空间方式
+export * as Http from './http'
+export * as Store from './store'
+export * as Router from './router'
+export * as Utils from './utils'
+export * as Config from './config'
+
+// 兼容性导出 - 保持向后兼容
 export type {
   CustomRequestOptions,
   RequestInterceptor,
@@ -23,29 +30,14 @@ export type {
   ErrorInterceptor
 } from './http/types'
 export { http, httpGet, httpPost, httpPut, httpDelete } from './http/index'
-export { requestInterceptor } from './http/interceptor'
-
-// 导出路由相关
 export { routeInterceptor, navigateToInterceptor, toLoginPage } from './router/interceptor'
 export * from './router/config'
-
-// 导出状态管理
 export * from './store/token'
 export * from './store/index'
-
-// 导出工具函数
 export * from './utils'
 export * from './utils/encrypt'
 export * from './utils/date'
-// export * from './utils/storage' // 暂时注释，后续创建
-// export * from './utils/device' // 暂时注释，后续创建
-// export * from './utils/validation' // 暂时注释，后续创建
-
-// 导出配置管理
 export * from './config'
-
-// 组件模块暂时注释，后续创建
-// export * from './components'
 
 /**
  * 创建 JH App 应用
