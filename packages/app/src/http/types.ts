@@ -1,13 +1,7 @@
 /**
- * 在 uniapp 的 RequestOptions 基础上，添加自定义参数
+ * 在 uniapp 的 RequestOptions 和 IUniUploadFileOptions 基础上，添加自定义参数
  */
-export type CustomRequestOptions = {
-  url: string
-  method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
-  data?: any
-  header?: Record<string, string>
-  timeout?: number
-  responseType?: 'text' | 'arraybuffer'
+export type CustomRequestOptions = UniApp.RequestOptions & {
   query?: Record<string, any>
   /** 出错时是否隐藏错误提示 */
   hideErrorToast?: boolean
@@ -15,11 +9,7 @@ export type CustomRequestOptions = {
   original?: boolean
   /** 是否API加密 add by panda 25.12.24 */
   isEncrypt?: boolean
-  // 上传文件相关属性
-  filePath?: string
-  name?: string
-  formData?: Record<string, any>
-}
+} & IUniUploadFileOptions // 添加uni.uploadFile参数类型
 
 // 通用响应格式（兼容 msg + message 字段）
 export type IResponse<T = any> = {
@@ -47,14 +37,5 @@ export interface PageResult<T> {
   total: number
 }
 
-// HTTP 响应配置（保持向后兼容）
-export interface HttpResponse<T = any> {
-  code: number
-  data: T
-  msg: string
-}
-
-// 请求拦截器类型
-export type RequestInterceptor = (config: CustomRequestOptions) => CustomRequestOptions
-export type ResponseInterceptor = (response: any) => any
-export type ErrorInterceptor = (error: any) => any
+/** 加载状态枚举 - 从 wot-design-uni 重新导出 */
+export type { LoadMoreState } from 'wot-design-uni/components/wd-loadmore/types'

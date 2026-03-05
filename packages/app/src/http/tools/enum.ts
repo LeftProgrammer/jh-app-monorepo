@@ -15,13 +15,11 @@ export enum ResultEnum {
   GatewayTimeout = 504, // 网关超时（原为gatewayTimeout）
   HttpVersionNotSupported = 505, // HTTP版本不支持（原为httpVersionNotSupported）
 }
-
 export enum ContentTypeEnum {
   JSON = 'application/json;charset=UTF-8',
   FORM_URLENCODED = 'application/x-www-form-urlencoded;charset=UTF-8',
   FORM_DATA = 'multipart/form-data;charset=UTF-8',
 }
-
 /**
  * 根据状态码，生成对应的错误信息
  * @param {number|string} status 状态码

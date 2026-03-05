@@ -1,12 +1,24 @@
-// 导出所有 Store 模块
-export { useTokenStore } from './token'
-export { useUserStore } from './user'
-export { useGlobalState } from './global'
-export { useDictStore } from './dict'
-export { useSystemState } from './system'
-export { useThemeStore } from './theme'
+import { createPinia, setActivePinia } from "pinia";
+import { createPersistedState } from "pinia-plugin-persistedstate"; // 数据持久化
 
-// 导出类型
-export type { DictItem, DictCache } from './dict'
-export type { IAuthLoginRes } from './token'
-export type { IUserInfoRes, AuthPermissionInfo } from './user'
+const store = createPinia();
+store.use(
+  createPersistedState({
+    storage: {
+      getItem: uni.getStorageSync,
+      setItem: uni.setStorageSync,
+    },
+  }),
+);
+// 立即激活 Pinia 实例, 这样即使在 app.use(store)之前调用 store 也能正常工作 （解决APP端白屏问题）
+setActivePinia(store);
+
+export default store;
+
+// 模块统一导出
+export * from "./dict";
+export * from "./theme";
+export * from "./token";
+export * from "./user";
+export * from "./global";
+export * from "./system";
