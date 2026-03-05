@@ -1,7 +1,7 @@
 /**
  * 在 uniapp 的 RequestOptions 和 IUniUploadFileOptions 基础上，添加自定义参数
  */
-export type CustomRequestOptions = UniApp.RequestOptions & {
+export type CustomRequestOptions = UniNamespace.RequestOptions & {
   query?: Record<string, any>
   /** 出错时是否隐藏错误提示 */
   hideErrorToast?: boolean
@@ -9,7 +9,7 @@ export type CustomRequestOptions = UniApp.RequestOptions & {
   original?: boolean
   /** 是否API加密 add by panda 25.12.24 */
   isEncrypt?: boolean
-} & IUniUploadFileOptions // 添加uni.uploadFile参数类型
+} & UniNamespace.IUniUploadFileOptions // 添加uni.uploadFile参数类型
 
 // 通用响应格式（兼容 msg + message 字段）
 export type IResponse<T = any> = {

@@ -1,10 +1,10 @@
-import type { IDoubleTokenRes } from '@/api/types/login'
-import type { CustomRequestOptions, IResponse } from '@/http/types'
+import type { IDoubleTokenRes } from '../api/types/login'
+import type { CustomRequestOptions, IResponse } from './types'
 import { nextTick } from 'vue'
-import { useTokenStore } from '@/store/token'
-import { getLastPage, isDoubleTokenMode } from '@/utils'
-import { ApiEncrypt } from '@/utils/encrypt'
-import { toLoginPage } from '@/utils/toLoginPage'
+import { useTokenStore } from '../store/token'
+import { getLastPage, isDoubleTokenMode } from '../utils'
+import { ApiEncrypt } from '../utils/encrypt'
+import { toLoginPage } from '../utils/toLoginPage'
 import { ResultEnum } from './tools/enum'
 
 // 刷新 token 状态管理
@@ -221,3 +221,6 @@ http.get = httpGet
 http.post = httpPost
 http.put = httpPut
 http.delete = httpDelete
+
+// 默认导出 HTTP 实例
+export default http
