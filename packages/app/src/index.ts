@@ -30,5 +30,7 @@ export * from './utils'
 // 样式模块
 export * from './style'
 
+export * from './vite-plugins'
+
 // 版本信息
 export const version = '1.0.0'
