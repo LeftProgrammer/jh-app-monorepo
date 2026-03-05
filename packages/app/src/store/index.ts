@@ -15,10 +15,10 @@ setActivePinia(store);
 
 export default store;
 
-// 模块统一导出
-export * from "./dict";
-export * from "./theme";
-export * from "./token";
-export * from "./user";
-export * from "./global";
-export * from "./system";
+// 模块命名空间导出 - 避免潜在的 actions/getters 冲突
+export * as dict from "./dict";
+export * as theme from "./theme";
+export * as token from "./token";
+export * as user from "./user";
+export * as global from "./global";
+export * as system from "./system";
