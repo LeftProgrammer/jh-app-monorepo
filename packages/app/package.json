@@ -7,8 +7,7 @@
   "types": "dist/index.d.ts",
   "files": [
     "dist",
-    "README.md",
-    "LICENSE"
+    "README.md"
   ],
   "scripts": {
     "build": "npm run clean && vite build",
@@ -104,6 +103,5 @@
     "framework",
     "all-in-one"
   ],
-  "author": "jh-app-team",
-  "license": "MIT"
+  "author": "jh-app-team"
 }

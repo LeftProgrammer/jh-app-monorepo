@@ -7,10 +7,10 @@
 ```
 jh-app-monorepo/
 ├── packages/
-│   ├── core/           # 核心功能包
-│   ├── components/     # 组件包
-│   └── utils/          # 工具包
-├── examples/           # 示例项目
+│   ├── app/             # 主应用包 (UniApp 框架)
+│   └── template/        # 项目模板包
+├── playground/          # 测试项目
+├── docs/               # 文档
 ├── .changeset/         # 版本管理配置
 ├── package.json        # 根配置
 ├── pnpm-workspace.yaml # workspace 配置
@@ -19,32 +19,25 @@ jh-app-monorepo/
 
 ## 包说明
 
-### @jh-app/core
-核心功能包，包含：
-- 路由管理
-- 状态管理 (Pinia)
-- HTTP 请求封装
-- 配置管理
-- 类型定义
+### @jh-app/app
+主应用包，包含：
+- **UniApp 框架** - 基于 Vue 3 + TypeScript 的移动端开发框架
+- **状态管理** - Pinia 状态管理集成
+- **路由管理** - 页面路由和导航
+- **HTTP 请求** - 统一的 API 请求封装
+- **UI 组件** - 基于 wot-design-uni 的组件库
+- **工具函数** - 常用的工具函数集合
+- **BPMN 流程** - 业务流程管理集成
 
-### @jh-app/components
-UI 组件包，包含：
-- 按钮组件
-- 加载组件
-- 模态框组件
-- 提示组件
-
-### @jh-app/utils
-工具函数包，包含：
-- 日期处理
-- 加密解密
-- 本地存储
-- 设备信息
-- 表单验证
+### @jh-app/template
+项目模板包，包含：
+- **项目初始化模板** - 快速创建新项目的脚手架
+- **最佳实践配置** - ESLint、Prettier、TypeScript 配置
+- **开发工具集成** - Vite、Husky、Changesets 配置
 
 ## 开发环境要求
 
-- Node.js >= 20
+- Node.js >= 18
 - pnpm >= 9
 
 ## 快速开始
@@ -61,10 +54,8 @@ pnpm install
 # 监听所有包的变化
 pnpm dev
 
-# 开发特定包
-pnpm --filter @jh-app/core dev
-pnpm --filter @jh-app/components dev
-pnpm --filter @jh-app/utils dev
+# 开发主应用包 (推荐)
+pnpm dev:app
 ```
 
 ### 构建
@@ -73,85 +64,76 @@ pnpm --filter @jh-app/utils dev
 # 构建所有包
 pnpm build
 
-# 构建特定包
-pnpm --filter @jh-app/core build
-```
-
-### 测试
-
-```bash
-# 运行所有测试
-pnpm test
-
-# 运行特定包的测试
-pnpm --filter @jh-app/core test
+# 构建主应用包 (推荐)
+pnpm build:app
 ```
 
 ### 代码检查
 
 ```bash
-# 运行 ESLint
+# 运行 ESLint (所有包)
 pnpm lint
 
+# 运行主应用包的 ESLint (推荐)
+pnpm lint:app
+
 # 自动修复
-pnpm lint:fix
+pnpm lint:fix:app
 
 # 类型检查
-pnpm type-check
+pnpm type-check:app
 ```
 
-## 版本管理
+## 发布
 
-使用 changesets 进行版本管理：
-
-### 添加变更集
+### 发布主应用包
 
 ```bash
+# 构建并发布 @jh-app/app
+pnpm release:app
+```
+
+### 使用 Changesets 管理版本
+
+```bash
+# 添加变更集
 pnpm changeset
-```
 
-### 发布版本
-
-```bash
 # 更新版本号
 pnpm version-packages
 
-# 发布到 npm
+# 发布所有包
 pnpm release
 ```
 
-## 发布流程
-
-1. 修改代码后运行 `pnpm changeset` 添加变更集
-2. 运行 `pnpm version-packages` 更新版本号
-3. 运行 `pnpm release` 构建并发布到 npm
-
 ## 使用示例
 
-### 安装包
+### 安装主应用包
 
 ```bash
-# 安装核心包
-pnpm add @jh-app/core
-
-# 安装组件包
-pnpm add @jh-app/components
-
-# 安装工具包
-pnpm add @jh-app/utils
+npm install @jh-app/app vue pinia @dcloudio/uni-app
 ```
 
 ### 在项目中使用
 
 ```typescript
-// 导入核心功能
-import { httpClient, useUserStore, routerManager } from '@jh-app/core'
+// 导入主应用功能
+import { 
+  httpClient, 
+  useUserStore, 
+  formatDate, 
+  encryptData 
+} from '@jh-app/app'
 
 // 导入组件
-import { JhButton, JhModal } from '@jh-app/components'
+import { 
+  JhButton, 
+  JhModal, 
+  JhTabbar 
+} from '@jh-app/app/components'
 
-// 导入工具函数
-import { formatDate, storage, isEmail } from '@jh-app/utils'
+// 导入样式
+import '@jh-app/app/style'
 ```
 
 ## 开发规范
@@ -175,6 +157,17 @@ import { formatDate, storage, isEmail } from '@jh-app/utils'
 - 遵循 ESLint 和 Prettier 配置
 - 组件和函数需要添加适当的类型定义
 - 编写单元测试
+
+## 特性
+
+- 🚀 **快速开发** - 基于 UniApp 的一站式移动端开发框架
+- 📦 **组件丰富** - 内置常用的 UI 组件和业务组件
+- 🔧 **工具齐全** - 提供常用的工具函数和业务逻辑
+- 🎯 **类型安全** - 完整的 TypeScript 类型定义
+- 📱 **多端支持** - 支持 H5、小程序、App 多端发布
+- 🔄 **状态管理** - 集成 Pinia 状态管理
+- 🌐 **HTTP 封装** - 统一的 API 请求处理
+- 🎨 **主题定制** - 支持主题和样式定制
 
 ## 许可证
 
