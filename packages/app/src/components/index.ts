@@ -1,4 +1,7 @@
 // 组件统一导出
-export { default as DictTag } from './dict-tag'
-export { default as FileUpload } from './file-upload'
-export { default as SystemSelect } from './system-select'
+export { DictTag } from './dict-tag'
+export { UploadFile } from './file-upload'
+export { UnitPicker, UserPicker } from './system-select'
+
+// 底部导航栏组件
+export { Tabbar } from './tabbar'
