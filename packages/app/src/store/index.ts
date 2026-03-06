@@ -15,10 +15,18 @@ setActivePinia(store);
 
 export default store;
 
+// 直接导出
+export { useTokenStore } from "./token";
+export { useUserStore } from "./user";
+export { useThemeStore } from "./theme";
+export { useSystemState } from "./system";
+export { useGlobalState } from "./global";
+export { useDictStore } from "./dict";
+
 // 模块命名空间导出 - 避免潜在的 actions/getters 冲突
-export * as dict from "./dict";
-export * as theme from "./theme";
-export * as token from "./token";
-export * as user from "./user";
-export * as global from "./global";
-export * as system from "./system";
+export * as dictStores from "./dict";
+export * as themeStores from "./theme";
+export * as tokenStores from "./token";
+export * as userStores from "./user";
+export * as globalStores from "./global";
+export * as systemStores from "./system";

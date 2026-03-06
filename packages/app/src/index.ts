@@ -28,7 +28,7 @@ export * from './components'
 export * from './style'
 
 // Vite 插件
-export * from './vite-plugins'
+// export * from './vite-plugins' // TODO：暂时注释
 
 // 版本信息
 export const version = '1.0.0'

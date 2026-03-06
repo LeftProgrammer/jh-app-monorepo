@@ -1,5 +1,5 @@
 import { defineUniPages } from "@uni-helper/vite-plugin-uni-pages";
-import { tabBar } from "../tabbar/config";
+import { tabBar } from "@/components/tabbar/config";
 
 /**
  * JH App 框架默认页面配置

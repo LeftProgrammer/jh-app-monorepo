@@ -3,12 +3,31 @@ import type {
   SubPackages,
 } from "@uni-helper/vite-plugin-uni-pages";
 import { isMpWeixin } from "@uni-helper/uni-env";
-import { pages, subPackages } from "@/pages.json";
-import { isPageTabbar } from "@/tabbar/store";
+import { isPageTabbarStore } from "@/components/tabbar/store";
 
 export type PageInstance = Page.PageInstance<AnyObject, object> & {
   $page: Page.PageInstance<AnyObject, object> & { fullPath: string };
 };
+
+/**
+ * 获取页面配置信息
+ * @param pagesConfig 页面配置对象（可选）
+ * @returns 页面配置
+ */
+export function getPageConfig(pagesConfig?: { pages: PageMetaDatum[], subPackages?: SubPackages[] }) {
+  return pagesConfig || { pages: [], subPackages: [] };
+}
+
+/**
+ * 检查页面是否为 tabbar 页面
+ * @param pagePath 页面路径
+ * @param tabbarPages tabbar 页面列表（可选）
+ * @returns 是否为 tabbar 页面
+ */
+export function isPageTabbar(pagePath: string, tabbarPages?: string[]): boolean {
+  if (!tabbarPages) return false;
+  return tabbarPages.some(path => pagePath.includes(path));
+}
 
 export function getLastPage() {
   // getCurrentPages() 至少有1个元素，所以不再额外判断
@@ -195,7 +214,7 @@ export function redirectAfterLogin(redirectUrl?: string) {
     path = `/${path}`;
   }
   const { path: _path } = parseUrlToObj(path);
-  if (isPageTabbar(_path)) {
+  if (isPageTabbarStore(_path)) {
     uni.switchTab({ url: path });
   } else {
     uni.navigateBack();
@@ -227,7 +246,7 @@ export function navigateBackPlus(fallbackUrl?: string) {
   }
   // 解析路径，判断是否是 tabbar 页面
   const { path } = parseUrlToObj(targetUrl);
-  if (isPageTabbar(path)) {
+  if (isPageTabbarStore(path)) {
     uni.switchTab({ url: targetUrl });
   } else {
     uni.reLaunch({ url: targetUrl });

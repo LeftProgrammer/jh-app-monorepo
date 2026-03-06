@@ -6,7 +6,7 @@ import { isMp } from '@uni-helper/uni-env'
  * 黑、白名单的配置，请看 config.ts 文件， EXCLUDE_LOGIN_PATH_LIST
  */
 import { useTokenStore } from '@/store/token'
-import { isPageTabbar, tabbarStore } from '@/tabbar/store'
+import { isPageTabbarStore, tabbarStore } from '@/components/tabbar/store'
 import { getAllPages, getLastPage, HOME_PAGE, parseUrlToObj } from '@/utils/index'
 import { toLoginPage } from '@/utils/toLoginPage'
 import { EXCLUDE_LOGIN_PATH_LIST, isNeedLoginMode, LOGIN_PAGE, LOGIN_PAGE_ENABLE_IN_MP, NOT_FOUND_PAGE } from './config'
@@ -88,7 +88,7 @@ export const navigateToInterceptor = {
       } else {
         console.log('已经登录，但是还在登录页', myQuery.redirect)
         const url = myQuery.redirect || HOME_PAGE
-        if (isPageTabbar(url)) {
+        if (isPageTabbarStore(url)) {
           uni.switchTab({ url })
         } else {
           uni.navigateTo({ url })

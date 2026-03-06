@@ -69,9 +69,10 @@ const httpInterceptor = {
 
     // 4. 添加租户标识
     if (tenantEnable && tenantEnable === 'true') {
-      const tenantId = useUserStore().tenantId
+      const userStore = useUserStore()
+      const tenantId = userStore.tenantId
       if (tenantId) {
-        options.header['tenant-id'] = tenantId
+        options.header['tenant-id'] = String(tenantId)
       }
     }
 
