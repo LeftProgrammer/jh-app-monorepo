@@ -1,102 +1,148 @@
 <script setup lang="ts">
-/* eslint-disable brace-style */ // 原因：unibest 官方维护的代码，尽量不要大概，避免难以合并
-// i-carbon-code
+import { computed, ref, onMounted } from 'vue';
 import type { CustomTabBarItem } from "./types";
-import { customTabbarEnable, needHideNativeTabbar, tabbarCacheEnable } from "./config";
-import { tabbarList, tabbarStore } from "./store";
-import { useGlobalState } from "@/store/global";
+import { 
+  createTabbarConfig, 
+  type TabbarPackageConfig
+} from "./config";
+import { 
+  createTabbarHooks,
+  type TabbarHooks
+} from "./hooks";
+import { 
+  createTabbarStore
+} from "./store";
+
+interface Props {
+  /** Tabbar 配置 */
+  config?: TabbarPackageConfig
+  /** Tabbar 钩子 */
+  hooks?: TabbarHooks
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  config: () => ({}),
+  hooks: () => ({}),
+})
+
+// 合并配置
+const config = computed(() => createTabbarConfig(props.config))
+
+// 创建钩子
+const tabbarHooks = computed(() => createTabbarHooks(props.hooks))
+
+// 创建状态
+const { tabbarList, tabbarStore } = createTabbarStore(
+  config.value.items,
+  config.value.features.bulge
+)
+
+// 当前选中状态
+const currentIndex = ref(tabbarStore.curIdx)
 
 // #ifdef MP-WEIXIN
-// 将自定义节点设置成虚拟的（去掉自定义组件包裹层），更加接近Vue组件的表现，能更好的使用flex属性
-defineOptions({
-  virtualHost: true
-});
+defineOptions({ virtualHost: true });
 // #endif
-const globalState = useGlobalState();
 
 /**
- * 中间的鼓包tabbarItem的点击事件
+ * 鼓包点击事件
  */
 function handleClickBulge() {
-  uni.showToast({
-    title: "点击了中间的鼓包tabbarItem",
-    icon: "none"
-  });
+  tabbarHooks.value.onBulgeClick?.()
 }
 
-function handleClick(index: number) {
-  // 点击原来的不做操作
-  if (index === tabbarStore.curIdx) {
-    return;
+/**
+ * 项目点击事件
+ */
+async function handleClick(index: number) {
+  if (index === currentIndex.value) return
+  
+  const item = tabbarList[index]
+  
+  if (item.isBulge) {
+    handleClickBulge()
+    return
   }
-  if (tabbarList[index].isBulge) {
-    handleClickBulge();
-    return;
-  }
-  const url = tabbarList[index].pagePath;
-  tabbarStore.setCurIdx(index);
-  if (tabbarCacheEnable) {
-    uni.switchTab({ url });
+  
+  // 执行前置钩子
+  const canNavigate = await tabbarHooks.value.beforeNavigate?.(index, item)
+  if (canNavigate === false) return
+  
+  // 更新状态
+  tabbarStore.setCurIdx(index)
+  currentIndex.value = index
+  
+  // 导航
+  const url = item.pagePath
+  if (config.value.features.cache) {
+    uni.switchTab({ url })
   } else {
-    uni.navigateTo({ url });
+    uni.navigateTo({ url })
   }
 }
-// #ifndef MP-WEIXIN || MP-ALIPAY
-// 因为有了 custom:true， 微信里面不需要多余的hide操作
-onLoad(() => {
-  // 解决原生 tabBar 未隐藏导致有2个 tabBar 的问题
-  needHideNativeTabbar &&
-    uni.hideTabBar({
-      fail(err) {
-        console.log("hideTabBar fail: ", err);
-      },
-      success(res) {
-        // console.log('hideTabBar success: ', res)
-      }
-    });
-});
-// #endif
-// #ifdef MP-ALIPAY
-onMounted(() => {
-  // 解决支付宝自定义tabbar 未隐藏导致有2个 tabBar 的问题; 注意支付宝很特别，需要在 onMounted 钩子调用
-  customTabbarEnable && // 另外，支付宝里面，只要是 customTabbar 都需要隐藏
-    uni.hideTabBar({
-      fail(err) {
-        console.log("hideTabBar fail: ", err);
-      },
-      success(res) {
-        // console.log('hideTabBar success: ', res)
-      }
-    });
-});
-// #endif
-const activeColor = "var(--wot-color-theme, #1890ff)";
-const inactiveColor = "#666";
-function getColorByIndex(index: number) {
-  return tabbarStore.curIdx === index ? activeColor : inactiveColor;
+
+/**
+ * 获取颜色
+ */
+const getColorByIndex = (index: number) => {
+  return currentIndex.value === index 
+    ? config.value.theme.activeColor 
+    : config.value.theme.inactiveColor
 }
 
+/**
+ * 获取图标
+ */
 function getImageByIndex(index: number, item: CustomTabBarItem) {
   if (!item.iconActive) {
-    console.warn(
-      "image 模式下，需要配置 iconActive (高亮时的图片），否则无法切换高亮图片"
-    );
-    return item.icon;
+    console.warn("image 模式下，需要配置 iconActive")
+    return item.icon
   }
-  return tabbarStore.curIdx === index ? item.iconActive : item.icon;
+  return currentIndex.value === index ? item.iconActive : item.icon
 }
+
+/**
+ * 获取角标
+ */
 const getTotal = computed(() => {
-  return (item) => {
-    let badge = 0;
-    if (typeof item === "number") badge = item;
-    else badge = globalState.globalConfig[item];
-    return badge > 99 ? "99+" : badge;
-  };
-});
+  return (item: CustomTabBarItem) => {
+    if (!config.value.features.badge) return undefined
+    
+    const badge = tabbarHooks.value.getBadge?.(item)
+    if (!badge) return undefined
+    
+    if (typeof badge === 'number') return badge > 99 ? "99+" : badge
+    return badge
+  }
+})
+
+// 隐藏原生 tabbar
+// #ifndef MP-WEIXIN || MP-ALIPAY
+onMounted(() => {
+  if (config.value.features.hideNative) {
+    uni.hideTabBar({
+      fail: (err: any) => console.log("hideTabBar fail: ", err),
+      success: () => console.log('hideTabBar success')
+    })
+  }
+})
+// #endif
+
+onMounted(() => {
+  // 支付宝小程序需要在 onMounted 中隐藏
+  // #ifdef MP-ALIPAY
+  if (config.value.features.hideNative) {
+    uni.hideTabBar({
+      fail: (err: any) => console.log("hideTabBar fail: ", err),
+      success: () => console.log('hideTabBar success')
+    })
+  }
+  // #endif
+})
 </script>
 
 <template>
-  <view v-if="customTabbarEnable" class="h-50px pb-safe">
+  <view v-if="config.strategy === 2 || config.strategy === 3" class="h-50px pb-safe">
     <view class="border-and-fixed bg-white" @touchmove.stop.prevent>
       <view class="h-50px flex items-center">
         <view
@@ -107,19 +153,13 @@ const getTotal = computed(() => {
           @click="handleClick(index)"
         >
           <view v-if="item.isBulge" class="relative">
-            <!-- 中间一个鼓包tabbarItem的处理 -->
+            <!-- 中间鼓包按钮 -->
             <view class="bulge">
-              <!-- TODO 2/2: 中间鼓包tabbarItem配置：通常是一个图片，或者icon，点击触发业务逻辑 -->
-              <!-- 常见的是：扫描按钮、发布按钮、更多按钮等 -->
               <image class="mt-6rpx h-200rpx w-200rpx" src="/static/tabbar/scan.png" />
             </view>
           </view>
           <view v-else class="relative px-3 text-center">
             <template v-if="item.iconType === 'uiLib'">
-              <!-- TODO: 以下内容请根据选择的UI库自行替换 -->
-              <!-- 如：<wd-icon name="home" /> (https://wot-design-uni.cn/component/icon.html) -->
-              <!-- 如：<uv-icon name="home" /> (https://www.uvui.cn/components/icon.html) -->
-              <!-- 如：<sar-icon name="image" /> (https://sard.wzt.zone/sard-uniapp-docs/components/icon)(sar没有home图标^_^) -->
               <wd-icon :name="item.icon" size="20" />
             </template>
             <template v-if="item.iconType === 'unocss' || item.iconType === 'iconfont'">
@@ -136,15 +176,15 @@ const getTotal = computed(() => {
               {{ item.text }}
             </view>
             <!-- 角标显示 -->
-            <view v-if="item.badge">
-              <template v-if="item.badge === 'dot'">
+            <view v-if="getTotal(item)">
+              <template v-if="getTotal(item) === 'dot'">
                 <view class="absolute right-0 top-0 h-2 w-2 rounded-full bg-#f56c6c" />
               </template>
-              <template v-else-if="getTotal(item.badge)">
+              <template v-else>
                 <view
                   class="absolute top-0 box-border h-5 min-w-5 center rounded-full bg-#f56c6c px-1 text-center text-xs text-white -right-3"
                 >
-                  {{ getTotal(item.badge) }}
+                  {{ getTotal(item) }}
                 </view>
               </template>
             </view>
@@ -164,11 +204,10 @@ const getTotal = computed(() => {
   left: 0;
   right: 0;
   z-index: 1000;
-
   border-top: 1px solid #eee;
   box-sizing: border-box;
 }
-// 中间鼓包的样式
+
 .bulge {
   position: absolute;
   top: -20px;
@@ -185,7 +224,7 @@ const getTotal = computed(() => {
   box-shadow: inset 0 0 0 1px #fefefe;
 
   &:active {
-    // opacity: 0.8;
+    opacity: 0.8;
   }
 }
 </style>

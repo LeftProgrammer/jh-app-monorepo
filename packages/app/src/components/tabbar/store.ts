@@ -11,26 +11,26 @@ import { tabbarList as _tabbarList, customTabbarEnable, selectedTabbarStrategy, 
 const BULGE_ENABLE = false
 
 /** tabbarList 里面的 path 从 pages.config.ts 得到 */
-const tabbarList = reactive<CustomTabBarItem[]>(_tabbarList.map(item => ({
+const tabbarListStore = reactive<CustomTabBarItem[]>(_tabbarList.map(item => ({
   ...item,
   pagePath: item.pagePath.startsWith('/') ? item.pagePath : `/${item.pagePath}`,
 })))
 
 if (customTabbarEnable && BULGE_ENABLE) {
-  if (tabbarList.length % 2) {
+  if (tabbarListStore.length % 2) {
     console.error('有鼓包时 tabbar 数量必须是偶数，否则样式很奇怪！！')
   }
-  tabbarList.splice(tabbarList.length / 2, 0, {
+  tabbarListStore.splice(tabbarListStore.length / 2, 0, {
     isBulge: true,
   } as CustomTabBarItem)
 }
 
-export function isPageTabbar(path: string) {
+export function isPageTabbarStore(path: string) {
   if (selectedTabbarStrategy === TABBAR_STRATEGY_MAP.NO_TABBAR) {
     return false
   }
   const _path = path.split('?')[0]
-  return tabbarList.some(item => item.pagePath === _path)
+  return tabbarListStore.some(item => item.pagePath === _path)
 }
 
 /**
@@ -41,32 +41,30 @@ export function isPageTabbar(path: string) {
 const tabbarStore = reactive({
   curIdx: uni.getStorageSync('app-tabbar-index') || 0,
   prevIdx: uni.getStorageSync('app-tabbar-index') || 0,
-  setCurIdx(idx: number) {
-    const tokenStore = useTokenStore()
-    // 已登录 或 (url 需要登录 && 在白名单 || 不需要登录 && 不在黑名单) （关于 白名单|黑名单 逻辑： src/router/interceptor.ts）
-    if (tokenStore.hasLogin || (isNeedLoginMode && judgeIsExcludePath(tabbarList[idx].pagePath)) || (!isNeedLoginMode && !judgeIsExcludePath(tabbarList[idx].pagePath))) {
-      this.curIdx = idx
-      uni.setStorageSync('app-tabbar-index', idx)
-    }
+  setCurIdx(index: number) {
+    if (index === this.curIdx)
+      return
+    this.prevIdx = this.curIdx
+    this.curIdx = index
+    uni.setStorageSync('app-tabbar-index', index)
   },
-  setTabbarItemBadge(idx: number, badge: CustomTabBarItemBadge) {
-    if (tabbarList[idx]) {
-      tabbarList[idx].badge = badge
+  setTabbarItemBadge(index: number, badge: CustomTabBarItemBadge) {
+    if (index >= 0 && index < tabbarListStore.length) {
+      tabbarListStore[index].badge = badge
     }
   },
   setAutoCurIdx(path: string) {
-    // '/' 当做首页
     if (path === '/') {
       this.setCurIdx(0)
       return
     }
-    const index = tabbarList.findIndex(item => item.pagePath === path)
+    const index = tabbarListStore.findIndex(item => item.pagePath === path)
     FG_LOG_ENABLE && console.log('index:', index, path)
     // console.log('tabbarList:', tabbarList)
     if (index === -1) {
       const pagesPathList = getCurrentPages().map(item => item.route.startsWith('/') ? item.route : `/${item.route}`)
       // console.log(pagesPathList)
-      const flag = tabbarList.some(item => pagesPathList.includes(item.pagePath))
+      const flag = tabbarListStore.some(item => pagesPathList.includes(item.pagePath))
       if (!flag) {
         this.setCurIdx(0)
         return
@@ -84,4 +82,74 @@ const tabbarStore = reactive({
   },
 })
 
-export { tabbarList, tabbarStore }
+export { tabbarListStore, tabbarStore }
+
+/**
+ * 创建自定义 Tabbar 状态
+ * @param customItems 自定义 tabbar 项目
+ * @param bulgeEnable 是否启用鼓包
+ * @returns Tabbar 状态和 store
+ */
+export function createTabbarStore(customItems?: CustomTabBarItem[], bulgeEnable = false) {
+  const items = customItems || _tabbarList
+  const processedItems = reactive<CustomTabBarItem[]>(items.map(item => ({
+    ...item,
+    pagePath: item.pagePath.startsWith('/') ? item.pagePath : `/${item.pagePath}`,
+  })))
+
+  // 处理鼓包
+  if (customTabbarEnable && bulgeEnable) {
+    if (processedItems.length % 2) {
+      console.error('有鼓包时 tabbar 数量必须是偶数，否则样式很奇怪！！')
+    }
+    processedItems.splice(processedItems.length / 2, 0, {
+      isBulge: true,
+    } as CustomTabBarItem)
+  }
+
+  const tabbarInstance = reactive({
+    curIdx: uni.getStorageSync('app-tabbar-index') || 0,
+    prevIdx: uni.getStorageSync('app-tabbar-index') || 0,
+    setCurIdx(idx: number) {
+      const tokenStore = useTokenStore()
+      if (tokenStore.hasLogin || (isNeedLoginMode && judgeIsExcludePath(processedItems[idx].pagePath)) || (!isNeedLoginMode && !judgeIsExcludePath(processedItems[idx].pagePath))) {
+        this.curIdx = idx
+        uni.setStorageSync('app-tabbar-index', idx)
+      }
+    },
+    setTabbarItemBadge(idx: number, badge: CustomTabBarItemBadge) {
+      if (processedItems[idx]) {
+        processedItems[idx].badge = badge
+      }
+    },
+    setAutoCurIdx(path: string) {
+      if (path === '/') {
+        this.setCurIdx(0)
+        return
+      }
+      const index = processedItems.findIndex(item => item.pagePath === path)
+      if (index === -1) {
+        const pagesPathList = getCurrentPages().map(item => item.route.startsWith('/') ? item.route : `/${item.route}`)
+        const flag = processedItems.some(item => pagesPathList.includes(item.pagePath))
+        if (!flag) {
+          this.setCurIdx(0)
+          return
+        }
+      }
+      else {
+        this.setCurIdx(index)
+      }
+    },
+    restorePrevIdx() {
+      if (this.prevIdx === this.curIdx)
+        return
+      this.setCurIdx(this.prevIdx)
+      this.prevIdx = uni.getStorageSync('app-tabbar-index') || 0
+    },
+  })
+
+  return {
+    tabbarList: processedItems,
+    tabbarStore: tabbarInstance,
+  }
+}

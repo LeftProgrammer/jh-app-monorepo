@@ -100,7 +100,7 @@ export const customTabbarList: CustomTabBarItem[] = [
     pagePath: "pages/bpm/index",
     iconType: "unocss",
     icon: "i-carbon-document",
-    badge: "todoTotal",
+    badge: "todoTotal" as any,
   },
   // {
   //   text: '通讯录',
@@ -113,7 +113,7 @@ export const customTabbarList: CustomTabBarItem[] = [
     pagePath: "pages/message/index",
     iconType: "unocss",
     icon: "i-carbon-chat",
-    badge: "msgTotal",
+    badge: "msgTotal" as any,
   },
   {
     text: "我的",
@@ -184,3 +184,98 @@ const _tabbar: TabBar = {
 };
 
 export const tabBar = tabbarCacheEnable ? _tabbar : undefined;
+
+/**
+ * 默认 Tabbar 配置 - 供外部项目使用
+ */
+export const defaultTabbarItems: CustomTabBarItem[] = [
+  {
+    text: "首页",
+    pagePath: "pages/index/index",
+    iconType: "unocss",
+    icon: "i-carbon-home",
+  },
+  {
+    text: "任务",
+    pagePath: "pages/bpm/index",
+    iconType: "unocss",
+    icon: "i-carbon-document",
+    badge: "todoTotal" as any,
+  },
+  {
+    text: "消息",
+    pagePath: "pages/message/index",
+    iconType: "unocss",
+    icon: "i-carbon-chat",
+    badge: "msgTotal" as any,
+  },
+  {
+    text: "我的",
+    pagePath: "pages/user/index",
+    iconType: "unocss",
+    icon: "i-carbon-user",
+  },
+];
+
+/**
+ * Tabbar 配置接口
+ */
+export interface TabbarPackageConfig {
+  /** Tabbar 策略 */
+  strategy?: number;
+  /** Tabbar 项目列表 */
+  items?: CustomTabBarItem[];
+  /** 主题配置 */
+  theme?: {
+    activeColor?: string;
+    inactiveColor?: string;
+    backgroundColor?: string;
+    borderColor?: string;
+  };
+  /** 功能配置 */
+  features?: {
+    bulge?: boolean;
+    badge?: boolean;
+    cache?: boolean;
+    hideNative?: boolean;
+  };
+}
+
+/**
+ * 默认主题配置
+ */
+export const defaultTabbarTheme = {
+  activeColor: "var(--wot-color-theme, #1890ff)",
+  inactiveColor: "#666",
+  backgroundColor: "#fff",
+  borderColor: "#eee",
+};
+
+/**
+ * 默认功能配置
+ */
+export const defaultTabbarFeatures = {
+  bulge: false,
+  badge: true,
+  cache: true,
+  hideNative: true,
+};
+
+/**
+ * 创建 Tabbar 配置
+ * @param config 外部配置覆盖
+ * @returns 完整的 Tabbar 配置
+ */
+export function createTabbarConfig(config: TabbarPackageConfig = {}) {
+  return {
+    strategy: config.strategy ?? selectedTabbarStrategy,
+    items: config.items ?? defaultTabbarItems,
+    theme: { ...defaultTabbarTheme, ...config.theme },
+    features: { ...defaultTabbarFeatures, ...config.features },
+  };
+}
+
+/**
+ * 默认完整配置 - 供组件直接使用
+ */
+export const defaultTabbarConfig = createTabbarConfig();
