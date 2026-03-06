@@ -6,11 +6,11 @@ export * as api from './api'
 // 状态管理
 export * as store from './store'
 
+// 路由管理
+export * as router from './router'
+
 // HTTP 模块
 export * from './http'
-
-// 路由管理
-export * from './router'
 
 // 组合函数
 export * from './hooks'

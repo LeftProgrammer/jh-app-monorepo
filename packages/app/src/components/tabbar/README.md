@@ -1,84 +1,359 @@
-# tabbar 说明
+# Tabbar 组件
 
-## tabbar 4种策略
+> 🚀 高度可配置的 Uni-app 底部导航栏组件
 
-`tabbar` 分为 `4 种` 情况：
+## 📑 目录
 
-- 0 `无 tabbar`，只有一个页面入口，底部无 `tabbar` 显示；常用语临时活动页。
+- [快速开始](#-快速开始)
+- [Tabbar 策略](#-tabbar-策略)
+- [使用方式](#-使用方式)
+- [配置选项](#-配置选项)
+- [图标类型](#-图标类型)
+- [高级功能](#-高级功能)
+- [最佳实践](#-最佳实践)
+- [常见问题](#-常见问题)
 
-- 1 `原生 tabbar`，使用 `switchTab` 切换 `tabbar`，`tabbar` 页面有缓存。
-  - 优势：原生自带的 `tabbar`，最先渲染，有缓存。
-  - 劣势：只能使用 2 组图片来切换选中和非选中状态，修改颜色只能重新换图片（或者用 iconfont）。
+## 🚀 快速开始
 
-- 2 `有缓存自定义 tabbar`，使用 `switchTab` 切换 `tabbar`，`tabbar` 页面有缓存。使用了第三方 UI 库的 `tabbar` 组件，并隐藏了原生 `tabbar` 的显示。
-  - 优势：可以随意配置自己想要的 `svg icon`，切换字体颜色方便。有缓存。可以实现各种花里胡哨的动效等。
-  - 劣势：首次点击 `tabbar` 会闪烁。
+### 安装
 
-- 3 `无缓存自定义 tabbar`，使用 `navigateTo` 切换 `tabbar`，`tabbar` 页面无缓存。使用了第三方 UI 库的 `tabbar` 组件。
-  - 优势：可以随意配置自己想要的 svg icon，切换字体颜色方便。可以实现各种花里胡哨的动效等。
-  - 劣势：首次点击 `tababr` 会闪烁，无缓存。
+```bash
+# 组件已内置在 @jh-app/app 中
+import { Tabbar } from '@jh-app/app'
+```
 
-> 注意：花里胡哨的效果需要自己实现，本模版不提供。
+### 基础使用
 
-## tabbar 配置说明
+```vue
+<template>
+  <Tabbar />
+</template>
 
-- 如果使用的是 `原生tabbar`，需要配置 `nativeTabbarList`，每个 `item` 需要配置 `path`、`text`、`iconPath`、`selectedIconPath` 等属性。
-- 如果使用的是  `自定义tabbar`，需要配置 `customTabbarList`，每个 `item` 需要配置 `path`、`text`、`icon` 、`iconType` 等属性（如果是 `image` 图片还需要配置2种图片）。
+<script setup>
+import { Tabbar } from '@jh-app/app'
+</script>
+```
 
-## 文件说明
+### 自定义配置
 
-`config.ts` 专门配置 `nativeTabbarList` 和 `customTabbarList` 的相关信息，请按照文件里面的注释配置相关项。
+```vue
+<template>
+  <Tabbar :config="tabbarConfig" />
+</template>
 
-使用 `原生tabbar` 时，不需要关心下面2个文件：
+<script setup>
+import { Tabbar, createTabbarConfig } from '@jh-app/app'
 
-- `store.ts` ，专门给 `自定义 tabbar` 提供状态管理，代码几乎不需要修改。
-- `index.vue` ，专门给 `自定义 tabbar` 提供渲染逻辑，代码可以稍微修改，以符合自己的需求。
+const tabbarConfig = createTabbarConfig({
+  items: [
+    { text: '首页', pagePath: '/pages/home', iconType: 'unocss', icon: 'i-carbon-home' },
+    { text: '消息', pagePath: '/pages/message', iconType: 'unocss', icon: 'i-carbon-chat' },
+    { text: '我的', pagePath: '/pages/user', iconType: 'unocss', icon: 'i-carbon-user' },
+  ]
+})
+</script>
+```
 
-## 自定义tabbar的不同类型的配置
+## 🎯 Tabbar 策略
 
-- uniUi 图标
+| 策略 | 模式 | 说明 | 优势 | 劣势 |
+|------|------|------|------|------|
+| 0 | 无 tabbar | 单页面应用，无底部导航 | 简单快速 | 功能有限 |
+| 1 | 原生 tabbar | 系统原生，有缓存 | 性能最佳，渲染最快 | 只支持图片，样式受限 |
+| 2 | 自定义 tabbar（有缓存） | 自定义UI，有缓存 | 样式灵活，功能丰富 | 首次点击会闪烁 |
+| 3 | 自定义 tabbar（无缓存） | 自定义UI，无缓存 | 样式灵活，功能丰富 | 首次闪烁，无缓存 |
 
- ```js
-  {
-    // ... 其他配置
-    "iconType": "uniUi",
-    "icon": "home",
+> 💡 **推荐**：新项目建议使用策略 2，平衡了性能和灵活性。
+
+## 🛠️ 使用方式
+
+### 方式一：基础使用
+
+```vue
+<template>
+  <Tabbar />
+</template>
+```
+
+### 方式二：配置化使用 ⭐
+
+```vue
+<template>
+  <Tabbar :config="tabbarConfig" :hooks="tabbarHooks" />
+</template>
+
+<script setup>
+import { Tabbar, createTabbarConfig, createTabbarHooks } from '@jh-app/app'
+
+const tabbarConfig = createTabbarConfig({
+  items: [
+    { text: '工作台', pagePath: '/pages/workspace', iconType: 'unocss', icon: 'i-carbon-dashboard' },
+    { text: '消息', pagePath: '/pages/message', iconType: 'unocss', icon: 'i-carbon-chat', badge: 'dot' },
+    { text: '我的', pagePath: '/pages/user', iconType: 'unocss', icon: 'i-carbon-user' },
+  ],
+  theme: { activeColor: '#007aff', inactiveColor: '#8e8e93' },
+  features: { bulge: false, badge: true, cache: true }
+})
+
+const tabbarHooks = createTabbarHooks({
+  beforeNavigate: async (index, item) => {
+    // 权限检查
+    if (item.pagePath === '/pages/admin' && !isAdmin()) {
+      uni.showToast({ title: '需要管理员权限' })
+      return false
+    }
+    return true
   }
-  ```
+})
+</script>
+```
 
-- unocss 图标
+### 方式三：状态管理
 
- ```js
-  {
-    // ... 其他配置
-    // 注意 unocss 图标需要如下处理：（二选一）
-    // 1）在fg-tabbar.vue页面上引入一下并注释掉（见tabbar/index.vue代码第2行）
-    // 2）配置到 unocss.config.ts 的 safelist 中
-    iconType: 'unocss',
-    icon: 'i-carbon-code',
+```vue
+<script setup>
+import { tabbarStore, createTabbarStore } from '@jh-app/app'
+
+// 全局状态
+const { curIdx, setCurIdx } = tabbarStore
+
+// 自定义状态
+const { tabbarList, tabbarStore: customStore } = createTabbarStore(customItems)
+</script>
+```
+
+### 方式四：完全自定义
+
+```vue
+<template>
+  <view class="custom-tabbar">
+    <view v-for="(item, index) in tabbarList" :key="index" @click="handleClick(index)">
+      <text>{{ item.text }}</text>
+    </view>
+  </view>
+</template>
+
+<script setup>
+import { createTabbarStore } from '@jh-app/app'
+const { tabbarList, tabbarStore } = createTabbarStore(customItems)
+</script>
+```
+
+## 📋 配置选项
+
+### TabbarConfig
+
+| 属性 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `strategy` | `number` | `2` | Tabbar 策略 (0-3) |
+| `items` | `TabBarItem[]` | `[]` | Tabbar 项目列表 |
+| `theme` | `ThemeConfig` | `{}` | 主题配置 |
+| `features` | `FeatureConfig` | `{}` | 功能配置 |
+
+### ThemeConfig
+
+| 属性 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `activeColor` | `string` | `#007aff` | 选中颜色 |
+| `inactiveColor` | `string` | `#8e8e93` | 未选中颜色 |
+| `backgroundColor` | `string` | `#ffffff` | 背景颜色 |
+
+### FeatureConfig
+
+| 属性 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `bulge` | `boolean` | `false` | 是否启用鼓包 |
+| `badge` | `boolean` | `true` | 是否显示角标 |
+| `cache` | `boolean` | `true` | 是否启用缓存 |
+
+### TabBarItem
+
+| 属性 | 类型 | 说明 |
+|------|------|------|
+| `text` | `string` | 显示文字 |
+| `pagePath` | `string` | 页面路径 |
+| `iconType` | `'unocss' \| 'uiLib' \| 'iconfont' \| 'image'` | 图标类型 |
+| `icon` | `string` | 图标内容 |
+| `badge` | `number \| string \| 'dot'` | 角标内容 |
+
+## 🎨 图标类型
+
+### UnoCSS 图标 ⭐
+
+```typescript
+{
+  text: '首页',
+  pagePath: '/pages/home',
+  iconType: 'unocss',
+  icon: 'i-carbon-home'
+}
+```
+
+### UI 库图标
+
+```typescript
+{
+  text: '首页',
+  pagePath: '/pages/home',
+  iconType: 'uiLib',
+  icon: 'home'  // wot-design-uni 图标名
+}
+```
+
+### Iconfont 图标
+
+```typescript
+{
+  text: '首页',
+  pagePath: '/pages/home',
+  iconType: 'iconfont',
+  icon: 'iconfont icon-home'
+}
+```
+
+### 图片图标
+
+```typescript
+{
+  text: '首页',
+  pagePath: '/pages/home',
+  iconType: 'image',
+  icon: '/static/tabbar/home.png',
+  iconActive: '/static/tabbar/home-active.png'
+}
+```
+
+## 🔧 高级功能
+
+### 钩子函数
+
+```typescript
+const tabbarHooks = createTabbarHooks({
+  // 导航前钩子
+  beforeNavigate: async (index, item) => {
+    // 权限检查、登录验证等
+    return true
+  },
+  
+  // 鼓包点击钩子
+  onBulgeClick: () => {
+    uni.navigateTo({ url: '/pages/scan' })
+  },
+  
+  // 角标计算钩子
+  getBadge: (item) => {
+    if (item.badge === 'messageCount') {
+      return getMessageCount()
+    }
+    return item.badge
   }
-  ```
+})
+```
 
-- iconfont 图标
+### 动态角标
 
- ```js
-  {
-    // ... 其他配置
-    // 注意 iconfont 图标需要额外加上 'iconfont'，如下
-    iconType: 'iconfont',
-    icon: 'iconfont icon-my',
-  }
-  ```
+```typescript
+// 数字角标
+{ badge: 5 }
 
-- image 本地图片
+// 小红点
+{ badge: 'dot' }
 
- ```js
-  {
-    // ... 其他配置
-    // 使用 ‘image’时，需要配置 icon + iconActive 2张图片（不推荐）
-    // 既然已经用了自定义tabbar了，就不建议用图片了，所以不推荐
-    iconType: 'image',
-    icon: '/static/tabbar/home.png',
-    iconActive: '/static/tabbar/homeHL.png',
-  }
-  ```
+// 动态角标
+{ badge: 'messageCount' }  // 从状态获取
+```
+
+### 鼓包按钮
+
+```typescript
+const config = createTabbarConfig({
+  features: { bulge: true },
+  items: [
+    // 需要偶数个普通项目
+    { text: '首页', pagePath: '/pages/home', iconType: 'unocss', icon: 'i-carbon-home' },
+    { text: '消息', pagePath: '/pages/message', iconType: 'unocss', icon: 'i-carbon-chat' },
+    { text: '发现', pagePath: '/pages/discover', iconType: 'unocss', icon: 'i-carbon-compass' },
+    { text: '我的', pagePath: '/pages/user', iconType: 'unocss', icon: 'i-carbon-user' }
+  ]
+})
+```
+
+## 🎯 最佳实践
+
+### 1. 使用配置工厂
+
+```typescript
+// ✅ 推荐
+const config = createTabbarConfig({ items: [...] })
+
+// ❌ 不推荐
+const config = { items: [...] }
+```
+
+### 2. 选择合适的图标
+
+- **UnoCSS** - 推荐，体积小，灵活
+- **UI库** - 简单，但依赖第三方库
+- **图片** - 不推荐，体积大
+
+### 3. 利用钩子函数
+
+```typescript
+// ✅ 在钩子中处理逻辑
+const hooks = createTabbarHooks({
+  beforeNavigate: (index, item) => checkPermission(item)
+})
+
+// ❌ 修改组件代码
+// 不要直接修改 index.vue
+```
+
+### 4. 配置分离
+
+```typescript
+// tabbar.config.ts
+export const tabbarConfig = createTabbarConfig({...})
+
+// 页面中使用
+import { tabbarConfig } from './tabbar.config'
+```
+
+## 📁 文件结构
+
+```
+tabbar/
+├── config.ts      # 配置管理
+├── store.ts        # 状态管理
+├── hooks.ts        # 钩子函数
+├── index.vue       # 主组件
+├── types.ts        # 类型定义
+└── index.ts        # 统一导出
+```
+
+### 使用原生 tabbar
+
+如果使用策略 1（原生 tabbar），只需要关注 `config.ts`，其他文件不需要修改。
+
+## 🐛 常见问题
+
+### Q: 如何隐藏某个 tabbar 项？
+A: 在 `items` 配置中排除该项，或使用 `beforeNavigate` 钩子返回 `false`。
+
+### Q: 如何实现动态角标？
+A: 使用 `getBadge` 钩子，从 API 或状态管理获取实时数据。
+
+### Q: 如何自定义鼓包按钮？
+A: 设置 `features.bulge: true`，并在 `onBulgeClick` 钩子中实现逻辑。
+
+### Q: 如何适配不同平台？
+A: 组件已内置平台适配，使用条件编译处理差异。
+
+### Q: 如何在运行时更新配置？
+A: 使用 `createTabbarStore` 创建新状态，或直接修改 store 数据。
+
+## 🔗 相关链接
+
+- [Uni-app 官方文档](https://uniapp.dcloud.io/)
+- [Vue 3 官方文档](https://vuejs.org/)
+- [UnoCSS 图标库](https://icones.js.org/)
+- [wot-design-uni](https://wot-design-uni.netlify.app/)
