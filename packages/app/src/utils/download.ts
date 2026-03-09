@@ -125,13 +125,26 @@ export function formatFileSize(size?: number): string {
 }
 
 /**
- * 获取静态资源完整 URL 地址
- * @param path 资源路径
- * @returns 完整的静态资源 URL 地址
+ * 获取框架内部静态资源 URL
+ * @param path 静态资源路径（相对于框架 static 目录）
+ * @returns 完整的框架静态资源 URL 地址
  */
-export function staticUrl(path: string): string {
+export function frameworkStaticUrl(path: string): string {
   const baseUrl = import.meta.env.VITE_STATIC_BASEURL || ''
   // 确保 path 以 / 开头
   const normalizedPath = path.startsWith('/') ? path : `/${path}`
-  return `${baseUrl}${normalizedPath}`
+  return `${baseUrl}/static${normalizedPath}`
+}
+
+/**
+ * 获取外部项目静态资源 URL
+ * @param path 静态资源路径
+ * @param baseUrl 自定义基准地址（可选）
+ * @returns 完整的外部静态资源 URL 地址
+ */
+export function staticUrl(path: string, baseUrl?: string): string {
+  const base = baseUrl || import.meta.env.VITE_STATIC_BASEURL || ''
+  // 确保 path 以 / 开头
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`
+  return `${base}${normalizedPath}`
 }

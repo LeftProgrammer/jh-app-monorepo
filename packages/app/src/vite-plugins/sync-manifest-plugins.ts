@@ -3,12 +3,19 @@ import fs from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
 
+/**
+ * Manifest 类型定义
+ * 
+ * @description UniApp Manifest 的类型定义，支持 plus 和 app-plus 配置
+ */
 interface ManifestType {
+  /** plus 配置 */
   'plus'?: {
     distribute?: {
       plugins?: Record<string, any>
     }
   }
+  /** app-plus 配置 */
   'app-plus'?: {
     distribute?: {
       plugins?: Record<string, any>
@@ -16,6 +23,24 @@ interface ManifestType {
   }
 }
 
+/**
+ * Manifest 同步 Vite 插件
+ * 
+ * @description 在构建后自动同步源 Manifest 中的插件配置到目标 Manifest 文件
+ * @export syncManifestPlugin - Manifest 同步插件
+ * @usage Vite 构建插件、Manifest 配置同步、原生插件管理
+ * 
+ * @example
+ * ```typescript
+ * import { syncManifestPlugin } from '@jh-app/app/vite-plugins'
+ * 
+ * export default defineConfig({
+ *   plugins: [
+ *     syncManifestPlugin()
+ *   ]
+ * })
+ * ```
+ */
 export default function syncManifestPlugin(): Plugin {
   return {
     name: 'sync-manifest',

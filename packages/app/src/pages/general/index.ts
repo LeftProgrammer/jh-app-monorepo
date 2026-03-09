@@ -12,18 +12,18 @@ export { default as LeaveApplyForm } from './leaveApply/dataForm.vue'
 
 // ==================== 会议管理模块 ====================
 export { default as MeetingSubscribePage } from './meeting/subscribe/index.vue'
-export { default as MeetingSubscribeForm } from './meeting/subscribe/form.vue'
+export { default as MeetingSubscribeForm } from './meeting/subscribe/SubscribeForm.vue'
 
 // ==================== 新闻资讯模块 ====================
 export { default as NewsPage } from './news/index.vue'
 
 // ==================== 用印申请模块 ====================
 export { default as SealDeclarationPage } from './sealdeclaration/index.vue'
-export { default as SealDeclarationForm } from './sealdeclaration/form.vue'
+export { default as SealDeclarationForm } from './sealdeclaration/SealDeclarationForm.vue'
 
 // ==================== 接待管理模块 ====================
 export { default as CampReceptionApplyPage } from './camp/receptionapply/index.vue'
-export { default as CampReceptionApplyForm } from './camp/receptionapply/form.vue'
+export { default as CampReceptionApplyForm } from './camp/receptionapply/ReceptionApplyForm.vue'
 export { default as CampSafetyPage } from './camp/safety/index.vue'
 
 // ==================== 类型定义 ====================

@@ -31,7 +31,7 @@ export * as pages from './pages'
 export * from './style'
 
 // Vite 插件
-// export * from './vite-plugins' // TODO：暂时注释
+export * from './vite-plugins' // TODO：暂时注释
 
 // 版本信息
 export const version = '1.0.0'
