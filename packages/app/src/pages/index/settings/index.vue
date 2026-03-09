@@ -1,5 +1,5 @@
 <template>
-  <view class="yd-page-container">
+  <view class="settings-page">
     <!-- 顶部导航栏 -->
     <wd-navbar
       title="全部功能"
@@ -10,126 +10,82 @@
       @click-left="handleBack"
     >
       <template #right>
-        <text v-if="!isEdit" @click="isEdit = !isEdit">编辑</text>
-        <wd-button v-else @click="save" :round="false" size="small">完成</wd-button>
+        <text v-if="!isEdit" @click="toggleEditMode" class="edit-btn">编辑</text>
+        <wd-button v-else @click="saveChanges" :round="false" size="small" type="primary">完成</wd-button>
       </template>
     </wd-navbar>
 
     <!-- 搜索框 -->
-    <view>
+    <view class="search-container">
       <wd-search
         v-model="searchKeyword"
-        placeholder="搜索常用"
+        placeholder="搜索功能"
         hide-cancel
         :placeholder-left="true"
+        @search="handleSearch"
+        @clear="handleSearchClear"
       />
     </view>
-    <!-- 常用区域 -->
-    <view class="mt-20rpx overflow-hidden bg-white px-31rpx py-23rpx">
-      <view class="text-31rpx text-#1D2129 font-500"> 首页功能 </view>
-      <!-- 常用分组 -->
-      <wd-grid :column="5" clickable :border="false">
+
+    <!-- 常用功能区域 -->
+    <view v-if="favoriteMenus.length > 0" class="section">
+      <view class="section-header">
+        <text class="section-title">首页功能</text>
+        <text class="section-count">({{ favoriteMenus.length }})</text>
+      </view>
+      
+      <wd-grid :column="5" clickable :border="false" class="menu-grid">
         <wd-grid-item v-for="menu in favoriteMenus" :key="menu.key">
-          <view class="position-relative" @click="delMenu(menu)">
-            <image
-              v-if="isEdit"
-              src="/static/images/home/subtract.png"
-              class="w-30rpx h-30rpx position-absolute top-0 right-0"
-            />
-            <image
-              class="w-61rpx h-61rpx"
-              :src="`/static/images/menus/${menu.key}.png`"
-            />
-            <view class="text-#4E5969 text-23rpx">{{ menu.name }}</view>
-          </view>
+          <MenuSettingItem 
+            :menu="menu" 
+            :is-edit="isEdit"
+            :is-favorite="true"
+            @click="handleMenuClick"
+            @toggle="handleToggleFavorite"
+          />
         </wd-grid-item>
       </wd-grid>
     </view>
 
-    <!-- 菜单分组 -->
-    <view id="menuGroups">
+    <!-- 全部功能区域 -->
+    <view class="section" id="menuGroups">
+      <view class="section-header">
+        <text class="section-title">全部功能</text>
+        <text class="section-count">({{ totalMenuCount }})</text>
+      </view>
+      
       <view
         v-for="group in filteredMenuGroups"
         :key="group.key"
-        class="mt-20rpx overflow-hidden bg-white px-31rpx py-23rpx"
+        class="group-section"
       >
-        <view class="text-31rpx text-#1D2129 font-500"> {{ group.name }} </view>
-        <wd-grid :column="5" clickable :border="false">
-          <wd-grid-item v-for="menu in group.menus" :key="menu.key" :text="menu.name">
-            <view class="position-relative" @click="addMenu(menu)">
-              <image
-                v-if="isEdit && !favoriteMenus.find((x) => x.key === menu.key)"
-                src="/static/images/home/plus.png"
-                class="w-30rpx h-30rpx position-absolute top-0 right-0"
-              />
-              <image
-                class="w-61rpx h-61rpx"
-                :src="`/static/images/menus/${menu.key}.png`"
-              />
-              <view class="text-#4E5969 text-23rpx">{{ menu.name }}</view>
-            </view>
-            <!-- <template #icon>
-              <view
-                class="h-80rpx w-80rpx flex items-center justify-center rounded-16rpx"
-              >
-                <image
-                  class="w-100% h-100%"
-                  :src="`/static/images/menus/${menu.key}.png`"
-                />
-              </view>
-            </template> -->
+        <view class="group-header">
+          <text class="group-name">{{ group.name }}</text>
+          <text class="group-count">({{ group.menus.length }})</text>
+        </view>
+        
+        <wd-grid :column="5" clickable :border="false" class="menu-grid">
+          <wd-grid-item v-for="menu in group.menus" :key="menu.key">
+            <MenuSettingItem 
+              :menu="menu" 
+              :is-edit="isEdit"
+              :is-favorite="isInFavorites(menu)"
+              @click="handleMenuClick"
+              @toggle="handleToggleFavorite"
+            />
           </wd-grid-item>
         </wd-grid>
-        <!-- <view class="menu-list">
-          <view v-for="menu in group.menus" :key="menu.key" class="menu-item">
-            <view class="menu-item__left">
-              <view
-                class="menu-item__icon"
-                :style="{
-                  backgroundColor: menu.iconColor ? `${menu.iconColor}20` : '#f5f5f5'
-                }"
-              >
-                <wd-icon
-                  v-if="menu.icon"
-                  :name="menu.icon"
-                  size="40rpx"
-                  :color="menu.iconColor"
-                />
-                <image
-                  v-else
-                  class="w-100% h-100%"
-                  :src="`/static/images/menus/${menu.key}.png`"
-                />
-              </view>
-              <text class="menu-item__name">{{ menu.name }}</text>
-            </view>
-            <view class="menu-item__right">
-              <wd-button
-                v-if="isInFavorites(menu)"
-                size="small"
-                type="warning"
-                plain
-                @click="handleRemoveFavorite(menu)"
-              >
-                从常用移除
-              </wd-button>
-              <wd-button
-                v-else
-                size="small"
-                type="primary"
-                plain
-                @click="handleAddFavorite(menu)"
-              >
-                添加至常用
-              </wd-button>
-            </view>
-          </view> 
-        </view>-->
       </view>
     </view>
 
+    <!-- 空状态 -->
+    <view v-if="filteredMenuGroups.length === 0 && favoriteMenus.length === 0" class="empty-state">
+      <wd-icon name="search" size="80rpx" color="#ddd" />
+      <text class="empty-text">未找到相关功能</text>
+    </view>
+
     <!-- 底部安全区域 -->
-    <view class="h-40rpx" />
+    <view class="safe-area-bottom" />
   </view>
 </template>
 
@@ -141,6 +97,7 @@ import { navigateBackPlus } from "@/utils";
 import { getMenuGroups, getMenuItemByKey } from "../index";
 import { parseUrl, setTabParams } from "@/utils/url";
 import { isTabBarPage } from "@/tabbar/config";
+
 defineOptions({
   name: "FavoriteSettings"
 });
@@ -151,199 +108,400 @@ definePage({
   }
 });
 
+// 组件引入
+const MenuSettingItem = defineComponent({
+  props: {
+    menu: { type: Object, required: true },
+    isEdit: { type: Boolean, default: false },
+    isFavorite: { type: Boolean, default: false }
+  },
+  emits: ['click', 'toggle'],
+  setup(props, { emit }) {
+    function handleClick() {
+      emit('click', props.menu);
+    }
+    
+    function handleToggle() {
+      emit('toggle', props.menu);
+    }
+    
+    return { handleClick, handleToggle };
+  },
+  template: `
+    <view class="menu-item" @click="handleClick">
+      <!-- 编辑模式下的操作按钮 -->
+      <view v-if="isEdit" class="action-btn" @click.stop="handleToggle">
+        <wd-icon 
+          :name="isFavorite ? 'subtract' : 'plus'" 
+          size="30rpx" 
+          :color="isFavorite ? '#f5222d' : '#52c41a'"
+        />
+      </view>
+      
+      <!-- 菜单图标 -->
+      <image
+        class="menu-icon"
+        :src="getMenuImageUrl(menu)"
+        mode="aspectFill"
+      />
+      
+      <!-- 菜单名称 -->
+      <text class="menu-name">{{ menu.name }}</text>
+    </view>
+  `
+});
+
+// 响应式数据
 const userStore = useUserStore();
 const toast = useToast();
 
-const searchKeyword = ref(""); // 搜索关键词
-const menuGroups = ref<MenuGroup[]>([]); // 菜单分组列表
+const searchKeyword = ref("");
+const menuGroups = ref<MenuGroup[]>([]);
 const favoriteMenus = ref<MenuItem[]>([]);
+const isEdit = ref(false);
+const pendingChanges = ref<{ add: MenuItem[], remove: MenuItem[] }>({ add: [], remove: [] });
 
-/** 过滤后的菜单分组 */
+// 计算属性
 const filteredMenuGroups = computed(() => {
-  if (!searchKeyword.value) {
+  if (!searchKeyword.value.trim()) {
     return menuGroups.value;
   }
+  
   const keyword = searchKeyword.value.toLowerCase();
   return menuGroups.value
     .map((group) => ({
       ...group,
-      menus: group.menus.filter((menu) => menu.name.toLowerCase().includes(keyword))
+      menus: group.menus.filter((menu) => 
+        menu.name.toLowerCase().includes(keyword) ||
+        menu.key.toLowerCase().includes(keyword)
+      )
     }))
     .filter((group) => group.menus.length > 0);
 });
 
-/** 返回上一页 */
+const totalMenuCount = computed(() => {
+  return filteredMenuGroups.value.reduce((total, group) => total + group.menus.length, 0);
+});
+
+// 工具函数
+function getMenuImageUrl(menu: MenuItem): string {
+  if (menu.imageUrl) return menu.imageUrl;
+  return `/static/images/menus/${menu.key}.png`;
+}
+
+function isInFavorites(menu: MenuItem): boolean {
+  return favoriteMenus.value.some((m) => m.key === menu.key);
+}
+
+// 事件处理
 function handleBack() {
-  navigateBackPlus();
-}
-const isEdit = ref(false);
-const addMenus = ref([]);
-const delMenus = ref([]);
-function addMenu(menu) {
-  if (!isEdit.value) {
-    handleClick(menu);
-    return;
-  }
-  const index1 = favoriteMenus.value.findIndex((item) => item.key === menu.key);
-  if (index1 !== -1) return;
-  const index = delMenus.value.findIndex((item) => item.key === menu.key);
-  if (index === -1) {
-    addMenus.value.push(menu);
+  if (hasPendingChanges()) {
+    uni.showModal({
+      title: '提示',
+      content: '您有未保存的更改，确定要离开吗？',
+      success: (res) => {
+        if (res.confirm) {
+          navigateBackPlus();
+        }
+      }
+    });
   } else {
-    delMenus.value.splice(index, 1);
+    navigateBackPlus();
   }
-  favoriteMenus.value.push(menu);
-}
-function delMenu(menu) {
-  if (!isEdit.value) {
-    handleClick(menu);
-    return;
-  }
-  const index = addMenus.value.findIndex((item) => item.key === menu.key);
-  if (index === -1) {
-    delMenus.value.push(menu);
-  } else {
-    addMenus.value.splice(index, 1);
-  }
-  const index1 = favoriteMenus.value.findIndex((item) => item.key === menu.key);
-  favoriteMenus.value.splice(index1, 1);
 }
 
-function save() {
-  // console.log(addMenus.value, delMenus.value, "添加和删除的菜单");
-  addMenus.value.forEach((item) => {
-    handleAddFavorite(item);
-  });
-  delMenus.value.forEach((item) => {
-    handleRemoveFavorite(item);
-  });
-  toast.success("保存成功");
-  isEdit.value = false;
+function toggleEditMode() {
+  if (favoriteMenus.value.length === 0) {
+    toast.show('暂无常用功能');
+    return;
+  }
+  isEdit.value = !isEdit.value;
+  if (!isEdit.value) {
+    // 退出编辑模式时重置待保存的更改
+    pendingChanges.value = { add: [], remove: [] };
+    refreshFavoriteMenus();
+  }
 }
 
-/** 处理菜单点击 */
-function handleClick(menu: MenuItem) {
-  console.log("点击菜单：", menu);
+function hasPendingChanges(): boolean {
+  return pendingChanges.value.add.length > 0 || pendingChanges.value.remove.length > 0;
+}
+
+function handleMenuClick(menu: MenuItem) {
+  if (isEdit.value) return;
+  
   if (!menu.url) {
     toast.show("功能开发中");
     return;
   }
 
-  // 解析 URL，提取路径和参数
-  const { path, query } = parseUrl(menu.url);
+  navigateToPage(menu.url);
+}
 
-  // 判断是否是 tabBar 页面
+function handleToggleFavorite(menu: MenuItem) {
+  if (!isEdit.value) return;
+  
+  const isFavorite = isInFavorites(menu);
+  
+  if (isFavorite) {
+    // 从常用中移除
+    removeFromFavorites(menu);
+  } else {
+    // 添加到常用
+    addToFavorites(menu);
+  }
+}
+
+function addToFavorites(menu: MenuItem) {
+  // 检查是否在待移除列表中
+  const removeIndex = pendingChanges.value.remove.findIndex(item => item.key === menu.key);
+  if (removeIndex !== -1) {
+    // 从待移除列表中移除
+    pendingChanges.value.remove.splice(removeIndex, 1);
+  } else {
+    // 添加到待添加列表（如果不在其中）
+    const addIndex = pendingChanges.value.add.findIndex(item => item.key === menu.key);
+    if (addIndex === -1) {
+      pendingChanges.value.add.push(menu);
+    }
+  }
+  
+  // 更新本地显示
+  favoriteMenus.value.push(menu);
+}
+
+function removeFromFavorites(menu: MenuItem) {
+  // 检查是否在待添加列表中
+  const addIndex = pendingChanges.value.add.findIndex(item => item.key === menu.key);
+  if (addIndex !== -1) {
+    // 从待添加列表中移除
+    pendingChanges.value.add.splice(addIndex, 1);
+  } else {
+    // 添加到待移除列表（如果不在其中）
+    const removeIndex = pendingChanges.value.remove.findIndex(item => item.key === menu.key);
+    if (removeIndex === -1) {
+      pendingChanges.value.remove.push(menu);
+    }
+  }
+  
+  // 更新本地显示
+  const index = favoriteMenus.value.findIndex(item => item.key === menu.key);
+  if (index !== -1) {
+    favoriteMenus.value.splice(index, 1);
+  }
+}
+
+function saveChanges() {
+  const { add, remove } = pendingChanges.value;
+  
+  // 执行添加操作
+  add.forEach(menu => {
+    const keys = [...userStore.favoriteMenus];
+    if (!keys.includes(menu.key)) {
+      keys.push(menu.key);
+      userStore.setFavoriteMenus(keys);
+    }
+  });
+  
+  // 执行移除操作
+  remove.forEach(menu => {
+    const keys = [...userStore.favoriteMenus];
+    const index = keys.indexOf(menu.key);
+    if (index > -1) {
+      keys.splice(index, 1);
+      userStore.setFavoriteMenus(keys);
+    }
+  });
+  
+  // 重置状态
+  pendingChanges.value = { add: [], remove: [] };
+  isEdit.value = false;
+  
+  toast.success("保存成功");
+}
+
+function navigateToPage(url: string) {
+  const { path, query } = parseUrl(url);
+
   if (isTabBarPage(path)) {
-    // tabBar 页面：通过 globalData 传参，使用 switchTab 跳转
     if (Object.keys(query).length > 0) {
       setTabParams(query);
     }
     uni.switchTab({
       url: path,
-      fail: () => {
-        toast.show("页面不存在");
-      }
+      fail: () => toast.show("页面不存在")
     });
   } else {
-    // 普通页面：使用 navigateTo 跳转
     uni.navigateTo({
-      url: menu.url,
-      fail: () => {
-        toast.show("页面不存在");
-      }
+      url: url,
+      fail: () => toast.show("页面不存在")
     });
   }
 }
-/** 初始化数据 */
-function initData() {
-  menuGroups.value = getMenuGroups();
+
+function handleSearch(keyword: string) {
+  searchKeyword.value = keyword;
 }
 
-/** 处理添加常用服务 */
-function handleAddFavorite(menu: MenuItem) {
-  const keys = [...userStore.favoriteMenus];
-  if (!keys.includes(menu.key)) {
-    keys.push(menu.key);
-    userStore.setFavoriteMenus(keys);
-  }
-  // toast.success("已添加");
+function handleSearchClear() {
+  searchKeyword.value = "";
 }
 
-/** 处理移除常用服务 */
-function handleRemoveFavorite(menu: MenuItem) {
-  const keys = [...userStore.favoriteMenus];
-  const index = keys.indexOf(menu.key);
-  if (index > -1) {
-    keys.splice(index, 1);
-    userStore.setFavoriteMenus(keys);
-  }
-  // toast.success("已移除");
-}
-
-/** 检查菜单是否已添加到常用服务 */
-function isInFavorites(menu: MenuItem): boolean {
-  return favoriteMenus.value.some((m) => m.key === menu.key);
-}
-
-/** 滚动到菜单分组区域 */
-function scrollToGroups() {
-  uni.pageScrollTo({
-    selector: "#menuGroups",
-    duration: 300
-  });
-}
-
-onLoad(() => {
-  initData();
+function refreshFavoriteMenus() {
   const keys = userStore.favoriteMenus;
   if (!keys || keys.length === 0) {
-    return [];
+    favoriteMenus.value = [];
+    return;
   }
+  
   favoriteMenus.value = keys
     .map((key) => getMenuItemByKey(key))
     .filter(Boolean) as MenuItem[];
+}
+
+function initData() {
+  menuGroups.value = getMenuGroups();
+  refreshFavoriteMenus();
+}
+
+// 生命周期
+onLoad(() => {
+  initData();
+});
+
+onShow(() => {
+  // 页面显示时刷新数据，以防在其他页面修改了常用功能
+  if (!isEdit.value) {
+    refreshFavoriteMenus();
+  }
 });
 </script>
 
 <style lang="scss" scoped>
-.menu-list {
-  padding: 0 30rpx 20rpx;
+.settings-page {
+  min-height: 100vh;
+  background-color: #f5f5f5;
 }
 
-.menu-item {
+.search-container {
+  padding: 20rpx;
+  background-color: white;
+}
+
+.section {
+  margin-top: 20rpx;
+  background-color: white;
+  padding: 0 31rpx 23rpx;
+}
+
+.section-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 23rpx 0;
+}
+
+.section-title {
+  font-size: 31rpx;
+  color: #1D2129;
+  font-weight: 500;
+}
+
+.section-count {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.group-section {
+  margin-top: 20rpx;
+}
+
+.group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.group-name {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+.group-count {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.menu-grid {
+  margin-top: 20rpx;
+}
+
+.menu-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   padding: 20rpx 0;
-  border-bottom: 1rpx solid #f5f5f5;
+}
 
-  &:last-child {
-    border-bottom: none;
-  }
+.action-btn {
+  position: absolute;
+  top: 10rpx;
+  right: 10rpx;
+  width: 40rpx;
+  height: 40rpx;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
 
-  &__left {
-    display: flex;
-    align-items: center;
-  }
+.menu-icon {
+  width: 61rpx;
+  height: 61rpx;
+  margin-bottom: 8rpx;
+}
 
-  &__icon {
-    width: 80rpx;
-    height: 80rpx;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 16rpx;
-    margin-right: 24rpx;
-  }
+.menu-name {
+  font-size: 23rpx;
+  color: #4E5969;
+  text-align: center;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
-  &__name {
-    font-size: 30rpx;
-    color: #333;
-  }
+.edit-btn {
+  color: #1890ff;
+  font-size: 28rpx;
+  padding: 10rpx 20rpx;
+}
 
-  &__right {
-    display: flex;
-    align-items: center;
-  }
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120rpx 0;
+  background-color: white;
+  margin-top: 20rpx;
+}
+
+.empty-text {
+  margin-top: 20rpx;
+  font-size: 28rpx;
+  color: #999;
+}
+
+.safe-area-bottom {
+  height: 40rpx;
 }
 </style>

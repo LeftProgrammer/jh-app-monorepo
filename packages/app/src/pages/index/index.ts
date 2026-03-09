@@ -15,6 +15,10 @@ export interface MenuItem {
   iconColor?: string; // 图标颜色（可选）
   enabled?: boolean; // 是否启用（可选，默认 true）
   permission?: string; // 权限标识（可选）
+  imageUrl?: string; // 自定义图片URL
+  description?: string; // 菜单描述
+  sort?: number; // 排序权重
+  badge?: string | number; // 角标
 }
 
 /** 菜单分组类型 */
@@ -22,10 +26,20 @@ export interface MenuGroup {
   key: string; // 分组唯一标识
   name: string; // 分组名称
   menus: MenuItem[]; // 分组下的菜单列表
+  enabled?: boolean; // 是否启用分组
+  sort?: number; // 分组排序
+}
+
+/** 菜单配置接口 */
+export interface MenuConfig {
+  groups?: MenuGroup[]; // 自定义菜单分组
+  mergeWithDefault?: boolean; // 是否与默认数据合并
+  overrideDefault?: boolean; // 是否完全覆盖默认数据
+  enablePermission?: boolean; // 是否启用权限过滤
 }
 
 /** 菜单分组原始数据 */
-const menuGroupsData: MenuGroup[] = [
+const defaultMenuGroupsData: MenuGroup[] = [
   // {
   //   key: "bpm",
   //   name: "工作流程",
@@ -168,27 +182,143 @@ const menuGroupsData: MenuGroup[] = [
   },
 ];
 
+/** 外部配置存储 */
+let externalMenuConfig: MenuConfig | null = null;
+
+/**
+ * 设置外部菜单配置 - 简化版本
+ * 外部项目可以调用此方法来自定义菜单数据
+ */
+export function setMenuConfig(config: MenuConfig | MenuGroup[]) {
+  // 如果传入的是数组，自动转换为配置对象
+  if (Array.isArray(config)) {
+    externalMenuConfig = {
+      groups: config,
+      mergeWithDefault: true
+    };
+  } else {
+    externalMenuConfig = config;
+  }
+}
+
+/**
+ * 快速配置菜单 - 最简单的方式
+ */
+export function configureMenus(groups: MenuGroup[]) {
+  setMenuConfig(groups);
+}
+
+/**
+ * 添加菜单分组 - 增量方式
+ */
+export function addMenuGroup(group: MenuGroup) {
+  const currentConfig = externalMenuConfig || { groups: [] };
+  setMenuConfig({
+    ...currentConfig,
+    groups: [...(currentConfig.groups || []), group]
+  });
+}
+
+/**
+ * 添加菜单项到指定分组
+ */
+export function addMenuItem(groupKey: string, menuItem: MenuItem) {
+  const currentConfig = externalMenuConfig || { groups: [] };
+  const groups = [...(currentConfig.groups || [])];
+  
+  const groupIndex = groups.findIndex(g => g.key === groupKey);
+  if (groupIndex !== -1) {
+    groups[groupIndex] = {
+      ...groups[groupIndex],
+      menus: [...groups[groupIndex].menus, menuItem]
+    };
+  } else {
+    groups.push({
+      key: groupKey,
+      name: groupKey,
+      menus: [menuItem]
+    });
+  }
+  
+  setMenuConfig({ ...currentConfig, groups });
+}
+
+/**
+ * 获取菜单分组原始数据
+ * 支持外部配置覆盖
+ */
+function getMenuGroupsData(): MenuGroup[] {
+  if (!externalMenuConfig) {
+    return defaultMenuGroupsData;
+  }
+
+  const { groups = [], mergeWithDefault = true, overrideDefault = false } = externalMenuConfig;
+
+  if (overrideDefault) {
+    // 完全覆盖默认数据
+    return groups;
+  }
+
+  if (mergeWithDefault && groups.length > 0) {
+    // 合并外部配置和默认数据
+    const mergedData = [...defaultMenuGroupsData];
+    
+    groups.forEach(externalGroup => {
+      const existingIndex = mergedData.findIndex(g => g.key === externalGroup.key);
+      
+      if (existingIndex !== -1) {
+        // 合并到现有分组
+        const existingGroup = mergedData[existingIndex];
+        mergedData[existingIndex] = {
+          ...existingGroup,
+          ...externalGroup,
+          menus: externalGroup.menus || existingGroup.menus
+        };
+      } else {
+        // 添加新分组
+        mergedData.push(externalGroup);
+      }
+    });
+    
+    return mergedData;
+  }
+
+  return defaultMenuGroupsData;
+}
+
 /**
  * 获取所有菜单分组数据（带权限过滤）：过滤掉没有权限的菜单项，如果整个分组都没有权限则不展示该分组
  */
 export function getMenuGroups(): MenuGroup[] {
   const { hasAccessByCodes } = useAccess();
-  return (
-    menuGroupsData
-      .map((group) => ({
-        ...group,
-        // 过滤掉没有权限的菜单项
-        menus: group.menus.filter((menu) => {
-          // 没有配置权限的菜单项默认展示
-          if (!menu.permission) {
-            return true;
-          }
+  const enablePermission = externalMenuConfig?.enablePermission !== false;
+  
+  return getMenuGroupsData()
+    .filter(group => group.enabled !== false)
+    .map((group) => ({
+      ...group,
+      // 过滤掉没有权限的菜单项
+      menus: group.menus.filter((menu) => {
+        // 过滤掉禁用的菜单
+        if (menu.enabled === false) return false;
+        
+        // 权限过滤
+        if (enablePermission && menu.permission) {
           return hasAccessByCodes([menu.permission]);
-        }),
-      }))
-      // 过滤掉没有菜单项的分组
-      .filter((group) => group.menus.length > 0)
-  );
+        }
+        
+        return true;
+      }),
+    }))
+    // 过滤掉没有菜单项的分组
+    .filter((group) => group.menus.length > 0)
+    // 按sort字段排序
+    .sort((a, b) => (a.sort || 0) - (b.sort || 0))
+    .map(group => ({
+      ...group,
+      // 菜单项也按sort字段排序
+      menus: group.menus.sort((a, b) => (a.sort || 0) - (b.sort || 0))
+    }));
 }
 
 /** 获取所有菜单项（扁平化） */
@@ -200,4 +330,42 @@ export function getAllMenuItems(): MenuItem[] {
 /** 根据 key 获取菜单项 */
 export function getMenuItemByKey(key: string): MenuItem | undefined {
   return getAllMenuItems().find((item) => item.key === key);
+}
+
+/** 根据 keys 批量获取菜单项 */
+export function getMenuItemsByKeys(keys: string[]): MenuItem[] {
+  return keys.map(key => getMenuItemByKey(key)).filter(Boolean) as MenuItem[];
+}
+
+/** 搜索菜单项 */
+export function searchMenuItems(keyword: string): MenuItem[] {
+  const items = getAllMenuItems();
+  const lowerKeyword = keyword.toLowerCase();
+  
+  return items.filter(item => 
+    item.name.toLowerCase().includes(lowerKeyword) ||
+    item.key.toLowerCase().includes(lowerKeyword) ||
+    (item.description && item.description.toLowerCase().includes(lowerKeyword))
+  );
+}
+
+/** 获取菜单统计信息 */
+export function getMenuStats() {
+  const groups = getMenuGroups();
+  const allItems = getAllMenuItems();
+  
+  return {
+    groupCount: groups.length,
+    totalMenus: allItems.length,
+    enabledMenus: allItems.filter(menu => menu.enabled !== false).length,
+    groupedMenus: groups.reduce((acc, group) => {
+      acc[group.key] = group.menus.length;
+      return acc;
+    }, {} as Record<string, number>)
+  };
+}
+
+/** 重置菜单配置到默认状态 */
+export function resetMenuConfig() {
+  externalMenuConfig = null;
 }
