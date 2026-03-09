@@ -90,13 +90,13 @@
 </template>
 
 <script lang="ts" setup>
-import type { MenuGroup, MenuItem } from "../index";
+import type { MenuGroup, MenuItem } from "../menu-config";
 import { useToast } from "wot-design-uni";
 import { useUserStore } from "@/store/user";
 import { navigateBackPlus } from "@/utils";
-import { getMenuGroups, getMenuItemByKey } from "../index";
+import { getMenuGroups, getMenuItemByKey } from "../menu-config";
 import { parseUrl, setTabParams } from "@/utils/url";
-import { isTabBarPage } from "@/tabbar/config";
+import { isTabBarPage } from "@/components/tabbar/config";
 
 defineOptions({
   name: "FavoriteSettings"

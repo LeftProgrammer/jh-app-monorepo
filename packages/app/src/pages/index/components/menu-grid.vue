@@ -51,9 +51,9 @@
 </template>
 
 <script lang="ts" setup>
-import type { MenuItem } from "../index";
+import type { MenuItem } from "../menu-config";
 import { useToast } from "wot-design-uni";
-import { isTabBarPage } from "@/tabbar/config";
+import { isTabBarPage } from "@/components/tabbar/config";
 import { parseUrl, setTabParams } from "@/utils/url";
 
 defineOptions({
