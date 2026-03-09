@@ -1,3 +1,11 @@
+/**
+ * 全局状态管理模块
+ * 
+ * @description 提供全局状态的管理，包括待办数量、消息数量等全局信息
+ * @export useGlobalState - 全局状态管理 Store
+ * @export globalStores - 全局模块命名空间
+ * @usage 全局状态管理、待办消息管理
+ */
 import { defineStore } from "pinia";
 import { getTaskTodoPage } from "@/api/bpm/task";
 import { getMyNotifyMessagePage } from "@/api/system/notify/message";

@@ -1,50 +1,45 @@
-# 登录 说明
+# 路由模块使用指南
 
-## 登录 2种策略
-- 默认无需登录策略： DEFAULT_NO_NEED_LOGIN
-- 默认需要登录策略： DEFAULT_NEED_LOGIN
+## 概述
 
-### 默认无需登录策略： DEFAULT_NO_NEED_LOGIN
-进入任何页面都不需要登录，只有进入到黑名单中的页面/或者页面中某些动作需要登录，才需要登录。
+路由模块提供完整的路由管理和登录拦截功能，支持黑名单和白名单两种登录策略，适用于不同类型的应用场景。
 
-比如大部分2C的应用，美团、今日头条、抖音等，都可以直接浏览，只有点赞、评论、分享等操作或者去特殊页面（比如个人中心），才需要登录。
+## 模块结构
 
-### 默认需要登录策略： DEFAULT_NEED_LOGIN
+### 核心模块
 
-进入任何页面都需要登录，只有进入到白名单中的页面，才不需要登录。默认进入应用需要先去登录页。
+- **config.ts** - 路由配置和登录策略
+- **interceptor.ts** - 路由拦截器实现
+- **index.ts** - 统一导出入口
 
-比如大部分2B和后台管理类的应用，比如企业微信、钉钉、飞书、内部报表系统、CMS系统等，都需要登录，只有登录后，才能使用。
+### 导出方式
 
-### EXCLUDE_LOGIN_PATH_LIST
-`EXCLUDE_LOGIN_PATH_LIST` 表示排除的路由列表。
+#### 统一导出 (export *)
+```typescript
+// 按需导入配置和功能
+import { 
+  LOGIN_STRATEGY,
+  LOGIN_PAGE,
+  EXCLUDE_LOGIN_PATH_LIST,
+  judgeIsExcludePath
+} from '@jh-app/app/router'
+```
 
-在 `默认无需登录策略： DEFAULT_NO_NEED_LOGIN` 中，只有路由在 `EXCLUDE_LOGIN_PATH_LIST` 中，才需要登录，相当于黑名单。
+#### 命名空间导出 (export * as)
+```typescript
+// 导入命名空间
+import { routerConfig, routerInterceptor } from '@jh-app/app/router'
 
-在 `默认需要登录策略： DEFAULT_NEED_LOGIN` 中，只有路由在 `EXCLUDE_LOGIN_PATH_LIST` 中，才不需要登录，相当于白名单。
-
-### excludeLoginPath
-definePage 中可以通过 `excludeLoginPath` 来配置路由是否需要登录。(类似过去的 needLogin 的功能)
-
-```ts
-definePage({
-  style: {
-    navigationBarTitleText: '关于',
-  },
-  // 登录授权(可选)：跟以前的 needLogin 类似功能，但是同时支持黑白名单，详情请见 src/router 文件夹
-  excludeLoginPath: true,
-  // 角色授权(可选)：如果需要根据角色授权，就配置这个
-  roleAuth: {
-    field: 'role',
-    value: 'admin',
-    redirect: '/pages/auth/403',
-  },
-})
+const { LOGIN_STRATEGY, LOGIN_PAGE } = routerConfig
+const { judgeIsExcludePath } = routerInterceptor
 ```
 
 ## 登录注册页路由
 
-登录页 `login.vue` 对应路由是 `/pages/login/login`.
-注册页 `register.vue` 对应路由是 `/pages/login/register`.
+登录页对应路由是 `/pages-core/auth/login`.
+注册页对应路由是 `/pages-core/auth/register`.
+短信登录页对应路由是 `/pages-core/auth/code-login`.
+忘记密码页对应路由是 `/pages-core/auth/forget-password`.
 
 ## 登录注册页适用性
 

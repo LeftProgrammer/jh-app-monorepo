@@ -1,4 +1,15 @@
 /**
+ * HTTP 模块类型定义
+ * 
+ * @description 提供 HTTP 请求和响应相关的 TypeScript 类型定义，确保类型安全
+ * @export CustomRequestOptions - 自定义请求选项类型
+ * @export IResponse - 通用响应格式类型
+ * @export PageParam - 分页参数类型
+ * @export PageResult - 分页结果类型
+ * @export LoadMoreState - 加载状态类型（从 wot-design-uni 重新导出）
+ * @usage 类型安全、接口定义、分页处理
+ */
+/**
  * 在 uniapp 的 RequestOptions 和 IUniUploadFileOptions 基础上，添加自定义参数
  */
 export type CustomRequestOptions = UniNamespace.RequestOptions & {

@@ -1,3 +1,11 @@
+/**
+ * 路由拦截器模块
+ * 
+ * @description 提供路由拦截、登录验证、页面访问控制等功能，支持黑名单和白名单两种策略
+ * @export judgeIsExcludePath - 判断路径是否需要排除登录
+ * @export FG_LOG_ENABLE - 调试日志开关
+ * @usage 路由拦截、登录验证、页面访问控制
+ */
 /* eslint-disable brace-style */ // 原因：unibest 官方维护的代码，尽量不要大概，避免难以合并
 import { isMp } from '@uni-helper/uni-env'
 /**

@@ -1,3 +1,12 @@
+/**
+ * 字典状态管理模块
+ * 
+ * @description 提供数据字典的管理，包括字典数据的缓存、查询、转换等功能
+ * @export useDictStore - 字典状态管理 Store
+ * @export DictItem - 字典项接口
+ * @export dictStores - 字典模块命名空间
+ * @usage 数据字典管理、字典数据缓存、字典转换
+ */
 import type { DictData } from "@/api/system/dict/data";
 import { defineStore } from "pinia";
 

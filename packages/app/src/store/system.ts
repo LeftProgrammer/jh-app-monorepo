@@ -1,3 +1,11 @@
+/**
+ * 系统状态管理模块
+ * 
+ * @description 提供系统相关状态的管理，包括系统配置、环境信息等
+ * @export useSystemState - 系统状态管理 Store
+ * @export systemStores - 系统模块命名空间
+ * @usage 系统配置管理、环境信息存储
+ */
 import { defineStore } from "pinia";
 // 初始化状态
 const systemState: any = {

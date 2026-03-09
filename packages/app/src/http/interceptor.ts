@@ -1,3 +1,11 @@
+/**
+ * HTTP 请求拦截器模块
+ * 
+ * @description 提供 uni.request 和 uni.uploadFile 的拦截器配置，包括 Token 自动添加、请求参数处理、API 加密等功能
+ * @export httpInterceptor - 拦截器配置对象
+ * @export requestInterceptor - 拦截器安装器
+ * @usage 请求拦截、Token 管理、参数处理、API 加密
+ */
 /* eslint-disable brace-style */ // 原因：unibest 官方维护的代码，尽量不要大概，避免难以合并
 import type { CustomRequestOptions } from './types'
 import { useTokenStore, useUserStore } from '../store'

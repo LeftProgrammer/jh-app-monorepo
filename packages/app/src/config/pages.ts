@@ -1,7 +1,7 @@
 import { tabBar } from "@/components/tabbar/config";
 
 /**
- * JH App 框架页面配置
+ * 页面配置
  * 
  * @description 提供 uni-app pages.json 的基础配置
  * @export pagesConfig - 页面配置对象

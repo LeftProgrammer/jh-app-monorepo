@@ -1,3 +1,11 @@
+/**
+ * Token 状态管理模块
+ * 
+ * @description 提供用户认证 Token 的管理，包括登录、登出、Token 刷新等功能
+ * @export useTokenStore - Token 状态管理 Store
+ * @export tokenStores - Token 模块命名空间
+ * @usage 用户认证、Token 管理、自动刷新、登录状态维护
+ */
 /* eslint-disable brace-style */ // 原因：unibest 官方维护的代码，尽量不要大概，避免难以合并
 import type {
   AuthLoginReqVO,

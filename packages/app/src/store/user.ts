@@ -1,3 +1,11 @@
+/**
+ * 用户状态管理模块
+ * 
+ * @description 提供用户信息的管理，包括用户资料、权限信息、部门信息等
+ * @export useUserStore - 用户状态管理 Store
+ * @export userStores - 用户模块命名空间
+ * @usage 用户信息管理、权限控制、部门管理
+ */
 import type { AuthPermissionInfo, IUserInfoRes } from "@/api/types/login";
 import { defineStore } from "pinia";
 import { ref } from "vue";

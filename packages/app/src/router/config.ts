@@ -1,3 +1,15 @@
+/**
+ * 路由配置模块
+ * 
+ * @description 提供登录策略配置、页面路径定义、路由白名单等功能
+ * @export LOGIN_STRATEGY_MAP - 登录策略枚举
+ * @export LOGIN_STRATEGY - 当前登录策略
+ * @export LOGIN_PAGE - 登录页面路径
+ * @export REGISTER_PAGE - 注册页面路径
+ * @export EXCLUDE_LOGIN_PATH_LIST - 排除登录路径列表
+ * @export LOGIN_PAGE_ENABLE_IN_MP - 小程序登录页启用配置
+ * @usage 登录策略配置、页面路径管理、路由访问控制
+ */
 // import { getAllPages } from '@/utils'
 
 export const LOGIN_STRATEGY_MAP = {

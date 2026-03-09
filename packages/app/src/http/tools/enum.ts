@@ -1,3 +1,12 @@
+/**
+ * HTTP 模块枚举和工具函数
+ * 
+ * @description 提供 HTTP 状态码枚举、内容类型枚举和错误消息生成工具函数
+ * @export ResultEnum - HTTP 状态码枚举
+ * @export ContentTypeEnum - 内容类型枚举
+ * @export ShowMessage - 错误消息生成函数
+ * @usage 状态码判断、内容类型设置、错误消息生成
+ */
 export enum ResultEnum {
   // 0和200当做成功都很普遍，这里直接兼容两者（PS：0和200通常都不会当做错误码，但是有的接口会返回0，有的接口会返回200）
   Success0 = 0, // 成功

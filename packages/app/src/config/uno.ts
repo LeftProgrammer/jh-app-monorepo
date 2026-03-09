@@ -12,13 +12,14 @@ import {
 } from "unocss";
 
 /**
- * JH App 框架样式配置
+ * 样式配置
  * 
  * @description 提供 UnoCSS 的基础配置
  * @export unoConfig - 样式配置对象
  * @usage 外部项目可基于此配置进行自定义扩展
  */
 export const unoConfig = {
+  presets: [
     presetUni({
       attributify: false,
     }),
@@ -107,18 +108,3 @@ export const unoConfig = {
     },
   },
 };
-
-// 导出说明：
-// unoConfig - UnoCSS 基础配置对象，用于外部自定义扩展
-// 使用方式：
-// import { unoConfig } from '@jh-app/app/config'
-// import { defineConfig } from 'unocss'
-// 
-// export default defineConfig({
-//   ...unoConfig,
-//   theme: {
-//     colors: {
-//       primary: '#1890ff'
-//     }
-//   }
-// })

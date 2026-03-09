@@ -2,7 +2,10 @@ import { useUserStore } from '@/store/user'
 
 /**
  * 权限控制 Hook
+ * 
  * @description 提供基于角色和权限码的权限判断方法
+ * @export useAccess - 权限控制 Hook
+ * @usage 权限验证和角色判断
  */
 function useAccess() {
   const userStore = useUserStore()

@@ -1,3 +1,11 @@
+/**
+ * 主题状态管理模块
+ * 
+ * @description 提供应用主题的管理，包括明暗主题切换、主题变量配置等功能
+ * @export useThemeStore - 主题状态管理 Store
+ * @export themeStores - 主题模块命名空间
+ * @usage 主题切换、主题变量配置、界面样式管理
+ */
 import type { ConfigProviderThemeVars } from 'wot-design-uni'
 
 import { defineStore } from 'pinia'

@@ -1,12 +1,12 @@
 /**
- * JH App 框架应用配置
+ * 应用配置
  * 
  * @description 提供 uni-app manifest.json 的基础配置
  * @export manifestConfig - 应用配置对象
  * @usage 外部项目可基于此配置进行自定义扩展
  */
 
-// JH App 框架基础配置
+// 基础配置
 export const manifestConfig = {
   description: "JH App 移动端开发框架",
   versionName: "1.0.0",

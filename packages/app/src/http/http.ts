@@ -1,3 +1,14 @@
+/**
+ * HTTP 请求核心模块
+ * 
+ * @description 提供基于 uni.request 的 HTTP 请求封装，支持 Token 自动刷新、错误处理、API 加密等功能
+ * @export http - HTTP 实例，包含 get、post、put、delete 方法
+ * @export httpGet - GET 请求方法
+ * @export httpPost - POST 请求方法
+ * @export httpPut - PUT 请求方法
+ * @export httpDelete - DELETE 请求方法
+ * @usage HTTP 请求、Token 管理、错误处理
+ */
 import type { IDoubleTokenRes } from '../api/types/login'
 import type { CustomRequestOptions, IResponse } from './types'
 import { nextTick } from 'vue'

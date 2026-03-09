@@ -1,3 +1,10 @@
+/**
+ * 请求处理 Hook
+ * 
+ * @description 提供异步请求的状态管理和执行控制
+ * @export useRequest - 请求处理 Hook
+ * @usage 异步请求、加载状态、错误处理
+ */
 import type { Ref } from 'vue'
 import { ref } from 'vue'
 
