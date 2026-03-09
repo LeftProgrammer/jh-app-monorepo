@@ -24,6 +24,9 @@ export * from './config'
 // 组件模块
 export * from './components'
 
+// 页面模块
+export * as pages from './pages'
+
 // 样式模块
 export * from './style'
 

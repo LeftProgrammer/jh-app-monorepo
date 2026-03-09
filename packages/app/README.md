@@ -2,6 +2,21 @@
 
 ## 📦 导入指南
 
+### 页面模块
+```typescript
+// 工作台页面
+import { pages } from '@jh-app/app'
+const { HomePage, UserHeader, MenuSection } = pages.index
+
+// 或者直接导入
+import { HomePage, UserHeader, MenuSection } from '@jh-app/app/pages/index'
+
+// 使用示例
+// HomePage - 首页工作台页面
+// UserHeader - 用户头部组件
+// MenuSection - 菜单区域组件
+```
+
 ### HTTP 模块
 ```typescript
 import { http, httpGet, httpPost, httpPut, httpDelete } from '@jh-app/app'
