@@ -4,9 +4,9 @@
 export * from './types'
 
 // 登录相关
-export * from './login'
+export * as login from './login'
 
-// 业务流程管理 (BPM) - 命名空间导出避免冲突
+// 业务流程管理 (BPM)
 export * as bpm from './bpm'
 
 // 通用业务模块

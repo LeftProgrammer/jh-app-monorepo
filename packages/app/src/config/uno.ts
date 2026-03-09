@@ -6,32 +6,19 @@ import { presetUni } from "@uni-helper/unocss-preset-uni";
 // @see https://unocss.dev/presets/legacy-compat
 import { presetLegacyCompat } from "@unocss/preset-legacy-compat";
 import {
-  defineConfig,
   presetIcons,
   transformerDirectives,
   transformerVariantGroup,
 } from "unocss";
 
 /**
- * JH App 框架默认 UnoCSS 配置
- * 使用方式：
- * import { defaultUnoConfig } from '@jh-app/app/config'
+ * JH App 框架样式配置
  * 
- * // 在外部项目的 uno.config.ts 中：
- * import { defineConfig } from "unocss";
- * import { defaultUnoConfig } from '@jh-app/app/config'
- * 
- * export default defineConfig({
- *   ...defaultUnoConfig,
- *   theme: {
- *     colors: {
- *       primary: "#1890ff",
- *     }
- *   }
- * })
+ * @description 提供 UnoCSS 的基础配置
+ * @export unoConfig - 样式配置对象
+ * @usage 外部项目可基于此配置进行自定义扩展
  */
-export const defaultUnoConfig = {
-  presets: [
+export const unoConfig = {
     presetUni({
       attributify: false,
     }),
@@ -121,5 +108,17 @@ export const defaultUnoConfig = {
   },
 };
 
-// 导出 UnoCSS 配置
-export default defineConfig(defaultUnoConfig);
+// 导出说明：
+// unoConfig - UnoCSS 基础配置对象，用于外部自定义扩展
+// 使用方式：
+// import { unoConfig } from '@jh-app/app/config'
+// import { defineConfig } from 'unocss'
+// 
+// export default defineConfig({
+//   ...unoConfig,
+//   theme: {
+//     colors: {
+//       primary: '#1890ff'
+//     }
+//   }
+// })

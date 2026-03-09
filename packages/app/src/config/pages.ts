@@ -1,23 +1,13 @@
-import { defineUniPages } from "@uni-helper/vite-plugin-uni-pages";
 import { tabBar } from "@/components/tabbar/config";
 
 /**
- * JH App 框架默认页面配置
- * 使用方式：
- * import { defaultPages } from '@jh-app/app/config'
+ * JH App 框架页面配置
  * 
- * // 在外部项目的 pages.config.ts 中：
- * import { defineUniPages } from "@uni-helper/vite-plugin-uni-pages";
- * import { defaultPages } from '@jh-app/app/config'
- * 
- * export default defineUniPages({
- *   ...defaultPages,
- *   globalStyle: {
- *     navigationBarTitleText: "我的应用",
- *   }
- * })
+ * @description 提供 uni-app pages.json 的基础配置
+ * @export pagesConfig - 页面配置对象
+ * @usage 外部项目可基于此配置进行自定义扩展
  */
-export const defaultPages = {
+export const pagesConfig: any = {
   globalStyle: {
     navigationStyle: "default",
     navigationBarTitleText: "JH App 框架",
@@ -36,6 +26,3 @@ export const defaultPages = {
   },
   tabBar: tabBar as any,
 };
-
-// 导出 uni-app 页面配置
-export default defineUniPages(defaultPages);

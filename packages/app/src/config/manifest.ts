@@ -1,41 +1,23 @@
-import path from "node:path";
-import process from "node:process";
-// manifest.config.ts
-import { defineManifestConfig } from "@uni-helper/vite-plugin-uni-manifest";
-import { loadEnv } from "vite";
-
-// 手动解析命令行参数获取 mode
-function getMode() {
-  const args = process.argv.slice(2);
-  const modeFlagIndex = args.findIndex((arg) => arg === "--mode");
-  return modeFlagIndex !== -1
-    ? args[modeFlagIndex + 1]
-    : args[0] === "build"
-      ? "production"
-      : "development"; // 默认 development
-}
-
-// 获取环境变量，如果不存在则使用默认值
-const env = loadEnv(getMode(), path.resolve(process.cwd(), "env"));
-const {
-  VITE_APP_TITLE = "JH App Framework",
-  VITE_UNI_APPID = "",
-  VITE_WX_APPID = "",
-  VITE_APP_PUBLIC_BASE = "/",
-  VITE_FALLBACK_LOCALE = "zh-Hans",
-} = env;
+/**
+ * JH App 框架应用配置
+ * 
+ * @description 提供 uni-app manifest.json 的基础配置
+ * @export manifestConfig - 应用配置对象
+ * @usage 外部项目可基于此配置进行自定义扩展
+ */
 
 // JH App 框架基础配置
-const baseConfig = {
+export const manifestConfig = {
   description: "JH App 移动端开发框架",
   versionName: "1.0.0",
   versionCode: "100",
-  transformPx: false,
-  locale: VITE_FALLBACK_LOCALE,
+  name: "JH App Framework",  // 默认名称，外部可覆盖
+  appid: "",               // 默认为空，外部必须设置
+  locale: "zh-Hans",
   
   h5: {
     router: {
-      base: VITE_APP_PUBLIC_BASE,
+      base: "/",
     },
   },
   
@@ -118,7 +100,7 @@ const baseConfig = {
   quickapp: {},
   
   "mp-weixin": {
-    appid: VITE_WX_APPID,
+    appid: "",  // 外部项目需要设置
     setting: {
       urlCheck: false,
       es6: true,
@@ -162,11 +144,14 @@ const baseConfig = {
   vueVersion: "3",
 };
 
-// 导出配置，外部环境变量可以覆盖基础配置
-export const defaultManifest = baseConfig;
-
-export default defineManifestConfig({
-  ...baseConfig,
-  name: VITE_APP_TITLE,
-  appid: VITE_UNI_APPID,
-});
+// 导出说明：
+// manifestConfig - 基础配置对象，用于外部自定义扩展
+// 使用方式：
+// import { manifestConfig } from '@jh-app/app/config'
+// import { defineManifestConfig } from "@uni-helper/vite-plugin-uni-manifest"
+// 
+// export default defineManifestConfig({
+//   ...manifestConfig,
+//   name: '我的应用',
+//   appid: 'com.myapp'
+// })
