@@ -130,3 +130,13 @@ export function getDictOptions(
 
   return dictOptions
 }
+
+// 默认导出所有字典工具函数
+export default {
+  getDictLabel,
+  getDictObj,
+  getIntDictOptions,
+  getStrDictOptions,
+  getBoolDictOptions,
+  getDictOptions
+}

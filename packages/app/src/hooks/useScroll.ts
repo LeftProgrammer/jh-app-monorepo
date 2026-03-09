@@ -73,3 +73,5 @@ export function useScroll<T>({
     loadMore,
   }
 }
+
+export default useScroll

@@ -37,5 +37,4 @@ function useAccess() {
   }
 }
 
-export { useAccess }
 export default useAccess
