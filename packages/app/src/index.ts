@@ -1,37 +1,48 @@
-// JH App 框架 - 核心功能导出
+/**
+ * JH App 框架 - 核心功能导出
+ * @description 提供 Vue 3 + UniApp 移动端开发框架的完整功能
+ * @module @jh-app/app
+ */
 
-// API 接口 - 命名空间导出避免冲突
+// 默认导出 - 全局引入的便利性
+import * as api from './api'
+import * as store from './store'
+import * as router from './router'
+import { http } from './http'
+import * as hooks from './hooks'
+import * as utils from './utils'
+import * as config from './config'
+import * as components from './components'
+import * as pages from './pages'
+import * as style from './style'
+import * as vitePlugins from './vite-plugins'
+
+// 命名空间导出 - 避免命名冲突，支持按需使用
 export * as api from './api'
-
-// 状态管理
 export * as store from './store'
-
-// 路由管理
 export * as router from './router'
-
-// HTTP 模块
 export * from './http'
-
-// 组合函数
 export * from './hooks'
-
-// 工具函数
 export * from './utils'
-
-// 配置模块
 export * from './config'
-
-// 组件模块
 export * from './components'
-
-// 页面模块
 export * as pages from './pages'
-
-// 样式模块
 export * from './style'
+export * from './vite-plugins'
 
-// Vite 插件
-export * from './vite-plugins' // TODO：暂时注释
+// 核心框架对象
+const jhApp = {
+  api,
+  store,
+  router,
+  http,
+  hooks,
+  utils,
+  config,
+  components,
+  pages,
+  style,
+  vitePlugins,
+}
 
-// 版本信息
-export const version = '1.0.0'
+export default jhApp
