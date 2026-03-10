@@ -1,15 +1,19 @@
-import { createApp } from 'vue'
+import { createSSRApp } from 'vue'
 import App from './App.vue'
-import { createJhApp } from '@jinghe-sanjiaoroad-app/core'
+import { requestInterceptor } from './http/interceptor'
+import { routeInterceptor } from './router/interceptor'
 
-const app = createApp(App)
+import store from './store'
+import '@/style/index.scss'
+import 'virtual:uno.css'
 
-// 使用 jinghe-sanjiaoroad App 框架
-const jhApp = createJhApp({
-  baseURL: 'https://api.example.com',
-  timeout: 10000
-})
+export function createApp() {
+  const app = createSSRApp(App)
+  app.use(store)
+  app.use(routeInterceptor)
+  app.use(requestInterceptor)
 
-app.use(jhApp)
-
-app.mount('#app')
+  return {
+    app,
+  }
+}

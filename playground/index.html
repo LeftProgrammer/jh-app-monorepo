@@ -1,53 +1,26 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>jinghe-sanjiaoroad App 框架示例</title>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-</head>
-<body>
-    <div id="app">
-        <h1>{{ message }}</h1>
-        <button @click="testFramework">测试框架</button>
-        <p>框架状态: {{ status }}</p>
-    </div>
-
+<!doctype html>
+<html build-time="%BUILD_TIME%">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     <script>
-        const { createApp } = Vue;
-
-        // 模拟 jinghe-sanjiaoroad App 框架
-        function createJhApp(config = {}) {
-            return {
-                install(app) {
-                    app.config.globalProperties.$config = config;
-                    console.log('jinghe-sanjiaoroad App 框架已安装', config);
-                }
-            };
-        }
-
-        const app = createApp({
-            data() {
-                return {
-                    message: 'jinghe-sanjiaoroad App 框架示例',
-                    status: '未初始化'
-                };
-            },
-            methods: {
-                testFramework() {
-                    this.status = '框架运行正常!';
-                    console.log('框架测试成功');
-                }
-            }
-        });
-
-        const jhApp = createJhApp({
-            baseURL: 'https://api.example.com',
-            timeout: 10000
-        });
-
-        app.use(jhApp);
-        app.mount('#app');
+      var coverSupport =
+        'CSS' in window &&
+        typeof CSS.supports === 'function' &&
+        (CSS.supports('top: env(a)') || CSS.supports('top: constant(a)'))
+      document.write(
+        '<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0' +
+          (coverSupport ? ', viewport-fit=cover' : '') +
+          '" />',
+      )
     </script>
-</body>
+    <title>%VITE_APP_TITLE%</title>
+    <!--preload-links-->
+    <!--app-context-->
+  </head>
+
+  <body>
+    <div id="app"><!--app-html--></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
 </html>
