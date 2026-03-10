@@ -3,7 +3,7 @@
  * 提供工作台相关的组件、配置和工具函数
  * 
  * 使用方式：
- * import { IndexPage, UserHeader, MenuSection, configureMenus } from '@jh-app/app/pages/index'
+ * import { IndexPage, UserHeader, MenuSection, configureMenus } from '@jinghe-sanjiaoroad-app/app/pages/index'
  */
 
 // ==================== 页面组件 ====================

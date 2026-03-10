@@ -180,7 +180,7 @@ importers:
       '@dcloudio/uni-app':
         specifier: 3.0.0-4070620250821001
         version: 3.0.0-4070620250821001(@dcloudio/types@3.4.29)(postcss@8.5.8)(rollup@4.59.0)(vue@3.5.29(typescript@5.8.3))
-      '@jh-app/app':
+      '@jinghe-sanjiaoroad-app/app':
         specifier: workspace:*
         version: link:../app
       pinia:

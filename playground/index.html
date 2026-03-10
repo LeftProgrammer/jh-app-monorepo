@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JH App 框架示例</title>
+    <title>jinghe-sanjiaoroad App 框架示例</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
 <body>
@@ -16,12 +16,12 @@
     <script>
         const { createApp } = Vue;
 
-        // 模拟 JH App 框架
+        // 模拟 jinghe-sanjiaoroad App 框架
         function createJhApp(config = {}) {
             return {
                 install(app) {
                     app.config.globalProperties.$config = config;
-                    console.log('JH App 框架已安装', config);
+                    console.log('jinghe-sanjiaoroad App 框架已安装', config);
                 }
             };
         }
@@ -29,7 +29,7 @@
         const app = createApp({
             data() {
                 return {
-                    message: 'JH App 框架示例',
+                    message: 'jinghe-sanjiaoroad App 框架示例',
                     status: '未初始化'
                 };
             },

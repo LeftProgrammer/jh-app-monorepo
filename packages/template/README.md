@@ -1,6 +1,6 @@
-# JH App 模板项目
+# jinghe-sanjiaoroad App 模板项目
 
-这是一个基于 JH App 框架创建的 uni-app 项目模板。
+这是一个基于 jinghe-sanjiaoroad App 框架创建的 uni-app 项目模板。
 
 ## 🚀 快速开始
 
@@ -74,12 +74,12 @@ src/
 ### 框架初始化
 ```typescript
 import { createApp } from 'vue'
-import { createJhApp } from '@jh-app/app'
+import { createJhApp } from '@jinghe-sanjiaoroad-app/app'
 import App from './App.vue'
 
 const app = createApp(App)
 
-// 使用 JH App 框架
+// 使用 jinghe-sanjiaoroad App 框架
 const jhApp = createJhApp({
   baseURL: 'https://api.example.com',
   timeout: 10000,
@@ -92,18 +92,18 @@ app.use(jhApp)
 ### 功能使用示例
 ```typescript
 // HTTP 请求
-import { httpClient } from '@jh-app/app'
+import { httpClient } from '@jinghe-sanjiaoroad-app/app'
 const response = await httpClient.get('/api/users')
 
 // 状态管理
-import { useUserStore } from '@jh-app/app'
+import { useUserStore } from '@jinghe-sanjiaoroad-app/app'
 const userStore = useUserStore()
 
 // UI 组件
-import { JhButton } from '@jh-app/app'
+import { JhButton } from '@jinghe-sanjiaoroad-app/app'
 
 // 工具函数
-import { formatDate, storage } from '@jh-app/app'
+import { formatDate, storage } from '@jinghe-sanjiaoroad-app/app'
 const formattedDate = formatDate(new Date(), 'YYYY-MM-DD')
 ```
 
@@ -119,7 +119,7 @@ VITE_APP_TIMEOUT=10000
 ### 主题定制
 在 `App.vue` 中自定义样式：
 ```scss
-.jh-app {
+.jinghe-sanjiaoroad-app {
   // 自定义主题色
   --primary-color: #007aff;
   --success-color: #28a745;
@@ -189,4 +189,4 @@ pnpm build:app
 
 ---
 
-通过这个模板，你可以快速开始基于 JH App 框架的移动端应用开发！
+通过这个模板，你可以快速开始基于 jinghe-sanjiaoroad App 框架的移动端应用开发！

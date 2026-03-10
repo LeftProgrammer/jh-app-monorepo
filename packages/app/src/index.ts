@@ -1,7 +1,7 @@
 /**
- * JH App 框架 - 核心功能导出
+ * jinghe-sanjiaoroad App 框架 - 核心功能导出
  * @description 提供 Vue 3 + UniApp 移动端开发框架的完整功能
- * @module @jh-app/app
+ * @module @jinghe-sanjiaoroad-app/app
  */
 
 // 默认导出 - 全局引入的便利性

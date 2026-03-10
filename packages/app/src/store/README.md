@@ -21,7 +21,7 @@
 #### **默认导出**
 ```typescript
 // 导入 Pinia 实例
-import store from '@jh-app/app/store'
+import store from '@jinghe-sanjiaoroad-app/app/store'
 
 // 在 main.js 中使用
 app.use(store)
@@ -37,7 +37,7 @@ import {
   useSystemState,
   useGlobalState,
   useDictStore
-} from '@jh-app/app/store'
+} from '@jinghe-sanjiaoroad-app/app/store'
 ```
 
 #### **命名空间导出 (export * as)**
@@ -50,7 +50,7 @@ import {
   systemStores,
   globalStores,
   dictStores
-} from '@jh-app/app/store'
+} from '@jinghe-sanjiaoroad-app/app/store'
 
 // 使用
 const { useTokenStore } = tokenStores
@@ -84,7 +84,7 @@ setActivePinia(store);
 ```typescript
 // main.js
 import { createApp } from 'vue'
-import store from '@jh-app/app/store'
+import store from '@jinghe-sanjiaoroad-app/app/store'
 
 const app = createApp(App)
 app.use(store)
@@ -94,7 +94,7 @@ app.use(store)
 
 #### **基础使用**
 ```typescript
-import { useTokenStore } from '@jh-app/app/store'
+import { useTokenStore } from '@jinghe-sanjiaoroad-app/app/store'
 
 const tokenStore = useTokenStore()
 
@@ -153,7 +153,7 @@ await tokenStore.register({
 
 #### **基础使用**
 ```typescript
-import { useUserStore } from '@jh-app/app/store'
+import { useUserStore } from '@jinghe-sanjiaoroad-app/app/store'
 
 const userStore = useUserStore()
 
@@ -186,7 +186,7 @@ interface UserState {
 
 #### **基础使用**
 ```typescript
-import { useThemeStore } from '@jh-app/app/store'
+import { useThemeStore } from '@jinghe-sanjiaoroad-app/app/store'
 
 const themeStore = useThemeStore()
 
@@ -232,7 +232,7 @@ themeStore.setThemeVars({
 
 #### **基础使用**
 ```typescript
-import { useSystemState } from '@jh-app/app/store'
+import { useSystemState } from '@jinghe-sanjiaoroad-app/app/store'
 
 const systemStore = useSystemState()
 
@@ -259,7 +259,7 @@ interface SystemState {
 
 #### **基础使用**
 ```typescript
-import { useGlobalState } from '@jh-app/app/store'
+import { useGlobalState } from '@jinghe-sanjiaoroad-app/app/store'
 
 const globalStore = useGlobalState()
 
@@ -289,7 +289,7 @@ interface GlobalState {
 
 #### **基础使用**
 ```typescript
-import { useDictStore } from '@jh-app/app/store'
+import { useDictStore } from '@jinghe-sanjiaoroad-app/app/store'
 
 const dictStore = useDictStore()
 
@@ -362,7 +362,7 @@ export const useTokenStore = defineStore('token', () => {
 
 #### **监听状态变化**
 ```typescript
-import { useTokenStore } from '@jh-app/app/store'
+import { useTokenStore } from '@jinghe-sanjiaoroad-app/app/store'
 
 const tokenStore = useTokenStore()
 
@@ -407,7 +407,7 @@ export const useUserStore = defineStore('user', () => {
 </template>
 
 <script setup>
-import { useTokenStore, useUserStore } from '@jh-app/app/store'
+import { useTokenStore, useUserStore } from '@jinghe-sanjiaoroad-app/app/store'
 
 const tokenStore = useTokenStore()
 const userStore = useUserStore()
@@ -430,7 +430,7 @@ const handleLogin = async () => {
 #### **自定义 Composables**
 ```typescript
 // composables/useAuth.ts
-import { useTokenStore, useUserStore } from '@jh-app/app/store'
+import { useTokenStore, useUserStore } from '@jinghe-sanjiaoroad-app/app/store'
 
 export function useAuth() {
   const tokenStore = useTokenStore()
@@ -566,7 +566,7 @@ const getUserInfo = async () => {
 ```typescript
 // 问题：Store 未激活导致白屏
 // 解决：确保在 main.js 中正确配置
-import store from '@jh-app/app/store'
+import store from '@jinghe-sanjiaoroad-app/app/store'
 app.use(store)
 
 // 或者手动激活

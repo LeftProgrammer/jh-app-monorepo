@@ -3,7 +3,7 @@
  * 提供通讯录相关的组件和功能
  * 
  * 使用方式：
- * import { ContactPage, ContactList, Breadcrumb } from '@jh-app/app/pages/contact'
+ * import { ContactPage, ContactList, Breadcrumb } from '@jinghe-sanjiaoroad-app/app/pages/contact'
  */
 
 // ==================== 页面组件 ====================

@@ -1,5 +1,5 @@
 {
-  "name": "jh-app-monorepo",
+  "name": "jinghe-sanjiaoroad-app-monorepo",
   "version": "1.0.0",
   "description": "移动端框架包开发 monorepo 项目",
   "private": true,
@@ -11,19 +11,19 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "build": "pnpm -r build",
-    "build:app": "pnpm --filter @jh-app/app build",
+    "build:app": "pnpm --filter @jinghe-sanjiaoroad-app/app build",
     "dev": "pnpm -r dev",
-    "dev:app": "pnpm --filter @jh-app/app dev",
+    "dev:app": "pnpm --filter @jinghe-sanjiaoroad-app/app dev",
     "test": "pnpm -r test",
-    "test:app": "pnpm --filter @jh-app/app test",
+    "test:app": "pnpm --filter @jinghe-sanjiaoroad-app/app test",
     "lint": "pnpm -r lint",
     "lint:fix": "pnpm -r lint:fix",
-    "lint:app": "pnpm --filter @jh-app/app lint",
-    "lint:fix:app": "pnpm --filter @jh-app/app lint:fix",
+    "lint:app": "pnpm --filter @jinghe-sanjiaoroad-app/app lint",
+    "lint:fix:app": "pnpm --filter @jinghe-sanjiaoroad-app/app lint:fix",
     "type-check": "pnpm -r type-check",
-    "type-check:app": "pnpm --filter @jh-app/app type-check",
+    "type-check:app": "pnpm --filter @jinghe-sanjiaoroad-app/app type-check",
     "clean": "pnpm -r clean && rm -rf node_modules",
-    "clean:app": "pnpm --filter @jh-app/app clean",
+    "clean:app": "pnpm --filter @jinghe-sanjiaoroad-app/app clean",
     "start": "pnpm dev:app",
     "check:all": "pnpm lint:app && pnpm type-check:app && pnpm build:app",
     "prepare:release": "pnpm check:all && pnpm build:app",
@@ -59,8 +59,8 @@
     ]
   },
   "author": {
-    "name": "jh-app-team",
-    "email": "team@jh-app.com"
+    "name": "jinghe-sanjiaoroad-app-team",
+    "email": "team@jinghe-sanjiaoroad-app.com"
   },
   "license": "MIT"
 }

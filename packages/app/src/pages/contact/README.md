@@ -29,7 +29,7 @@
 </template>
 
 <script setup>
-import { ContactList } from '@jh-app/app/pages/contact'
+import { ContactList } from '@jinghe-sanjiaoroad-app/app/pages/contact'
 </script>
 ```
 
@@ -64,7 +64,7 @@ import { ContactList } from '@jh-app/app/pages/contact'
 
 <script setup>
 import { ref, computed } from 'vue'
-import { ContactList, ContactBreadcrumb } from '@jh-app/app/pages/contact'
+import { ContactList, ContactBreadcrumb } from '@jinghe-sanjiaoroad-app/app/pages/contact'
 </script>
 ```
 
@@ -313,9 +313,9 @@ A: 组件会自动显示空状态，可通过 `emptyText` 自定义文本。
 
 如有问题或建议，请通过以下方式联系：
 
-- 📧 邮箱：support@jh-app.com
-- 🐛 问题反馈：[GitHub Issues](https://github.com/jh-app/issues)
-- 📖 文档：[完整文档](https://docs.jh-app.com)
+- 📧 邮箱：support@jinghe-sanjiaoroad-app.com
+- 🐛 问题反馈：[GitHub Issues](https://github.com/jinghe-sanjiaoroad-app/issues)
+- 📖 文档：[完整文档](https://docs.jinghe-sanjiaoroad-app.com)
 
 ---
 

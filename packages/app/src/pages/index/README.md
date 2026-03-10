@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-import { UserHeader, MenuSection, HomeNews } from '@jh-app/app/pages/index'
+import { UserHeader, MenuSection, HomeNews } from '@jinghe-sanjiaoroad-app/app/pages/index'
 </script>
 ```
 
@@ -25,7 +25,7 @@ import { UserHeader, MenuSection, HomeNews } from '@jh-app/app/pages/index'
 
 ```typescript
 // App.vue - 应用启动时
-import { configureMenus } from '@jh-app/app/pages/index'
+import { configureMenus } from '@jinghe-sanjiaoroad-app/app/pages/index'
 
 export default {
   onLaunch() {
@@ -147,7 +147,7 @@ export default {
 #### 方式1: 最简单 - 直接传入数组
 
 ```typescript
-import { configureMenus } from '@jh-app/app/pages/index'
+import { configureMenus } from '@jinghe-sanjiaoroad-app/app/pages/index'
 
 configureMenus([
   {
@@ -163,7 +163,7 @@ configureMenus([
 #### 方式2: 增量添加
 
 ```typescript
-import { addMenuGroup, addMenuItem } from '@jh-app/app/pages/index'
+import { addMenuGroup, addMenuItem } from '@jinghe-sanjiaoroad-app/app/pages/index'
 
 // 添加整个分组
 addMenuGroup({
@@ -183,7 +183,7 @@ addMenuItem("general", {
 #### 方式3: 完全控制
 
 ```typescript
-import { setMenuConfig } from '@jh-app/app/pages/index'
+import { setMenuConfig } from '@jinghe-sanjiaoroad-app/app/pages/index'
 
 setMenuConfig({
   overrideDefault: true,
@@ -235,7 +235,7 @@ import {
   getAllMenuItems,       // 获取所有菜单项
   searchMenuItems,       // 搜索菜单项
   getMenuStats           // 获取菜单统计
-} from '@jh-app/app/pages/index'
+} from '@jinghe-sanjiaoroad-app/app/pages/index'
 
 // 使用示例
 const groups = getMenuGroups()
@@ -253,7 +253,7 @@ import {
   addMenuItem,           // 添加菜单项
   setMenuConfig,         // 高级配置
   resetMenuConfig        // 重置配置
-} from '@jh-app/app/pages/index'
+} from '@jinghe-sanjiaoroad-app/app/pages/index'
 ```
 
 ## 🎨 样式定制
@@ -279,7 +279,7 @@ import {
 
 ```typescript
 // 只需要这样
-import { configureMenus } from '@jh-app/app/pages/index'
+import { configureMenus } from '@jinghe-sanjiaoroad-app/app/pages/index'
 
 configureMenus([
   { key: "app", name: "应用", menus: [
@@ -292,7 +292,7 @@ configureMenus([
 
 ```typescript
 // 按需添加功能
-import { addMenuItem } from '@jh-app/app/pages/index'
+import { addMenuItem } from '@jinghe-sanjiaoroad-app/app/pages/index'
 
 addMenuItem("general", { key: "feature", name: "功能" })
 ```
@@ -301,7 +301,7 @@ addMenuItem("general", { key: "feature", name: "功能" })
 
 ```typescript
 // 完全控制
-import { setMenuConfig, type MenuConfig } from '@jh-app/app/pages/index'
+import { setMenuConfig, type MenuConfig } from '@jinghe-sanjiaoroad-app/app/pages/index'
 
 const config: MenuConfig = {
   overrideDefault: true,
@@ -315,7 +315,7 @@ setMenuConfig(config)
 ### 🛠️ 调试工具
 
 ```typescript
-import { getMenuStats, resetMenuConfig } from '@jh-app/app/pages/index'
+import { getMenuStats, resetMenuConfig } from '@jinghe-sanjiaoroad-app/app/pages/index'
 
 // 查看菜单统计
 const stats = getMenuStats()

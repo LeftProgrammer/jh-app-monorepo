@@ -8,10 +8,10 @@
 
 // 基础配置
 export const manifestConfig = {
-  description: "JH App 移动端开发框架",
+  description: "jinghe-sanjiaoroad App 移动端开发框架",
   versionName: "1.0.0",
   versionCode: "100",
-  name: "JH App Framework",  // 默认名称，外部可覆盖
+  name: "jinghe-sanjiaoroad App Framework",  // 默认名称，外部可覆盖
   appid: "",               // 默认为空，外部必须设置
   locale: "zh-Hans",
   
@@ -147,7 +147,7 @@ export const manifestConfig = {
 // 导出说明：
 // manifestConfig - 基础配置对象，用于外部自定义扩展
 // 使用方式：
-// import { manifestConfig } from '@jh-app/app/config'
+// import { manifestConfig } from '@jinghe-sanjiaoroad-app/app/config'
 // import { defineManifestConfig } from "@uni-helper/vite-plugin-uni-manifest"
 // 
 // export default defineManifestConfig({

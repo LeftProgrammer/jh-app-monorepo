@@ -1,5 +1,5 @@
 <template>
-  <view class="jh-app">
+  <view class="jinghe-sanjiaoroad-app">
     <!-- 用户信息头部 -->
     <UserHeader />
     <!-- 菜单区域 -->
@@ -34,7 +34,7 @@ onHide(() => {
 </script>
 
 <style lang="scss">
-.jh-app {
+.jinghe-sanjiaoroad-app {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 </style>

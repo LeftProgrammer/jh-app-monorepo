@@ -10,7 +10,7 @@ import { tabBar } from "@/components/tabbar/config";
 export const pagesConfig: any = {
   globalStyle: {
     navigationStyle: "default",
-    navigationBarTitleText: "JH App 框架",
+    navigationBarTitleText: "jinghe-sanjiaoroad App 框架",
     navigationBarBackgroundColor: "#f8f8f8",
     navigationBarTextStyle: "black",
     backgroundColor: "#FFFFFF",

@@ -1,7 +1,7 @@
 {
-  "name": "@jh-app/template",
+  "name": "@jinghe-sanjiaoroad-app/template",
   "version": "1.0.0",
-  "description": "JH App 框架项目模板",
+  "description": "jinghe-sanjiaoroad App 框架项目模板",
   "main": "src/main.ts",
   "type": "module",
   "scripts": {
@@ -14,7 +14,7 @@
     "lint:fix": "eslint src --ext .ts,.vue --fix"
   },
   "dependencies": {
-    "@jh-app/app": "workspace:*",
+    "@jinghe-sanjiaoroad-app/app": "workspace:*",
     "@dcloudio/uni-app": "3.0.0-4070620250821001",
     "vue": "^3.4.21",
     "pinia": "2.0.36"
@@ -39,6 +39,6 @@
     "mobile",
     "framework"
   ],
-  "author": "jh-app-team",
+  "author": "jinghe-sanjiaoroad-app-team",
   "license": "MIT"
 }

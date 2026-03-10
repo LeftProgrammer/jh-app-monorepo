@@ -32,7 +32,7 @@ interface ManifestType {
  * 
  * @example
  * ```typescript
- * import { syncManifestPlugin } from '@jh-app/app/vite-plugins'
+ * import { syncManifestPlugin } from '@jinghe-sanjiaoroad-app/app/vite-plugins'
  * 
  * export default defineConfig({
  *   plugins: [

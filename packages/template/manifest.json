@@ -1,7 +1,7 @@
 {
-  "name": "jh-app-template",
+  "name": "jinghe-sanjiaoroad-app-template",
   "appid": "__UNI__APPID__",
-  "description": "JH App 框架模板项目",
+  "description": "jinghe-sanjiaoroad App 框架模板项目",
   "versionName": "1.0.0",
   "versionCode": "100",
   "transformPx": false,

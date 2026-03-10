@@ -41,10 +41,10 @@ import '@/style'
 // 使用者项目的 uni.scss
 // 覆盖主题色
 $uni-color-primary: #ff6b35;
-$jh-app-primary: #ff6b35;
+$jinghe-sanjiaoroad-app-primary: #ff6b35;
 
 // 覆盖间距
-$jh-app-spacing-md: 32rpx;
+$jinghe-sanjiaoroad-app-spacing-md: 32rpx;
 
 // 其他自定义配置...
 ```
@@ -58,10 +58,10 @@ $jh-app-spacing-md: 32rpx;
   font-size: $uni-font-size-base;
   padding: $uni-spacing-row-base;
   
-  // 使用 JH App 扩展变量
-  background: $jh-app-primary;
-  margin: $jh-app-spacing-md;
-  border-radius: $jh-app-radius-lg;
+  // 使用 jinghe-sanjiaoroad App 扩展变量
+  background: $jinghe-sanjiaoroad-app-primary;
+  margin: $jinghe-sanjiaoroad-app-spacing-md;
+  border-radius: $jinghe-sanjiaoroad-app-radius-lg;
 }
 ```
 
@@ -83,10 +83,10 @@ $jh-app-spacing-md: 32rpx;
 - `$uni-spacing-*` - 间距
 - `$uni-border-radius-*` - 圆角
 
-### JH App 框架扩展变量
-- `$jh-app-primary` - 主题色
-- `$jh-app-spacing-*` - 框架间距系统（rpx 单位）
-- `$jh-app-radius-*` - 框架圆角系统（rpx 单位）
+### jinghe-sanjiaoroad App 框架扩展变量
+- `$jinghe-sanjiaoroad-app-primary` - 主题色
+- `$jinghe-sanjiaoroad-app-spacing-*` - 框架间距系统（rpx 单位）
+- `$jinghe-sanjiaoroad-app-radius-*` - 框架圆角系统（rpx 单位）
 
 ## 优势
 

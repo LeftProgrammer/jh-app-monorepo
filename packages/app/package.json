@@ -1,7 +1,7 @@
 {
-  "name": "@jh-app/app",
+  "name": "@jinghe-sanjiaoroad-app/app",
   "version": "1.0.0",
-  "description": "JH App 移动端框架 - 一体化解决方案",
+  "description": "jinghe-sanjiaoroad App 移动端框架 - 一体化解决方案",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
@@ -103,5 +103,5 @@
     "framework",
     "all-in-one"
   ],
-  "author": "jh-app-team"
+  "author": "jinghe-sanjiaoroad-app-team"
 }

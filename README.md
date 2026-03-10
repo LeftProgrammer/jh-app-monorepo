@@ -1,11 +1,11 @@
-# JH App Monorepo
+# jinghe-sanjiaoroad App Monorepo
 
 移动端框架包开发 monorepo 项目，基于 pnpm + workspace + changesets 进行管理。
 
 ## 项目结构
 
 ```
-jh-app-monorepo/
+jinghe-sanjiaoroad-app-monorepo/
 ├── packages/
 │   ├── app/             # 主应用包 (UniApp 框架)
 │   └── template/        # 项目模板包
@@ -19,7 +19,7 @@ jh-app-monorepo/
 
 ## 包说明
 
-### @jh-app/app
+### @jinghe-sanjiaoroad-app/app
 主应用包，包含：
 - **UniApp 框架** - 基于 Vue 3 + TypeScript 的移动端开发框架
 - **状态管理** - Pinia 状态管理集成
@@ -29,7 +29,7 @@ jh-app-monorepo/
 - **工具函数** - 常用的工具函数集合
 - **BPMN 流程** - 业务流程管理集成
 
-### @jh-app/template
+### @jinghe-sanjiaoroad-app/template
 项目模板包，包含：
 - **项目初始化模板** - 快速创建新项目的脚手架
 - **最佳实践配置** - ESLint、Prettier、TypeScript 配置
@@ -89,7 +89,7 @@ pnpm type-check:app
 ### 发布主应用包
 
 ```bash
-# 构建并发布 @jh-app/app
+# 构建并发布 @jinghe-sanjiaoroad-app/app
 pnpm release:app
 ```
 
@@ -111,7 +111,7 @@ pnpm release
 ### 安装主应用包
 
 ```bash
-npm install @jh-app/app vue pinia @dcloudio/uni-app
+npm install @jinghe-sanjiaoroad-app/app vue pinia @dcloudio/uni-app
 ```
 
 ### 在项目中使用
@@ -123,17 +123,17 @@ import {
   useUserStore, 
   formatDate, 
   encryptData 
-} from '@jh-app/app'
+} from '@jinghe-sanjiaoroad-app/app'
 
 // 导入组件
 import { 
   JhButton, 
   JhModal, 
   JhTabbar 
-} from '@jh-app/app/components'
+} from '@jinghe-sanjiaoroad-app/app/components'
 
 // 导入样式
-import '@jh-app/app/style'
+import '@jinghe-sanjiaoroad-app/app/style'
 ```
 
 ## 开发规范

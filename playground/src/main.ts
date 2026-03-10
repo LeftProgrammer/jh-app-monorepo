@@ -1,10 +1,10 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import { createJhApp } from '@jh-app/core'
+import { createJhApp } from '@jinghe-sanjiaoroad-app/core'
 
 const app = createApp(App)
 
-// 使用 JH App 框架
+// 使用 jinghe-sanjiaoroad App 框架
 const jhApp = createJhApp({
   baseURL: 'https://api.example.com',
   timeout: 10000

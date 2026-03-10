@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <h1>JH App 框架示例</h1>
+    <h1>jinghe-sanjiaoroad App 框架示例</h1>
 
     <div class="demo-section">
       <h2>HTTP 请求示例</h2>
@@ -31,7 +31,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { JhButton, httpClient, useUserStore, formatDate } from '@jh-app/app'
+import { JhButton, httpClient, useUserStore, formatDate } from '@jinghe-sanjiaoroad-app/app'
 
 const httpResult = ref('')
 const formattedDate = ref('')

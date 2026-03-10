@@ -3,14 +3,14 @@
     {
       "path": "pages/index/index",
       "style": {
-        "navigationBarTitleText": "JH App",
+        "navigationBarTitleText": "jinghe-sanjiaoroad App",
         "navigationStyle": "custom"
       }
     }
   ],
   "globalStyle": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "JH App",
+    "navigationBarTitleText": "jinghe-sanjiaoroad App",
     "navigationBarBackgroundColor": "#F8F8F8",
     "backgroundColor": "#F8F8F8"
   },

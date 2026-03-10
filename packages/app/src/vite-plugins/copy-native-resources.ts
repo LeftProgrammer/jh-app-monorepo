@@ -7,7 +7,7 @@
  * 
  * @example
  * ```typescript
- * import { createCopyNativeResourcesPlugin } from '@jh-app/app/vite-plugins'
+ * import { createCopyNativeResourcesPlugin } from '@jinghe-sanjiaoroad-app/app/vite-plugins'
  * 
  * export default defineConfig({
  *   plugins: [

@@ -1,7 +1,7 @@
 {
-  "name": "jh-app-simple-example",
+  "name": "jinghe-sanjiaoroad-app-simple-example",
   "version": "1.0.0",
-  "description": "JH App 框架简单示例",
+  "description": "jinghe-sanjiaoroad App 框架简单示例",
   "private": true,
   "type": "module",
   "scripts": {
@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@jh-app/app": "workspace:*",
+    "@jinghe-sanjiaoroad-app/app": "workspace:*",
     "vue": "^3.4.21"
   },
   "devDependencies": {

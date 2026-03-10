@@ -26,10 +26,10 @@
  *       - 这样既保证了灵活性，又简化了基本使用
  * 
  * @note 持久化插件使用：
- *       - 基础使用：import { store } from '@jh-app/app/store'
- *       - 自定义配置：import { createAppStore } from '@jh-app/app/store'
- *       - 主要方法：import { createPersistedState } from '@jh-app/app/store'
- *       - 完整访问：import { persistPlugin } from '@jh-app/app/store'
+ *       - 基础使用：import { store } from '@jinghe-sanjiaoroad-app/app/store'
+ *       - 自定义配置：import { createAppStore } from '@jinghe-sanjiaoroad-app/app/store'
+ *       - 主要方法：import { createPersistedState } from '@jinghe-sanjiaoroad-app/app/store'
+ *       - 完整访问：import { persistPlugin } from '@jinghe-sanjiaoroad-app/app/store'
  * 
  * @note 包体积优化：
  *       - createPersistedState: 按需导出，支持 Tree Shaking
@@ -69,11 +69,11 @@ setActivePinia(store);
  * @example
  * ```typescript
  * // 方式1: 使用默认配置（推荐）
- * import { store } from '@jh-app/app/store'
+ * import { store } from '@jinghe-sanjiaoroad-app/app/store'
  * app.use(store)
  * 
  * // 方式2: 使用自定义配置
- * import { createAppStore } from '@jh-app/app/store'
+ * import { createAppStore } from '@jinghe-sanjiaoroad-app/app/store'
  * const customStore = createAppStore({
  *   getItem: localStorage.getItem,
  *   setItem: localStorage.setItem,
@@ -82,7 +82,7 @@ setActivePinia(store);
  * 
  * // 方式3: 完全自定义配置
  * import { createPinia } from 'pinia'  // 外部项目安装 pinia
- * import { createPersistedState } from '@jh-app/app/store'  // 按需导入
+ * import { createPersistedState } from '@jinghe-sanjiaoroad-app/app/store'  // 按需导入
  * const customStore = createPinia()
  * customStore.use(createPersistedState({
  *   storage: {
@@ -94,7 +94,7 @@ setActivePinia(store);
  * app.use(customStore)
  * 
  * // 方式4: 使用插件的其他方法（按需导入）
- * import { persistPlugin } from '@jh-app/app/store'
+ * import { persistPlugin } from '@jinghe-sanjiaoroad-app/app/store'
  * // 假设插件有其他方法
  * // persistPlugin.someOtherMethod()
  * ```
