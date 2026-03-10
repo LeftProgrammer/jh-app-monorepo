@@ -67,12 +67,12 @@
 
 <script lang="ts" setup>
 import { storeToRefs } from "pinia";
-import { useUserStore } from "@/store";
-import { getTaskTodoPage } from "@/api/bpm/task";
-import { getMyNotifyMessagePage } from "@/api/system/notify/message";
-import { isTabBarPage } from "@/components/tabbar/config";
+import { useUserStore } from "../../../store";
+import { getTaskTodoPage } from "../../../api/bpm/task";
+import { getMyNotifyMessagePage } from "../../../api/system/notify/message";
+import { isTabBarPage } from "../../../components/tabbar/config";
 import { useToast } from "wot-design-uni";
-import { parseUrl, setTabParams } from "@/utils/url";
+import { parseUrl, setTabParams } from "../../../utils/url";
 
 defineOptions({
   name: "UserHeader"

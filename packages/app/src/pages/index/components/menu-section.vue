@@ -55,11 +55,11 @@
 
 <script lang="ts" setup>
 import type { MenuGroup, MenuItem } from "../menu-config";
-import { useUserStore } from "@/store/user";
+import { useUserStore } from "../../../store/user";
 import { getMenuGroups, getMenuItemByKey } from "../menu-config";
 import { useToast } from "wot-design-uni";
-import { parseUrl, setTabParams } from "@/utils/url";
-import { isTabBarPage } from "@/components/tabbar/config";
+import { parseUrl, setTabParams } from "../../../utils/url";
+import { isTabBarPage } from "../../../components/tabbar/config";
 
 defineOptions({
   name: "MenuSection"

@@ -53,8 +53,8 @@
 <script lang="ts" setup>
 import type { MenuItem } from "../menu-config";
 import { useToast } from "wot-design-uni";
-import { isTabBarPage } from "@/components/tabbar/config";
-import { parseUrl, setTabParams } from "@/utils/url";
+import { isTabBarPage } from "../../../components/tabbar/config";
+import { parseUrl, setTabParams } from "../../../utils/url";
 
 defineOptions({
   name: "MenuGrid"

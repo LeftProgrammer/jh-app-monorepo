@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onHide, onLaunch, onShow } from '@dcloudio/uni-app'
-import { router } from '@jinghe-sanjiaoroad-app/app'
+import { navigateToInterceptor } from '@/router/interceptor'
 
 onLaunch((options) => {
   console.log('App.vue onLaunch', options)
@@ -10,10 +10,10 @@ onShow((options) => {
   // 处理直接进入页面路由的情况：如h5直接输入路由、微信小程序分享后进入等
   // https://github.com/unibest-tech/unibest/issues/192
   if (options?.path) {
-    router.navigateToInterceptor.invoke({ url: `/${options.path}`, query: options.query })
+    navigateToInterceptor.invoke({ url: `/${options.path}`, query: options.query })
   }
   else {
-    router.navigateToInterceptor.invoke({ url: '/' })
+    navigateToInterceptor.invoke({ url: '/' })
   }
 })
 onHide(() => {

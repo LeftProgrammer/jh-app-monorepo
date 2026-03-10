@@ -26,7 +26,7 @@ import type {
   SubPackages,
 } from "@uni-helper/vite-plugin-uni-pages";
 import { isMpWeixin } from "@uni-helper/uni-env";
-import { isPageTabbarStore } from "@/components/tabbar/store";
+import { isPageTabbarStore } from "../components/tabbar/store";
 
 export type PageInstance = Page.PageInstance<AnyObject, object> & {
   $page: Page.PageInstance<AnyObject, object> & { fullPath: string };

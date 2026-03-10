@@ -1,6 +1,6 @@
 /**
  * 路由拦截器模块
- * 
+ *
  * @description 提供路由拦截、登录验证、页面访问控制等功能，支持黑名单和白名单两种策略
  * @export judgeIsExcludePath - 判断路径是否需要排除登录
  * @export FG_LOG_ENABLE - 调试日志开关
@@ -8,15 +8,15 @@
  */
 /* eslint-disable brace-style */ // 原因：unibest 官方维护的代码，尽量不要大概，避免难以合并
 import { isMp } from '@uni-helper/uni-env'
+import { isPageTabbarStore, tabbarStore } from '../components/tabbar/store'
 /**
  * by 菲鸽 on 2025-08-19
  * 路由拦截，通常也是登录拦截
  * 黑、白名单的配置，请看 config.ts 文件， EXCLUDE_LOGIN_PATH_LIST
  */
-import { useTokenStore } from '@/store/token'
-import { isPageTabbarStore, tabbarStore } from '@/components/tabbar/store'
-import { getAllPages, getLastPage, HOME_PAGE, parseUrlToObj } from '@/utils/index'
-import { toLoginPage } from '@/utils/toLoginPage'
+import { useTokenStore } from '../store/token'
+import { getAllPages, getLastPage, HOME_PAGE, parseUrlToObj } from '../utils/index'
+import { toLoginPage } from '../utils/toLoginPage'
 import { EXCLUDE_LOGIN_PATH_LIST, isNeedLoginMode, LOGIN_PAGE, LOGIN_PAGE_ENABLE_IN_MP, NOT_FOUND_PAGE } from './config'
 
 export const FG_LOG_ENABLE = false

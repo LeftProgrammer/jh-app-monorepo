@@ -96,5 +96,9 @@ export default defineConfig(({ mode }) => {
         '@': resolve(__dirname, 'src'),
       },
     },
+    // 确保外部化时正确处理别名路径
+    define: {
+      'process.env.NODE_ENV': JSON.stringify(mode),
+    },
   }
 })

@@ -1,6 +1,6 @@
 /**
  * 路由配置模块
- * 
+ *
  * @description 提供登录策略配置、页面路径定义、路由白名单等功能
  * @export LOGIN_STRATEGY_MAP - 登录策略枚举
  * @export LOGIN_STRATEGY - 当前登录策略

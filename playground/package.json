@@ -2,8 +2,8 @@
   "name": "jinghe-sanjiaoroad-app-playground",
   "type": "module",
   "version": "1.0.0",
-  "description": "jinghe-sanjiaoroad App 框架示例项目",
   "packageManager": "pnpm@10.10.0",
+  "description": "jinghe-sanjiaoroad App 框架示例项目",
   "author": {
     "name": "jinghe-sanjiaoroad",
     "email": "dev@jinghe-sanjiaoroad.com"
@@ -27,7 +27,6 @@
     "lint:fix": "eslint --fix"
   },
   "dependencies": {
-    "@jinghe-sanjiaoroad-app/app": "workspace:*",
     "@dcloudio/uni-app": "3.0.0-4070620250821001",
     "@dcloudio/uni-app-harmony": "3.0.0-4070620250821001",
     "@dcloudio/uni-app-plus": "3.0.0-4070620250821001",
@@ -43,7 +42,8 @@
     "@dcloudio/uni-mp-toutiao": "3.0.0-4070620250821001",
     "@dcloudio/uni-mp-weixin": "3.0.0-4070620250821001",
     "@dcloudio/uni-mp-xhs": "3.0.0-4070620250821001",
-    "@dcloudio/uni-quickapp-webview": "3.0.0-4070620250821001"
+    "@dcloudio/uni-quickapp-webview": "3.0.0-4070620250821001",
+    "@jinghe-sanjiaoroad-app/app": "workspace:*"
   },
   "devDependencies": {
     "@dcloudio/types": "^3.4.8",
@@ -57,6 +57,8 @@
     "@iconify/utils": "^3.0.2",
     "@rollup/rollup-darwin-x64": "^4.28.0",
     "@types/node": "^20.17.9",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
     "@uni-helper/eslint-config": "0.5.0",
     "@uni-helper/plugin-uni": "0.1.0",
     "@uni-helper/uni-env": "0.1.8",
@@ -74,8 +76,6 @@
     "diagram-js": "12.8.0",
     "eslint": "^9.31.0",
     "eslint-plugin-format": "^1.0.1",
-    "@typescript-eslint/eslint-plugin": "^8.0.0",
-    "@typescript-eslint/parser": "^8.0.0",
     "prettier": "^3.3.0",
     "sass": "1.77.8",
     "std-env": "^3.9.0",
@@ -87,6 +87,9 @@
     "vue-tsc": "^3.0.6"
   },
   "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": ["vue"]
+    },
     "overrides": {
       "unconfig": "7.3.2"
     }
