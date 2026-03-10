@@ -17,7 +17,7 @@ export * as store from './store'
 export * as router from './router'
 
 // HTTP 模块
-export * from './http'
+export * as http from './http'
 
 // 组合函数
 export * from './hooks'
@@ -35,7 +35,7 @@ export * from './components'
 export * as pages from './pages'
 
 // 样式模块
-export * from './style'
+export * as style from './style'
 
 // Vite 插件
-export * from './vite-plugins'
+export * as vitePlugins from './vite-plugins'

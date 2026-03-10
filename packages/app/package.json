@@ -36,7 +36,7 @@
       "require": "./dist/components/index.cjs.js",
       "types": "./dist/components/index.d.ts"
     },
-    "./style": "./dist/index.css"
+    "./style": "./dist/style.css"
   },
   "dependencies": {
     "@dcloudio/uni-components": "3.0.0-4070620250821001",
