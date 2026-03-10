@@ -4,6 +4,14 @@
   "description": "移动端框架包开发 monorepo 项目",
   "private": true,
   "packageManager": "pnpm@10.10.0",
+  "resolutions": {
+    "bin-wrapper": "npm:bin-wrapper-china"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": ["vue"]
+    }
+  },
   "engines": {
     "node": ">=18",
     "pnpm": ">=9"

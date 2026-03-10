@@ -26,11 +26,8 @@ export default defineConfig(({ mode }) => {
         name: 'JhApp',
         formats: ['es', 'cjs'],
         fileName: (format, entryName) => {
-          const extension = format === 'es' ? 'esm' : format;
-          if (entryName === 'index') {
-            return `index.${extension}.js`;
-          }
-          return `${entryName}.${extension}.js`;
+          const extension = format === 'es' ? 'esm' : 'cjs';
+          return entryName === 'index' ? `index.${extension}` : `${entryName}.${extension}`;
         },
       },
       rollupOptions: {

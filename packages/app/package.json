@@ -2,7 +2,7 @@
   "name": "@jinghe-sanjiaoroad-app/app",
   "version": "1.0.0",
   "description": "jinghe-sanjiaoroad App 移动端框架 - 一体化解决方案",
-  "main": "dist/index.js",
+  "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -10,7 +10,7 @@
     "README.md"
   ],
   "scripts": {
-    "build": "pnpm -r build",
+    "build": "vite build",
     "build:types": "vue-tsc --emitDeclarationOnly",
     "build:watch": "vite build --watch",
     "dev": "vite build --watch",
@@ -27,8 +27,8 @@
   },
   "exports": {
     ".": {
-      "import": "./dist/index-*.mjs",
-      "require": "./dist/index-*.js",
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.cjs.js",
       "types": "./dist/index.d.ts"
     },
     "./components": {
@@ -50,7 +50,8 @@
     "diagram-js": "12.8.0",
     "jsencrypt": "^3.5.4",
     "pinia-plugin-persistedstate": "3.2.1",
-    "wot-design-uni": "^1.13.0"
+    "wot-design-uni": "^1.13.0",
+    "vue": "^3.4.37"
   },
   "devDependencies": {
     "@dcloudio/types": "^3.4.8",
@@ -82,7 +83,7 @@
   },
   "peerDependencies": {
     "@dcloudio/uni-app": "3.0.0-4070620250821001",
-    "vue": "^3.4.21",
+    "vue": "^3.4.37",
     "pinia": "2.0.36"
   },
   "peerDependenciesMeta": {

@@ -15,14 +15,14 @@
     "url-old": "https://github.com/codercup/unibest/issues"
   },
   "engines": {
-    "node": ">=20",
+    "node": ">=18",
     "pnpm": ">=9"
   },
   "scripts": {
     "dev": "uni",
     "build": "uni build",
     "type-check": "vue-tsc --noEmit",
-    "prepare": "pnpm init-baseFiles",
+    "prepare": "node scripts/create-base-files.js",
     "lint": "eslint",
     "lint:fix": "eslint --fix"
   },
@@ -82,9 +82,9 @@
     "typescript": "~5.8.0",
     "unocss": "66.0.0",
     "unplugin-auto-import": "^20.0.0",
-    "vue-tsc": "^3.0.6",
     "vite": "5.2.8",
-    "vite-plugin-restart": "^1.0.0"
+    "vite-plugin-restart": "^1.0.0",
+    "vue-tsc": "^3.0.6"
   },
   "pnpm": {
     "overrides": {
