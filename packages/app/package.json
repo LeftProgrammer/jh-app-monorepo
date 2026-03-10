@@ -10,16 +10,20 @@
     "README.md"
   ],
   "scripts": {
-    "build": "npm run clean && vite build",
+    "build": "pnpm -r build",
     "build:types": "vue-tsc --emitDeclarationOnly",
     "build:watch": "vite build --watch",
     "dev": "vite build --watch",
     "lint": "eslint src --ext .ts,.vue --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint src --ext .ts,.vue --fix",
     "type-check": "vue-tsc --noEmit",
-    "clean": "rimraf dist",
-    "prepublishOnly": "npm run build && npm run build:types && npm run lint",
-    "preview": "npm run build && npm pack --dry-run"
+    "test": "vitest",
+    "test:watch": "vitest --watch",
+    "test:coverage": "vitest --coverage",
+    "clean": "pnpm -r clean && rm -rf node_modules",
+    "prepublishOnly": "pnpm -r build",
+    "prepublish": "pnpm -r build && pnpm test",
+    "publish": "pnpm -r publish --no-git-checks --access public"
   },
   "exports": {
     ".": {

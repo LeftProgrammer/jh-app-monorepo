@@ -24,6 +24,11 @@
     "type-check:app": "pnpm --filter @jinghe-sanjiaoroad-app/app type-check",
     "clean": "pnpm -r clean && rm -rf node_modules",
     "clean:app": "pnpm --filter @jinghe-sanjiaoroad-app/app clean",
+    "dev:playground": "pnpm --filter jinghe-sanjiaoroad-app-playground dev",
+    "build:playground": "pnpm --filter jinghe-sanjiaoroad-app-playground build",
+    "lint:playground": "pnpm --filter jinghe-sanjiaoroad-app-playground lint",
+    "check:playground": "node scripts/test-framework.js",
+    "clean:playground": "pnpm --filter jinghe-sanjiaoroad-app-playground clean",
     "start": "pnpm dev:app",
     "check:all": "pnpm lint:app && pnpm type-check:app && pnpm build:app",
     "prepare:release": "pnpm check:all && pnpm build:app",
@@ -60,7 +65,16 @@
   },
   "author": {
     "name": "jinghe-sanjiaoroad-app-team",
-    "email": "team@jinghe-sanjiaoroad-app.com"
+    "email": "team@jinghe-sanjiaoroad-app.com",
+    "url": "https://github.com/LeftProgrammer/jh-app-monorepo"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "homepage": "https://github.com/LeftProgrammer/jh-app-monorepo#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LeftProgrammer/jh-app-monorepo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/LeftProgrammer/jh-app-monorepo/issues"
+  }
 }
