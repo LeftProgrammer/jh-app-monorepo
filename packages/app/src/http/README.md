@@ -25,19 +25,19 @@ import {
   CustomRequestOptions, // 类型定义
   ResultEnum,        // 枚举
   stringifyQuery     // 工具函数
-} from '@jinghe-sanjiaoroad-app/app/http'
+} from '@jinghe-sanjiaoroad-app/framework/http'
 ```
 
 #### **明确命名导出 (export { default as })**
 ```typescript
 // 直接导入 HTTP 实例
-import { http } from '@jinghe-sanjiaoroad-app/app/http'
+import { http } from '@jinghe-sanjiaoroad-app/framework/http'
 ```
 
 #### **命名空间导出 (export * as)**
 ```typescript
 // 导入命名空间
-import { httpCore, httpTypes, httpInterceptor } from '@jinghe-sanjiaoroad-app/app/http'
+import { httpCore, httpTypes, httpInterceptor } from '@jinghe-sanjiaoroad-app/framework/http'
 
 const { http: httpFunction } = httpCore
 const { CustomRequestOptions } = httpTypes
@@ -50,7 +50,7 @@ const { requestInterceptor } = httpInterceptor
 
 #### **GET 请求**
 ```typescript
-import { http } from '@jinghe-sanjiaoroad-app/app/http'
+import { http } from '@jinghe-sanjiaoroad-app/framework/http'
 
 // 简单 GET 请求
 const users = await http.get('/api/users')
@@ -109,7 +109,7 @@ const result = await http({
 
 #### **自定义请求选项**
 ```typescript
-import { CustomRequestOptions } from '@jinghe-sanjiaoroad-app/app/http'
+import { CustomRequestOptions } from '@jinghe-sanjiaoroad-app/framework/http'
 
 const options: CustomRequestOptions = {
   url: '/api/users',
@@ -128,7 +128,7 @@ const result = await http(options)
 
 #### **类型安全使用**
 ```typescript
-import { http, CustomRequestOptions, IResponse } from '@jinghe-sanjiaoroad-app/app/http'
+import { http, CustomRequestOptions, IResponse } from '@jinghe-sanjiaoroad-app/framework/http'
 
 interface User {
   id: number
@@ -149,7 +149,7 @@ const response: IResponse<User[]> = await http(options)
 
 #### **状态码判断**
 ```typescript
-import { ResultEnum, ShowMessage } from '@jinghe-sanjiaoroad-app/app/http'
+import { ResultEnum, ShowMessage } from '@jinghe-sanjiaoroad-app/framework/http'
 
 try {
   const response = await http.get('/api/users')
@@ -166,7 +166,7 @@ try {
 
 #### **错误消息生成**
 ```typescript
-import { ShowMessage } from '@jinghe-sanjiaoroad-app/app/http'
+import { ShowMessage } from '@jinghe-sanjiaoroad-app/framework/http'
 
 // 生成错误消息
 const errorMessage = ShowMessage(404)
@@ -196,7 +196,7 @@ const login = await http.post('/login', credentials)
 
 #### **分页参数类型**
 ```typescript
-import { PageParam, PageResult } from '@jinghe-sanjiaoroad-app/app/http'
+import { PageParam, PageResult } from '@jinghe-sanjiaoroad-app/framework/http'
 
 interface User {
   id: number
@@ -218,7 +218,7 @@ const result: PageResult<User> = await http.get('/api/users', pageParam)
 
 #### **查询参数序列化**
 ```typescript
-import { stringifyQuery } from '@jinghe-sanjiaoroad-app/app/http'
+import { stringifyQuery } from '@jinghe-sanjiaoroad-app/framework/http'
 
 // 序列化查询参数
 const query = stringifyQuery({
@@ -235,7 +235,7 @@ console.log(query) // "page=1&size=10&status=active&tags=tag1&tags=tag2"
 
 #### **安装拦截器**
 ```typescript
-import { requestInterceptor } from '@jinghe-sanjiaoroad-app/app/http'
+import { requestInterceptor } from '@jinghe-sanjiaoroad-app/framework/http'
 
 // 在应用启动时安装拦截器
 requestInterceptor.install()
@@ -271,7 +271,7 @@ const users = await http.get('/users')
 
 #### **1. 统一的错误处理**
 ```typescript
-import { http, ResultEnum } from '@jinghe-sanjiaoroad-app/app/http'
+import { http, ResultEnum } from '@jinghe-sanjiaoroad-app/framework/http'
 
 class ApiService {
   static async request<T>(options: CustomRequestOptions): Promise<T> {
@@ -294,7 +294,7 @@ class ApiService {
 
 #### **2. 类型安全的 API 封装**
 ```typescript
-import { http, CustomRequestOptions } from '@jinghe-sanjiaoroad-app/app/http'
+import { http, CustomRequestOptions } from '@jinghe-sanjiaoroad-app/framework/http'
 
 interface User {
   id: number
@@ -338,7 +338,7 @@ class UserApi {
 
 #### **3. 请求重试机制**
 ```typescript
-import { http } from '@jinghe-sanjiaoroad-app/app/http'
+import { http } from '@jinghe-sanjiaoroad-app/framework/http'
 
 async function requestWithRetry<T>(
   options: CustomRequestOptions,

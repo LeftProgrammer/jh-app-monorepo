@@ -74,8 +74,10 @@ export default defineConfig(({ command, mode }) => {
         // 是个数组，可以配置多个，但是不能为pages里面的目录！！
         subPackages: [
           'src/pages-core', // 这个是相对必要的路由，尽量留着（登录页、注册页、404页等）
-          'src/pages-bpm', // “工作流程”模块
+          'src/pages-bpm', // "工作流程"模块
+          'src/pages-new', // 新增分包
         ],
+
         dts: 'src/types/uni-pages.d.ts',
       }),
       // Optimization 插件需要 page.json 文件，故应在 UniPages 插件之后执行
@@ -179,6 +181,9 @@ export default defineConfig(({ command, mode }) => {
         '@': path.join(process.cwd(), './src'),
         '@img': path.join(process.cwd(), './src/static/images'),
       },
+    },
+    optimizeDeps: {
+      include: ['@jinghe-sanjiaoroad-app/framework'],
     },
     server: {
       host: '0.0.0.0',

@@ -1,15 +1,14 @@
 {
-  "name": "@jinghe-sanjiaoroad-app/app",
+  "name": "@jinghe-sanjiaoroad-app/framework",
   "version": "1.0.0",
-  "description": "jinghe-sanjiaoroad App 移动端框架 - 一体化解决方案",
-  "author": "jinghe-sanjiaoroad-app-team",
+  "description": "jinghe-sanjiaoroad App 移动端框架",
+  "author": "jinghe-智慧工程",
   "keywords": [
     "uni-app",
     "vue3",
     "typescript",
     "mobile",
-    "framework",
-    "all-in-one"
+    "framework"
   ],
   "exports": {
     ".": {

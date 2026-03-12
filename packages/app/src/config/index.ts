@@ -2,7 +2,7 @@
  * 配置模块统一导出
  * 
  * 使用方式：
- * import { manifestConfig, pagesConfig, unoConfig } from '@jinghe-sanjiaoroad-app/app/config'
+ * import { manifestConfig, pagesConfig, unoConfig } from '@jinghe-sanjiaoroad-app/framework/config'
  */
 
 // 直接导出配置

@@ -1,15 +1,15 @@
-# @jinghe-sanjiaoroad-app/app
+# @jinghe-sanjiaoroad-app/framework
 
 ## 📦 导入指南
 
 ### 页面模块
 ```typescript
 // 工作台页面
-import { pages } from '@jinghe-sanjiaoroad-app/app'
+import { pages } from '@jinghe-sanjiaoroad-app/framework'
 const { HomePage, UserHeader, MenuSection } = pages.index
 
 // 或者直接导入
-import { HomePage, UserHeader, MenuSection } from '@jinghe-sanjiaoroad-app/app/pages/index'
+import { HomePage, UserHeader, MenuSection } from '@jinghe-sanjiaoroad-app/framework/pages/index'
 
 // 使用示例
 // HomePage - 首页工作台页面
@@ -897,7 +897,7 @@ function handleSettingsClick() {
 
 **方式1: 直接传入数组（推荐）**
 ```typescript
-import { configureMenus } from '@jinghe-sanjiaoroad-app/app'
+import { configureMenus } from '@jinghe-sanjiaoroad-app/framework'
 
 // 最简单：直接传入菜单数组
 configureMenus([
@@ -917,7 +917,7 @@ configureMenus([
 
 **方式2: 增量添加**
 ```typescript
-import { addMenuGroup, addMenuItem } from '@jinghe-sanjiaoroad-app/app'
+import { addMenuGroup, addMenuItem } from '@jinghe-sanjiaoroad-app/framework'
 
 // 添加整个分组
 addMenuGroup({
@@ -1023,7 +1023,7 @@ addMenuItem("general", {
 
 **完全自定义菜单**
 ```typescript
-import { setMenuConfig } from '@jinghe-sanjiaoroad-app/app'
+import { setMenuConfig } from '@jinghe-sanjiaoroad-app/framework'
 
 // 高级配置：完全控制
 setMenuConfig({
@@ -1088,7 +1088,7 @@ setMenuConfig({
 **新手用户**
 ```typescript
 // 只需要这样配置
-import { configureMenus } from '@jinghe-sanjiaoroad-app/app'
+import { configureMenus } from '@jinghe-sanjiaoroad-app/framework'
 
 configureMenus([
   { key: "myapp", name: "我的应用", menus: [
@@ -1100,7 +1100,7 @@ configureMenus([
 **进阶用户**
 ```typescript
 // 可以使用更多功能，但不是必须的
-import { setMenuConfig, addMenuItem } from '@jinghe-sanjiaoroad-app/app'
+import { setMenuConfig, addMenuItem } from '@jinghe-sanjiaoroad-app/framework'
 
 // 添加菜单
 addMenuItem("general", { key: "feature", name: "功能", url: "/pages/feature" })
@@ -1120,31 +1120,31 @@ setMenuConfig({
 
 ### HTTP 模块
 ```typescript
-import { http, httpGet, httpPost, httpPut, httpDelete } from '@jinghe-sanjiaoroad-app/app'
+import { http, httpGet, httpPost, httpPut, httpDelete } from '@jinghe-sanjiaoroad-app/framework'
 // 来源：src/http/index.ts
 ```
 
 ### Store 状态管理
 ```typescript
-import { useTokenStore, useUserStore } from '@jinghe-sanjiaoroad-app/app'
+import { useTokenStore, useUserStore } from '@jinghe-sanjiaoroad-app/framework'
 // 来源：src/store/token.ts, src/store/index.ts
 ```
 
 ### Router 路由
 ```typescript
-import { useRouter, toLoginPage } from '@jinghe-sanjiaoroad-app/app'
+import { useRouter, toLoginPage } from '@jinghe-sanjiaoroad-app/framework'
 // 来源：src/router/interceptor.ts
 ```
 
 ### Utils 工具函数
 ```typescript
-import { formatDate, deepClone, debounce } from '@jinghe-sanjiaoroad-app/app'
+import { formatDate, deepClone, debounce } from '@jinghe-sanjiaoroad-app/framework'
 // 来源：src/utils/index.ts, src/utils/date.ts
 ```
 
 ### Types 类型定义
 ```typescript
-import type { CustomRequestOptions, UserInfo } from '@jinghe-sanjiaoroad-app/app'
+import type { CustomRequestOptions, UserInfo } from '@jinghe-sanjiaoroad-app/framework'
 // 来源：src/types/index.ts, src/http/types.ts
 ```
 

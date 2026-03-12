@@ -18,8 +18,8 @@
 ### 安装
 
 ```bash
-# 组件已内置在 @jinghe-sanjiaoroad-app/app 中
-import { Tabbar } from '@jinghe-sanjiaoroad-app/app'
+# 组件已内置在 @jinghe-sanjiaoroad-app/framework 中
+import { Tabbar } from '@jinghe-sanjiaoroad-app/framework'
 ```
 
 ### 基础使用
@@ -30,7 +30,7 @@ import { Tabbar } from '@jinghe-sanjiaoroad-app/app'
 </template>
 
 <script setup>
-import { Tabbar } from '@jinghe-sanjiaoroad-app/app'
+import { Tabbar } from '@jinghe-sanjiaoroad-app/framework'
 </script>
 ```
 
@@ -42,7 +42,7 @@ import { Tabbar } from '@jinghe-sanjiaoroad-app/app'
 </template>
 
 <script setup>
-import { Tabbar, createTabbarConfig } from '@jinghe-sanjiaoroad-app/app'
+import { Tabbar, createTabbarConfig } from '@jinghe-sanjiaoroad-app/framework'
 
 const tabbarConfig = createTabbarConfig({
   items: [
@@ -83,7 +83,7 @@ const tabbarConfig = createTabbarConfig({
 </template>
 
 <script setup>
-import { Tabbar, createTabbarConfig, createTabbarHooks } from '@jinghe-sanjiaoroad-app/app'
+import { Tabbar, createTabbarConfig, createTabbarHooks } from '@jinghe-sanjiaoroad-app/framework'
 
 const tabbarConfig = createTabbarConfig({
   items: [
@@ -112,7 +112,7 @@ const tabbarHooks = createTabbarHooks({
 
 ```vue
 <script setup>
-import { tabbarStore, createTabbarStore } from '@jinghe-sanjiaoroad-app/app'
+import { tabbarStore, createTabbarStore } from '@jinghe-sanjiaoroad-app/framework'
 
 // 全局状态
 const { curIdx, setCurIdx } = tabbarStore
@@ -134,7 +134,7 @@ const { tabbarList, tabbarStore: customStore } = createTabbarStore(customItems)
 </template>
 
 <script setup>
-import { createTabbarStore } from '@jinghe-sanjiaoroad-app/app'
+import { createTabbarStore } from '@jinghe-sanjiaoroad-app/framework'
 const { tabbarList, tabbarStore } = createTabbarStore(customItems)
 </script>
 ```

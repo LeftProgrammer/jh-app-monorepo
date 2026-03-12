@@ -3,7 +3,7 @@
  * 提供请假、会议、新闻、用印、接待等通用业务组件和功能
  * 
  * 使用方式：
- * import { LeaveApplyPage, MeetingPage, NewsPage, SealPage, CampPage } from '@jinghe-sanjiaoroad-app/app/pages/general'
+ * import { LeaveApplyPage, MeetingPage, NewsPage, SealPage, CampPage } from '@jinghe-sanjiaoroad-app/framework/pages/general'
  */
 
 // ==================== 请假申请模块 ====================

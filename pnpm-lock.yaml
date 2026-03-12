@@ -228,7 +228,7 @@ importers:
       '@dcloudio/uni-quickapp-webview':
         specifier: 3.0.0-4070620250821001
         version: 3.0.0-4070620250821001(postcss@8.5.8)(rollup@4.59.0)(vue@3.5.30(typescript@5.8.3))
-      '@jinghe-sanjiaoroad-app/app':
+      '@jinghe-sanjiaoroad-app/framework':
         specifier: workspace:*
         version: link:../packages/app
     devDependencies:

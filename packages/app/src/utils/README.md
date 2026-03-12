@@ -37,7 +37,7 @@ import {
   currRoute,
   formatDate,
   deepClone
-} from '@jinghe-sanjiaoroad-app/app/utils'
+} from '@jinghe-sanjiaoroad-app/framework/utils'
 ```
 
 ### 🎯 命名空间导出
@@ -58,7 +58,7 @@ import {
   utilsTree,
   utilsUpdate,
   utilsLogin
-} from '@jinghe-sanjiaoroad-app/app/utils'
+} from '@jinghe-sanjiaoroad-app/framework/utils'
 
 // 使用
 const { isPageTabbar } = utilsPage
@@ -72,7 +72,7 @@ const { AES } = utilsEncrypt
 
 #### **页面配置**
 ```typescript
-import { getPageConfig } from '@jinghe-sanjiaoroad-app/app/utils'
+import { getPageConfig } from '@jinghe-sanjiaoroad-app/framework/utils'
 
 // 获取页面配置
 const config = getPageConfig({
@@ -88,7 +88,7 @@ const config = getPageConfig({
 
 #### **页面状态**
 ```typescript
-import { getLastPage, currRoute } from '@jinghe-sanjiaoroad-app/app/utils'
+import { getLastPage, currRoute } from '@jinghe-sanjiaoroad-app/framework/utils'
 
 // 获取最后页面
 const lastPage = getLastPage()
@@ -101,7 +101,7 @@ console.log('查询参数:', route.query)
 
 #### **Tabbar 判断**
 ```typescript
-import { isPageTabbar } from '@jinghe-sanjiaoroad-app/app/utils'
+import { isPageTabbar } from '@jinghe-sanjiaoroad-app/framework/utils'
 
 // 检查是否为 Tabbar 页面
 const isTabbar = isPageTabbar('/pages/index/index', [
@@ -114,7 +114,7 @@ const isTabbar = isPageTabbar('/pages/index/index', [
 
 #### **日期格式化**
 ```typescript
-import { formatDate } from '@jinghe-sanjiaoroad-app/app/utils'
+import { formatDate } from '@jinghe-sanjiaoroad-app/framework/utils'
 
 // 格式化日期
 const formattedDate = formatDate(new Date(), 'YYYY-MM-DD HH:mm:ss')
@@ -126,7 +126,7 @@ const time = formatDate(Date.now(), 'HH:mm:ss')
 
 #### **AES 加密**
 ```typescript
-import { AES } from '@jinghe-sanjiaoroad-app/app/utils'
+import { AES } from '@jinghe-sanjiaoroad-app/framework/utils'
 
 // AES 加密
 const encrypted = AES.encrypt('hello world', 'secret-key')
@@ -138,7 +138,7 @@ const decrypted = AES.decrypt(encrypted, 'secret-key')
 
 #### **RSA 加密**
 ```typescript
-import { RSA } from '@jinghe-sanjiaoroad-app/app/utils'
+import { RSA } from '@jinghe-sanjiaoroad-app/framework/utils'
 
 // RSA 加密
 const rsa = new RSA()
@@ -150,7 +150,7 @@ const decrypted = rsa.decrypt(encrypted, privateKey)
 
 #### **业务常量**
 ```typescript
-import { utilsConstants } from '@jinghe-sanjiaoroad-app/app/utils'
+import { utilsConstants } from '@jinghe-sanjiaoroad-app/framework/utils'
 
 // BPM 枚举
 const { BPM_ENUM } = utilsConstants
@@ -166,7 +166,7 @@ const { DICT_ENUM } = utilsConstants
 
 #### **获取导航栏高度**
 ```typescript
-import { getNavbarHeight } from '@jinghe-sanjiaoroad-app/app/utils'
+import { getNavbarHeight } from '@jinghe-sanjiaoroad-app/framework/utils'
 
 // 获取导航栏高度（考虑状态栏和胶囊按钮）
 const navbarHeight = getNavbarHeight()
@@ -174,7 +174,7 @@ const navbarHeight = getNavbarHeight()
 
 #### **环境配置**
 ```typescript
-import { getEnvBaseUrl, isDoubleTokenMode } from '@jinghe-sanjiaoroad-app/app/utils'
+import { getEnvBaseUrl, isDoubleTokenMode } from '@jinghe-sanjiaoroad-app/framework/utils'
 
 // 获取环境基准地址
 const baseUrl = getEnvBaseUrl()
@@ -187,7 +187,7 @@ const isDouble = isDoubleTokenMode()
 
 #### **文件上传**
 ```typescript
-import { utilsUpload } from '@jinghe-sanjiaoroad-app/app/utils'
+import { utilsUpload } from '@jinghe-sanjiaoroad-app/framework/utils'
 
 // 使用上传工具
 const { uploadFile } = utilsUpload
@@ -197,7 +197,7 @@ const { uploadFile } = utilsUpload
 
 #### **文件下载**
 ```typescript
-import { utilsDownload } from '@jinghe-sanjiaoroad-app/app/utils'
+import { utilsDownload } from '@jinghe-sanjiaoroad-app/framework/utils'
 
 // 使用下载工具
 const { downloadFile } = utilsDownload
@@ -207,7 +207,7 @@ const { downloadFile } = utilsDownload
 
 #### **树形操作**
 ```typescript
-import { utilsTree } from '@jinghe-sanjiaoroad-app/app/utils'
+import { utilsTree } from '@jinghe-sanjiaoroad-app/framework/utils'
 
 // 使用树形工具
 const { treeToList, listToTree } = utilsTree
@@ -217,7 +217,7 @@ const { treeToList, listToTree } = utilsTree
 
 #### **防抖处理**
 ```typescript
-import { utilsDebounce } from '@jinghe-sanjiaoroad-app/app/utils'
+import { utilsDebounce } from '@jinghe-sanjiaoroad-app/framework/utils'
 
 // 使用防抖工具
 const { debounce } = utilsDebounce
@@ -227,7 +227,7 @@ const { debounce } = utilsDebounce
 
 #### **表单验证**
 ```typescript
-import { utilsValidator } from '@jinghe-sanjiaoroad-app/app/utils'
+import { utilsValidator } from '@jinghe-sanjiaoroad-app/framework/utils'
 
 // 使用验证器
 const { validateEmail, validatePhone } = utilsValidator
@@ -237,7 +237,7 @@ const { validateEmail, validatePhone } = utilsValidator
 
 #### **更新检查**
 ```typescript
-import { utilsUpdate } from '@jinghe-sanjiaoroad-app/app/utils'
+import { utilsUpdate } from '@jinghe-sanjiaoroad-app/framework/utils'
 
 // 使用更新工具
 const { checkUpdate, downloadUpdate } = utilsUpdate
@@ -247,7 +247,7 @@ const { checkUpdate, downloadUpdate } = utilsUpdate
 
 #### **登录跳转**
 ```typescript
-import { utilsLogin } from '@jinghe-sanjiaoroad-app/app/utils'
+import { utilsLogin } from '@jinghe-sanjiaoroad-app/framework/utils'
 
 // 跳转到登录页
 const { toLoginPage } = utilsLogin
@@ -257,7 +257,7 @@ const { toLoginPage } = utilsLogin
 
 #### **URL 解析**
 ```typescript
-import { parseUrlToObj, ensureDecodeURIComponent } from '@jinghe-sanjiaoroad-app/app/utils'
+import { parseUrlToObj, ensureDecodeURIComponent } from '@jinghe-sanjiaoroad-app/framework/utils'
 
 // 解析 URL
 const urlObj = parseUrlToObj('/pages/login?redirect=%2Fhome')
@@ -271,7 +271,7 @@ const decodedUrl = ensureDecodeURIComponent('%2Fpages%2Flogin')
 
 #### **对象深拷贝**
 ```typescript
-import { deepClone } from '@jinghe-sanjiaoroad-app/app/utils'
+import { deepClone } from '@jinghe-sanjiaoroad-app/framework/utils'
 
 // 深拷贝对象
 const original = { a: 1, b: { c: 2 } }
@@ -290,13 +290,13 @@ const clonedCircular = deepClone(circular) // 正确处理循环引用
 #### **1. 按需导入**
 ```typescript
 // 只导入需要的工具函数
-import { formatDate, deepClone } from '@jinghe-sanjiaoroad-app/app/utils'
+import { formatDate, deepClone } from '@jinghe-sanjiaoroad-app/framework/utils'
 ```
 
 #### **2. 命名空间导入**
 ```typescript
 // 按分类导入，避免命名冲突
-import { utilsDate, utilsEncrypt } from '@jinghe-sanjiaoroad-app/app/utils'
+import { utilsDate, utilsEncrypt } from '@jinghe-sanjiaoroad-app/framework/utils'
 const { formatDate } = utilsDate
 const { AES } = utilsEncrypt
 ```

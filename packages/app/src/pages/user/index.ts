@@ -3,7 +3,7 @@
  * 提供用户个人中心相关的组件和功能
  * 
  * 使用方式：
- * import { UserPage } from '@jinghe-sanjiaoroad-app/app/pages/user'
+ * import { UserPage } from '@jinghe-sanjiaoroad-app/framework/pages/user'
  */
 
 // ==================== 页面组件 ====================

@@ -16,7 +16,7 @@ jinghe-sanjiaoroad App 框架的配置模块，提供应用配置、页面配置
 **外部使用：**
 ```typescript
 // manifest.config.ts
-import { manifestConfig } from '@jinghe-sanjiaoroad-app/app/config'
+import { manifestConfig } from '@jinghe-sanjiaoroad-app/framework/config'
 import { defineManifestConfig } from "@uni-helper/vite-plugin-uni-manifest"
 
 export default defineManifestConfig({
@@ -36,7 +36,7 @@ export default defineManifestConfig({
 **外部使用：**
 ```typescript
 // pages.config.ts
-import { pagesConfig } from '@jinghe-sanjiaoroad-app/app/config'
+import { pagesConfig } from '@jinghe-sanjiaoroad-app/framework/config'
 import { defineUniPages } from "@uni-helper/vite-plugin-uni-pages"
 
 export default defineUniPages({
@@ -58,7 +58,7 @@ export default defineUniPages({
 **外部使用：**
 ```typescript
 // uno.config.ts
-import { unoConfig } from '@jinghe-sanjiaoroad-app/app/config'
+import { unoConfig } from '@jinghe-sanjiaoroad-app/framework/config'
 import { defineConfig } from 'unocss'
 
 export default defineConfig({
@@ -80,7 +80,7 @@ import {
   manifestConfig,
   pagesConfig, 
   unoConfig 
-} from '@jinghe-sanjiaoroad-app/app/config'
+} from '@jinghe-sanjiaoroad-app/framework/config'
 ```
 
 ## 环境变量处理

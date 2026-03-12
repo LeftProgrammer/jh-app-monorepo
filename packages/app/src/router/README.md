@@ -22,13 +22,13 @@ import {
   LOGIN_PAGE,
   EXCLUDE_LOGIN_PATH_LIST,
   judgeIsExcludePath
-} from '@jinghe-sanjiaoroad-app/app/router'
+} from '@jinghe-sanjiaoroad-app/framework/router'
 ```
 
 #### 命名空间导出 (export * as)
 ```typescript
 // 导入命名空间
-import { routerConfig, routerInterceptor } from '@jinghe-sanjiaoroad-app/app/router'
+import { routerConfig, routerInterceptor } from '@jinghe-sanjiaoroad-app/framework/router'
 
 const { LOGIN_STRATEGY, LOGIN_PAGE } = routerConfig
 const { judgeIsExcludePath } = routerInterceptor

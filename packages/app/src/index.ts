@@ -2,7 +2,7 @@
  * jinghe-sanjiaoroad App 框架 - 核心功能导出
  * 
  * @description 提供 Vue 3 + UniApp 移动端开发框架的完整功能
- * @module @jinghe-sanjiaoroad-app/app
+ * @module @jinghe-sanjiaoroad-app/framework
  * @version 1.0.0
  */
 

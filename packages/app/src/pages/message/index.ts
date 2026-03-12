@@ -3,7 +3,7 @@
  * 提供消息通知相关的组件和功能
  * 
  * 使用方式：
- * import { MessagePage, MessageSearchForm, MessageDetailPopup } from '@jinghe-sanjiaoroad-app/app/pages/message'
+ * import { MessagePage, MessageSearchForm, MessageDetailPopup } from '@jinghe-sanjiaoroad-app/framework/pages/message'
  */
 
 // ==================== 页面组件 ====================

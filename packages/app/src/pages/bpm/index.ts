@@ -3,7 +3,7 @@
  * 提供工作流任务管理相关的组件和功能
  * 
  * 使用方式：
- * import { BpmPage, TodoList, DoneList, MyList, CopyList } from '@jinghe-sanjiaoroad-app/app/pages/bpm'
+ * import { BpmPage, TodoList, DoneList, MyList, CopyList } from '@jinghe-sanjiaoroad-app/framework/pages/bpm'
  */
 
 // ==================== 页面组件 ====================

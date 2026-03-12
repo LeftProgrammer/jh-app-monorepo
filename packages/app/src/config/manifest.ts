@@ -147,7 +147,7 @@ export const manifestConfig = {
 // 导出说明：
 // manifestConfig - 基础配置对象，用于外部自定义扩展
 // 使用方式：
-// import { manifestConfig } from '@jinghe-sanjiaoroad-app/app/config'
+// import { manifestConfig } from '@jinghe-sanjiaoroad-app/framework/config'
 // import { defineManifestConfig } from "@uni-helper/vite-plugin-uni-manifest"
 // 
 // export default defineManifestConfig({

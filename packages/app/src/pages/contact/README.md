@@ -29,7 +29,7 @@
 </template>
 
 <script setup>
-import { ContactList } from '@jinghe-sanjiaoroad-app/app/pages/contact'
+import { ContactList } from '@jinghe-sanjiaoroad-app/framework/pages/contact'
 </script>
 ```
 
@@ -64,7 +64,7 @@ import { ContactList } from '@jinghe-sanjiaoroad-app/app/pages/contact'
 
 <script setup>
 import { ref, computed } from 'vue'
-import { ContactList, ContactBreadcrumb } from '@jinghe-sanjiaoroad-app/app/pages/contact'
+import { ContactList, ContactBreadcrumb } from '@jinghe-sanjiaoroad-app/framework/pages/contact'
 </script>
 ```
 

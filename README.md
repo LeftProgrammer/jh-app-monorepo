@@ -19,7 +19,7 @@ jinghe-sanjiaoroad-app-monorepo/
 
 ## 包说明
 
-### @jinghe-sanjiaoroad-app/app
+### @jinghe-sanjiaoroad-app/framework
 主应用包，包含：
 - **UniApp 框架** - 基于 Vue 3 + TypeScript 的移动端开发框架
 - **状态管理** - Pinia 状态管理集成
@@ -89,7 +89,7 @@ pnpm type-check:app
 ### 发布主应用包
 
 ```bash
-# 构建并发布 @jinghe-sanjiaoroad-app/app
+# 构建并发布 @jinghe-sanjiaoroad-app/framework
 pnpm release:app
 ```
 
@@ -111,7 +111,7 @@ pnpm release
 ### 安装主应用包
 
 ```bash
-npm install @jinghe-sanjiaoroad-app/app vue pinia @dcloudio/uni-app
+npm install @jinghe-sanjiaoroad-app/framework vue pinia @dcloudio/uni-app
 ```
 
 ### 在项目中使用
@@ -123,17 +123,17 @@ import {
   useUserStore, 
   formatDate, 
   encryptData 
-} from '@jinghe-sanjiaoroad-app/app'
+} from '@jinghe-sanjiaoroad-app/framework'
 
 // 导入组件
 import { 
   JhButton, 
   JhModal, 
   JhTabbar 
-} from '@jinghe-sanjiaoroad-app/app/components'
+} from '@jinghe-sanjiaoroad-app/framework/components'
 
 // 导入样式
-import '@jinghe-sanjiaoroad-app/app/style'
+import '@jinghe-sanjiaoroad-app/framework/style'
 ```
 
 ## 开发规范
