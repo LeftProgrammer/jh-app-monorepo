@@ -12,8 +12,17 @@ export default defineConfig(({ mode }) => {
       // 启用 DTS 插件，自动生成类型声明
       dts({
         insertTypesEntry: true,
-        include: ['src/index.ts', 'src/components/index.ts'],
-        exclude: ['src/**/*.test.ts', 'src/**/*.spec.ts'],
+        include: [
+          'src/utils/**/*.ts',
+          'src/store/**/*.ts',
+          'src/http/**/*.ts',
+          'src/hooks/**/*.ts',
+          'src/components/**/*.{ts,vue}',
+          'src/router/**/*.ts',
+          'src/vite-plugins/**/*.ts',
+          'src/index.ts',
+        ],
+        exclude: ['src/**/*.test.ts', 'src/**/*.spec.ts', 'src/pages/**/*', 'src/api/**/*'],
         rollupTypes: false,
       }),
     ],
@@ -22,6 +31,11 @@ export default defineConfig(({ mode }) => {
         entry: {
           'index': resolve(__dirname, 'src/index.ts'),
           'components/index': resolve(__dirname, 'src/components/index.ts'),
+          'store/index': resolve(__dirname, 'src/store/index.ts'),
+          'http/index': resolve(__dirname, 'src/http/index.ts'),
+          'utils/index': resolve(__dirname, 'src/utils/index.ts'),
+          'hooks/index': resolve(__dirname, 'src/hooks/index.ts'),
+          'vite-plugins/index': resolve(__dirname, 'src/vite-plugins/index.ts'),
         },
         name: 'JhApp',
         formats: ['es', 'cjs'],

@@ -21,7 +21,33 @@
       "import": "./dist/components/index.esm.js",
       "require": "./dist/components/index.cjs.js"
     },
-    "./style": "./dist/style.css"
+    "./store": {
+      "types": "./dist/store/index.d.ts",
+      "import": "./dist/store/index.esm.js",
+      "require": "./dist/store/index.cjs.js"
+    },
+    "./http": {
+      "types": "./dist/http/index.d.ts",
+      "import": "./dist/http/index.esm.js",
+      "require": "./dist/http/index.cjs.js"
+    },
+    "./utils": {
+      "types": "./dist/utils/index.d.ts",
+      "import": "./dist/utils/index.esm.js",
+      "require": "./dist/utils/index.cjs.js"
+    },
+    "./hooks": {
+      "types": "./dist/hooks/index.d.ts",
+      "import": "./dist/hooks/index.esm.js",
+      "require": "./dist/hooks/index.cjs.js"
+    },
+    "./vite-plugins": {
+      "types": "./dist/vite-plugins/index.d.ts",
+      "import": "./dist/vite-plugins/index.esm.js",
+      "require": "./dist/vite-plugins/index.cjs.js"
+    },
+    "./style": "./dist/style.css",
+    "./package.json": "./package.json"
   },
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
@@ -49,7 +75,7 @@
   "peerDependencies": {
     "@dcloudio/uni-app": "3.0.0-4070620250821001",
     "pinia": "2.0.36",
-    "vue": "^3.4.37"
+    "vue": "^3.4.21"
   },
   "peerDependenciesMeta": {
     "@dcloudio/uni-app": {
@@ -74,7 +100,6 @@
     "diagram-js": "12.8.0",
     "jsencrypt": "^3.5.4",
     "pinia-plugin-persistedstate": "3.2.1",
-    "vue": "^3.4.37",
     "wot-design-uni": "^1.13.0"
   },
   "devDependencies": {
