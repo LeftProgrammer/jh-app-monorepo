@@ -20,9 +20,9 @@
  */
 import type {
   PageMetaDatum,
-  PagesConfig,
   SubPackages,
 } from '@uni-helper/vite-plugin-uni-pages'
+import { isMpWeixin } from '@uni-helper/uni-env'
 import { isTabBarPage as _isTabBarPage } from '../components/tabbar/config'
 
 // 导出 isPageTabbar，供外部使用
@@ -34,15 +34,15 @@ export type PageInstance = Page.PageInstance<AnyObject, object> & {
 
 // 页面处理工具
 export function getPageConfig(pagesConfig?: { pages: PageMetaDatum[], subPackages?: SubPackages[] }) {
-  return pagesConfig || { pages: [], subPackages: [] };
+  return pagesConfig || { pages: [], subPackages: [] }
 }
 
 export function getLastPage() {
   // getCurrentPages() 至少有1个元素，所以不再额外判断
   // const lastPage = getCurrentPages().at(-1)
   // 上面那个在低版本安卓中打包会报错，所以改用下面这个【虽然我加了 src/interceptions/prototype.ts，但依然报错】
-  const pages = getCurrentPages();
-  return pages[pages.length - 1] as PageInstance;
+  const pages = getCurrentPages()
+  return pages[pages.length - 1] as PageInstance
 }
 
 /**
@@ -51,45 +51,50 @@ export function getLastPage() {
  * redirectPath 如 '/pages/demo/base/route-interceptor'
  */
 export function currRoute() {
-  const lastPage = getLastPage() as PageInstance;
+  const lastPage = getLastPage() as PageInstance
   if (!lastPage) {
     return {
-      path: "",
+      path: '',
       query: {},
-    };
+    }
   }
-  const fullPath = lastPage.$page.fullPath;
+  const fullPath = lastPage.$page.fullPath
   // console.log('fullPath', fullPath)
-  const [path, queryStr] = fullPath.split("?");
+  const [path, queryStr] = fullPath.split('?')
   return {
     path,
     query: parseUrlToObj(queryStr),
-  };
+  }
 }
 
 export function ensureDecodeURIComponent(url: string) {
-  if (url.startsWith("%")) {
-    return ensureDecodeURIComponent(decodeURIComponent(url));
+  if (url.startsWith('%')) {
+    return ensureDecodeURIComponent(decodeURIComponent(url))
   }
-  return url;
+  return url
 }
 
 /**
+ * 解析 url 得到 path 和 query
  * 比如输入url: /pages/login/login?redirect=%2Fpages%2Fdemo%2Fbase%2Froute-interceptor
  * 输出: {path: /pages/login/login, query: {redirect: /pages/demo/base/route-interceptor}}
  */
 export function parseUrlToObj(url: string) {
   const [path, queryStr] = url.split("?");
   // console.log(path, queryStr)
-  const query: Record<string, string> = {};
-  if (queryStr) {
-    queryStr.split("&").forEach((str) => {
-      const [key, val] = str.split("=");
-      if (key) {
-        query[key] = decodeURIComponent(val);
-      }
-    });
+
+  if (!queryStr) {
+    return {
+      path,
+      query: {},
+    };
   }
+  const query: Record<string, string> = {};
+  queryStr.split("&").forEach((item) => {
+    const [key, value] = item.split("=");
+    // console.log(key, value)
+    query[key] = ensureDecodeURIComponent(value); // 这里需要统一 decodeURIComponent 一下，可以兼容h5和微信y
+  });
   return { path, query };
 }
 
@@ -99,17 +104,23 @@ export function parseUrlToObj(url: string) {
  *
  * @param pagesConfig 页面配置对象,包含 pages 和 subPackages
  * @param key 可选的过滤键
+ * @returns 返回包含 path 属性的对象数组
  */
 export function getAllPages(
-  pagesConfig: { pages: PageMetaDatum[], subPackages?: SubPackages[] },
+  pagesConfig?: { pages: PageMetaDatum[], subPackages?: SubPackages[] },
   key?: string,
 ) {
+  // 如果没有传入配置，返回空数组
+  if (!pagesConfig) {
+    return []
+  }
+
   const mainPages = pagesConfig.pages
     .filter(page => !key || page[key])
-    .map(page => `/${page.path}`)
+    .map(page => ({ path: `/${page.path}` }))
 
   const subPages = (pagesConfig.subPackages || []).flatMap(pkg =>
-    (pkg.pages || []).map(page => `/${pkg.root}/${page.path}`),
+    (pkg.pages || []).map(page => ({ path: `/${pkg.root}/${page.path}` })),
   )
 
   const result = [...mainPages, ...subPages]
@@ -120,7 +131,7 @@ export function getAllPages(
 
 /**
  * 获取当前页面的国际化键
- * 
+ *
  * @param pagesConfig 页面配置对象
  */
 export function getCurrentPageI18nKey(pagesConfig: { pages: PageMetaDatum[] }) {
@@ -231,20 +242,20 @@ export function navigateBackPlus(
 
 /** 获取 wd-navbar 导航栏高度 */
 export function getNavbarHeight() {
-  const systemInfo = uni.getSystemInfoSync();
-  const statusBarHeight = systemInfo.statusBarHeight || 0;
-  // #ifdef MP-WEIXIN
-  // 小程序：根据胶囊按钮位置计算导航栏高度，确保内容与胶囊垂直居中
-  const menuButtonInfo = uni.getMenuButtonBoundingClientRect();
-  // 导航栏高度 = (胶囊顶部到状态栏底部的距离) * 2 + 胶囊高度
-  const navBarHeight =
-    (menuButtonInfo.top - statusBarHeight) * 2 + menuButtonInfo.height;
-  return statusBarHeight + navBarHeight;
-  // #endif
-  // #ifndef MP-WEIXIN
+  const systemInfo = uni.getSystemInfoSync()
+  const statusBarHeight = systemInfo.statusBarHeight || 0
+
+  // 使用运行时平台检测替代条件编译，以支持 npm 包发布
+  if (isMpWeixin) {
+    // 小程序：根据胶囊按钮位置计算导航栏高度，确保内容与胶囊垂直居中
+    const menuButtonInfo = uni.getMenuButtonBoundingClientRect()
+    // 导航栏高度 = (胶囊顶部到状态栏底部的距离) * 2 + 胶囊高度
+    const navBarHeight = (menuButtonInfo.top - statusBarHeight) * 2 + menuButtonInfo.height
+    return statusBarHeight + navBarHeight
+  }
+
   // H5/App：状态栏高度 + 导航栏高度（44px）
-  return statusBarHeight + 44;
-  // #endif
+  return statusBarHeight + 44
 }
 
 /**
@@ -255,56 +266,62 @@ export function getNavbarHeight() {
  */
 export function deepClone<T>(src: T, wm = new WeakMap<object, any>()): T {
   // 1. 基本类型 / function => 直接返回
-  if (Object(src) !== src || typeof src === "function") {
-    return src;
+  if (Object(src) !== src || typeof src === 'function') {
+    return src
   }
 
   // 2. 已拷贝过（循环引用）=> 返回缓存
   if (wm.has(src as object)) {
-    return wm.get(src as object);
+    return wm.get(src as object)
   }
 
-  let dst: any;
+  let dst: any
 
   // 3. 特殊内置类型
   if (src instanceof Date) {
-    dst = new Date(src);
+    dst = new Date(src)
   } else if (src instanceof RegExp) {
-    dst = new RegExp(src);
+    dst = new RegExp(src)
   } else if (src instanceof Map) {
-    dst = new Map();
-    wm.set(src, dst);
+    dst = new Map()
+    wm.set(src, dst)
     src.forEach((v, k) => {
-      dst.set(deepClone(k, wm), deepClone(v, wm));
-    });
-    return dst;
+      dst.set(deepClone(k, wm), deepClone(v, wm))
+    })
+    return dst
   } else if (src instanceof Set) {
-    dst = new Set();
-    wm.set(src, dst);
+    dst = new Set()
+    wm.set(src, dst)
     src.forEach((v) => {
-      dst.add(deepClone(v, wm));
-    });
-    return dst;
+      dst.add(deepClone(v, wm))
+    })
+    return dst
   } else if (Array.isArray(src)) {
-    dst = [];
+    dst = []
   } else {
     // 普通对象：保留原型链
-    dst = Object.create(Object.getPrototypeOf(src));
+    dst = Object.create(Object.getPrototypeOf(src))
   }
 
   // 4. 记录已拷贝对象
-  wm.set(src as object, dst);
+  wm.set(src as object, dst)
 
   // 5. 拷贝所有自有属性（含 Symbol 键）
   Reflect.ownKeys(src as object).forEach((key) => {
-    dst[key] = deepClone((src as any)[key], wm);
-  });
+    dst[key] = deepClone((src as any)[key], wm)
+  })
 
-  return dst;
+  return dst
 }
 
 // ==================== 子模块重新导出 ====================
 // 以下导出所有子模块的功能，方便使用者直接从主入口导入
+
+// 应用更新
+export * from './appUpdate'
+
+// 常量枚举
+export * from './constants'
 
 // 日期处理工具
 export * from './date'
@@ -312,23 +329,14 @@ export * from './date'
 // 防抖节流
 export * from './debounce'
 
-// 加密解密
-export * from './encrypt'
-
 // 文件下载
 export * from './download'
 
-// 树形数据处理
-export * from './tree'
+// 加密解密
+export * from './encrypt'
 
-// 表单验证
-export * from './validator'
-
-// 文件上传
-export * from './uploadFile'
-
-// URL 处理
-export * from './url'
+// 路由辅助
+export * from './routerHelper'
 
 // 系统信息
 export * from './systemInfo'
@@ -336,14 +344,17 @@ export * from './systemInfo'
 // 登录跳转
 export * from './toLoginPage'
 
-// 应用更新
-export * from './appUpdate'
+// 树形数据处理
+export * from './tree'
 
 // 微信更新管理
 export * from './updateManager.wx'
 
-// 路由辅助
-export * from './routerHelper'
+// 文件上传
+export * from './uploadFile'
 
-// 常量枚举
-export * from './constants'
+// URL 处理
+export * from './url'
+
+// 表单验证
+export * from './validator'

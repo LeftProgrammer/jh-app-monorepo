@@ -1,26 +1,27 @@
 /* eslint-disable import/no-mutable-exports */
+import { isMpWeixin } from '@uni-helper/uni-env'
+
 // 获取屏幕边界到安全区域距离
 let systemInfo
 let safeAreaInsets
 
-// #ifdef MP-WEIXIN
-// 微信小程序使用新的API
-systemInfo = uni.getWindowInfo()
-safeAreaInsets = systemInfo.safeArea
-  ? {
-      top: systemInfo.safeArea.top,
-      right: systemInfo.windowWidth - systemInfo.safeArea.right,
-      bottom: systemInfo.windowHeight - systemInfo.safeArea.bottom,
-      left: systemInfo.safeArea.left,
-    }
-  : null
-// #endif
-
-// #ifndef MP-WEIXIN
-// 其他平台继续使用uni API
-systemInfo = uni.getSystemInfoSync()
-safeAreaInsets = systemInfo.safeAreaInsets
-// #endif
+// 使用运行时检测替代条件编译，以支持 npm 包发布
+if (isMpWeixin) {
+  // 微信小程序使用新的API
+  systemInfo = uni.getWindowInfo()
+  safeAreaInsets = systemInfo.safeArea
+    ? {
+        top: systemInfo.safeArea.top,
+        right: systemInfo.windowWidth - systemInfo.safeArea.right,
+        bottom: systemInfo.windowHeight - systemInfo.safeArea.bottom,
+        left: systemInfo.safeArea.left,
+      }
+    : null
+} else {
+  // 其他平台继续使用uni API
+  systemInfo = uni.getSystemInfoSync()
+  safeAreaInsets = systemInfo.safeAreaInsets
+}
 
 console.log('systemInfo', systemInfo)
 // 微信里面打印

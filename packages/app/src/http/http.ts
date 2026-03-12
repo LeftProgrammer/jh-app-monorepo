@@ -1,6 +1,6 @@
 /**
  * HTTP 请求核心模块
- * 
+ *
  * @description 提供基于 uni.request 的 HTTP 请求封装，支持 Token 自动刷新、错误处理、API 加密等功能
  * @export http - HTTP 实例，包含 get、post、put、delete 方法
  * @export httpGet - GET 请求方法
@@ -11,6 +11,7 @@
  */
 import type { IDoubleTokenRes } from '../api/types/login'
 import type { CustomRequestOptions, IResponse } from './types'
+import { isMpWeixin } from '@uni-helper/uni-env'
 import { nextTick } from 'vue'
 import { useTokenStore } from '../store/token'
 import { getLastPage, isDoubleTokenMode } from '../utils'
@@ -28,9 +29,9 @@ export function http<T>(options: CustomRequestOptions) {
     uni.request({
       ...options,
       dataType: 'json',
-      // #ifndef MP-WEIXIN
-      responseType: 'json',
-      // #endif
+      // 使用运行时检测替代条件编译，以支持 npm 包发布
+      // 微信小程序不支持 responseType 参数
+      ...(!isMpWeixin && { responseType: 'json' }),
       // 响应成功
       success: async (res) => {
         let responseData = res.data as IResponse<T>

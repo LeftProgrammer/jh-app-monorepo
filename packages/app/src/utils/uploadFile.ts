@@ -8,6 +8,9 @@
  * 通过环境变量 VITE_UPLOAD_TYPE 配置
  */
 
+import type { Ref } from 'vue'
+import { isH5, isMpWeixin } from '@uni-helper/uni-env'
+import { ref } from 'vue'
 import { useToast } from 'wot-design-uni'
 import * as FileApi from '../api/infra/file'
 
@@ -232,76 +235,75 @@ export function createUploadTask<T = string>(url: string, formData: Record<strin
       return
     }
 
-    // #ifdef MP-WEIXIN
-    // 微信小程序环境下使用 chooseMedia API
-    uni.chooseMedia({
-      count,
-      mediaType: ['image'], // 仅支持图片类型
-      sourceType,
-      success: (res) => {
-        const file = res.tempFiles[0]
-        // 检查文件大小是否符合限制
-        if (!checkFileSize(file.size))
-          return
+    // 使用运行时检测替代条件编译，以支持 npm 包发布
+    if (isMpWeixin) {
+      // 微信小程序环境下使用 chooseMedia API
+      uni.chooseMedia({
+        count,
+        mediaType: ['image'], // 仅支持图片类型
+        sourceType,
+        success: (res) => {
+          const file = res.tempFiles[0]
+          // 检查文件大小是否符合限制
+          if (!checkFileSize(file.size))
+            return
 
-        // 开始上传
-        loading.value = true
-        progress.value = 0
-        uploadFile<T>({
-          url,
-          tempFilePath: file.tempFilePath,
-          formData,
-          data,
-          error,
-          loading,
-          progress,
-          onProgress,
-          onSuccess,
-          onError,
-          onComplete,
-        })
-      },
-      fail: (err) => {
-        console.error('选择媒体文件失败:', err)
-        error.value = true
-        onError?.(err)
-      },
-    })
-    // #endif
+          // 开始上传
+          loading.value = true
+          progress.value = 0
+          uploadFile<T>({
+            url,
+            tempFilePath: file.tempFilePath,
+            formData,
+            data,
+            error,
+            loading,
+            progress,
+            onProgress,
+            onSuccess,
+            onError,
+            onComplete,
+          })
+        },
+        fail: (err) => {
+          console.error('选择媒体文件失败:', err)
+          error.value = true
+          onError?.(err)
+        },
+      })
+    } else {
+      // 非微信小程序环境下使用 chooseImage API
+      uni.chooseImage({
+        count,
+        sizeType,
+        sourceType,
+        success: (res) => {
+          console.log('选择图片成功:', res)
 
-    // #ifndef MP-WEIXIN
-    // 非微信小程序环境下使用 chooseImage API
-    uni.chooseImage({
-      count,
-      sizeType,
-      sourceType,
-      success: (res) => {
-        console.log('选择图片成功:', res)
-
-        // 开始上传
-        loading.value = true
-        progress.value = 0
-        uploadFile<T>({
-          url,
-          tempFilePath: res.tempFilePaths[0],
-          formData,
-          data,
-          error,
-          loading,
-          progress,
-          onProgress,
-          onSuccess,
-          onError,
-          onComplete,
-        })
-      },
-      fail: (err) => {
-        console.error('选择图片失败:', err)
-        error.value = true
-        onError?.(err)
-      },
-    })
-    // #endif
+          // 开始上传
+          loading.value = true
+          progress.value = 0
+          uploadFile<T>({
+            url,
+            tempFilePath: res.tempFilePaths[0],
+            formData,
+            data,
+            error,
+            loading,
+            progress,
+            onProgress,
+            onSuccess,
+            onError,
+            onComplete,
+          })
+        },
+        fail: (err) => {
+          console.error('选择图片失败:', err)
+          error.value = true
+          onError?.(err)
+        },
+      })
+    }
   }
 
   return { loading, error, data, progress, run }
@@ -363,9 +365,8 @@ function uploadFile<T>({
       formData,
       header: {
         // H5环境下不需要手动设置Content-Type，让浏览器自动处理multipart格式
-        // #ifndef H5
-        'Content-Type': 'multipart/form-data',
-        // #endif
+        // 使用运行时检测替代条件编译
+        ...(!isH5 && { 'Content-Type': 'multipart/form-data' }),
       },
       // 确保文件名称合法
       success: (uploadFileRes) => {

@@ -1,6 +1,6 @@
 /**
  * HTTP 请求拦截器模块
- * 
+ *
  * @description 提供 uni.request 和 uni.uploadFile 的拦截器配置，包括 Token 自动添加、请求参数处理、API 加密等功能
  * @export httpInterceptor - 拦截器配置对象
  * @export requestInterceptor - 拦截器安装器
@@ -8,6 +8,7 @@
  */
 /* eslint-disable brace-style */ // 原因：unibest 官方维护的代码，尽量不要大概，避免难以合并
 import type { CustomRequestOptions } from './types'
+import { isH5 } from '@uni-helper/uni-env'
 import { useTokenStore, useUserStore } from '../store'
 import { getEnvBaseUrl } from '../utils'
 import { ApiEncrypt } from '../utils/encrypt'
@@ -39,19 +40,15 @@ const httpInterceptor = {
     }
     // 非 http 开头需拼接地址
     if (!options.url.startsWith('http')) {
-      // #ifdef H5
-      if (JSON.parse(import.meta.env.VITE_APP_PROXY_ENABLE)) {
-        // 自动拼接代理前缀
+      // 使用运行时检测替代条件编译，以支持 npm 包发布
+      if (isH5 && import.meta.env?.VITE_APP_PROXY_ENABLE && JSON.parse(import.meta.env.VITE_APP_PROXY_ENABLE)) {
+        // H5 环境且开启代理：自动拼接代理前缀
         options.url = import.meta.env.VITE_APP_PROXY_PREFIX + options.url
       }
       else {
+        // 其他情况：正常拼接 baseUrl
         options.url = baseUrl + options.url
       }
-      // #endif
-      // 非H5正常拼接
-      // #ifndef H5
-      options.url = baseUrl + options.url
-      // #endif
       // TIPS: 如果需要对接多个后端服务，也可以在这里处理，拼接成所需要的地址
     }
     // 1. 请求超时
