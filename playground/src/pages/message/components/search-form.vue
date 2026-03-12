@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <!-- 搜索框入口 -->
   <view class="flex items-center bg-white pr-30rpx">
     <view class="flex-1" @click="visible = true">
@@ -77,9 +77,8 @@
 </template>
 
 <script lang="ts" setup>
+import { formatDate, formatDateRange, getNavbarHeight } from '@/utils'
 import { computed, reactive, ref } from 'vue'
-import { getNavbarHeight } from '@/utils'
-import { formatDate, formatDateRange } from '@/utils/date'
 
 const emit = defineEmits<{
   search: [data: Record<string, any>]

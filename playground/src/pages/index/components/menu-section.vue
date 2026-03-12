@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view class="bg-#FFF rounded-8rpx">
     <wd-swiper
       :list="favoriteMenuItems"
@@ -69,7 +69,7 @@ import { useUserStore } from "@/store/user";
 import { getMenuGroups, getMenuItemByKey } from "../index";
 import MenuGrid from "./menu-grid.vue";
 import { useToast } from "wot-design-uni";
-import { parseUrl, setTabParams } from "@/utils/url";
+import { parseUrl, setTabParams } from "@/utils";
 import { isTabBarPage } from "@/tabbar/config";
 
 defineOptions({

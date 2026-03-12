@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view>
     <wd-grid :column="5" clickable :border="false">
       <wd-grid-item
@@ -34,7 +34,7 @@
 import type { MenuItem } from "../index";
 import { useToast } from "wot-design-uni";
 import { isTabBarPage } from "@/tabbar/config";
-import { parseUrl, setTabParams } from "@/utils/url";
+import { parseUrl, setTabParams } from "@/utils";
 
 defineOptions({
   name: "MenuGrid"

@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view class="yd-page-container">
     <!-- 顶部导航栏 -->
     <wd-navbar
@@ -74,14 +74,13 @@
 </template>
 
 <script lang="ts" setup>
+import { CommonStatusEnum, DICT_TYPE, navigateBackPlus } from '@/utils'
 import type { FormInstance } from 'wot-design-uni/components/wd-form/types'
 import type { Category } from '@/api/bpm/category'
 import { computed, onMounted, ref } from 'vue'
 import { useToast } from 'wot-design-uni'
 import { createCategory, getCategory, updateCategory } from '@/api/bpm/category'
 import { getIntDictOptions } from '@/hooks/useDict'
-import { navigateBackPlus } from '@/utils'
-import { CommonStatusEnum, DICT_TYPE } from '@/utils/constants'
 
 const props = defineProps<{
   id?: number | any

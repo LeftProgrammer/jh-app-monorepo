@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <wd-popup
     v-model="visible"
     position="bottom"
@@ -58,12 +58,11 @@
 </template>
 
 <script lang="ts" setup>
+import { DICT_TYPE, isBlank, isEmail, isMobile } from '@/utils'
 import { computed, ref, watch } from 'vue'
 import { useToast } from 'wot-design-uni'
 import { updateUserProfile } from '@/api/system/user/profile'
 import { getIntDictOptions } from '@/hooks/useDict'
-import { DICT_TYPE } from '@/utils/constants'
-import { isBlank, isEmail, isMobile } from '@/utils/validator'
 
 const props = defineProps<{
   modelValue: boolean

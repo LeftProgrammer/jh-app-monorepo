@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view class="yd-page-container overflow-auto">
     <!-- 顶部导航栏 -->
     <wd-navbar
@@ -115,6 +115,7 @@
 </template>
 
 <script lang="ts" setup>
+import { DICT_TYPE, formatDateTime, formatPast, getNavbarHeight, navigateBackPlus } from '@/utils'
 import type { ProcessDefinition, ProcessInstance } from "@/api/bpm/processInstance";
 import type { Task } from "@/api/bpm/task";
 import { onLoad } from "@dcloudio/uni-app";
@@ -126,8 +127,8 @@ import {
 } from "@/api/bpm/processInstance";
 import { getTaskListByProcessInstanceId } from "@/api/bpm/task";
 import { useUserStore } from "@/store";
-import { navigateBackPlus, getNavbarHeight } from "@/utils";
-import { formatDateTime, formatPast } from "@/utils/date";
+;
+;
 import FormDetail from "./components/form-detail.vue";
 import {
   approveTask,
@@ -139,7 +140,7 @@ import {
 import { useGlobalState } from "@/store/global";
 import ProcessInstanceBpmnViewer from "./components/ProcessInstanceBpmnViewer.vue";
 import ProcessInstanceTaskList from "./components/ProcessInstanceTaskList.vue";
-import { DICT_TYPE } from "@/utils/constants";
+;
 
 definePage({
   style: {

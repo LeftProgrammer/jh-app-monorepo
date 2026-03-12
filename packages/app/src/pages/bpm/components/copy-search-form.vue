@@ -77,7 +77,7 @@
 <script lang="ts" setup>
 import { computed, reactive, nextTick, ref } from "vue";
 import { getNavbarHeight } from "@/utils";
-import { formatDate, formatDateRange } from "@/utils/date";
+import { formatDate, formatDateRange } from "@/utils";
 
 const emit = defineEmits<{
   search: [data: Record<string, any>];

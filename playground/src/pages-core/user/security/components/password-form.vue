@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <wd-popup
     v-model="visible"
     position="bottom"
@@ -44,7 +44,7 @@
 import { computed, reactive, ref, watch } from 'vue'
 import { useToast } from 'wot-design-uni'
 import { updateUserPassword } from '@/api/system/user/profile'
-import { isBlank } from '@/utils/validator'
+import { isBlank } from '@/utils'
 
 const props = defineProps<{
   modelValue: boolean

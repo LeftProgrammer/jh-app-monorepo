@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view>
     <!-- 搜索组件 -->
     <DoneSearchForm @search="handleSearch" @reset="handleReset" />
@@ -41,14 +41,15 @@
 </template>
 
 <script lang="ts" setup>
+import { DICT_TYPE, formatDate, formatDateTime } from '@/utils'
 import type { Task } from "@/api/bpm/task";
 import type { LoadMoreState } from "@/http/types";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { onMounted, ref } from "vue";
 import { getTaskDonePage } from "@/api/bpm/task";
-import { DICT_TYPE } from "@/utils/constants";
-import { formatDate } from "@/utils/date";
-import { formatDateTime } from "@/utils/date";
+;
+;
+;
 import DoneSearchForm from "./done-search-form.vue";
 import "../styles/index.scss";
 

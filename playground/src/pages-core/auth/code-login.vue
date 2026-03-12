@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view class="auth-container">
     <!-- 顶部 -->
     <Header />
@@ -52,12 +52,12 @@
 </template>
 
 <script lang="ts" setup>
+import { ensureDecodeURIComponent, isMobile, redirectAfterLogin } from '@/utils'
 import { reactive, ref } from 'vue'
 import { useToast } from 'wot-design-uni'
 import { FORGET_PASSWORD_PAGE, LOGIN_PAGE } from '@/router/config'
 import { useTokenStore } from '@/store/token'
-import { ensureDecodeURIComponent, redirectAfterLogin } from '@/utils'
-import { isMobile } from '@/utils/validator'
+
 import CodeInput from './components/code-input.vue'
 import Header from './components/header.vue'
 import TenantPicker from './components/tenant-picker.vue'

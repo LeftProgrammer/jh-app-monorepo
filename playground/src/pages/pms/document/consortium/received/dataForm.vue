@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view :class="embedded ? '' : 'yd-page-container'" class="bg-#f5f5f5">
     <!-- 顶部导航栏 -->
     <wd-navbar
@@ -170,14 +170,15 @@
 </template>
 
 <script lang="ts" setup>
+import { DICT_TYPE, formatDate, navigateBackPlus } from '@/utils'
 import { useToast } from "wot-design-uni";
 import * as ReceivedApi from "@/api/pms/document/received";
 import UserPicker from "@/components/system-select/user-picker.vue";
 import UnitPicker from "@/components/system-select/unit-picker.vue";
-import { DICT_TYPE } from "@/utils/constants";
+;
 import { useUserStore } from "@/store";
-import { formatDate } from "@/utils/date";
-import { navigateBackPlus } from "@/utils";
+;
+;
 import { useGlobalState } from "@/store/global";
 defineOptions({ name: "DocumentReceivedCreateWd" });
 

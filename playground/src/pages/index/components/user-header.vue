@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view class="pt-82rpx mb-16rpx">
     <view class="flex mb-19rpx">
       <image :src="userInfo.avatar" class="h-80rpx w-80rpx mr-18rpx" />
@@ -56,7 +56,7 @@ import { getTaskTodoPage } from "@/api/bpm/task";
 import { getMyNotifyMessagePage } from "@/api/system/notify/message";
 import { isTabBarPage } from "@/tabbar/config";
 import { useToast } from "wot-design-uni";
-import { parseUrl, setTabParams } from "@/utils/url";
+import { parseUrl, setTabParams } from "@/utils";
 
 defineOptions({
   name: "UserHeader"

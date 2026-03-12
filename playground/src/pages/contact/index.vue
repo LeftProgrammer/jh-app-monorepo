@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view class="yd-page-container">
     <!-- 顶部导航栏 -->
     <wd-navbar
@@ -100,7 +100,7 @@ import { computed, onMounted, ref } from "vue";
 import { useToast } from "wot-design-uni";
 import { getSimpleDeptList } from "@/api/system/dept";
 import { getUserPage, getUser } from "@/api/system/user";
-import { findChildren, handleTree } from "@/utils/tree";
+import { findChildren, handleTree } from "@/utils";
 import Breadcrumb from "./components/breadcrumb.vue";
 import { navigateBackPlus } from "@/utils";
 import { useUserStore } from "@/store";

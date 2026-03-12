@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view class="yd-page-container">
     <!-- 顶部导航栏 -->
     <wd-navbar
@@ -139,7 +139,7 @@ import { useToast } from "wot-design-uni";
 import { useUserStore } from "@/store/user";
 import { navigateBackPlus } from "@/utils";
 import { getMenuGroups, getMenuItemByKey } from "../index";
-import { parseUrl, setTabParams } from "@/utils/url";
+import { parseUrl, setTabParams } from "@/utils";
 import { isTabBarPage } from "@/tabbar/config";
 defineOptions({
   name: "FavoriteSettings"

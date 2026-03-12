@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view class="yd-page-container">
     <!-- 顶部导航栏 -->
     <wd-navbar
@@ -79,12 +79,13 @@
 </template>
 
 <script lang="ts" setup>
+import { DICT_TYPE, navigateBackPlus } from '@/utils'
 import { onMounted, ref } from "vue";
 import { useToast } from "wot-design-uni";
-import { navigateBackPlus } from "@/utils";
+;
 import appUpdate from "@/utils/appUpdate";
 import { useDictStore } from "@/store/dict";
-import { DICT_TYPE } from "@/utils/constants";
+;
 import { useMessage } from "wot-design-uni";
 
 definePage({

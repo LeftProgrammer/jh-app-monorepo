@@ -1,4 +1,4 @@
-<!-- 表单详情：流程表单/业务表单 -->
+﻿<!-- 表单详情：流程表单/业务表单 -->
 <template>
   <view class="overflow-hidden bg-white">
     <!-- 标题 -->
@@ -53,8 +53,7 @@ import constructionPostedDataForm from "@/pages/pms/document/construction/posted
 import ownerPostedDataForm from "@/pages/pms/document/owner/posted/dataForm.vue";
 import supervisionPostedDataForm from "@/pages/pms/document/supervision/posted/dataForm.vue";
 import rectificationDataForm from "@/pages/pms/safety/safeInspection/rectification/dataForm.vue";
-import { BpmModelFormType } from "@/utils/constants";
-import { registerComponent } from "@/utils/routerHelper";
+import { BpmModelFormType, registerComponent } from "@/utils";
 
 const props = defineProps<{
   /** 流程定义 */
@@ -69,7 +68,8 @@ const BusinessFormComponent = computed(() => {
   const componentPath = props.processDefinition?.formCustomCreatePath;
   let component;
   // #ifdef H5
-  component = registerComponent(componentPath);
+  const h5Modules = import.meta.glob('../../../../../pages/**/*.{vue,tsx}')
+  component = registerComponent(componentPath, h5Modules as Record<string, () => Promise<unknown>>)
   // #endif
 
   // #ifndef H5

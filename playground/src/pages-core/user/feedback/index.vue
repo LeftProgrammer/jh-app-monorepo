@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view class="yd-page-container">
     <!-- 顶部导航栏 -->
     <wd-navbar
@@ -53,7 +53,7 @@ import type { FormInstance } from "wot-design-uni/components/wd-form/types";
 import type { UploadFile, UploadMethod } from "wot-design-uni/components/wd-upload/types";
 import { ref } from "vue";
 import { useToast } from "wot-design-uni";
-import { getEnvBaseUrl, navigateBackPlus } from "@/utils/index";
+import { getEnvBaseUrl, navigateBackPlus } from "@/utils";
 
 definePage({
   style: {

@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view :class="embedded ? '' : 'yd-page-container'" class="bg-#F5F5F5">
     <!-- 顶部导航栏（仅路由访问时显示） -->
     <wd-navbar
@@ -246,13 +246,14 @@
 </template>
 
 <script lang="ts" setup>
+import { deepClone, DICT_TYPE, formatDate, navigateBackPlus } from '@/utils'
 import { computed, onMounted, reactive, ref, watch } from "vue";
 import dayjs from "dayjs";
 import RectificationApi from "@/api/pms/safety/safeInspection/rectification";
-import { DICT_TYPE } from "@/utils/constants";
-import { navigateBackPlus, deepClone } from "@/utils/index"; // 确保提供 deepClone
+;
+; // 确保提供 deepClone
 import { useUserStore } from "@/store"; // 替换为你的用户 store 路径
-import { formatDate } from "@/utils/date"; // 确保提供 formatDate
+; // 确保提供 formatDate
 import { useToast, useMessage } from "wot-design-uni";
 
 defineOptions({ name: "SafeHiddenDangerRecordsForm" });

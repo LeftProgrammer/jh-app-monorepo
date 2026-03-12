@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <!-- TODO vben 对应的地址：/Users/yunai/Java/yudao-ui-admin-vben-v5/apps/web-antd/src/views/bpm/processInstance/create/index.vue -->
   <view class="yd-page-container">
     <!-- 顶部导航栏 -->
@@ -96,6 +96,7 @@
 </template>
 
 <script lang="ts" setup>
+import { BpmModelFormType, navigateBackPlus } from '@/utils'
 import type { Category } from "@/api/bpm/category";
 import type { ProcessDefinition } from "@/api/bpm/definition";
 import { onLoad } from "@dcloudio/uni-app";
@@ -104,8 +105,8 @@ import { useToast } from "wot-design-uni";
 import { getCategorySimpleList } from "@/api/bpm/category";
 import { getProcessDefinitionList } from "@/api/bpm/definition";
 import { getMobileFormCustomPath } from "@/pages-bpm/utils";
-import { navigateBackPlus } from "@/utils";
-import { BpmModelFormType } from "@/utils/constants";
+;
+;
 
 // TODO @芋艿：【重新发起流程】支持通过 processInstanceId 参数重新发起已有流程
 // 对应 vben 第 44-60 行：从路由获取 processInstanceId，查询流程实例后自动选中对应流程定义并填充表单数据

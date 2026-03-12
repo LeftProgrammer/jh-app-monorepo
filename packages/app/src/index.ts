@@ -16,6 +16,9 @@ export * as router from './router'
 // HTTP 模块
 export * as http from './http'
 
+// API 模块 - 提供基础 API 封装,支持外部扩展和覆盖
+export * as api from './api'
+
 // 组合函数
 export * from './hooks'
 

@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view class="yd-page-container">
     <!-- 顶部导航栏 -->
     <wd-navbar
@@ -121,6 +121,7 @@
 </template>
 
 <script lang="ts" setup>
+import { DICT_TYPE, formatDate } from '@/utils'
 import type { NotifyMessage } from "@/api/system/notify/message";
 import type { LoadMoreState } from "@/http/types";
 import { onReachBottom } from "@dcloudio/uni-app";
@@ -133,8 +134,8 @@ import {
   updateNotifyMessageRead
 } from "@/api/system/notify/message";
 import { getDictLabel } from "@/hooks/useDict";
-import { DICT_TYPE } from "@/utils/constants";
-import { formatDate } from "@/utils/date";
+;
+;
 import DetailPopup from "./components/detail-popup.vue";
 import SearchForm from "./components/search-form.vue";
 import { useGlobalState } from "@/store/global";

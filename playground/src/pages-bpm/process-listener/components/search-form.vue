@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <!-- 搜索框入口 -->
   <view @click="visible = true">
     <wd-search :placeholder="placeholder" hide-cancel disabled />
@@ -47,10 +47,9 @@
 </template>
 
 <script lang="ts" setup>
+import { DICT_TYPE, getNavbarHeight } from '@/utils'
 import { computed, reactive, ref } from 'vue'
 import { getDictLabel, getStrDictOptions } from '@/hooks/useDict'
-import { getNavbarHeight } from '@/utils'
-import { DICT_TYPE } from '@/utils/constants'
 
 const emit = defineEmits<{
   search: [data: Record<string, any>]

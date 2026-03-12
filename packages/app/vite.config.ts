@@ -12,18 +12,21 @@ export default defineConfig(({ mode }) => {
       // 启用 DTS 插件，自动生成类型声明
       dts({
         insertTypesEntry: true,
+        // 只为入口文件生成类型声明，减少 dist 文件数量
         include: [
-          'src/utils/**/*.ts',
-          'src/store/**/*.ts',
-          'src/http/**/*.ts',
-          'src/hooks/**/*.ts',
-          'src/components/**/*.{ts,vue}',
-          'src/router/**/*.ts',
-          'src/vite-plugins/**/*.ts',
           'src/index.ts',
+          'src/utils/index.ts',
+          'src/store/index.ts',
+          'src/http/index.ts',
+          'src/hooks/index.ts',
+          'src/components/index.ts',
+          'src/router/index.ts',
+          'src/vite-plugins/index.ts',
         ],
         exclude: ['src/**/*.test.ts', 'src/**/*.spec.ts', 'src/pages/**/*', 'src/api/**/*'],
         rollupTypes: false,
+        // 禁用 source map，减少文件数量
+        declarationMap: false,
       }),
     ],
     build: {
@@ -46,39 +49,44 @@ export default defineConfig(({ mode }) => {
       },
       rollupOptions: {
         // 最简单有效的方案
-        external: [
-          // 核心依赖
-          'vue',
-          'pinia',
-          'vue-router',
-          'vue-i18n',
-          'dayjs',
-          'crypto-js',
-          'jsencrypt',
-          // UniApp 相关
-          '@dcloudio/uni-app',
-          '@dcloudio/uni-components',
-          '@dcloudio/uni-h5',
-          '@dcloudio/uni-mp-weixin',
-          'wot-design-uni',
-          // BPMN 相关
-          'bpmn-js',
-          'bpmn-js-token-simulation',
-          'diagram-js',
-          'min-dash',
-          // 其他依赖
-          'axios',
-          'pinia-plugin-persistedstate',
-          'js-cookie',
-          'lodash-es',
-          'z-paging',
-          'wot-design-uni',
-          // 一劳永逸 - 外部化所有第三方包
-          /^@/, // 所有 @ 开头的包
-          /^[a-z]/, // 所有小写字母开头的包
-          'node:*', // 所有 node: 模块
-          /^node:/, // 所有 node: 模块
-        ],
+        external: (id) => {
+          // 外部化 pages/ 目录下的所有页面组件，避免被打包进库
+          if (
+            id.includes('/src/pages/')
+            || id.includes('\\src\\pages\\')
+            || (/[/\\]pages[/\\]/.test(id) && (id.endsWith('.vue') || id.endsWith('.ts')))
+          ) {
+            return true
+          }
+          // 其余走字符串/正则匹配
+          const externals: (string | RegExp)[] = [
+            'vue',
+            'pinia',
+            'vue-router',
+            'vue-i18n',
+            'dayjs',
+            'crypto-js',
+            'jsencrypt',
+            '@dcloudio/uni-app',
+            '@dcloudio/uni-components',
+            '@dcloudio/uni-h5',
+            '@dcloudio/uni-mp-weixin',
+            'wot-design-uni',
+            'bpmn-js',
+            'bpmn-js-token-simulation',
+            'diagram-js',
+            'min-dash',
+            'axios',
+            'pinia-plugin-persistedstate',
+            'js-cookie',
+            'lodash-es',
+            'z-paging',
+            /^@/,
+            /^[a-z]/,
+            /^node:/,
+          ]
+          return externals.some(e => typeof e === 'string' ? id === e : e.test(id))
+        },
         output: {
           globals: {
             'vue': 'Vue',

@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view class="yd-page-container">
     <!-- 顶部导航栏 -->
     <wd-navbar
@@ -85,13 +85,14 @@
 </template>
 
 <script lang="ts" setup>
-import { navigateBackPlus, deepClone } from "@/utils";
+;
+import { deepClone, DICT_TYPE, formatDate, navigateBackPlus } from '@/utils'
 import LeaveApplyApi from "@/api/general/leaveApply";
 import type { LoadMoreState } from "@/http/types";
-import { DICT_TYPE } from "@/utils/constants";
+;
 import { getDictLabel } from "@/hooks/useDict";
 import { useUserStore } from "@/store";
-import { formatDate } from "@/utils/date";
+;
 import { useMessage } from "wot-design-uni";
 
 definePage({

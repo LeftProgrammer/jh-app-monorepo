@@ -77,12 +77,13 @@
 </template>
 
 <script lang="ts" setup>
+import { formatDate, navigateBackPlus } from '@/utils'
 import { useUserStore } from "@/store";
-import { navigateBackPlus } from "@/utils";
+;
 import { getPage, deleteById } from "@/api/pms/document/posted";
 import type { LoadMoreState } from "@/http/types";
-import { DICT_TYPE } from "@/utils/constants/dict-enum";
-import { formatDate } from "@/utils/date";
+import { DICT_TYPE } from "@/utils";
+;
 import { useMessage } from "wot-design-uni";
 
 definePage({

@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view class="yd-page-container">
     <!-- 顶部导航栏 -->
     <wd-navbar
@@ -54,6 +54,7 @@
 </template>
 
 <script lang="ts" setup>
+import { DICT_TYPE, formatDateTime, navigateBackPlus } from '@/utils'
 import type { UserGroup } from '@/api/bpm/user-group'
 import type { SimpleUser } from '@/api/system/user'
 import { onMounted, ref } from 'vue'
@@ -61,9 +62,6 @@ import { useToast } from 'wot-design-uni'
 import { deleteUserGroup, getUserGroup } from '@/api/bpm/user-group'
 import { getSimpleUserList } from '@/api/system/user'
 import { useAccess } from '@/hooks/useAccess'
-import { navigateBackPlus } from '@/utils'
-import { DICT_TYPE } from '@/utils/constants'
-import { formatDateTime } from '@/utils/date'
 
 const props = defineProps<{
   id?: number | any

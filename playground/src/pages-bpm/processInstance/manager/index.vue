@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view class="yd-page-container">
     <!-- 顶部导航栏 -->
     <wd-navbar
@@ -94,6 +94,7 @@
 </template>
 
 <script lang="ts" setup>
+import { DICT_TYPE, formatDateTime, navigateBackPlus } from '@/utils'
 import type { ProcessInstance } from '@/api/bpm/processInstance'
 import type { LoadMoreState } from '@/http/types'
 import { onReachBottom } from '@dcloudio/uni-app'
@@ -104,9 +105,7 @@ import {
   getProcessInstanceManagerPage,
 } from '@/api/bpm/processInstance'
 import DictTag from '@/components/dict-tag/dict-tag.vue'
-import { navigateBackPlus } from '@/utils'
-import { DICT_TYPE } from '@/utils/constants'
-import { formatDateTime } from '@/utils/date'
+
 import SearchForm from './components/search-form.vue'
 
 // 流程实例状态枚举

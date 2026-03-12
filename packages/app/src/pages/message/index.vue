@@ -83,8 +83,8 @@ import {
   updateNotifyMessageRead,
 } from '@/api/system/notify/message'
 import { getDictLabel } from '@/hooks/useDict'
-import { DICT_TYPE } from '@/utils/constants'
-import { formatDateTime } from '@/utils/date'
+import { DICT_TYPE } from '@/utils'
+import { formatDateTime } from '@/utils'
 import DetailPopup from './components/detail-popup.vue'
 import SearchForm from './components/search-form.vue'
 

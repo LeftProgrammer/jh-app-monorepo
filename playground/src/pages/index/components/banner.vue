@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view class="mx-20rpx mt-20rpx overflow-hidden rounded-16rpx bg-white">
     <wd-swiper
       :list="banners"
@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts" setup>
-import { staticUrl } from "@/utils/download";
+import { staticUrl } from "@/utils";
 
 defineOptions({
   name: "HomeBanner"

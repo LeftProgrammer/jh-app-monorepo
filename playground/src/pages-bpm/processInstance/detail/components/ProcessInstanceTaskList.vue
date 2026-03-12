@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view class="mt-16rpx bg-white">
     <view class="p-24rpx">
       <view
@@ -46,7 +46,7 @@
 </template>
 
 <script lang="ts" setup>
-import { formatDate, formatPast } from "@/utils/date";
+import { formatDate, formatPast } from "@/utils";
 import type { Task } from "@/api/bpm/task";
 
 const props = defineProps({

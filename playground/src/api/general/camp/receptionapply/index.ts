@@ -1,6 +1,6 @@
-import type { PageParam, PageResult } from "@/http/types";
+﻿import type { PageParam, PageResult } from "@/http/types";
 import { http } from "@/http/http";
-import { formatDate } from "@/utils/date";
+import { formatDate } from "@/utils";
 
 export interface PostedVO {
   id: number;

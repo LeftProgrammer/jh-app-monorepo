@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view class="yd-page-container">
     <!-- 顶部导航栏 -->
     <wd-navbar
@@ -111,14 +111,15 @@
 </template>
 
 <script lang="ts" setup>
+import { deepClone, DICT_TYPE, formatDate, navigateBackPlus } from '@/utils'
 import { computed, ref } from "vue";
-import { navigateBackPlus, deepClone } from "@/utils/index";
+;
 import RectificationApi from "@/api/pms/safety/safeInspection/rectification";
 import type { LoadMoreState } from "@/http/types";
-import { DICT_TYPE } from "@/utils/constants";
+;
 import { getDictLabel } from "@/hooks/useDict";
 import { useUserStore } from "@/store";
-import { formatDate } from "@/utils/date";
+;
 import { useMessage } from "wot-design-uni";
 
 definePage({

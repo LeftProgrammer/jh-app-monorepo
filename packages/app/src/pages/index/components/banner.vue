@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts" setup>
-import { staticUrl } from "@/utils/download";
+import { staticUrl } from "@/utils";
 
 defineOptions({
   name: "HomeBanner"

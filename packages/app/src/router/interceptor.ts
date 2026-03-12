@@ -15,9 +15,9 @@ import { isPageTabbarStore, tabbarStore } from '../components/tabbar/store'
  * 黑、白名单的配置，请看 config.ts 文件， EXCLUDE_LOGIN_PATH_LIST
  */
 import { useTokenStore } from '../store/token'
-import { getAllPages, getLastPage, HOME_PAGE, parseUrlToObj } from '../utils/index'
+import { getAllPages, getLastPage, parseUrlToObj } from '../utils/index'
 import { toLoginPage } from '../utils/toLoginPage'
-import { EXCLUDE_LOGIN_PATH_LIST, isNeedLoginMode, LOGIN_PAGE, LOGIN_PAGE_ENABLE_IN_MP, NOT_FOUND_PAGE } from './config'
+import { EXCLUDE_LOGIN_PATH_LIST, HOME_PAGE, isNeedLoginMode, LOGIN_PAGE, LOGIN_PAGE_ENABLE_IN_MP, NOT_FOUND_PAGE } from './config'
 
 export const FG_LOG_ENABLE = false
 

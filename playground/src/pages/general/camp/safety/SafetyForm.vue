@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view :class="embedded ? '' : 'yd-page-container'" class="bg-#f5f5f5">
     <wd-navbar
       v-if="!embedded"
@@ -133,14 +133,15 @@
 </template>
 
 <script lang="ts" setup>
+import { deepClone, formatDate, navigateBackPlus } from '@/utils'
 import { ref, computed, reactive, onMounted } from "vue";
 import { useToast } from "wot-design-uni";
 import * as ConsortiumApi from "@/api/general/camp/safety";
-import { navigateBackPlus, deepClone } from "@/utils";
+;
 import { useUserStore } from "@/store";
 
 import UserPicker from "@/components/system-select/user-picker.vue";
-import { formatDate } from "@/utils/date";
+;
 import { useGlobalState } from "@/store/global";
 
 defineOptions({ name: "safetyFormCreateApp" });

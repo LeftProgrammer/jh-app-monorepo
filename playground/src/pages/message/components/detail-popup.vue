@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <wd-popup
     v-model="visible"
     position="bottom"
@@ -58,11 +58,12 @@
 </template>
 
 <script lang="ts" setup>
+import { DICT_TYPE, formatDateTime } from '@/utils'
 import type { NotifyMessage } from "@/api/system/notify/message";
 import { ref } from "vue";
 import { getDictLabel } from "@/hooks/useDict";
-import { DICT_TYPE } from "@/utils/constants";
-import { formatDateTime } from "@/utils/date";
+;
+;
 
 const visible = ref(false);
 const formData = ref<NotifyMessage>();

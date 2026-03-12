@@ -45,10 +45,10 @@
 import type { ProcessInstanceCopy } from "@/api/bpm/processInstance";
 import type { LoadMoreState } from "@/http/types";
 import { onReachBottom } from "@dcloudio/uni-app";
-import { formatDate } from "@/utils/date";
+import { formatDate } from "@/utils";
 import { onMounted, ref } from "vue";
 import { getProcessInstanceCopyPage } from "@/api/bpm/processInstance";
-import { formatDateTime } from "@/utils/date";
+import { formatDateTime } from "@/utils";
 import CopySearchForm from "./copy-search-form.vue";
 import "../styles/index.scss";
 

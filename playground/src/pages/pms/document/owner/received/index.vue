@@ -79,8 +79,8 @@ import { useToast } from "wot-design-uni";
 import { navigateBackPlus } from "@/utils";
 import { getPage, deleteById } from "@/api/pms/document/received";
 import type { LoadMoreState } from "@/http/types";
-import { DICT_TYPE } from "@/utils/constants/dict-enum";
-import { formatDate } from "../../../../../utils/date";
+import { DICT_TYPE } from "@/utils";
+import { formatDate } from "@/utils";
 import { useUserStore } from "@/store";
 import { useMessage } from "wot-design-uni";
 

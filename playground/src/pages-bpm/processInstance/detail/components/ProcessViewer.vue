@@ -1,4 +1,4 @@
-<template>
+﻿<template>
 	<view class="h-100% w-100% position-relative">
 		<view id="bpmnCanvas" class="process-viewer w-100% h-100%" :prop="xml" :change:prop="bpmnCanvas.handleXmlChange"
 			:view-prop="view" :change:view-prop="bpmnCanvas.handleViewChange" @touchstart="bpmnCanvas.handleTouchStart"
@@ -30,7 +30,7 @@
 	import BpmnViewer from "bpmn-js/lib/Viewer";
 	import {
 		BpmProcessInstanceStatus
-	} from '@/utils/constants'
+	} from '@/utils'
 	import MoveCanvasModule from "diagram-js/lib/navigation/movecanvas";
 
 	export default {

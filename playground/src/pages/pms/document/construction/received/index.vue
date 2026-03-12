@@ -73,8 +73,8 @@ import { useToast } from "wot-design-uni";
 import { navigateBackPlus } from "@/utils";
 import { getPage } from "@/api/pms/document/received";
 import type { LoadMoreState } from "@/http/types";
-import { DICT_TYPE } from "@/utils/constants/dict-enum";
-import { formatDate } from "../../../../../utils/date";
+import { DICT_TYPE } from "@/utils";
+import { formatDate } from "@/utils";
 import { useUserStore } from "@/store";
 
 definePage({

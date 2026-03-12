@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view class="yd-page-container">
     <!-- 顶部导航栏 -->
     <wd-navbar
@@ -74,15 +74,14 @@
 </template>
 
 <script lang="ts" setup>
+import { DICT_TYPE, formatDateTime, navigateBackPlus } from '@/utils'
 import type { Task } from '@/api/bpm/task'
 import type { LoadMoreState } from '@/http/types'
 import { onReachBottom } from '@dcloudio/uni-app'
 import { onMounted, ref } from 'vue'
 import { getTaskManagerPage } from '@/api/bpm/task'
 import DictTag from '@/components/dict-tag/dict-tag.vue'
-import { navigateBackPlus } from '@/utils'
-import { DICT_TYPE } from '@/utils/constants'
-import { formatDateTime } from '@/utils/date'
+
 import SearchForm from './components/search-form.vue'
 
 definePage({

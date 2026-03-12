@@ -9,7 +9,7 @@
  */
 
 import { useToast } from 'wot-design-uni'
-import * as FileApi from '@/api/infra/file'
+import * as FileApi from '../api/infra/file'
 
 /** 上传类型 */
 const UPLOAD_TYPE = {
@@ -146,14 +146,15 @@ export interface UploadOptions {
 }
 
 /**
- * 文件上传钩子函数（带 formData）
+ * 创建文件上传任务
+ * 
  * @template T 上传成功后返回的数据类型
  * @param url 上传地址
  * @param formData 额外的表单数据
  * @param options 上传选项
  * @returns 上传状态和控制对象
  */
-export function useUpload<T = string>(url: string, formData: Record<string, any> = {}, options: UploadOptions = {},
+export function createUploadTask<T = string>(url: string, formData: Record<string, any> = {}, options: UploadOptions = {},
   /** 直接传入文件路径，跳过选择器 */
   directFilePath?: string) {
   /** 上传中状态 */

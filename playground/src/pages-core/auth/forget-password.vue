@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view class="auth-container">
     <!-- 顶部 -->
     <Header />
@@ -68,7 +68,7 @@ import { reactive, ref } from 'vue'
 import { useToast } from 'wot-design-uni'
 import { smsResetPassword } from '@/api/login'
 import { LOGIN_PAGE } from '@/router/config'
-import { isMobile } from '@/utils/validator'
+import { isMobile } from '@/utils'
 import CodeInput from './components/code-input.vue'
 import Header from './components/header.vue'
 import TenantPicker from './components/tenant-picker.vue'

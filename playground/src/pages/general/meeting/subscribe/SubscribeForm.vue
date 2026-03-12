@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view :class="embedded ? '' : 'yd-page-container'" class="bg-#F5F5F5">
     <!-- 顶部导航栏（仅路由访问时显示） -->
     <wd-navbar
@@ -331,16 +331,17 @@
 </template>
 
 <script lang="ts" setup>
+import { deepClone, DICT_TYPE, formatDate, getNavbarHeight, navigateBackPlus } from '@/utils'
 import { useToast } from "wot-design-uni";
 import SubscribeApi from "@/api/general/meeting";
-import { navigateBackPlus, deepClone } from "@/utils";
+;
 import UserPicker from "@/components/system-select/user-picker.vue";
-import { formatDate } from "@/utils/date";
+;
 import { useUserStore } from "@/store";
 import { getDictLabel } from "@/hooks/useDict";
-import { DICT_TYPE } from "@/utils/constants";
+;
 import { useGlobalState } from "@/store/global";
-import { getNavbarHeight } from "@/utils";
+;
 import dayjs from "dayjs";
 
 const props = defineProps<{

@@ -64,6 +64,9 @@ export default defineConfig(({ command, mode }) => {
   return defineConfig({
     envDir: './env', // 自定义env目录
     base: VITE_APP_PUBLIC_BASE,
+    optimizeDeps: {
+      exclude: ['@/pages.json'], // 排除 pages.json，避免 esbuild 预构建时解析注释报错
+    },
     plugins: [
       UniLayouts(),
       UniPlatform(),
@@ -74,7 +77,7 @@ export default defineConfig(({ command, mode }) => {
         // 是个数组，可以配置多个，但是不能为pages里面的目录！！
         subPackages: [
           'src/pages-core', // 这个是相对必要的路由，尽量留着（登录页、注册页、404页等）
-          'src/pages-bpm', // “工作流程”模块
+          'src/pages-bpm', // "工作流程"模块
         ],
         dts: 'src/types/uni-pages.d.ts',
       }),

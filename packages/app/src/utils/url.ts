@@ -1,3 +1,5 @@
+declare function getApp(): any
+
 /**
  * 解析 URL 查询参数
  * @param url URL 字符串

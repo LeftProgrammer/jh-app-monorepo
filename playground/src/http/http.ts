@@ -1,10 +1,8 @@
-import type { IDoubleTokenRes } from '@/api/types/login'
+﻿import type { IDoubleTokenRes } from '@/api/types/login'
 import type { CustomRequestOptions, IResponse } from '@/http/types'
 import { nextTick } from 'vue'
 import { useTokenStore } from '@/store/token'
-import { getLastPage, isDoubleTokenMode } from '@/utils'
-import { ApiEncrypt } from '@/utils/encrypt'
-import { toLoginPage } from '@/utils/toLoginPage'
+import { ApiEncrypt, getLastPage, isDoubleTokenMode, toLoginPage } from '@/utils'
 import { ResultEnum } from './tools/enum'
 
 // 刷新 token 状态管理

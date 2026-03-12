@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <!-- 搜索框入口 -->
   <view @click="visible = true">
     <wd-search :placeholder="placeholder" hide-cancel disabled />
@@ -66,9 +66,8 @@
 </template>
 
 <script lang="ts" setup>
+import { formatDate, formatDateRange, getNavbarHeight } from '@/utils'
 import { computed, reactive, ref } from 'vue'
-import { getNavbarHeight } from '@/utils'
-import { formatDate, formatDateRange } from '@/utils/date'
 
 const emit = defineEmits<{
   search: [data: Record<string, any>]

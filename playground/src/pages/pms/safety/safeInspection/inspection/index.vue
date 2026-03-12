@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view class="yd-page-container">
     <!-- 顶部导航栏 -->
     <wd-navbar
@@ -93,14 +93,15 @@
 </template>
 
 <script lang="ts" setup>
+import { deepClone, DICT_TYPE, formatDate, navigateBackPlus } from '@/utils'
 import { computed, onMounted, ref } from "vue";
-import { navigateBackPlus, deepClone } from "@/utils/index"; // 确保提供 deepClone
+; // 确保提供 deepClone
 import InspectionApi from "@/api/pms/safety/safeInspection/inspection"; // 你的 API
 import type { LoadMoreState } from "@/http/types";
-import { DICT_TYPE } from "@/utils/constants"; // 你的字典常量
+; // 你的字典常量
 import { getDictLabel, getStrDictOptions } from "@/hooks/useDict"; // 你的字典 hook
 import { useUserStore } from "@/store"; // 你的用户 store
-import { formatDate } from "@/utils/date"; // 你的日期格式化工具
+; // 你的日期格式化工具
 import { useMessage } from "wot-design-uni";
 
 definePage({

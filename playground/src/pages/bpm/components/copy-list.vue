@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view>
     <!-- 搜索组件 -->
     <CopySearchForm @search="handleSearch" @reset="handleReset" />
@@ -42,13 +42,14 @@
 </template>
 
 <script lang="ts" setup>
+import { formatDate, formatDateTime } from '@/utils'
 import type { ProcessInstanceCopy } from "@/api/bpm/processInstance";
 import type { LoadMoreState } from "@/http/types";
 import { onReachBottom } from "@dcloudio/uni-app";
-import { formatDate } from "@/utils/date";
+;
 import { onMounted, ref } from "vue";
 import { getProcessInstanceCopyPage } from "@/api/bpm/processInstance";
-import { formatDateTime } from "@/utils/date";
+;
 import CopySearchForm from "./copy-search-form.vue";
 import "../styles/index.scss";
 

@@ -1,6 +1,6 @@
 /**
  * 工具函数模块统一导出
- * 
+ *
  * @description 提供常用的工具函数，包括页面处理、路由辅助、日期格式化、加解密等功能
  * @export PageInstance - 页面实例类型
  * @export getPageConfig - 获取页面配置
@@ -9,37 +9,32 @@
  * @export currRoute - 获取当前路由
  * @export ensureDecodeURIComponent - 确保 URL 解码
  * @export parseUrlToObj - 解析 URL 为对象
- * @export getAllPages - 获取所有页面
+ * @export getAllPages - 获取所有页面（参数化）
+ * @export getHomePage - 获取首页路径（参数化）
  * @export getCurrentPageI18nKey - 获取当前页面国际化键
- * @export getEnvBaseUrl - 获取环境基准地址
- * @export getEnvBaseUrlRoot - 获取环境根地址
- * @export isDoubleTokenMode - 是否双 token 模式
- * @export HOME_PAGE - 首页路径
- * @export redirectAfterLogin - 登录后跳转
- * @export navigateBackPlus - 导航返回
+ * @export redirectAfterLogin - 登录后跳转（参数化）
+ * @export navigateBackPlus - 导航返回（参数化）
  * @export getNavbarHeight - 获取导航栏高度
  * @export deepClone - 深拷贝
  * @usage 页面处理、路由辅助、工具函数
  */
 import type {
   PageMetaDatum,
+  PagesConfig,
   SubPackages,
-} from "@uni-helper/vite-plugin-uni-pages";
-import { isMpWeixin } from "@uni-helper/uni-env";
-import { isPageTabbarStore } from "../components/tabbar/store";
+} from '@uni-helper/vite-plugin-uni-pages'
+import { isTabBarPage as _isTabBarPage } from '../components/tabbar/config'
+
+// 导出 isPageTabbar，供外部使用
+export const isPageTabbar = _isTabBarPage
 
 export type PageInstance = Page.PageInstance<AnyObject, object> & {
-  $page: Page.PageInstance<AnyObject, object> & { fullPath: string };
-};
+  $page: Page.PageInstance<AnyObject, object> & { fullPath: string }
+}
 
 // 页面处理工具
 export function getPageConfig(pagesConfig?: { pages: PageMetaDatum[], subPackages?: SubPackages[] }) {
   return pagesConfig || { pages: [], subPackages: [] };
-}
-
-export function isPageTabbar(pagePath: string, tabbarPages?: string[]): boolean {
-  if (!tabbarPages) return false;
-  return tabbarPages.some(path => pagePath.includes(path));
 }
 
 export function getLastPage() {
@@ -101,99 +96,99 @@ export function parseUrlToObj(url: string) {
 /**
  * 这里设计得通用一点，可以传递 key 作为判断依据，默认是 excludeLoginPath, 与 route-block 配对使用
  * 如果没有传 key，则表示所有的 pages，如果传递了 key, 则表示通过 key 过滤
+ *
+ * @param pagesConfig 页面配置对象,包含 pages 和 subPackages
+ * @param key 可选的过滤键
  */
-export function getAllPages(key?: string) {
-  // 这里处理主包
-  const mainPages = (pages as PageMetaDatum[])
-    .filter((page) => !key || page[key])
-    .map((page) => `/${page.path}`);
+export function getAllPages(
+  pagesConfig: { pages: PageMetaDatum[], subPackages?: SubPackages[] },
+  key?: string,
+) {
+  const mainPages = pagesConfig.pages
+    .filter(page => !key || page[key])
+    .map(page => `/${page.path}`)
 
-  // 这里处理分包
-  const subPages = (subPackages as SubPackages[]).flatMap((pkg) =>
-    (pkg.pages || []).map((page) => `/${pkg.root}/${page.path}`),
-  );
+  const subPages = (pagesConfig.subPackages || []).flatMap(pkg =>
+    (pkg.pages || []).map(page => `/${pkg.root}/${page.path}`),
+  )
 
-  const result = [...mainPages, ...subPages];
+  const result = [...mainPages, ...subPages]
 
   // console.log('getAllPages', result)
-  return result;
-}
-
-export function getCurrentPageI18nKey() {
-  const routeObj = currRoute();
-  const currPage = (pages as PageMetaDatum[]).find(
-    (page) => `/${page.path}` === routeObj.path,
-  );
-  return currPage?.i18nKey || "";
+  return result
 }
 
 /**
- * 根据微信小程序当前环境，判断应该获取的 baseUrl
+ * 获取当前页面的国际化键
  * 
- * 支持动态环境切换：开发版、测试版、正式版使用不同的 API 地址
+ * @param pagesConfig 页面配置对象
+ */
+export function getCurrentPageI18nKey(pagesConfig: { pages: PageMetaDatum[] }) {
+  const routeObj = currRoute()
+  const currPage = pagesConfig.pages.find(
+    page => `/${page.path}` === routeObj.path,
+  )
+  return currPage?.i18nKey || ''
+}
+
+/**
+ * 获取环境基准地址
+ * @deprecated 建议项目自行实现或从 router/config 导入 BASE_URL
  */
 export function getEnvBaseUrl() {
-  // 请求基准地址
-  let baseUrl = import.meta.env.VITE_SERVER_BASEURL;
-
-  // #ifdef MP-WEIXIN
-  if (isMpWeixin()) {
-    // 微信小程序，根据环境版本动态切换地址
-    const { miniProgram: { envVersion } } = uni.getAccountInfoSync();
-    
-    // 动态构建环境变量名
-    const envKey = `VITE_SERVER_BASEURL__WEIXIN_${envVersion.toUpperCase()}`;
-    const envBaseUrl = import.meta.env[envKey];
-    
-    // 使用环境特定地址，如果未配置则使用默认地址
-    baseUrl = envBaseUrl || baseUrl;
-  }
-  // #endif
-
-  return baseUrl;
+  return (import.meta as any).env?.VITE_SERVER_BASEURL || 'http://localhost:48080/admin-api'
 }
 
 /**
- * 根据环境变量，获取基础路径的根路径，比如 http://localhost:48080
- *
- * add by 芋艿：用户类似 websocket 这种需要根路径的场景
- *
- * @return 根路径
+ * 获取环境根地址
+ * @deprecated 建议项目自行实现
  */
 export function getEnvBaseUrlRoot() {
-  const baseUrl = getEnvBaseUrl();
-  // 提取根路径
-  const urlObj = new URL(baseUrl);
-  return urlObj.origin;
+  const baseUrl = getEnvBaseUrl()
+  const urlObj = new URL(baseUrl)
+  return urlObj.origin
 }
 
 /**
- * 是否是双token模式
+ * 是否是双 token 模式
+ * @deprecated 建议项目自行实现或从 router/config 导入 IS_DOUBLE_TOKEN_MODE
  */
-export const isDoubleTokenMode = import.meta.env.VITE_AUTH_MODE === "double";
+export const isDoubleTokenMode = (import.meta as any).env?.VITE_AUTH_MODE === 'double'
 
 /**
- * 首页路径，通过 page.json 里面的 type 为 home 的页面获取，如果没有，则默认是第一个页面
+ * 获取首页路径
+ * 通过 page.json 里面的 type 为 home 的页面获取，如果没有，则默认是第一个页面
  * 通常为 /pages/index/index
+ *
+ * @param pagesConfig 页面配置对象
+ * @returns 首页路径
  */
-export const HOME_PAGE = `/${(pages as PageMetaDatum[]).find((page) => page.type === "home")?.path || (pages as PageMetaDatum[])[0].path}`;
+export function getHomePage(pagesConfig: { pages: PageMetaDatum[] }): string {
+  const homePage = pagesConfig.pages.find(page => page.type === 'home')
+  return `/${homePage?.path || pagesConfig.pages[0]?.path || 'pages/index/index'}`
+}
 
 /**
  * 登录成功后跳转
  *
  * @author 芋艿
- * @param redirectUrl 重定向地址，为空则跳转到默认首页（HOME_PAGE）
+ * @param redirectUrl 重定向地址，为空则跳转到首页
+ * @param pagesConfig 页面配置对象，用于获取首页路径
  */
-export function redirectAfterLogin(redirectUrl?: string) {
-  let path = redirectUrl || HOME_PAGE;
-  if (!path.startsWith("/")) {
-    path = `/${path}`;
+export function redirectAfterLogin(
+  redirectUrl: string | undefined,
+  pagesConfig: { pages: PageMetaDatum[] },
+) {
+  const homePage = getHomePage(pagesConfig)
+  let path = redirectUrl || homePage
+  if (!path.startsWith('/')) {
+    path = `/${path}`
   }
-  const { path: _path } = parseUrlToObj(path);
-  if (isPageTabbarStore(_path)) {
-    uni.switchTab({ url: path });
+  const { path: _path } = parseUrlToObj(path)
+  if (_isTabBarPage(_path)) {
+    uni.switchTab({ url: path })
   } else {
-    uni.navigateBack();
+    uni.navigateBack()
   }
 }
 
@@ -205,27 +200,32 @@ export function redirectAfterLogin(redirectUrl?: string) {
  *
  * @author 芋艿
  * @param fallbackUrl 备选跳转地址，当不存在上一页时使用
+ * @param pagesConfig 页面配置对象，用于获取首页路径
  */
-export function navigateBackPlus(fallbackUrl?: string) {
-  const pages = getCurrentPages();
+export function navigateBackPlus(
+  fallbackUrl: string | undefined,
+  pagesConfig: { pages: PageMetaDatum[] },
+) {
+  const pages = getCurrentPages()
   // 情况一：如果存在上一页（页面栈长度大于 1），则直接返回
   if (pages.length > 1) {
-    uni.navigateBack();
-    return;
+    uni.navigateBack()
+    return
   }
 
   // 情况二 + 三：不存在上一页，尝试跳转到传入的 fallbackUrl
-  let targetUrl = fallbackUrl || HOME_PAGE;
+  const homePage = getHomePage(pagesConfig)
+  let targetUrl = fallbackUrl || homePage
   // 确保路径以 / 开头
-  if (!targetUrl.startsWith("/")) {
-    targetUrl = `/${targetUrl}`;
+  if (!targetUrl.startsWith('/')) {
+    targetUrl = `/${targetUrl}`
   }
   // 解析路径，判断是否是 tabbar 页面
-  const { path } = parseUrlToObj(targetUrl);
-  if (isPageTabbarStore(path)) {
-    uni.switchTab({ url: targetUrl });
+  const { path } = parseUrlToObj(targetUrl)
+  if (_isTabBarPage(path)) {
+    uni.switchTab({ url: targetUrl })
   } else {
-    uni.reLaunch({ url: targetUrl });
+    uni.reLaunch({ url: targetUrl })
   }
 }
 
@@ -302,3 +302,48 @@ export function deepClone<T>(src: T, wm = new WeakMap<object, any>()): T {
 
   return dst;
 }
+
+// ==================== 子模块重新导出 ====================
+// 以下导出所有子模块的功能，方便使用者直接从主入口导入
+
+// 日期处理工具
+export * from './date'
+
+// 防抖节流
+export * from './debounce'
+
+// 加密解密
+export * from './encrypt'
+
+// 文件下载
+export * from './download'
+
+// 树形数据处理
+export * from './tree'
+
+// 表单验证
+export * from './validator'
+
+// 文件上传
+export * from './uploadFile'
+
+// URL 处理
+export * from './url'
+
+// 系统信息
+export * from './systemInfo'
+
+// 登录跳转
+export * from './toLoginPage'
+
+// 应用更新
+export * from './appUpdate'
+
+// 微信更新管理
+export * from './updateManager.wx'
+
+// 路由辅助
+export * from './routerHelper'
+
+// 常量枚举
+export * from './constants'

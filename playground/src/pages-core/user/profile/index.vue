@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view class="yd-page-container">
     <!-- 顶部导航栏 -->
     <wd-navbar
@@ -80,15 +80,16 @@
 </template>
 
 <script lang="ts" setup>
+import { DICT_TYPE, navigateBackPlus, uploadFileFromPath } from '@/utils'
 import type { UserProfileVO } from "@/api/system/user/profile";
 import { onMounted, ref } from "vue";
 import { useToast } from "wot-design-uni";
 import { getUserProfile, updateUserProfile } from "@/api/system/user/profile";
 import { getDictLabel } from "@/hooks/useDict";
 import { useUserStore } from "@/store/user";
-import { navigateBackPlus } from "@/utils";
-import { DICT_TYPE } from "@/utils/constants";
-import { uploadFileFromPath } from "@/utils/uploadFile";
+;
+;
+;
 import Form from "./components/form.vue";
 import { getFileByIds } from "@/api/infra/file";
 

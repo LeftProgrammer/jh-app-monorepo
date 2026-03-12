@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view>
     <!-- 搜索组件 -->
     <MySearchForm @search="handleSearch" @reset="handleReset" />
@@ -59,6 +59,7 @@
 </template>
 
 <script lang="ts" setup>
+import { DICT_TYPE, formatPast } from '@/utils'
 import type { ProcessInstance } from "@/api/bpm/processInstance";
 import type { LoadMoreState } from "@/http/types";
 import { onReachBottom } from "@dcloudio/uni-app";
@@ -66,8 +67,8 @@ import { computed, onMounted, ref } from "vue";
 import { useMessage, useToast } from "wot-design-uni";
 import { getProcessInstanceMyPage, urgeCreate } from "@/api/bpm/processInstance";
 import { useUserStore } from "@/store";
-import { DICT_TYPE } from "@/utils/constants";
-import { formatPast } from "@/utils/date";
+;
+;
 import MySearchForm from "./my-search-form.vue";
 import "../styles/index.scss";
 

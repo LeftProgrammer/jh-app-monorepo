@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view>
     <!-- 搜索组件 -->
     <TodoSearchForm @search="handleSearch" @reset="handleReset" />
@@ -40,7 +40,7 @@ import type { LoadMoreState } from "@/http/types";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { onMounted, ref } from "vue";
 import { getTaskTodoPage } from "@/api/bpm/task";
-import { formatDate } from "@/utils/date";
+import { formatDate } from "@/utils";
 import TodoSearchForm from "./todo-search-form.vue";
 import { useMessage, useToast } from "wot-design-uni";
 import "../styles/index.scss";

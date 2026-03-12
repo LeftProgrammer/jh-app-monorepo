@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view :class="embedded ? '' : 'yd-page-container'" class="bg-#f5f5f5">
     <!-- 顶部导航栏（仅路由访问时显示） -->
     <wd-navbar
@@ -244,13 +244,14 @@
 </template>
 
 <script lang="ts" setup>
+import { deepClone, DICT_TYPE, formatDate, navigateBackPlus } from '@/utils'
 import { useToast } from "wot-design-uni";
 import { get, PostedVO } from "@/api/pms/document/posted";
-import { navigateBackPlus, deepClone } from "@/utils";
-import { DICT_TYPE } from "@/utils/constants";
+;
+;
 import UserPicker from "@/components/system-select/user-picker.vue";
 import UnitPicker from "@/components/system-select/unit-picker.vue";
-import { formatDate } from "@/utils/date";
+;
 import { useUserStore } from "@/store";
 import { useGlobalState } from "@/store/global";
 import { create } from "@/api/pms/document/posted";

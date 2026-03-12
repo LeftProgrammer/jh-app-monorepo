@@ -76,12 +76,13 @@
 </template>
 
 <script lang="ts" setup>
-import { navigateBackPlus } from "@/utils";
+;
+import { formatDate, formatDateTimeHour, navigateBackPlus } from '@/utils'
 import { getPage, deleteById } from "@/api/general/camp/safety";
 import type { LoadMoreState } from "@/http/types";
 import { useUserStore } from "@/store";
-import { DICT_TYPE } from "@/utils/constants/dict-enum";
-import { formatDateTimeHour, formatDate } from "@/utils/date";
+import { DICT_TYPE } from "@/utils";
+;
 import { useMessage } from "wot-design-uni";
 
 definePage({

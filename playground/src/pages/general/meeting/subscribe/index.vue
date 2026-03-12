@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view class="yd-page-container">
     <!-- 顶部导航栏 -->
     <wd-navbar
@@ -85,14 +85,15 @@
 </template>
 
 <script lang="ts" setup>
-import { navigateBackPlus } from "@/utils";
+;
+import { DICT_TYPE, formatDate, getNavbarHeight, navigateBackPlus } from '@/utils'
 import SubscribeApi from "@/api/general/meeting";
 import type { LoadMoreState } from "@/http/types";
-import { DICT_TYPE } from "@/utils/constants";
+;
 import { useUserStore } from "@/store";
 import { useMessage, useToast } from "wot-design-uni";
-import { formatDate } from "@/utils/date";
-import { getNavbarHeight } from "@/utils";
+;
+;
 
 definePage({
   style: {

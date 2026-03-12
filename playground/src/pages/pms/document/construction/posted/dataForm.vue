@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view :class="embedded ? '' : 'yd-page-container'" class="bg-#f5f5f5">
     <!-- 顶部导航（路由打开才显示） -->
     <wd-navbar
@@ -120,18 +120,19 @@
 </template>
 
 <script lang="ts" setup>
+import { deepClone, DICT_TYPE, formatDate, navigateBackPlus } from '@/utils'
 import { ref, computed, reactive, onMounted } from "vue";
 import { useToast } from "wot-design-uni";
-import { DICT_TYPE } from "@/utils/constants";
+;
 
 import * as ConsortiumApi from "@/api/pms/document/posted";
-import { navigateBackPlus, deepClone } from "@/utils";
+;
 import { useUserStore } from "@/store";
 import { useGlobalState } from "@/store/global";
 
 import UserPicker from "@/components/system-select/user-picker.vue";
 import UnitPicker from "@/components/system-select/unit-picker.vue";
-import { formatDate } from "@/utils/date";
+;
 
 defineOptions({ name: "DocumentConstructionPostedCreateApp" });
 

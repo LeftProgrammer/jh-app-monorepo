@@ -37,7 +37,7 @@
 <script lang="ts" setup>
 import { getNavbarHeight } from "@/utils";
 import { computed, ref } from "vue";
-import { getAndClearTabParams } from "@/utils/url";
+import { getAndClearTabParams } from "@/utils";
 import CopyList from "./components/copy-list.vue";
 import DoneList from "./components/done-list.vue";
 import MyList from "./components/my-list.vue";

@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view class="yd-page-container">
     <!-- 顶部导航栏 -->
     <wd-navbar
@@ -52,14 +52,12 @@
 </template>
 
 <script lang="ts" setup>
+import { DICT_TYPE, formatDateTime, navigateBackPlus } from '@/utils'
 import type { ProcessListener } from '@/api/bpm/process-listener'
 import { onMounted, ref } from 'vue'
 import { useToast } from 'wot-design-uni'
 import { deleteProcessListener, getProcessListener } from '@/api/bpm/process-listener'
 import { useAccess } from '@/hooks/useAccess'
-import { navigateBackPlus } from '@/utils'
-import { DICT_TYPE } from '@/utils/constants'
-import { formatDateTime } from '@/utils/date'
 
 const props = defineProps<{
   id?: number | any

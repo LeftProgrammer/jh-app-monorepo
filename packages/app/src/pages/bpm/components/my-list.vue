@@ -66,8 +66,8 @@ import { computed, onMounted, ref } from "vue";
 import { useMessage, useToast } from "wot-design-uni";
 import { getProcessInstanceMyPage, urgeCreate } from "@/api/bpm/processInstance";
 import { useUserStore } from "@/store";
-import { DICT_TYPE } from "@/utils/constants";
-import { formatPast } from "@/utils/date";
+import { DICT_TYPE } from "@/utils";
+import { formatPast } from "@/utils";
 import MySearchForm from "./my-search-form.vue";
 import "../styles/index.scss";
 
