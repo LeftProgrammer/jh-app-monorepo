@@ -1,45 +1,36 @@
-// import { getAllPages } from '@/utils'
+// ============================================================
+// 页面路径常量（项目自定义）
+// ============================================================
+export const LOGIN_PAGE = '/pages-core/auth/login'
+export const REGISTER_PAGE = '/pages-core/auth/register'
+export const CODE_LOGIN_PAGE = '/pages-core/auth/code-login'
+export const FORGET_PASSWORD_PAGE = '/pages-core/auth/forget-password'
+export const NOT_FOUND_PAGE = '/pages-core/error/404'
+export const ONLY_PC_PAGE = '/pages-core/error/only-pc'
 
-export const LOGIN_STRATEGY_MAP = {
-  DEFAULT_NO_NEED_LOGIN: 0, // 黑名单策略，默认可以进入APP
-  DEFAULT_NEED_LOGIN: 1, // 白名单策略，默认不可以进入APP，需要强制登录
-}
-// TODO: 1/3 登录策略，默认使用`无需登录策略`，即默认不需要登录就可以访问
-export const LOGIN_STRATEGY = LOGIN_STRATEGY_MAP.DEFAULT_NEED_LOGIN // edit by 芋艿：管理后台，默认需要登录
-export const isNeedLoginMode
-  = LOGIN_STRATEGY === LOGIN_STRATEGY_MAP.DEFAULT_NEED_LOGIN
+// ============================================================
+// 路由拦截配置（项目自定义，由 interceptor.ts 传入框架包）
+// ============================================================
 
-export const LOGIN_PAGE = '/pages-core/auth/login' // edit by 芋艿：自定义了登录页路径
-export const REGISTER_PAGE = '/pages-core/auth/register' // edit by 芋艿：自定义了注册页路径
-export const CODE_LOGIN_PAGE = '/pages-core/auth/code-login' // edit by 芋艿：自定义了短信登录页路径
-export const FORGET_PASSWORD_PAGE = '/pages-core/auth/forget-password' // edit by 芋艿：自定义了忘记密码页路径
-export const NOT_FOUND_PAGE = '/pages-core/error/404' // edit by 芋艿：调整 404 页面路径
-export const ONLY_PC_PAGE = '/pages-core/error/only-pc' // edit by 芋艿：新增仅 PC 端访问提示页面路径
+// TODO: 1/2 登录策略：true = 白名单（默认需要登录），false = 黑名单（默认不需要登录）
+export const IS_NEED_LOGIN_MODE = true // edit by 芋艿：管理后台，默认需要登录
 
-// TODO @芋艿：【优化】貌似 unibest 这个变量没用？！
-export const LOGIN_PAGE_LIST = [
-  LOGIN_PAGE,
-  REGISTER_PAGE,
-  CODE_LOGIN_PAGE,
-  FORGET_PASSWORD_PAGE,
+// TODO: 2/2 在 definePage 配置 excludeLoginPath，或在下面配置排除列表
+// 白名单模式：列表内路径不需要登录；黑名单模式：列表内路径需要登录
+export const EXCLUDE_LOGIN_PATH_LIST: string[] = [
+  // '/pages/xxx/index', // 示例值
 ]
 
-// 注释 by 芋艿：在 mp 环境下，getAllPages 函数还没初始化好，所以不能直接调用。统一优化到 judgeIsExcludePath 函数里面去获取
-// 在 definePage 里面配置了 excludeLoginPath 的页面，功能与 EXCLUDE_LOGIN_PATH_LIST 相同
-// export const excludeLoginPathList = getAllPages('excludeLoginPath').map(
-//   page => page.path,
-// )
-
-// 排除在外的列表，白名单策略指白名单列表，黑名单策略指黑名单列表
-// TODO: 2/3 在 definePage 配置 excludeLoginPath，或者在下面配置 EXCLUDE_LOGIN_PATH_LIST
-export const EXCLUDE_LOGIN_PATH_LIST = [
-  '/pages/xxx/index', // 示例值
-  '/pages-sub/xxx/index', // 示例值
-  // 注释 by 芋艿：在 mp 环境下，getAllPages 函数还没初始化好，所以不能直接调用。统一优化到 judgeIsExcludePath 函数里面去获取
-  // ...excludeLoginPathList, // 都是以 / 开头的 path
-]
-
-// 在小程序里面是否使用H5的登录页，默认为 false
-// 如果为 true 则复用 h5 的登录逻辑
-// TODO: 3/3 确定自己的登录页是否需要在小程序里面使用
+// 小程序是否使用自定义 H5 登录页，false = 使用平台自带登录
 export const LOGIN_PAGE_ENABLE_IN_MP = true // edit by 芋艿：管理后台，小程序也使用自定义登录页
+
+// 运行时路由配置单例（由 createRouterConfig 更新，供框架包内部组件使用）
+export const activeRouterConfig = {
+  loginPage: LOGIN_PAGE,
+  homePage: '/pages/index/index',
+  notFoundPage: NOT_FOUND_PAGE,
+  isNeedLoginMode: IS_NEED_LOGIN_MODE,
+  excludeLoginPathList: EXCLUDE_LOGIN_PATH_LIST,
+  loginPageEnableInMp: LOGIN_PAGE_ENABLE_IN_MP,
+  debugLog: false,
+}

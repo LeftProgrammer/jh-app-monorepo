@@ -1,5 +1,5 @@
 /* eslint-disable brace-style */ // 原因：unibest 官方维护的代码，尽量不要大概，避免难以合并
-import { LOGIN_PAGE } from '../router/config'
+import { activeRouterConfig } from '../router/config'
 import { getLastPage } from './index'
 import { debounce } from './debounce'
 
@@ -29,13 +29,13 @@ export const toLoginPage = debounce((options: ToLoginPageOptions = {}) => {
     mode = 'reLaunch'
   }
 
-  const url = `${LOGIN_PAGE}${queryString}`
+  const url = `${activeRouterConfig.loginPage}${queryString}`
 
   // 获取当前页面路径
   const currentPage = getLastPage()
   const currentPath = `/${currentPage.route}`
   // 如果已经在登录页，则不跳转
-  if (currentPath === LOGIN_PAGE) {
+  if (currentPath === activeRouterConfig.loginPage) {
     return
   }
 

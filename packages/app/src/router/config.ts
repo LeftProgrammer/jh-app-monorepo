@@ -60,3 +60,63 @@ export const EXCLUDE_LOGIN_PATH_LIST = [
 // 如果为 true 则复用 h5 的登录逻辑
 // TODO: 3/3 确定自己的登录页是否需要在小程序里面使用
 export const LOGIN_PAGE_ENABLE_IN_MP = true // edit by 芋艿：管理后台，小程序也使用自定义登录页
+
+// ============================================================
+// 以下为供外部项目使用的接口类型和工厂函数
+// ============================================================
+
+/**
+ * 路由配置接口（供外部项目使用）
+ * @description 外部项目通过此接口定义路由配置，传入 createRouteInterceptor
+ */
+export interface RouterConfig {
+  /** 登录页路径 */
+  loginPage: string
+  /** 首页路径 */
+  homePage: string
+  /** 404 页面路径 */
+  notFoundPage: string
+  /** 是否为白名单登录模式（true=默认需要登录，false=默认不需要登录） */
+  isNeedLoginMode: boolean
+  /** 排除登录路径列表（白名单模式下为白名单，黑名单模式下为黑名单） */
+  excludeLoginPathList: string[]
+  /** 小程序是否启用自定义登录页 */
+  loginPageEnableInMp: boolean
+  /** 是否开启调试日志 */
+  debugLog?: boolean
+}
+
+/**
+ * 运行时可更新的路由配置单例（包内部使用，外部项目不应直接访问）
+ * @description 包内部消费者（toLoginPage、tabbar 等）应读取此单例而非静态常量，
+ *              外部项目调用 createRouterConfig 后，此单例会被更新，确保行为一致
+ * @internal
+ */
+export const activeRouterConfig: RouterConfig = {
+  loginPage: LOGIN_PAGE,
+  homePage: HOME_PAGE,
+  notFoundPage: NOT_FOUND_PAGE,
+  isNeedLoginMode,
+  excludeLoginPathList: EXCLUDE_LOGIN_PATH_LIST,
+  loginPageEnableInMp: LOGIN_PAGE_ENABLE_IN_MP,
+  debugLog: false,
+}
+
+/**
+ * 创建路由配置（工厂函数，供外部项目使用）
+ * @description 外部项目使用此函数，将项目的路由常量整合为 RouterConfig 对象，
+ *              同时更新包内活动配置单例，确保 toLoginPage、tabbar 等内部消费者行为一致
+ * @example
+ * const config = createRouterConfig({
+ *   loginPage: LOGIN_PAGE,
+ *   homePage: HOME_PAGE,
+ *   notFoundPage: NOT_FOUND_PAGE,
+ *   isNeedLoginMode,
+ *   excludeLoginPathList: EXCLUDE_LOGIN_PATH_LIST,
+ *   loginPageEnableInMp: LOGIN_PAGE_ENABLE_IN_MP,
+ * })
+ */
+export function createRouterConfig(config: RouterConfig): RouterConfig {
+  Object.assign(activeRouterConfig, config)
+  return config
+}

@@ -9,7 +9,9 @@
   },
   "pnpm": {
     "peerDependencyRules": {
-      "ignoreMissing": ["vue"]
+      "ignoreMissing": [
+        "vue"
+      ]
     }
   },
   "engines": {
@@ -33,6 +35,7 @@
     "clean": "pnpm -r clean && rm -rf node_modules",
     "clean:app": "pnpm --filter @jinghe-sanjiaoroad-app/framework clean",
     "dev:playground": "pnpm --filter jinghe-sanjiaoroad-app-playground dev",
+    "dev:all": "pnpm --parallel --filter @jinghe-sanjiaoroad-app/framework --filter jinghe-sanjiaoroad-app-playground dev",
     "build:playground": "pnpm --filter jinghe-sanjiaoroad-app-playground build",
     "lint:playground": "pnpm --filter jinghe-sanjiaoroad-app-playground lint",
     "check:playground": "node scripts/test-framework.js",

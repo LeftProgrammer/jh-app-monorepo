@@ -67,7 +67,7 @@
 import { reactive, ref } from 'vue'
 import { useToast } from 'wot-design-uni'
 import { smsResetPassword } from '@/api/login'
-import { LOGIN_PAGE } from '@/router/config'
+import { LOGIN_PAGE } from '@/router'
 import { isMobile } from '@/utils'
 import CodeInput from './components/code-input.vue'
 import Header from './components/header.vue'

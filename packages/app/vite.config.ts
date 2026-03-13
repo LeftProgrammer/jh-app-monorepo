@@ -21,6 +21,8 @@ export default defineConfig(({ mode }) => {
           'src/hooks/index.ts',
           'src/components/index.ts',
           'src/router/index.ts',
+          'src/router/config.ts',
+          'src/router/interceptor.ts',
           'src/vite-plugins/index.ts',
         ],
         exclude: ['src/**/*.test.ts', 'src/**/*.spec.ts', 'src/pages/**/*', 'src/api/**/*'],

@@ -12,6 +12,8 @@ export * as store from './store'
 
 // 路由管理
 export * as router from './router'
+// 路由工厂函数直接导出，方便外部项目使用
+export { createRouteInterceptor, createRouterConfig } from './router'
 
 // HTTP 模块
 export * as http from './http'
@@ -28,5 +30,5 @@ export * from './utils'
 // 组件模块
 export * from './components'
 
-// Vite 插件
-export * as vitePlugins from './vite-plugins'
+// 注意：Vite 插件不导出到主入口，避免 Node.js 模块污染浏览器代码
+// 使用方式：import { ... } from '@jinghe-sanjiaoroad-app/framework/vite-plugins'

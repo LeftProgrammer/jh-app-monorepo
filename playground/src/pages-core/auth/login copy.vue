@@ -81,7 +81,7 @@
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
 import { useToast } from "wot-design-uni";
-import { CODE_LOGIN_PAGE, FORGET_PASSWORD_PAGE, REGISTER_PAGE } from "@/router/config";
+import { CODE_LOGIN_PAGE, FORGET_PASSWORD_PAGE, REGISTER_PAGE } from "@/router";
 import { useTokenStore } from "@/store/token";
 import { ensureDecodeURIComponent, redirectAfterLogin } from "@/utils";
 import appUpdate from "@/utils/appUpdate";

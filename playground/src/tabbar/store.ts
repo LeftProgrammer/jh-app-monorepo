@@ -2,13 +2,13 @@
 import type { CustomTabBarItem, CustomTabBarItemBadge } from './types'
 import { reactive } from 'vue'
 
-import { isNeedLoginMode } from '@/router/config'
-import { FG_LOG_ENABLE, judgeIsExcludePath } from '@/router/interceptor'
+import { IS_NEED_LOGIN_MODE, judgeIsExcludePath } from '@/router'
 import { useTokenStore } from '@/store/token'
 import { tabbarList as _tabbarList, customTabbarEnable, selectedTabbarStrategy, TABBAR_STRATEGY_MAP } from './config'
 
 // TODO 1/2: 中间的鼓包tabbarItem的开关
 const BULGE_ENABLE = false
+const FG_LOG_ENABLE = false
 
 /** tabbarList 里面的 path 从 pages.config.ts 得到 */
 const tabbarList = reactive<CustomTabBarItem[]>(_tabbarList.map(item => ({
@@ -44,7 +44,7 @@ const tabbarStore = reactive({
   setCurIdx(idx: number) {
     const tokenStore = useTokenStore()
     // 已登录 或 (url 需要登录 && 在白名单 || 不需要登录 && 不在黑名单) （关于 白名单|黑名单 逻辑： src/router/interceptor.ts）
-    if (tokenStore.hasLogin || (isNeedLoginMode && judgeIsExcludePath(tabbarList[idx].pagePath)) || (!isNeedLoginMode && !judgeIsExcludePath(tabbarList[idx].pagePath))) {
+    if (tokenStore.hasLogin || (IS_NEED_LOGIN_MODE && judgeIsExcludePath(tabbarList[idx].pagePath)) || (!IS_NEED_LOGIN_MODE && !judgeIsExcludePath(tabbarList[idx].pagePath))) {
       this.curIdx = idx
       uni.setStorageSync('app-tabbar-index', idx)
     }

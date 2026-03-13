@@ -59,12 +59,9 @@ export function currRoute() {
     }
   }
   const fullPath = lastPage.$page.fullPath
-  // console.log('fullPath', fullPath)
-  const [path, queryStr] = fullPath.split('?')
-  return {
-    path,
-    query: parseUrlToObj(queryStr),
-  }
+  // 经过多端测试，只有 fullPath 靠谱，其他都不靠谱
+  // 直接调用 parseUrlToObj，它会处理有无查询参数的情况
+  return parseUrlToObj(fullPath)
 }
 
 export function ensureDecodeURIComponent(url: string) {
@@ -80,6 +77,7 @@ export function ensureDecodeURIComponent(url: string) {
  * 输出: {path: /pages/login/login, query: {redirect: /pages/demo/base/route-interceptor}}
  */
 export function parseUrlToObj(url: string) {
+  console.error('url======', url)
   const [path, queryStr] = url.split("?");
   // console.log(path, queryStr)
 

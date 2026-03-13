@@ -21,133 +21,210 @@ import { EXCLUDE_LOGIN_PATH_LIST, HOME_PAGE, isNeedLoginMode, LOGIN_PAGE, LOGIN_
 
 export const FG_LOG_ENABLE = false
 
-let excludeListInited = false // 标记 EXCLUDE_LOGIN_PATH_LIST 是否已经根据 getAllPages('excludeLoginPath') 做过一次性补充（仅非开发环境）
-export function judgeIsExcludePath(path: string) {
-  const isDev = import.meta.env.DEV
-  if (!isDev) {
-    // edit by 芋艿：非开发环境下，只初始化一次
-    if (!excludeListInited) {
-      const pages = getAllPages('excludeLoginPath')
-      pages.forEach((page) => {
-        if (!EXCLUDE_LOGIN_PATH_LIST.includes(page.path)) {
-          EXCLUDE_LOGIN_PATH_LIST.push(page.path)
-        }
-      })
-      excludeListInited = true
+// ============================================================
+// 外部项目依赖注入接口及工厂函数
+// 外部项目通过 createRouteInterceptor 注入自身依赖，得到路由拦截器实例
+// ============================================================
+
+/**
+ * 外部项目依赖注入接口（所有字段均可选，不传则使用框架包默认实现）
+ */
+export interface RouterDeps {
+  /** tabbarStore 实例，用于处理 tabbar index 的自动更新。默认使用框架包内置 tabbarStore */
+  tabbarStore?: { setAutoCurIdx: (path: string) => void }
+  /** 判断路径是否是 tabbar 页面。默认使用框架包内置 isPageTabbarStore */
+  isPageTabbar?: (path: string) => boolean
+  /** 跳转到登录页的函数。默认使用框架包内置 toLoginPage */
+  toLoginPage?: (options?: { mode?: 'navigateTo' | 'reLaunch', queryString?: string }) => void
+  /**
+   * 获取所有页面（含可选过滤 key）。
+   * 框架包本身无 pages.json，默认返回空数组。
+   * 外部项目如需支持 `excludeLoginPath` 动态收集，需注入已绑定 pages.json 的版本。
+   * 例如 playground/src/utils 中的 getAllPages(key?)
+   */
+  getAllPages?: (key?: string) => Array<{ path: string }>
+}
+
+/**
+ * 创建路由拦截器（工厂函数，供外部项目使用）
+ * @description 传入路由配置（由 createRouterConfig 创建），可选传入依赖覆盖，得到路由拦截器实例。
+ *              不传 deps 时，使用框架包内置的 tabbarStore、toLoginPage 等默认实现。
+ * @param config 路由配置
+ * @param deps 可选依赖覆盖
+ * @returns { navigateToInterceptor, routeInterceptor, judgeIsExcludePath }
+ * @example 最简用法（不传 deps）
+ * ```ts
+ * // src/router/interceptor.ts
+ * import { createRouteInterceptor, createRouterConfig } from '@jinghe-sanjiaoroad-app/framework'
+ * import { LOGIN_PAGE, HOME_PAGE, NOT_FOUND_PAGE, IS_NEED_LOGIN_MODE, EXCLUDE_LOGIN_PATH_LIST, LOGIN_PAGE_ENABLE_IN_MP } from './config'
+ *
+ * const config = createRouterConfig({ loginPage: LOGIN_PAGE, homePage: HOME_PAGE, notFoundPage: NOT_FOUND_PAGE,
+ *   isNeedLoginMode: IS_NEED_LOGIN_MODE, excludeLoginPathList: EXCLUDE_LOGIN_PATH_LIST, loginPageEnableInMp: LOGIN_PAGE_ENABLE_IN_MP })
+ * export const { navigateToInterceptor, routeInterceptor, judgeIsExcludePath } = createRouteInterceptor(config)
+ * ```
+ * @example 传入 getAllPages 以支持 excludeLoginPath 动态收集
+ * ```ts
+ * import { getAllPages } from '@/utils'
+ * export const { navigateToInterceptor, routeInterceptor, judgeIsExcludePath } =
+ *   createRouteInterceptor(config, { getAllPages })
+ * ```
+ */
+export function createRouteInterceptor(config: import('./config').RouterConfig, deps: RouterDeps = {}) {
+  const {
+    loginPage,
+    homePage,
+    notFoundPage,
+    isNeedLoginMode: _isNeedLoginMode,
+    excludeLoginPathList,
+    loginPageEnableInMp,
+    debugLog = false,
+  } = config
+
+  const _tabbarStore = deps.tabbarStore ?? tabbarStore
+  const _isPageTabbar = deps.isPageTabbar ?? isPageTabbarStore
+  const _toLoginPage = deps.toLoginPage ?? toLoginPage
+  const _getAllPages = deps.getAllPages ?? ((key?: string) => getAllPages(undefined, key))
+
+  let _excludeListInited = false
+
+  function _judgeIsExcludePath(path: string): boolean {
+    const isDev = import.meta.env.DEV
+    if (!isDev) {
+      if (!_excludeListInited) {
+        const pages = _getAllPages('excludeLoginPath')
+        pages.forEach((page) => {
+          if (!excludeLoginPathList.includes(page.path)) {
+            excludeLoginPathList.push(page.path)
+          }
+        })
+        _excludeListInited = true
+      }
+      return excludeLoginPathList.includes(path)
     }
-    return EXCLUDE_LOGIN_PATH_LIST.includes(path)
+    const allExcludeLoginPages = _getAllPages('excludeLoginPath')
+    return excludeLoginPathList.includes(path) || (isDev && allExcludeLoginPages.some(page => page.path === path))
   }
-  const allExcludeLoginPages = getAllPages('excludeLoginPath') // dev 环境下，需要每次都重新获取，否则新配置就不会生效
-  return EXCLUDE_LOGIN_PATH_LIST.includes(path) || (isDev && allExcludeLoginPages.some(page => page.path === path))
-}
 
-export const navigateToInterceptor = {
-  // 注意，这里的url是 '/' 开头的，如 '/pages/index/index'，跟 'pages.json' 里面的 path 不同
-  // 增加对相对路径的处理，BY 网友 @ideal
-  invoke({ url, query }: { url: string, query?: Record<string, string> }) {
-    if (url === undefined) {
-      return
-    }
-    let { path, query: _query } = parseUrlToObj(url)
+  const _navigateToInterceptor = {
+    invoke({ url, query }: { url: string, query?: Record<string, string> }) {
+      if (url === undefined) {
+        return
+      }
+      let { path, query: _query } = parseUrlToObj(url)
 
-    FG_LOG_ENABLE && console.log('\n\n路由拦截器:-------------------------------------')
-    FG_LOG_ENABLE && console.log('路由拦截器 1: url->', url, ', query ->', query)
-    const myQuery = { ..._query, ...query }
-    // /pages/route-interceptor/index?name=feige&age=30
-    FG_LOG_ENABLE && console.log('路由拦截器 2: path->', path, ', _query ->', _query)
-    FG_LOG_ENABLE && console.log('路由拦截器 3: myQuery ->', myQuery)
+      debugLog && console.log('\n\n路由拦截器:-------------------------------------')
+      debugLog && console.log('路由拦截器 1: url->', url, ', query ->', query)
+      const myQuery = { ..._query, ...query }
+      debugLog && console.log('路由拦截器 2: path->', path, ', _query ->', _query)
+      debugLog && console.log('路由拦截器 3: myQuery ->', myQuery)
 
-    // 处理相对路径
-    if (!path.startsWith('/')) {
-      const currentPath = getLastPage()?.route || ''
-      const normalizedCurrentPath = currentPath.startsWith('/') ? currentPath : `/${currentPath}`
-      const baseDir = normalizedCurrentPath.substring(0, normalizedCurrentPath.lastIndexOf('/'))
-      path = `${baseDir}/${path}`
-    }
+      if (!path.startsWith('/')) {
+        const currentPath = getLastPage()?.route || ''
+        const normalizedCurrentPath = currentPath.startsWith('/') ? currentPath : `/${currentPath}`
+        const baseDir = normalizedCurrentPath.substring(0, normalizedCurrentPath.lastIndexOf('/'))
+        path = `${baseDir}/${path}`
+      }
 
-    // 处理路由不存在的情况
-    if (path !== '/' && !getAllPages().some(page => page.path !== path)) {
-      console.warn('路由不存在:', path)
-      uni.navigateTo({ url: NOT_FOUND_PAGE })
-      return false // 明确表示阻止原路由继续执行
-    }
+      if (path !== '/' && !_getAllPages().some(page => page.path === path)) {
+        console.warn('路由不存在:', path)
+        uni.navigateTo({ url: notFoundPage })
+        return false
+      }
 
-    // 插件页面
-    if (url.startsWith('plugin://')) {
-      FG_LOG_ENABLE && console.log('路由拦截器 4: plugin:// 路径 ==>', url)
-      path = url
-    }
+      if (url.startsWith('plugin://')) {
+        debugLog && console.log('路由拦截器 4: plugin:// 路径 ==>', url)
+        path = url
+      }
 
-    // 处理直接进入路由非首页时，tabbarIndex 不正确的问题
-    tabbarStore.setAutoCurIdx(path)
+      _tabbarStore.setAutoCurIdx(path)
 
-    // 小程序里面使用平台自带的登录，则不走下面的逻辑
-    if (isMp && !LOGIN_PAGE_ENABLE_IN_MP) {
-      return true // 明确表示允许路由继续执行
-    }
+      if (isMp && !loginPageEnableInMp) {
+        return true
+      }
 
-    const tokenStore = useTokenStore()
-    FG_LOG_ENABLE && console.log('tokenStore.hasLogin:', tokenStore.hasLogin)
+      const tokenStore = useTokenStore()
+      debugLog && console.log('tokenStore.hasLogin:', tokenStore.hasLogin)
 
-    // 不管黑白名单，登录了就直接去吧（但是当前不能是登录页）
-    if (tokenStore.hasLogin) {
-      if (path !== LOGIN_PAGE) {
-        return true // 明确表示允许路由继续执行
-      } else {
-        console.log('已经登录，但是还在登录页', myQuery.redirect)
-        const url = myQuery.redirect || HOME_PAGE
-        if (isPageTabbarStore(url)) {
-          uni.switchTab({ url })
-        } else {
-          uni.navigateTo({ url })
+      if (tokenStore.hasLogin) {
+        if (path !== loginPage) {
+          return true
         }
-        return false // 明确表示阻止原路由继续执行
+        else {
+          console.log('已经登录，但是还在登录页', myQuery.redirect)
+          const url = myQuery.redirect || homePage
+          if (_isPageTabbar(url)) {
+            uni.switchTab({ url })
+          }
+          else {
+            uni.navigateTo({ url })
+          }
+          return false
+        }
       }
-    }
-    let fullPath = path
 
-    if (Object.keys(myQuery).length) {
-      fullPath += `?${Object.keys(myQuery).map(key => `${key}=${myQuery[key]}`).join('&')}`
-    }
-    const redirectQuery = `?redirect=${encodeURIComponent(fullPath)}`
-
-    // #region 1/2 默认需要登录的情况(白名单策略) ---------------------------
-    if (isNeedLoginMode) {
-      // 需要登录里面的 EXCLUDE_LOGIN_PATH_LIST 表示白名单，可以直接通过
-      if (judgeIsExcludePath(path)) {
-        return true // 明确表示允许路由继续执行
+      let fullPath = path
+      if (Object.keys(myQuery).length) {
+        fullPath += `?${Object.keys(myQuery).map(key => `${key}=${myQuery[key]}`).join('&')}`
       }
-      // 否则需要重定向到登录页
+      const redirectQuery = `?redirect=${encodeURIComponent(fullPath)}`
+
+      // #region 1/2 默认需要登录的情况(白名单策略)
+      if (_isNeedLoginMode) {
+        if (_judgeIsExcludePath(path)) {
+          return true
+        }
+        else {
+          if (path === loginPage) {
+            return true
+          }
+          debugLog && console.log('1 isNeedLogin(白名单策略) url:', fullPath)
+          _toLoginPage({ queryString: redirectQuery })
+          return false
+        }
+      }
+      // #endregion
+
+      // #region 2/2 默认不需要登录的情况(黑名单策略)
       else {
-        if (path === LOGIN_PAGE) {
-          return true // 明确表示允许路由继续执行
+        if (_judgeIsExcludePath(path)) {
+          debugLog && console.log('2 isNeedLogin(黑名单策略) url:', fullPath)
+          _toLoginPage({ queryString: redirectQuery })
+          return false
         }
-        FG_LOG_ENABLE && console.log('1 isNeedLogin(白名单策略) url:', fullPath)
-        toLoginPage({ queryString: redirectQuery })
-        return false // 明确表示阻止原路由继续执行
+        return true
       }
-    }
-    // #endregion 1/2 默认需要登录的情况(白名单策略) ---------------------------
+      // #endregion
+    },
+  }
 
-    // #region 2/2 默认不需要登录的情况(黑名单策略) ---------------------------
-    else {
-      // 不需要登录里面的 EXCLUDE_LOGIN_PATH_LIST 表示黑名单，需要重定向到登录页
-      if (judgeIsExcludePath(path)) {
-        FG_LOG_ENABLE && console.log('2 isNeedLogin(黑名单策略) url:', fullPath)
-        toLoginPage({ queryString: redirectQuery })
-        return false // 修改为false，阻止原路由继续执行
-      }
-      return true // 明确表示允许路由继续执行
-    }
-    // #endregion 2/2 默认不需要登录的情况(黑名单策略) ---------------------------
-  },
+  const _routeInterceptor = {
+    install() {
+      uni.addInterceptor('navigateTo', _navigateToInterceptor)
+      uni.addInterceptor('reLaunch', _navigateToInterceptor)
+      uni.addInterceptor('redirectTo', _navigateToInterceptor)
+      uni.addInterceptor('switchTab', _navigateToInterceptor)
+    },
+  }
+
+  return {
+    navigateToInterceptor: _navigateToInterceptor,
+    routeInterceptor: _routeInterceptor,
+    judgeIsExcludePath: _judgeIsExcludePath,
+  }
 }
 
-export const routeInterceptor = {
-  install() {
-    uni.addInterceptor('navigateTo', navigateToInterceptor)
-    uni.addInterceptor('reLaunch', navigateToInterceptor)
-    uni.addInterceptor('redirectTo', navigateToInterceptor)
-    uni.addInterceptor('switchTab', navigateToInterceptor)
-  },
-}
+// ============================================================
+// 包内部默认实例：使用包自身默认配置，不传 deps（由工厂函数内部兜底）
+// ============================================================
+const _defaultInstance = createRouteInterceptor({
+  loginPage: LOGIN_PAGE,
+  homePage: HOME_PAGE,
+  notFoundPage: NOT_FOUND_PAGE,
+  isNeedLoginMode,
+  excludeLoginPathList: EXCLUDE_LOGIN_PATH_LIST,
+  loginPageEnableInMp: LOGIN_PAGE_ENABLE_IN_MP,
+})
+
+export const judgeIsExcludePath = _defaultInstance.judgeIsExcludePath
+export const navigateToInterceptor = _defaultInstance.navigateToInterceptor
+export const routeInterceptor = _defaultInstance.routeInterceptor
