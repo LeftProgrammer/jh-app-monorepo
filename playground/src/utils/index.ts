@@ -7,6 +7,7 @@ import type { PageMetaDatum } from '@uni-helper/vite-plugin-uni-pages'
 import {
   getAllPages as _getAllPages,
   getHomePage as _getHomePage,
+  navigateBackPlus as _navigateBackPlus,
   redirectAfterLogin as _redirectAfterLogin,
 } from '@jinghe-sanjiaoroad-app/framework/utils'
 
@@ -38,15 +39,26 @@ export function getHomePage() {
 
 /**
  * 首页路径常量
+ * 动态计算自 pages.json，与原始项目保持一致
  */
 export const HOME_PAGE = getHomePage()
 
 /**
  * 登录后跳转
- * 覆盖框架包实现，自动注入本地 pages.json 配置
+ * 覆盖框架包实现，自动注入本地 HOME_PAGE
+ * 保持与原始项目一致的调用方式
  */
 export function redirectAfterLogin(redirectUrl?: string) {
-  return _redirectAfterLogin(redirectUrl, { pages: pages as PageMetaDatum[] })
+  return _redirectAfterLogin(redirectUrl, HOME_PAGE)
+}
+
+/**
+ * 增强的返回方法
+ * 覆盖框架包实现，自动注入本地 HOME_PAGE
+ * 保持与原始项目一致的调用方式
+ */
+export function navigateBackPlus(fallbackUrl?: string) {
+  return _navigateBackPlus(fallbackUrl, HOME_PAGE)
 }
 
 // ============ 透传框架包所有工具函数 ============

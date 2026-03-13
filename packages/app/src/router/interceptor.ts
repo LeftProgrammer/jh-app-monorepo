@@ -17,7 +17,7 @@ import { isPageTabbarStore, tabbarStore } from '../components/tabbar/store'
 import { useTokenStore } from '../store/token'
 import { getAllPages, getLastPage, parseUrlToObj } from '../utils/index'
 import { toLoginPage } from '../utils/toLoginPage'
-import { EXCLUDE_LOGIN_PATH_LIST, HOME_PAGE, isNeedLoginMode, LOGIN_PAGE, LOGIN_PAGE_ENABLE_IN_MP, NOT_FOUND_PAGE } from './config'
+import { activeRouterConfig } from './config'
 
 export const FG_LOG_ENABLE = false
 
@@ -214,16 +214,9 @@ export function createRouteInterceptor(config: import('./config').RouterConfig, 
 }
 
 // ============================================================
-// 包内部默认实例：使用包自身默认配置，不传 deps（由工厂函数内部兜底）
+// 包内部默认实例：使用 activeRouterConfig（由外部项目通过 createRouterConfig 更新）
 // ============================================================
-const _defaultInstance = createRouteInterceptor({
-  loginPage: LOGIN_PAGE,
-  homePage: HOME_PAGE,
-  notFoundPage: NOT_FOUND_PAGE,
-  isNeedLoginMode,
-  excludeLoginPathList: EXCLUDE_LOGIN_PATH_LIST,
-  loginPageEnableInMp: LOGIN_PAGE_ENABLE_IN_MP,
-})
+const _defaultInstance = createRouteInterceptor(activeRouterConfig)
 
 export const judgeIsExcludePath = _defaultInstance.judgeIsExcludePath
 export const navigateToInterceptor = _defaultInstance.navigateToInterceptor

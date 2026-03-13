@@ -77,7 +77,6 @@ export function ensureDecodeURIComponent(url: string) {
  * 输出: {path: /pages/login/login, query: {redirect: /pages/demo/base/route-interceptor}}
  */
 export function parseUrlToObj(url: string) {
-  console.error('url======', url)
   const [path, queryStr] = url.split("?");
   // console.log(path, queryStr)
 
@@ -178,17 +177,17 @@ export function getHomePage(pagesConfig: { pages: PageMetaDatum[] }): string {
 }
 
 /**
- * 登录成功后跳转
+ * 登录成功后跳转（框架包基础实现）
  *
  * @author 芋艿
  * @param redirectUrl 重定向地址，为空则跳转到首页
- * @param pagesConfig 页面配置对象，用于获取首页路径
+ * @param homePage 首页路径，默认为 '/pages/index/index'，项目层应覆盖此函数并注入实际的 HOME_PAGE
+ * @internal 此函数应由项目层覆盖，不建议直接使用
  */
 export function redirectAfterLogin(
-  redirectUrl: string | undefined,
-  pagesConfig: { pages: PageMetaDatum[] },
+  redirectUrl?: string,
+  homePage: string = '/pages/index/index',
 ) {
-  const homePage = getHomePage(pagesConfig)
   let path = redirectUrl || homePage
   if (!path.startsWith('/')) {
     path = `/${path}`
@@ -202,18 +201,19 @@ export function redirectAfterLogin(
 }
 
 /**
- * 增强的返回方法
+ * 增强的返回方法（框架包基础实现）
  * 1. 如果存在上一页，则返回上一页
  * 2. 如果不存在上一页，则跳转到传入的 fallbackUrl 地址
  * 3. 如果 fallbackUrl 也不存在，则跳转到首页
  *
  * @author 芋艿
  * @param fallbackUrl 备选跳转地址，当不存在上一页时使用
- * @param pagesConfig 页面配置对象，用于获取首页路径
+ * @param homePage 首页路径，默认为 '/pages/index/index'，项目层应覆盖此函数并注入实际的 HOME_PAGE
+ * @internal 此函数应由项目层覆盖，不建议直接使用
  */
 export function navigateBackPlus(
-  fallbackUrl: string | undefined,
-  pagesConfig: { pages: PageMetaDatum[] },
+  fallbackUrl?: string,
+  homePage: string = '/pages/index/index',
 ) {
   const pages = getCurrentPages()
   // 情况一：如果存在上一页（页面栈长度大于 1），则直接返回
@@ -223,7 +223,6 @@ export function navigateBackPlus(
   }
 
   // 情况二 + 三：不存在上一页，尝试跳转到传入的 fallbackUrl
-  const homePage = getHomePage(pagesConfig)
   let targetUrl = fallbackUrl || homePage
   // 确保路径以 / 开头
   if (!targetUrl.startsWith('/')) {
