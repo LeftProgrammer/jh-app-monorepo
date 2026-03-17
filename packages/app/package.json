@@ -11,50 +11,27 @@
     "framework"
   ],
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.esm.js",
-      "require": "./dist/index.cjs.js"
-    },
-    "./components": {
-      "types": "./dist/components/index.d.ts",
-      "import": "./dist/components/index.esm.js",
-      "require": "./dist/components/index.cjs.js"
-    },
-    "./store": {
-      "types": "./dist/store/index.d.ts",
-      "import": "./dist/store/index.esm.js",
-      "require": "./dist/store/index.cjs.js"
-    },
-    "./http": {
-      "types": "./dist/http/index.d.ts",
-      "import": "./dist/http/index.esm.js",
-      "require": "./dist/http/index.cjs.js"
-    },
-    "./utils": {
-      "types": "./dist/utils/index.d.ts",
-      "import": "./dist/utils/index.esm.js",
-      "require": "./dist/utils/index.cjs.js"
-    },
-    "./hooks": {
-      "types": "./dist/hooks/index.d.ts",
-      "import": "./dist/hooks/index.esm.js",
-      "require": "./dist/hooks/index.cjs.js"
-    },
-    "./vite-plugins": {
-      "types": "./dist/vite-plugins/index.d.ts",
-      "import": "./dist/vite-plugins/index.esm.js",
-      "require": "./dist/vite-plugins/index.cjs.js"
-    },
-    "./style": "./dist/style.css",
+    ".": "./src/index.ts",
+    "./components": "./src/components/index.ts",
+    "./components/*": "./src/components/*",
+    "./store": "./src/store/index.ts",
+    "./http": "./src/http/index.ts",
+    "./utils": "./src/utils/index.ts",
+    "./hooks": "./src/hooks/index.ts",
+    "./router": "./src/router/index.ts",
+    "./api": "./src/api/index.ts",
+    "./config": "./src/config/index.ts",
+    "./config/framework": "./src/config/framework.ts",
+    "./vite-plugins": "./src/vite-plugins/index.ts",
+    "./style": "./src/style/index.scss",
     "./package.json": "./package.json"
   },
-  "main": "dist/index.cjs.js",
-  "module": "dist/index.esm.js",
-  "types": "dist/index.d.ts",
+  "main": "src/index.ts",
+  "module": "src/index.ts",
+  "types": "src/index.ts",
   "files": [
     "README.md",
-    "dist"
+    "src"
   ],
   "scripts": {
     "build": "vite build",
