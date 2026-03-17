@@ -5,7 +5,14 @@
  * - server: 后端上传（默认）
  * - client: 前端直连上传（仅支持 S3 服务）
  *
- * 通过环境变量 VITE_UPLOAD_TYPE 配置
+ * @description 配置通过 initFramework 传入，不直接读取环境变量
+ * @example
+ * // main.ts
+ * initFramework({
+ *   upload: {
+ *     type: import.meta.env.VITE_UPLOAD_TYPE || 'server'
+ *   }
+ * })
  */
 
 import type { Ref } from 'vue'
@@ -13,6 +20,7 @@ import { isH5, isMpWeixin } from '@uni-helper/uni-env'
 import { ref } from 'vue'
 import { useToast } from 'wot-design-uni'
 import * as FileApi from '../api/infra/file'
+import { getUploadType } from '../config/framework'
 
 /** 上传类型 */
 const UPLOAD_TYPE = {
@@ -66,7 +74,7 @@ function createFileRecord(presignedInfo: FileApi.FilePresignedUrlRespVO, file: {
  */
 export async function uploadFileFromPath(filePath: string, directory?: string, fileType?: string): Promise<string> {
   const fileName = filePath.includes('/') ? filePath.substring(filePath.lastIndexOf('/') + 1) : filePath
-  const uploadType = import.meta.env.VITE_UPLOAD_TYPE || UPLOAD_TYPE.SERVER
+  const uploadType = getUploadType()
   // 根据文件后缀推断 MIME 类型
   const mimeType = fileType || getMimeType(fileName)
 

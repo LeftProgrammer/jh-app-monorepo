@@ -13,6 +13,31 @@ initFramework({
   isDoubleTokenMode: import.meta.env.VITE_AUTH_MODE === 'double',
   baseUrl: import.meta.env.VITE_SERVER_BASEURL,
   debugLog: import.meta.env.DEV,
+  // API 加密配置
+  apiEncrypt: {
+    enable: import.meta.env.VITE_APP_API_ENCRYPT_ENABLE === 'true',
+    header: import.meta.env.VITE_APP_API_ENCRYPT_HEADER,
+    algorithm: import.meta.env.VITE_APP_API_ENCRYPT_ALGORITHM as 'AES' | 'RSA',
+    requestKey: import.meta.env.VITE_APP_API_ENCRYPT_REQUEST_KEY,
+    responseKey: import.meta.env.VITE_APP_API_ENCRYPT_RESPONSE_KEY,
+  },
+  // 上传配置
+  upload: {
+    type: (import.meta.env.VITE_UPLOAD_TYPE as 'server' | 'client') || 'server',
+  },
+  // 静态资源配置
+  static: {
+    baseUrl: import.meta.env.VITE_STATIC_BASEURL,
+  },
+  // 代理配置（仅 H5 环境生效）
+  proxy: {
+    enable: import.meta.env.VITE_APP_PROXY_ENABLE === 'true',
+    prefix: import.meta.env.VITE_APP_PROXY_PREFIX || '/api',
+  },
+  // 租户配置
+  tenant: {
+    enable: import.meta.env.VITE_APP_TENANT_ENABLE === 'true',
+  },
 })
 
 export function createApp() {

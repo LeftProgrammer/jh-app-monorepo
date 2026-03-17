@@ -10,6 +10,7 @@
  * @export LOGIN_PAGE_ENABLE_IN_MP - 小程序登录页启用配置
  * @usage 登录策略配置、页面路径管理、路由访问控制
  */
+import { getBaseUrl, isDoubleTokenMode } from '../config/framework'
 // import { getAllPages } from '@/utils'
 
 export const LOGIN_STRATEGY_MAP = {
@@ -28,9 +29,10 @@ export const FORGET_PASSWORD_PAGE = '/pages-core/auth/forget-password' // edit b
 export const NOT_FOUND_PAGE = '/pages-core/error/404' // edit by 芋艿：调整 404 页面路径
 export const ONLY_PC_PAGE = '/pages-core/error/only-pc' // edit by 芋艿：新增仅 PC 端访问提示页面路径
 
-// 环境配置（项目可以覆盖）
-export const BASE_URL = import.meta.env?.VITE_SERVER_BASEURL || 'http://localhost:48080/admin-api'
-export const IS_DOUBLE_TOKEN_MODE = import.meta.env?.VITE_AUTH_MODE === 'double'
+// 环境配置（已弃用，请使用 initFramework 配置）
+// @deprecated 使用 getBaseUrl() 和 isDoubleTokenMode() 替代
+export const BASE_URL = getBaseUrl() || 'http://localhost:48080/admin-api'
+export const IS_DOUBLE_TOKEN_MODE = isDoubleTokenMode()
 
 // TODO @芋艿：【优化】貌似 unibest 这个变量没用？！
 export const LOGIN_PAGE_LIST = [

@@ -24,6 +24,7 @@ import type {
 } from '@uni-helper/vite-plugin-uni-pages'
 import { isMpWeixin } from '@uni-helper/uni-env'
 import { isTabBarPage as _isTabBarPage } from '../components/tabbar/config'
+import { getBaseUrl } from '../config/framework'
 
 // 导出 isPageTabbar，供外部使用
 export const isPageTabbar = _isTabBarPage
@@ -141,15 +142,15 @@ export function getCurrentPageI18nKey(pagesConfig: { pages: PageMetaDatum[] }) {
 
 /**
  * 获取环境基准地址
- * @deprecated 建议项目自行实现或从 router/config 导入 BASE_URL
+ * @deprecated 请使用 getBaseUrl() 从 config/framework 导入
  */
 export function getEnvBaseUrl() {
-  return (import.meta as any).env?.VITE_SERVER_BASEURL || 'http://localhost:48080/admin-api'
+  return getBaseUrl() || 'http://localhost:48080/admin-api'
 }
 
 /**
  * 获取环境根地址
- * @deprecated 建议项目自行实现
+ * @deprecated 请使用 getBaseUrl() 从 config/framework 导入，然后自行解析
  */
 export function getEnvBaseUrlRoot() {
   const baseUrl = getEnvBaseUrl()

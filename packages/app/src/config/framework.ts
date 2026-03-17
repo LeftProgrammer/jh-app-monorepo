@@ -16,6 +16,58 @@
  */
 
 /**
+ * API 加密配置接口
+ */
+export interface ApiEncryptConfig {
+  /** 是否启用 API 加密 */
+  enable?: boolean
+  /** 加密请求头名称 */
+  header?: string
+  /** 加密算法: 'AES' | 'RSA' */
+  algorithm?: 'AES' | 'RSA'
+  /** 请求加密密钥（AES密钥 或 RSA公钥） */
+  requestKey?: string
+  /** 响应解密密钥（AES密钥 或 RSA私钥） */
+  responseKey?: string
+}
+
+/**
+ * 上传配置接口
+ */
+export interface UploadConfig {
+  /** 上传类型: 'server' | 'client' */
+  type?: 'server' | 'client'
+}
+
+/**
+ * 静态资源配置接口
+ */
+export interface StaticConfig {
+  /** 静态资源基础 URL */
+  baseUrl?: string
+}
+
+/**
+ * HTTP 代理配置接口
+ */
+export interface ProxyConfig {
+  /** 是否启用代理（仅 H5 环境生效） */
+  enable?: boolean
+  /** 代理前缀 */
+  prefix?: string
+}
+
+/**
+ * 租户配置接口
+ */
+export interface TenantConfig {
+  /** 是否启用租户 */
+  enable?: boolean
+  /** 默认租户 ID */
+  id?: string | number
+}
+
+/**
  * 框架配置接口
  * @description 定义所有需要外部项目传入的配置项
  */
@@ -24,10 +76,18 @@ export interface FrameworkConfig {
   isDoubleTokenMode?: boolean
   /** API 基础地址 */
   baseUrl?: string
-  /** 租户 ID */
-  tenantId?: string | number
   /** 是否开启调试日志 */
   debugLog?: boolean
+  /** API 加密配置 */
+  apiEncrypt?: ApiEncryptConfig
+  /** 上传配置 */
+  upload?: UploadConfig
+  /** 静态资源配置 */
+  static?: StaticConfig
+  /** HTTP 代理配置 */
+  proxy?: ProxyConfig
+  /** 租户配置 */
+  tenant?: TenantConfig
 }
 
 /**
@@ -36,8 +96,28 @@ export interface FrameworkConfig {
 const defaultConfig: FrameworkConfig = {
   isDoubleTokenMode: false,
   baseUrl: '',
-  tenantId: '',
   debugLog: false,
+  apiEncrypt: {
+    enable: false,
+    header: 'X-Api-Encrypt',
+    algorithm: 'AES',
+    requestKey: '',
+    responseKey: '',
+  },
+  upload: {
+    type: 'server',
+  },
+  static: {
+    baseUrl: '',
+  },
+  proxy: {
+    enable: false,
+    prefix: '/api',
+  },
+  tenant: {
+    enable: false,
+    id: '',
+  },
 }
 
 /**
@@ -133,4 +213,108 @@ export function getBaseUrl(): string {
  */
 export function isDebugLog(): boolean {
   return _frameworkConfig.debugLog ?? false
+}
+
+// ============================================================
+// API 加密配置访问器
+// ============================================================
+
+/**
+ * 获取 API 加密配置
+ */
+export function getApiEncryptConfig(): ApiEncryptConfig {
+  return _frameworkConfig.apiEncrypt ?? defaultConfig.apiEncrypt!
+}
+
+/**
+ * 是否启用 API 加密
+ */
+export function isApiEncryptEnabled(): boolean {
+  return _frameworkConfig.apiEncrypt?.enable ?? false
+}
+
+/**
+ * 获取加密请求头名称
+ */
+export function getApiEncryptHeader(): string {
+  return _frameworkConfig.apiEncrypt?.header ?? 'X-Api-Encrypt'
+}
+
+/**
+ * 获取加密算法
+ */
+export function getApiEncryptAlgorithm(): 'AES' | 'RSA' {
+  return _frameworkConfig.apiEncrypt?.algorithm ?? 'AES'
+}
+
+/**
+ * 获取请求加密密钥
+ */
+export function getApiEncryptRequestKey(): string {
+  return _frameworkConfig.apiEncrypt?.requestKey ?? ''
+}
+
+/**
+ * 获取响应解密密钥
+ */
+export function getApiEncryptResponseKey(): string {
+  return _frameworkConfig.apiEncrypt?.responseKey ?? ''
+}
+
+// ============================================================
+// 上传配置访问器
+// ============================================================
+
+/**
+ * 获取上传类型
+ */
+export function getUploadType(): 'server' | 'client' {
+  return _frameworkConfig.upload?.type ?? 'server'
+}
+
+// ============================================================
+// 静态资源配置访问器
+// ============================================================
+
+/**
+ * 获取静态资源基础 URL
+ */
+export function getStaticBaseUrl(): string {
+  return _frameworkConfig.static?.baseUrl ?? ''
+}
+
+// ============================================================
+// 代理配置访问器
+// ============================================================
+
+/**
+ * 是否启用代理
+ */
+export function isProxyEnabled(): boolean {
+  return _frameworkConfig.proxy?.enable ?? false
+}
+
+/**
+ * 获取代理前缀
+ */
+export function getProxyPrefix(): string {
+  return _frameworkConfig.proxy?.prefix ?? '/api'
+}
+
+// ============================================================
+// 租户配置访问器
+// ============================================================
+
+/**
+ * 是否启用租户
+ */
+export function isTenantEnabled(): boolean {
+  return _frameworkConfig.tenant?.enable ?? false
+}
+
+/**
+ * 获取租户 ID
+ */
+export function getTenantId(): string | number {
+  return _frameworkConfig.tenant?.id ?? ''
 }

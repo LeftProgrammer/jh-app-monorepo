@@ -1,17 +1,30 @@
 import CryptoJS from 'crypto-js'
 import { JSEncrypt } from 'jsencrypt'
+import {
+  getApiEncryptAlgorithm,
+  getApiEncryptHeader,
+  getApiEncryptRequestKey,
+  getApiEncryptResponseKey,
+  isApiEncryptEnabled,
+} from '../config/framework'
 
 /**
  * API 加解密工具类
  * 支持 AES 和 RSA 加密算法
+ *
+ * @description 配置通过 initFramework 传入，不直接读取环境变量
+ * @example
+ * // main.ts
+ * initFramework({
+ *   apiEncrypt: {
+ *     enable: import.meta.env.VITE_APP_API_ENCRYPT_ENABLE === 'true',
+ *     header: import.meta.env.VITE_APP_API_ENCRYPT_HEADER,
+ *     algorithm: import.meta.env.VITE_APP_API_ENCRYPT_ALGORITHM,
+ *     requestKey: import.meta.env.VITE_APP_API_ENCRYPT_REQUEST_KEY,
+ *     responseKey: import.meta.env.VITE_APP_API_ENCRYPT_RESPONSE_KEY,
+ *   }
+ * })
  */
-
-// 从环境变量获取配置
-const API_ENCRYPT_ENABLE = import.meta.env.VITE_APP_API_ENCRYPT_ENABLE === 'true'
-const API_ENCRYPT_HEADER = import.meta.env.VITE_APP_API_ENCRYPT_HEADER || 'X-Api-Encrypt'
-const API_ENCRYPT_ALGORITHM = import.meta.env.VITE_APP_API_ENCRYPT_ALGORITHM || 'AES'
-const API_ENCRYPT_REQUEST_KEY = import.meta.env.VITE_APP_API_ENCRYPT_REQUEST_KEY || '' // AES密钥 或 RSA公钥
-const API_ENCRYPT_RESPONSE_KEY = import.meta.env.VITE_APP_API_ENCRYPT_RESPONSE_KEY || '' // AES密钥 或 RSA私钥
 
 /**
  * AES 加密工具类
@@ -145,7 +158,7 @@ export class ApiEncrypt {
    * 获取加密头名称
    */
   static getEncryptHeader(): string {
-    return API_ENCRYPT_HEADER
+    return getApiEncryptHeader()
   }
 
   /**
@@ -154,29 +167,31 @@ export class ApiEncrypt {
    * @returns 加密后的数据
    */
   static encryptRequest(data: any): string {
-    if (!API_ENCRYPT_ENABLE) {
+    if (!isApiEncryptEnabled()) {
       return data
     }
 
     try {
       const jsonData = typeof data === 'string' ? data : JSON.stringify(data)
+      const algorithm = getApiEncryptAlgorithm()
+      const requestKey = getApiEncryptRequestKey()
 
-      if (API_ENCRYPT_ALGORITHM.toUpperCase() === 'AES') {
-        if (!API_ENCRYPT_REQUEST_KEY) {
+      if (algorithm.toUpperCase() === 'AES') {
+        if (!requestKey) {
           throw new Error('AES 请求加密密钥未配置')
         }
-        return AES.encrypt(jsonData, API_ENCRYPT_REQUEST_KEY)
-      } else if (API_ENCRYPT_ALGORITHM.toUpperCase() === 'RSA') {
-        if (!API_ENCRYPT_REQUEST_KEY) {
+        return AES.encrypt(jsonData, requestKey)
+      } else if (algorithm.toUpperCase() === 'RSA') {
+        if (!requestKey) {
           throw new Error('RSA 公钥未配置')
         }
-        const result = RSA.encrypt(jsonData, API_ENCRYPT_REQUEST_KEY)
+        const result = RSA.encrypt(jsonData, requestKey)
         if (result === false) {
           throw new Error('RSA 加密失败')
         }
         return result
       } else {
-        throw new Error(`不支持的加密算法: ${API_ENCRYPT_ALGORITHM}`)
+        throw new Error(`不支持的加密算法: ${algorithm}`)
       }
     } catch (error) {
       console.error('请求数据加密失败:', error)
@@ -190,27 +205,30 @@ export class ApiEncrypt {
    * @returns 解密后的数据
    */
   static decryptResponse(encryptedData: string): any {
-    if (!API_ENCRYPT_ENABLE) {
+    if (!isApiEncryptEnabled()) {
       return encryptedData
     }
 
     try {
+      const algorithm = getApiEncryptAlgorithm()
+      const responseKey = getApiEncryptResponseKey()
       let decryptedData: string | false = ''
-      if (API_ENCRYPT_ALGORITHM.toUpperCase() === 'AES') {
-        if (!API_ENCRYPT_RESPONSE_KEY) {
+
+      if (algorithm.toUpperCase() === 'AES') {
+        if (!responseKey) {
           throw new Error('AES 响应解密密钥未配置')
         }
-        decryptedData = AES.decrypt(encryptedData, API_ENCRYPT_RESPONSE_KEY)
-      } else if (API_ENCRYPT_ALGORITHM.toUpperCase() === 'RSA') {
-        if (!API_ENCRYPT_RESPONSE_KEY) {
+        decryptedData = AES.decrypt(encryptedData, responseKey)
+      } else if (algorithm.toUpperCase() === 'RSA') {
+        if (!responseKey) {
           throw new Error('RSA 私钥未配置')
         }
-        decryptedData = RSA.decrypt(encryptedData, API_ENCRYPT_RESPONSE_KEY)
+        decryptedData = RSA.decrypt(encryptedData, responseKey)
         if (decryptedData === false) {
           throw new Error('RSA 解密失败')
         }
       } else {
-        throw new Error(`不支持的解密算法: ${API_ENCRYPT_ALGORITHM}`)
+        throw new Error(`不支持的解密算法: ${algorithm}`)
       }
 
       if (!decryptedData) {

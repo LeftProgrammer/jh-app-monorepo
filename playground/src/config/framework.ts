@@ -10,4 +10,27 @@
 export { initFramework } from '@jinghe-sanjiaoroad-app/framework'
 
 // @ts-expect-error vite alias 会在运行时正确解析路径
-export { isDoubleTokenMode } from '@jinghe-sanjiaoroad-app/framework/config/framework'
+export {
+  getApiEncryptConfig,
+  getBaseUrl,
+  getFrameworkConfig,
+  getProxyPrefix,
+  getStaticBaseUrl,
+  getTenantId,
+  getUploadType,
+  isApiEncryptEnabled,
+  isDebugLog,
+  isDoubleTokenMode,
+  isProxyEnabled,
+  isTenantEnabled,
+} from '@jinghe-sanjiaoroad-app/framework/config/framework'
+
+// @ts-expect-error vite alias 会在运行时正确解析路径
+export type {
+  ApiEncryptConfig,
+  FrameworkConfig,
+  ProxyConfig,
+  StaticConfig,
+  TenantConfig,
+  UploadConfig,
+} from '@jinghe-sanjiaoroad-app/framework/config/framework'

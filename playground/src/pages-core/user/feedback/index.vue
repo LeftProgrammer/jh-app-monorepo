@@ -53,7 +53,8 @@ import type { FormInstance } from "wot-design-uni/components/wd-form/types";
 import type { UploadFile, UploadMethod } from "wot-design-uni/components/wd-upload/types";
 import { ref } from "vue";
 import { useToast } from "wot-design-uni";
-import { getEnvBaseUrl, navigateBackPlus } from "@/utils";
+import { getBaseUrl } from "@/config/framework";
+import { navigateBackPlus } from "@/utils";
 
 definePage({
   style: {
@@ -88,7 +89,7 @@ function handleBack() {
 /** 自定义上传方法 */
 const customUpload: UploadMethod = (file, formData, options) => {
   const uploadTask = uni.uploadFile({
-    url: `${getEnvBaseUrl()}/infra/file/upload`,
+    url: `${getBaseUrl()}/infra/file/upload`,
     header: {
       ...options.header
     },

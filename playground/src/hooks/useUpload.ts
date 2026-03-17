@@ -1,8 +1,6 @@
-﻿import { ref } from 'vue'
+import { ref } from 'vue'
 import { useToast } from 'wot-design-uni'
-import { getEnvBaseUrl } from '@/utils'
-
-const VITE_UPLOAD_BASEURL = `${getEnvBaseUrl()}/upload`
+import { getBaseUrl } from '@/config/framework'
 
 type TfileType = 'image' | 'file'
 type TImage = 'png' | 'jpg' | 'jpeg' | 'webp' | '*'
@@ -151,7 +149,7 @@ async function uploadFile({
   onComplete: () => void
 }) {
   uni.uploadFile({
-    url: VITE_UPLOAD_BASEURL,
+    url: `${getBaseUrl()}/upload`,
     filePath: tempFilePath,
     name: 'file',
     formData,

@@ -3,6 +3,7 @@
  */
 
 import { isH5, isMpWeixin } from '@uni-helper/uni-env'
+import { getStaticBaseUrl } from '../config/framework'
 
 /** 保存图片到相册 */
 export async function saveImageToAlbum(url: string, fileName?: string): Promise<void> {
@@ -128,9 +129,15 @@ export function formatFileSize(size?: number): string {
  * 获取框架内部静态资源 URL
  * @param path 静态资源路径（相对于框架 static 目录）
  * @returns 完整的框架静态资源 URL 地址
+ *
+ * @description 配置通过 initFramework 传入
+ * @example
+ * initFramework({
+ *   static: { baseUrl: import.meta.env.VITE_STATIC_BASEURL }
+ * })
  */
 export function frameworkStaticUrl(path: string): string {
-  const baseUrl = import.meta.env.VITE_STATIC_BASEURL || ''
+  const baseUrl = getStaticBaseUrl()
   // 确保 path 以 / 开头
   const normalizedPath = path.startsWith('/') ? path : `/${path}`
   return `${baseUrl}/static${normalizedPath}`
@@ -139,11 +146,11 @@ export function frameworkStaticUrl(path: string): string {
 /**
  * 获取外部项目静态资源 URL
  * @param path 静态资源路径
- * @param baseUrl 自定义基准地址（可选）
+ * @param baseUrl 自定义基准地址（可选，不传则使用配置的静态资源基础 URL）
  * @returns 完整的外部静态资源 URL 地址
  */
 export function staticUrl(path: string, baseUrl?: string): string {
-  const base = baseUrl || import.meta.env.VITE_STATIC_BASEURL || ''
+  const base = baseUrl || getStaticBaseUrl()
   // 确保 path 以 / 开头
   const normalizedPath = path.startsWith('/') ? path : `/${path}`
   return `${base}${normalizedPath}`

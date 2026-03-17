@@ -9,14 +9,10 @@
 /* eslint-disable brace-style */ // 原因：unibest 官方维护的代码，尽量不要大概，避免难以合并
 import type { CustomRequestOptions } from './types'
 import { isH5 } from '@uni-helper/uni-env'
+import { getBaseUrl, getProxyPrefix, isProxyEnabled, isTenantEnabled } from '../config/framework'
 import { useTokenStore, useUserStore } from '../store'
-import { getEnvBaseUrl } from '../utils'
 import { ApiEncrypt } from '../utils/encrypt'
 import { stringifyQuery } from './tools/queryString'
-
-// 请求基准地址
-const baseUrl = getEnvBaseUrl()
-const tenantEnable = import.meta.env.VITE_APP_TENANT_ENABLE
 
 const whiteList: string[] = [
   '/login',
@@ -41,13 +37,13 @@ const httpInterceptor = {
     // 非 http 开头需拼接地址
     if (!options.url.startsWith('http')) {
       // 使用运行时检测替代条件编译，以支持 npm 包发布
-      if (isH5 && import.meta.env?.VITE_APP_PROXY_ENABLE && JSON.parse(import.meta.env.VITE_APP_PROXY_ENABLE)) {
+      if (isH5 && isProxyEnabled()) {
         // H5 环境且开启代理：自动拼接代理前缀
-        options.url = import.meta.env.VITE_APP_PROXY_PREFIX + options.url
+        options.url = getProxyPrefix() + options.url
       }
       else {
         // 其他情况：正常拼接 baseUrl
-        options.url = baseUrl + options.url
+        options.url = getBaseUrl() + options.url
       }
       // TIPS: 如果需要对接多个后端服务，也可以在这里处理，拼接成所需要的地址
     }
@@ -73,7 +69,7 @@ const httpInterceptor = {
     }
 
     // 4. 添加租户标识
-    if (tenantEnable && tenantEnable === 'true') {
+    if (isTenantEnabled()) {
       const userStore = useUserStore()
       const tenantId = userStore.tenantId
       if (tenantId) {

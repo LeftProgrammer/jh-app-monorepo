@@ -1,5 +1,6 @@
 import { useToast } from 'wot-design-uni'
 import { http } from '@/http/http'
+import { getBaseUrl } from '../../../config/framework'
 import { useTokenStore } from '../../../store/token'
 import { useUserStore } from '../../../store/user'
 
@@ -88,7 +89,7 @@ export function uploadFile(
   const userStore = useUserStore()
   return new Promise((resolve, reject) => {
     uni.uploadFile({
-      url: `${import.meta.env.VITE_SERVER_BASEURL}/infra/file/upload-file`,
+      url: `${getBaseUrl()}/infra/file/upload-file`,
       filePath,
       name: 'file',
       header: {
