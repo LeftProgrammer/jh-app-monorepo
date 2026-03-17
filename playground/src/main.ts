@@ -1,10 +1,11 @@
+import { routeInterceptor } from '@jinghe-sanjiaoroad-app/framework/router'
 import { createSSRApp } from 'vue'
 import App from './App.vue'
 import { initFramework } from './config/framework'
 import { requestInterceptor } from './http/interceptor'
-import { routeInterceptor } from './router'
-
 import store from './store'
+import { getAllPages, HOME_PAGE } from './utils'
+
 import '@/style/index.scss'
 import 'virtual:uno.css'
 
@@ -37,6 +38,23 @@ initFramework({
   // 租户配置
   tenant: {
     enable: import.meta.env.VITE_APP_TENANT_ENABLE === 'true',
+  },
+  // 路由配置
+  router: {
+    loginPage: '/pages-core/auth/login',
+    homePage: HOME_PAGE,
+    notFoundPage: '/pages-core/error/404',
+    registerPage: '/pages-core/auth/register',
+    codeLoginPage: '/pages-core/auth/code-login',
+    forgetPasswordPage: '/pages-core/auth/forget-password',
+    onlyPcPage: '/pages-core/error/only-pc',
+    isNeedLoginMode: true,
+    excludeLoginPathList: [],
+    loginPageEnableInMp: true,
+  },
+  // 路由依赖注入
+  routerDeps: {
+    getAllPages,
   },
 })
 

@@ -68,6 +68,47 @@ export interface TenantConfig {
 }
 
 /**
+ * 路由配置接口
+ */
+export interface RouterConfig {
+  /** 登录页路径 */
+  loginPage?: string
+  /** 首页路径 */
+  homePage?: string
+  /** 404 页面路径 */
+  notFoundPage?: string
+  /** 注册页路径 */
+  registerPage?: string
+  /** 短信登录页路径 */
+  codeLoginPage?: string
+  /** 忘记密码页路径 */
+  forgetPasswordPage?: string
+  /** 仅 PC 端访问提示页路径 */
+  onlyPcPage?: string
+  /** 是否为白名单登录模式（true=默认需要登录，false=默认不需要登录） */
+  isNeedLoginMode?: boolean
+  /** 排除登录路径列表（白名单模式下为免登录路径，黑名单模式下为需登录路径） */
+  excludeLoginPathList?: string[]
+  /** 小程序是否启用自定义登录页 */
+  loginPageEnableInMp?: boolean
+}
+
+/**
+ * 路由依赖注入接口
+ * @description 外部项目可注入自定义实现
+ */
+export interface RouterDeps {
+  /** 获取所有页面（含可选过滤 key），用于支持 excludeLoginPath 动态收集 */
+  getAllPages?: (key?: string) => Array<{ path: string }>
+  /** tabbarStore 实例，用于处理 tabbar index 的自动更新 */
+  tabbarStore?: { setAutoCurIdx: (path: string) => void }
+  /** 判断路径是否是 tabbar 页面 */
+  isPageTabbar?: (path: string) => boolean
+  /** 跳转到登录页的函数 */
+  toLoginPage?: (options?: { mode?: 'navigateTo' | 'reLaunch', queryString?: string }) => void
+}
+
+/**
  * 框架配置接口
  * @description 定义所有需要外部项目传入的配置项
  */
@@ -88,11 +129,31 @@ export interface FrameworkConfig {
   proxy?: ProxyConfig
   /** 租户配置 */
   tenant?: TenantConfig
+  /** 路由配置 */
+  router?: RouterConfig
+  /** 路由依赖注入 */
+  routerDeps?: RouterDeps
 }
 
 /**
  * 默认配置
  */
+/**
+ * 默认路由配置
+ */
+const defaultRouterConfig: RouterConfig = {
+  loginPage: '/pages/login/index',
+  homePage: '/pages/index/index',
+  notFoundPage: '/pages/error/404',
+  registerPage: '/pages/register/index',
+  codeLoginPage: '/pages/code-login/index',
+  forgetPasswordPage: '/pages/forget-password/index',
+  onlyPcPage: '/pages/error/only-pc',
+  isNeedLoginMode: true,
+  excludeLoginPathList: [],
+  loginPageEnableInMp: true,
+}
+
 const defaultConfig: FrameworkConfig = {
   isDoubleTokenMode: false,
   baseUrl: '',
@@ -118,6 +179,7 @@ const defaultConfig: FrameworkConfig = {
     enable: false,
     id: '',
   },
+  router: { ...defaultRouterConfig },
 }
 
 /**
@@ -317,4 +379,104 @@ export function isTenantEnabled(): boolean {
  */
 export function getTenantId(): string | number {
   return _frameworkConfig.tenant?.id ?? ''
+}
+
+// ============================================================
+// 路由配置访问器
+// ============================================================
+
+/**
+ * 获取路由配置
+ */
+export function getRouterConfig(): RouterConfig {
+  return _frameworkConfig.router ?? defaultRouterConfig
+}
+
+/**
+ * 获取路由依赖
+ */
+export function getRouterDeps(): RouterDeps {
+  return _frameworkConfig.routerDeps ?? {}
+}
+
+/**
+ * 获取登录页路径
+ */
+export function getLoginPage(): string {
+  return _frameworkConfig.router?.loginPage ?? defaultRouterConfig.loginPage!
+}
+
+/**
+ * 获取首页路径
+ */
+export function getHomePage(): string {
+  return _frameworkConfig.router?.homePage ?? defaultRouterConfig.homePage!
+}
+
+/**
+ * 获取 404 页面路径
+ */
+export function getNotFoundPage(): string {
+  return _frameworkConfig.router?.notFoundPage ?? defaultRouterConfig.notFoundPage!
+}
+
+/**
+ * 获取注册页路径
+ */
+export function getRegisterPage(): string {
+  return _frameworkConfig.router?.registerPage ?? defaultRouterConfig.registerPage!
+}
+
+/**
+ * 获取短信登录页路径
+ */
+export function getCodeLoginPage(): string {
+  return _frameworkConfig.router?.codeLoginPage ?? defaultRouterConfig.codeLoginPage!
+}
+
+/**
+ * 获取忘记密码页路径
+ */
+export function getForgetPasswordPage(): string {
+  return _frameworkConfig.router?.forgetPasswordPage ?? defaultRouterConfig.forgetPasswordPage!
+}
+
+/**
+ * 获取仅 PC 端访问提示页路径
+ */
+export function getOnlyPcPage(): string {
+  return _frameworkConfig.router?.onlyPcPage ?? defaultRouterConfig.onlyPcPage!
+}
+
+/**
+ * 是否为白名单登录模式
+ */
+export function isNeedLoginMode(): boolean {
+  return _frameworkConfig.router?.isNeedLoginMode ?? defaultRouterConfig.isNeedLoginMode!
+}
+
+/**
+ * 获取排除登录路径列表
+ */
+export function getExcludeLoginPathList(): string[] {
+  return _frameworkConfig.router?.excludeLoginPathList ?? []
+}
+
+/**
+ * 小程序是否启用自定义登录页
+ */
+export function isLoginPageEnableInMp(): boolean {
+  return _frameworkConfig.router?.loginPageEnableInMp ?? defaultRouterConfig.loginPageEnableInMp!
+}
+
+/**
+ * 获取登录页列表
+ */
+export function getLoginPageList(): string[] {
+  return [
+    getLoginPage(),
+    getRegisterPage(),
+    getCodeLoginPage(),
+    getForgetPasswordPage(),
+  ]
 }

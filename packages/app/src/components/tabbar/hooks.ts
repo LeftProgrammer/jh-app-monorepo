@@ -1,5 +1,5 @@
 import type { CustomTabBarItem } from './types'
-import { activeRouterConfig } from '../../router/config'
+import { isNeedLoginMode } from '../../config/framework'
 import { judgeIsExcludePath } from '../../router/interceptor'
 import { useGlobalState } from '../../store/global'
 import { useTokenStore } from '../../store/token'
@@ -29,8 +29,8 @@ export const defaultTabbarHooks: Required<TabbarHooks> = {
 
     // 默认权限检查逻辑
     const hasPermission = tokenStore.hasLogin
-      || (activeRouterConfig.isNeedLoginMode && judgeIsExcludePath(item.pagePath))
-      || (!activeRouterConfig.isNeedLoginMode && !judgeIsExcludePath(item.pagePath))
+      || (isNeedLoginMode() && judgeIsExcludePath(item.pagePath))
+      || (!isNeedLoginMode() && !judgeIsExcludePath(item.pagePath))
 
     return hasPermission
   },

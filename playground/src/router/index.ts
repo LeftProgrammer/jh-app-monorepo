@@ -1,6 +1,32 @@
 /**
  * 路由模块统一导出
- * @description 统一导出路由配置常量和拦截器实例，供各页面从 @/router 导入
+ *
+ * @description 路由配置已整合到 initFramework()
+ *              配置访问器从 @/config/framework 导入
+ *              路由拦截器从框架包导入
  */
-export * from './config'
-export * from './interceptor'
+
+// 配置访问器（从 config/framework 重新导出）
+export {
+  getCodeLoginPage,
+  getExcludeLoginPathList,
+  getForgetPasswordPage,
+  getHomePage,
+  getLoginPage,
+  getLoginPageList,
+  getNotFoundPage,
+  getOnlyPcPage,
+  getRegisterPage,
+  getRouterConfig,
+  isLoginPageEnableInMp,
+  isNeedLoginMode,
+} from '@/config/framework'
+// 路由拦截器（从框架包导入）
+export {
+  judgeIsExcludePath,
+  navigateToInterceptor,
+  routeInterceptor,
+} from '@jinghe-sanjiaoroad-app/framework/router'
+
+// 类型导出
+export type { RouterConfig, RouterDeps } from '@/config/framework'

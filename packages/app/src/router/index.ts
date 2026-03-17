@@ -1,15 +1,37 @@
 /**
  * 路由模块统一导出
  *
- * @description 提供路由配置、登录策略、路由拦截等功能
- * @export routerConfig - 路由配置命名空间
- * @export routerInterceptor - 路由拦截器命名空间
- * @usage 登录策略配置、路由拦截、页面访问控制
+ * @description 提供路由拦截器和路由特有工具
+ *              配置访问器请从 config/framework 导入
+ *
+ * @example
+ * // 外部项目 main.ts 中配置
+ * initFramework({
+ *   router: {
+ *     loginPage: '/pages-core/auth/login',
+ *     homePage: '/pages/index/index',
+ *     isNeedLoginMode: true,
+ *   },
+ *   routerDeps: { getAllPages }
+ * })
+ *
+ * // 使用路由拦截器
+ * import { routeInterceptor } from '@jinghe-sanjiaoroad-app/framework/router'
+ * app.use(routeInterceptor)
+ *
+ * // 获取路由配置（从 config/framework 导入）
+ * import { getLoginPage, isNeedLoginMode } from '@jinghe-sanjiaoroad-app/framework/config/framework'
  */
-// 路由模块统一导出
-export * from './config'
-// 命名空间导出 - 避免命名冲突
-export * as routerConfig from './config'
 
-export * from './interceptor'
-export * as routerInterceptor from './interceptor'
+// 类型导出
+export type { RouterConfig, RouterDeps } from './config'
+
+// 路由特有工具
+export { LOGIN_STRATEGY_MAP } from './config'
+
+// 路由拦截器
+export {
+  judgeIsExcludePath,
+  navigateToInterceptor,
+  routeInterceptor,
+} from './interceptor'

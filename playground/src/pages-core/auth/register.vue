@@ -94,7 +94,7 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
 import { useToast } from 'wot-design-uni'
-import { LOGIN_PAGE } from '@/router'
+import { getLoginPage } from '@/router'
 import { useTokenStore } from '@/store'
 import { redirectAfterLogin } from '@/utils'
 import Header from './components/header.vue'
@@ -193,7 +193,7 @@ async function verifySuccess(params: any) {
 
 /** 跳转到登录页面 */
 function goToLogin() {
-  uni.navigateTo({ url: LOGIN_PAGE })
+  uni.navigateTo({ url: getLoginPage() })
 }
 
 /** 跳转到用户协议 */

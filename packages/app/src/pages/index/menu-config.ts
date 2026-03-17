@@ -1,5 +1,4 @@
 import { useAccess } from "@/hooks/useAccess";
-import { ONLY_PC_PAGE } from "@/router/config";
 
 /**
  * 工作台菜单数据

@@ -55,7 +55,7 @@
 import { ensureDecodeURIComponent, isMobile, redirectAfterLogin } from '@/utils'
 import { reactive, ref } from 'vue'
 import { useToast } from 'wot-design-uni'
-import { FORGET_PASSWORD_PAGE, LOGIN_PAGE } from '@/router'
+import { getForgetPasswordPage, getLoginPage } from '@/router'
 import { useTokenStore } from '@/store'
 
 import CodeInput from './components/code-input.vue'
@@ -153,12 +153,12 @@ async function verifySuccess(params: any) {
 
 /** 跳转到账号密码登录 */
 function goToLogin() {
-  uni.navigateTo({ url: LOGIN_PAGE })
+  uni.navigateTo({ url: getLoginPage() })
 }
 
 /** 跳转到忘记密码 */
 function goToForgetPassword() {
-  uni.navigateTo({ url: FORGET_PASSWORD_PAGE })
+  uni.navigateTo({ url: getForgetPasswordPage() })
 }
 </script>
 

@@ -2,8 +2,8 @@
 import type { CustomTabBarItem, CustomTabBarItemBadge } from './types'
 import { reactive } from 'vue'
 
-import { activeRouterConfig } from '../../router/config'
-import { FG_LOG_ENABLE, judgeIsExcludePath } from '../../router/interceptor'
+import { isDebugLog, isNeedLoginMode } from '../../config/framework'
+import { judgeIsExcludePath } from '../../router/interceptor'
 import { useTokenStore } from '../../store/token'
 import { tabbarList as _tabbarList, customTabbarEnable, selectedTabbarStrategy, TABBAR_STRATEGY_MAP } from './config'
 
@@ -59,7 +59,7 @@ const tabbarStore = reactive({
       return
     }
     const index = tabbarListStore.findIndex(item => item.pagePath === path)
-    FG_LOG_ENABLE && console.log('index:', index, path)
+    isDebugLog() && console.log('index:', index, path)
     // console.log('tabbarList:', tabbarList)
     if (index === -1) {
       const pagesPathList = getCurrentPages().map(item => item.route.startsWith('/') ? item.route : `/${item.route}`)
@@ -112,7 +112,7 @@ export function createTabbarStore(customItems?: CustomTabBarItem[], bulgeEnable 
     prevIdx: uni.getStorageSync('app-tabbar-index') || 0,
     setCurIdx(idx: number) {
       const tokenStore = useTokenStore()
-      if (tokenStore.hasLogin || (activeRouterConfig.isNeedLoginMode && judgeIsExcludePath(processedItems[idx].pagePath)) || (!activeRouterConfig.isNeedLoginMode && !judgeIsExcludePath(processedItems[idx].pagePath))) {
+      if (tokenStore.hasLogin || (isNeedLoginMode() && judgeIsExcludePath(processedItems[idx].pagePath)) || (!isNeedLoginMode() && !judgeIsExcludePath(processedItems[idx].pagePath))) {
         this.curIdx = idx
         uni.setStorageSync('app-tabbar-index', idx)
       }

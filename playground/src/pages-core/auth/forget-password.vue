@@ -67,7 +67,7 @@
 import { reactive, ref } from 'vue'
 import { useToast } from 'wot-design-uni'
 import { smsResetPassword } from '@/api/login'
-import { LOGIN_PAGE } from '@/router'
+import { getLoginPage } from '@/router'
 import { isMobile } from '@/utils'
 import CodeInput from './components/code-input.vue'
 import Header from './components/header.vue'
@@ -151,7 +151,7 @@ async function handleResetPassword() {
 
 /** 跳转到登录页面 */
 function goToLogin() {
-  uni.navigateTo({ url: LOGIN_PAGE })
+  uni.navigateTo({ url: getLoginPage() })
 }
 </script>
 

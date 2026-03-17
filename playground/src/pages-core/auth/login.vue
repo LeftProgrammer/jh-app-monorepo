@@ -59,7 +59,7 @@
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
 import { useToast } from "wot-design-uni";
-import { CODE_LOGIN_PAGE, FORGET_PASSWORD_PAGE, REGISTER_PAGE } from "@/router";
+import { getCodeLoginPage, getForgetPasswordPage, getRegisterPage } from '@/router'
 import { useTokenStore } from "@/store";
 import { ensureDecodeURIComponent, redirectAfterLogin } from "@/utils";
 import appUpdate from "@/utils/appUpdate";
@@ -167,17 +167,17 @@ async function verifySuccess(params: any) {
 
 /** 跳转到注册页面 */
 function goToRegister() {
-  uni.navigateTo({ url: REGISTER_PAGE });
+  uni.navigateTo({ url: getRegisterPage() })
 }
 
 /** 跳转到验证码登录 */
 function goToSmsLogin() {
-  uni.navigateTo({ url: CODE_LOGIN_PAGE });
+  uni.navigateTo({ url: getCodeLoginPage() })
 }
 
 /** 跳转到忘记密码 */
 function goToForgetPassword() {
-  uni.navigateTo({ url: FORGET_PASSWORD_PAGE });
+  uni.navigateTo({ url: getForgetPasswordPage() })
 }
 
 /** 微信登录 */

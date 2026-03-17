@@ -73,7 +73,7 @@ import { storeToRefs } from "pinia";
 import { onMounted, ref } from "vue";
 import { useToast } from "wot-design-uni";
 import { getUserProfile } from "@/api/system/user/profile";
-import { LOGIN_PAGE } from "@/router";
+import { getLoginPage } from "@/router";
 import { useUserStore } from "@/store";
 import { useTokenStore } from "@/store";
 import { useMessage } from "wot-design-uni";
@@ -129,25 +129,12 @@ function handleLogout() {
       await tokenStore.logout();
       toast.success("退出登录成功");
       setTimeout(() => {
-        uni.reLaunch({ url: LOGIN_PAGE });
+        uni.reLaunch({ url: getLoginPage() });
       }, 500);
     })
     .catch(() => {
       console.log("点击了取消按钮");
     });
-  // uni.showModal({
-  //   title: "提示",
-  //   content: "确定要退出登录吗？",
-  //   success: async (res) => {
-  //     if (!res.confirm) {
-  //       return;
-  //     }
-  //     toast.success("退出登录成功");
-  //     setTimeout(() => {
-  //       uni.reLaunch({ url: LOGIN_PAGE });
-  //     }, 500);
-  //   }
-  // });
 }
 </script>
 

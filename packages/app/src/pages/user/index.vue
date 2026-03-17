@@ -75,7 +75,7 @@ import { useToast } from "wot-design-uni";
 import { useMessage } from "wot-design-uni";
 import type { UserProfileVO } from "../../api/system/user/profile";
 import { getUserProfile } from "../../api/system/user/profile";
-import { LOGIN_PAGE } from "../../router";
+import { getLoginPage } from "../../config/framework";
 import { useUserStore } from "../../store";
 import { useTokenStore } from "../../store/token";
 
@@ -130,7 +130,7 @@ function handleLogout() {
       await tokenStore.logout();
       toast.success("退出登录成功");
       setTimeout(() => {
-        uni.reLaunch({ url: LOGIN_PAGE });
+        uni.reLaunch({ url: getLoginPage() });
       }, 500);
     })
     .catch(() => {
@@ -145,7 +145,7 @@ function handleLogout() {
   //     }
   //     toast.success("退出登录成功");
   //     setTimeout(() => {
-  //       uni.reLaunch({ url: LOGIN_PAGE });
+  //       uni.reLaunch({ url: getLoginPage() });
   //     }, 500);
   //   }
   // });
