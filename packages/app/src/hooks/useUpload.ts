@@ -1,11 +1,9 @@
 /**
  * 文件上传 Hook
- * 
  * @description 提供文件选择、上传和状态管理功能
  * @export useUpload - 文件上传 Hook
  * @usage 图片上传、文件上传、上传状态管理
  */
-import type { Ref } from 'vue'
 import { isMpWeixin } from '@uni-helper/uni-env'
 import { ref } from 'vue'
 import { useToast } from 'wot-design-uni'

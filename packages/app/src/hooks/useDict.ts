@@ -1,12 +1,11 @@
 /**
  * 字典工具模块
- * 
  * @description 提供字典数据的获取和处理工具函数
  * @export dict - 字典工具函数集合
  * @usage 字典标签获取、选项生成、数据转换
  */
-import type { DictItem } from '@/store/dict'
-import { useDictStore } from '@/store/dict'
+import type { DictItem } from '../store/dict'
+import { useDictStore } from '../store/dict'
 
 type ColorType = 'error' | 'info' | 'primary' | 'success' | 'warning'
 

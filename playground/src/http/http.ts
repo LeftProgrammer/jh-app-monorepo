@@ -1,8 +1,9 @@
 ﻿import type { IDoubleTokenRes } from '@/api/types/login'
 import type { CustomRequestOptions, IResponse } from '@/http/types'
 import { nextTick } from 'vue'
-import { useTokenStore } from '@/store/token'
-import { ApiEncrypt, getLastPage, isDoubleTokenMode, toLoginPage } from '@/utils'
+import { isDoubleTokenMode } from '@/config/framework'
+import { useTokenStore } from '@/store'
+import { ApiEncrypt, getLastPage, toLoginPage } from '@/utils'
 import { ResultEnum } from './tools/enum'
 
 // 刷新 token 状态管理
@@ -40,7 +41,7 @@ export function http<T>(options: CustomRequestOptions) {
 
         if (isTokenExpired) {
           const tokenStore = useTokenStore()
-          if (!isDoubleTokenMode) {
+          if (!isDoubleTokenMode()) {
             // 未启用双token策略，清理用户信息，跳转到登录页
             tokenStore.logout()
             toLoginPage()

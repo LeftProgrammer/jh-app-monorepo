@@ -1,6 +1,5 @@
 /**
  * 查询字符串处理工具
- * 
  * @description 提供对象序列化为 URL 查询字符串的功能，替代第三方 qs 库，节省包体积
  * @export stringifyQuery - 查询字符串序列化函数
  * @usage URL 参数处理、查询字符串生成

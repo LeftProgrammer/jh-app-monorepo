@@ -86,7 +86,7 @@ import { onMounted, ref } from "vue";
 import { useToast } from "wot-design-uni";
 import { getUserProfile, updateUserProfile } from "@/api/system/user/profile";
 import { getDictLabel } from "@/hooks/useDict";
-import { useUserStore } from "@/store/user";
+import { useUserStore } from "@/store";
 ;
 ;
 ;

@@ -1,21 +1,21 @@
 /**
  * 原生插件资源复制 Vite 插件
- * 
+ *
  * @description 专为基于 UniApp 框架的项目设计的 Vite 插件，用于解决使用原生插件时打包后出现"插件找不到"的问题
  * @export createCopyNativeResourcesPlugin - 原生插件资源复制插件
  * @usage Vite 构建插件、原生插件管理、资源复制
- * 
+ *
  * @example
  * ```typescript
  * import { createCopyNativeResourcesPlugin } from '@jinghe-sanjiaoroad-app/framework/vite-plugins'
- * 
+ *
  * export default defineConfig({
  *   plugins: [
  *     createCopyNativeResourcesPlugin(true)
  *   ]
  * })
  * ```
- * 
+ *
  * @note 根据 UniApp 官方文档：https://uniapp.dcloud.net.cn/plugin/native-plugin.html
  */
 import type { Plugin } from 'vite'
@@ -25,7 +25,7 @@ import fs from 'fs-extra'
 
 /**
  * 原生插件资源复制配置接口
- * 
+ *
  * 根据 UniApp 官方文档：https://uniapp.dcloud.net.cn/plugin/native-plugin.html#%E6%9C%AC%E5%9C%B0%E6%8F%92%E4%BB%B6-%E9%9D%9E%E5%86%85%E7%BD%AE%E5%8E%9F%E7%94%9F%E6%8F%92%E4%BB%B6
  * 本地插件应该存储在项目根目录的 nativeplugins 目录下
  */
@@ -178,8 +178,7 @@ export function copyNativeResources(options: CopyNativeResourcesOptions = {}): P
           console.log(`${logPrefix} 已成功复制 ${sourceFiles.length} 个文件/目录到构建目录`)
           console.log(`${logPrefix} 原生插件现在可以在 App 中正常使用`)
         }
-      }
-      catch (error) {
+      } catch (error) {
         console.error(`${config.logPrefix} ❌ 复制 UniApp 本地原生插件失败:`, error)
         console.error(`${config.logPrefix} 错误详情:`, error instanceof Error ? error.message : String(error))
         console.error(`${config.logPrefix} 请检查源目录权限和磁盘空间`)

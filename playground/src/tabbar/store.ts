@@ -3,7 +3,7 @@ import type { CustomTabBarItem, CustomTabBarItemBadge } from './types'
 import { reactive } from 'vue'
 
 import { IS_NEED_LOGIN_MODE, judgeIsExcludePath } from '@/router'
-import { useTokenStore } from '@/store/token'
+import { useTokenStore } from '@/store'
 import { tabbarList as _tabbarList, customTabbarEnable, selectedTabbarStrategy, TABBAR_STRATEGY_MAP } from './config'
 
 // TODO 1/2: 中间的鼓包tabbarItem的开关

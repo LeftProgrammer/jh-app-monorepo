@@ -1,4 +1,4 @@
-import { http } from '@/http/http'
+import { http } from '../../../http/http'
 
 /** 地区信息 */
 export interface Area {

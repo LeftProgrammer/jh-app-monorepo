@@ -1,5 +1,5 @@
-import type { TabBar } from "@uni-helper/vite-plugin-uni-pages";
-import type { CustomTabBarItem, NativeTabBarItem } from "./types";
+import type { TabBar } from '@uni-helper/vite-plugin-uni-pages'
+import type { CustomTabBarItem, NativeTabBarItem } from './types'
 // import { getMyNotifyMessagePage } from "@/api/system/notify/message";
 // import { getTaskTodoPage } from "@/api/bpm/task";
 /**
@@ -16,30 +16,30 @@ export const TABBAR_STRATEGY_MAP = {
   NATIVE_TABBAR: 1,
   CUSTOM_TABBAR_WITH_CACHE: 2,
   CUSTOM_TABBAR_WITHOUT_CACHE: 3,
-};
+}
 
 // TODO: 1/3. 通过这里切换使用tabbar的策略
 // 如果是使用 NO_TABBAR(0)，nativeTabbarList 和 customTabbarList 都不生效(里面的配置不用管)
 // 如果是使用 NATIVE_TABBAR(1)，只需要配置 nativeTabbarList，customTabbarList 不生效
 // 如果是使用 CUSTOM_TABBAR(2,3)，只需要配置 customTabbarList，nativeTabbarList 不生效
-export const selectedTabbarStrategy =
-  TABBAR_STRATEGY_MAP.CUSTOM_TABBAR_WITH_CACHE;
+export const selectedTabbarStrategy
+  = TABBAR_STRATEGY_MAP.CUSTOM_TABBAR_WITH_CACHE
 
 // TODO: 2/3. 使用 NATIVE_TABBAR 时，更新下面的 tabbar 配置
 export const nativeTabbarList: NativeTabBarItem[] = [
   {
-    iconPath: "static/tabbar/home.png",
-    selectedIconPath: "static/tabbar/homeHL.png",
-    pagePath: "pages/index/index",
-    text: "首页",
+    iconPath: 'static/tabbar/home.png',
+    selectedIconPath: 'static/tabbar/homeHL.png',
+    pagePath: 'pages/index/index',
+    text: '首页',
   },
   {
-    iconPath: "static/tabbar/personal.png",
-    selectedIconPath: "static/tabbar/personalHL.png",
-    pagePath: "pages/user/index", // edit by 芋艿：原 me 被删除，改为 user 避免 IDE linter 报错
-    text: "个人",
+    iconPath: 'static/tabbar/personal.png',
+    selectedIconPath: 'static/tabbar/personalHL.png',
+    pagePath: 'pages/user/index', // edit by 芋艿：原 me 被删除，改为 user 避免 IDE linter 报错
+    text: '个人',
   },
-];
+]
 
 // TODO: 3/3. 使用 CUSTOM_TABBAR(2,3) 时，更新下面的 tabbar 配置
 // 如果需要配置鼓包，需要在 'tabbar/store.ts' 里面设置，最后在 `tabbar/index.vue` 里面更改鼓包的图片
@@ -90,17 +90,17 @@ export const customTabbarList: CustomTabBarItem[] = [
   // },
   // add by 芋艿：图标可到 https://icon-sets.iconify.design/carbon/ 选择。另外，需要在 uno.config.ts 的 safelist 中添加图标类名
   {
-    text: "首页",
-    pagePath: "pages/index/index",
-    iconType: "unocss",
-    icon: "i-carbon-home",
+    text: '首页',
+    pagePath: 'pages/index/index',
+    iconType: 'unocss',
+    icon: 'i-carbon-home',
   },
   {
-    text: "任务",
-    pagePath: "pages/bpm/index",
-    iconType: "unocss",
-    icon: "i-carbon-document",
-    badge: "todoTotal" as any,
+    text: '任务',
+    pagePath: 'pages/bpm/index',
+    iconType: 'unocss',
+    icon: 'i-carbon-document',
+    badge: 'todoTotal' as any,
   },
   // {
   //   text: '通讯录',
@@ -109,19 +109,19 @@ export const customTabbarList: CustomTabBarItem[] = [
   //   icon: 'i-carbon-user-avatar',
   // },
   {
-    text: "消息",
-    pagePath: "pages/message/index",
-    iconType: "unocss",
-    icon: "i-carbon-chat",
-    badge: "msgTotal" as any,
+    text: '消息',
+    pagePath: 'pages/message/index',
+    iconType: 'unocss',
+    icon: 'i-carbon-chat',
+    badge: 'msgTotal' as any,
   },
   {
-    text: "我的",
-    pagePath: "pages/user/index",
-    iconType: "unocss",
-    icon: "i-carbon-user",
+    text: '我的',
+    pagePath: 'pages/user/index',
+    iconType: 'unocss',
+    icon: 'i-carbon-user',
   },
-];
+]
 
 /**
  * 是否启用 tabbar 缓存
@@ -130,7 +130,7 @@ export const customTabbarList: CustomTabBarItem[] = [
 export const tabbarCacheEnable = [
   TABBAR_STRATEGY_MAP.NATIVE_TABBAR,
   TABBAR_STRATEGY_MAP.CUSTOM_TABBAR_WITH_CACHE,
-].includes(selectedTabbarStrategy);
+].includes(selectedTabbarStrategy)
 
 /**
  * 是否启用自定义 tabbar
@@ -139,24 +139,24 @@ export const tabbarCacheEnable = [
 export const customTabbarEnable = [
   TABBAR_STRATEGY_MAP.CUSTOM_TABBAR_WITH_CACHE,
   TABBAR_STRATEGY_MAP.CUSTOM_TABBAR_WITHOUT_CACHE,
-].includes(selectedTabbarStrategy);
+].includes(selectedTabbarStrategy)
 
 /**
  * 是否需要隐藏原生 tabbar
  * CUSTOM_TABBAR_WITH_CACHE(2) 时，需要隐藏原生tabbar
  */
-export const needHideNativeTabbar =
-  selectedTabbarStrategy === TABBAR_STRATEGY_MAP.CUSTOM_TABBAR_WITH_CACHE;
+export const needHideNativeTabbar
+  = selectedTabbarStrategy === TABBAR_STRATEGY_MAP.CUSTOM_TABBAR_WITH_CACHE
 
 const _tabbarList = customTabbarEnable
-  ? customTabbarList.map((item) => ({
+  ? customTabbarList.map(item => ({
       text: item.text,
       pagePath: item.pagePath,
     }))
-  : nativeTabbarList;
+  : nativeTabbarList
 export const tabbarList = customTabbarEnable
   ? customTabbarList
-  : nativeTabbarList;
+  : nativeTabbarList
 
 /**
  * 判断路径是否是 tabBar 页面
@@ -164,92 +164,92 @@ export const tabbarList = customTabbarEnable
  */
 export function isTabBarPage(path: string): boolean {
   // 统一处理路径格式：去掉开头的 /
-  const normalizedPath = path.startsWith("/") ? path.slice(1) : path;
-  return tabbarList.some((item) => item.pagePath === normalizedPath);
+  const normalizedPath = path.startsWith('/') ? path.slice(1) : path
+  return tabbarList.some(item => item.pagePath === normalizedPath)
 }
 
 const _tabbar: TabBar = {
   // 只有微信小程序支持 custom。App 和 H5 不生效
   custom:
     selectedTabbarStrategy === TABBAR_STRATEGY_MAP.CUSTOM_TABBAR_WITH_CACHE,
-  color: "#999999",
-  selectedColor: "#018d71",
-  backgroundColor: "#F8F8F8",
-  borderStyle: "black",
-  height: "50px",
-  fontSize: "10px",
-  iconWidth: "24px",
-  spacing: "3px",
-  list: _tabbarList as unknown as TabBar["list"],
-};
+  color: '#999999',
+  selectedColor: '#018d71',
+  backgroundColor: '#F8F8F8',
+  borderStyle: 'black',
+  height: '50px',
+  fontSize: '10px',
+  iconWidth: '24px',
+  spacing: '3px',
+  list: _tabbarList as unknown as TabBar['list'],
+}
 
-export const tabBar = tabbarCacheEnable ? _tabbar : undefined;
+export const tabBar = tabbarCacheEnable ? _tabbar : undefined
 
 /**
  * 默认 Tabbar 配置 - 供外部项目使用
  */
 export const defaultTabbarItems: CustomTabBarItem[] = [
   {
-    text: "首页",
-    pagePath: "pages/index/index",
-    iconType: "unocss",
-    icon: "i-carbon-home",
+    text: '首页',
+    pagePath: 'pages/index/index',
+    iconType: 'unocss',
+    icon: 'i-carbon-home',
   },
   {
-    text: "任务",
-    pagePath: "pages/bpm/index",
-    iconType: "unocss",
-    icon: "i-carbon-document",
-    badge: "todoTotal" as any,
+    text: '任务',
+    pagePath: 'pages/bpm/index',
+    iconType: 'unocss',
+    icon: 'i-carbon-document',
+    badge: 'todoTotal' as any,
   },
   {
-    text: "消息",
-    pagePath: "pages/message/index",
-    iconType: "unocss",
-    icon: "i-carbon-chat",
-    badge: "msgTotal" as any,
+    text: '消息',
+    pagePath: 'pages/message/index',
+    iconType: 'unocss',
+    icon: 'i-carbon-chat',
+    badge: 'msgTotal' as any,
   },
   {
-    text: "我的",
-    pagePath: "pages/user/index",
-    iconType: "unocss",
-    icon: "i-carbon-user",
+    text: '我的',
+    pagePath: 'pages/user/index',
+    iconType: 'unocss',
+    icon: 'i-carbon-user',
   },
-];
+]
 
 /**
  * Tabbar 配置接口
  */
 export interface TabbarPackageConfig {
   /** Tabbar 策略 */
-  strategy?: number;
+  strategy?: number
   /** Tabbar 项目列表 */
-  items?: CustomTabBarItem[];
+  items?: CustomTabBarItem[]
   /** 主题配置 */
   theme?: {
-    activeColor?: string;
-    inactiveColor?: string;
-    backgroundColor?: string;
-    borderColor?: string;
-  };
+    activeColor?: string
+    inactiveColor?: string
+    backgroundColor?: string
+    borderColor?: string
+  }
   /** 功能配置 */
   features?: {
-    bulge?: boolean;
-    badge?: boolean;
-    cache?: boolean;
-    hideNative?: boolean;
-  };
+    bulge?: boolean
+    badge?: boolean
+    cache?: boolean
+    hideNative?: boolean
+  }
 }
 
 /**
  * 默认主题配置
  */
 export const defaultTabbarTheme = {
-  activeColor: "var(--wot-color-theme, #1890ff)",
-  inactiveColor: "#666",
-  backgroundColor: "#fff",
-  borderColor: "#eee",
-};
+  activeColor: 'var(--wot-color-theme, #1890ff)',
+  inactiveColor: '#666',
+  backgroundColor: '#fff',
+  borderColor: '#eee',
+}
 
 /**
  * 默认功能配置
@@ -259,7 +259,7 @@ export const defaultTabbarFeatures = {
   badge: true,
   cache: true,
   hideNative: true,
-};
+}
 
 /**
  * 创建 Tabbar 配置
@@ -272,10 +272,10 @@ export function createTabbarConfig(config: TabbarPackageConfig = {}) {
     items: config.items ?? defaultTabbarItems,
     theme: { ...defaultTabbarTheme, ...config.theme },
     features: { ...defaultTabbarFeatures, ...config.features },
-  };
+  }
 }
 
 /**
  * 默认完整配置 - 供组件直接使用
  */
-export const defaultTabbarConfig = createTabbarConfig();
+export const defaultTabbarConfig = createTabbarConfig()

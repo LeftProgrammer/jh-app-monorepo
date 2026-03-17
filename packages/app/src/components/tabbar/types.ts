@@ -1,5 +1,5 @@
 import type { TabBar } from '@uni-helper/vite-plugin-uni-pages'
-import type { RemoveLeadingSlashFromUnion } from '@/typings'
+import type { RemoveLeadingSlashFromUnion } from '../../typings'
 
 /**
  * 原生 tabbar 的单个选项配置

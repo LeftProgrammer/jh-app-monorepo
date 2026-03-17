@@ -2,9 +2,9 @@
 import type { CustomTabBarItem, CustomTabBarItemBadge } from './types'
 import { reactive } from 'vue'
 
-import { activeRouterConfig } from '@/router/config'
-import { FG_LOG_ENABLE, judgeIsExcludePath } from '@/router/interceptor'
-import { useTokenStore } from '@/store/token'
+import { activeRouterConfig } from '../../router/config'
+import { FG_LOG_ENABLE, judgeIsExcludePath } from '../../router/interceptor'
+import { useTokenStore } from '../../store/token'
 import { tabbarList as _tabbarList, customTabbarEnable, selectedTabbarStrategy, TABBAR_STRATEGY_MAP } from './config'
 
 // TODO 1/2: 中间的鼓包tabbarItem的开关

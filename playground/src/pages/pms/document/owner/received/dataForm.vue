@@ -137,7 +137,7 @@ import UnitPicker from "@/components/system-select/unit-picker.vue";
 ;
 import { useUserStore } from "@/store";
 ;
-import { useGlobalState } from "@/store/global";
+import { useGlobalState } from "@/store";
 ;
 defineOptions({ name: "DocumentReceivedCreateWd" });
 const props = defineProps<{

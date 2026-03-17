@@ -137,7 +137,7 @@ import {
   returnTask,
   delegateTask
 } from "@/api/bpm/task";
-import { useGlobalState } from "@/store/global";
+import { useGlobalState } from "@/store";
 import ProcessInstanceBpmnViewer from "./components/ProcessInstanceBpmnViewer.vue";
 import ProcessInstanceTaskList from "./components/ProcessInstanceTaskList.vue";
 ;

@@ -1,5 +1,5 @@
-import type { PageParam, PageResult } from '@/http/types'
-import { http } from '@/http/http'
+import type { PageParam, PageResult } from '../../../../http/types'
+import { http } from '../../../../http/http'
 
 /** OAuth2.0 客户端信息 */
 export interface OAuth2Client {

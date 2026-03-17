@@ -340,7 +340,7 @@ import UserPicker from "@/components/system-select/user-picker.vue";
 import { useUserStore } from "@/store";
 import { getDictLabel } from "@/hooks/useDict";
 ;
-import { useGlobalState } from "@/store/global";
+import { useGlobalState } from "@/store";
 ;
 import dayjs from "dayjs";
 

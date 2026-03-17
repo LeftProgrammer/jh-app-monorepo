@@ -68,15 +68,16 @@
 </template>
 
 <script lang="ts" setup>
-import type { UserProfileVO } from "@/api/system/user/profile";
+
 import { storeToRefs } from "pinia";
 import { onMounted, ref } from "vue";
 import { useToast } from "wot-design-uni";
-import { getUserProfile } from "@/api/system/user/profile";
-import { LOGIN_PAGE } from "@/router";
-import { useUserStore } from "@/store";
-import { useTokenStore } from "@/store/token";
 import { useMessage } from "wot-design-uni";
+import type { UserProfileVO } from "../../api/system/user/profile";
+import { getUserProfile } from "../../api/system/user/profile";
+import { LOGIN_PAGE } from "../../router";
+import { useUserStore } from "../../store";
+import { useTokenStore } from "../../store/token";
 
 definePage({
   style: {

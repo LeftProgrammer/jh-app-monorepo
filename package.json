@@ -40,6 +40,8 @@
     "lint:playground": "pnpm --filter jinghe-sanjiaoroad-app-playground lint",
     "check:playground": "node scripts/test-framework.js",
     "clean:playground": "pnpm --filter jinghe-sanjiaoroad-app-playground clean",
+    "clean:cache": "rimraf playground/node_modules/.vite playground/dist packages/app/dist",
+    "rebuild": "pnpm clean:cache && pnpm build:app && pnpm dev:playground",
     "start": "pnpm dev:app",
     "check:all": "pnpm lint:app && pnpm type-check:app && pnpm build:app",
     "prepare:release": "pnpm check:all && pnpm build:app",

@@ -138,7 +138,7 @@ import { getDictLabel } from "@/hooks/useDict";
 ;
 import DetailPopup from "./components/detail-popup.vue";
 import SearchForm from "./components/search-form.vue";
-import { useGlobalState } from "@/store/global";
+import { useGlobalState } from "@/store";
 
 definePage({
   style: {

@@ -16,7 +16,7 @@ import { pages, subPackages } from '@/pages.json'
 
 // ============ 项目级环境配置工具 ============
 // 这些函数依赖项目特定的环境变量，因此在项目级实现
-export { getEnvBaseUrl, getEnvBaseUrlRoot, isDoubleTokenMode } from './env'
+export { getEnvBaseUrl, getEnvBaseUrlRoot } from './env'
 
 // ============ 覆盖框架包函数，自动注入 pages.json ============
 

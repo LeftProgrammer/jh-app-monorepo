@@ -99,7 +99,6 @@
     "dayjs": "1.11.10",
     "diagram-js": "12.8.0",
     "jsencrypt": "^3.5.4",
-    "pinia-plugin-persistedstate": "3.2.1",
     "wot-design-uni": "^1.13.0"
   },
   "devDependencies": {

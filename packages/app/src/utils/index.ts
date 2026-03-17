@@ -158,12 +158,6 @@ export function getEnvBaseUrlRoot() {
 }
 
 /**
- * 是否是双 token 模式
- * @deprecated 建议项目自行实现或从 router/config 导入 IS_DOUBLE_TOKEN_MODE
- */
-export const isDoubleTokenMode = (import.meta as any).env?.VITE_AUTH_MODE === 'double'
-
-/**
  * 获取首页路径
  * 通过 page.json 里面的 type 为 home 的页面获取，如果没有，则默认是第一个页面
  * 通常为 /pages/index/index

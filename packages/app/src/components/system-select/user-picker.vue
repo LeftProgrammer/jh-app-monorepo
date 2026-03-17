@@ -39,7 +39,7 @@
 
 <script lang="ts" setup>
 import { onMounted, ref, watch } from "vue";
-import { useUserStore } from "@/store";
+import { useUserStore } from "../../store";
 
 const props = withDefaults(
   defineProps<{

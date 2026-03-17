@@ -42,7 +42,7 @@ import CopyList from "./components/copy-list.vue";
 import DoneList from "./components/done-list.vue";
 import MyList from "./components/my-list.vue";
 import TodoList from "./components/todo-list.vue";
-import { useGlobalState } from "@/store/global";
+import { useGlobalState } from "@/store";
 
 definePage({
   style: {

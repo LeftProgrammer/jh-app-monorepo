@@ -60,14 +60,14 @@
 import { reactive, ref } from "vue";
 import { useToast } from "wot-design-uni";
 import { CODE_LOGIN_PAGE, FORGET_PASSWORD_PAGE, REGISTER_PAGE } from "@/router";
-import { useTokenStore } from "@/store/token";
+import { useTokenStore } from "@/store";
 import { ensureDecodeURIComponent, redirectAfterLogin } from "@/utils";
 import appUpdate from "@/utils/appUpdate";
 import Header from "./components/header.vue";
 import TenantPicker from "./components/tenant-picker.vue";
 import Verify from "./components/verifition/verify.vue";
 const title = import.meta.env.VITE_APP_TITLE; // 应用标题
-import { useSystemState } from "@/store/system";
+import { useSystemState } from "@/store";
 
 defineOptions({
   name: "LoginPage",

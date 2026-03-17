@@ -173,7 +173,7 @@ import { useUserStore } from "@/store";
 import UserPicker from "@/components/system-select/user-picker.vue";
 import UnitPicker from "@/components/system-select/unit-picker.vue";
 ;
-import { useGlobalState } from "@/store/global";
+import { useGlobalState } from "@/store";
 
 defineOptions({ name: "ReceptionApplyFormCreateApp" });
 

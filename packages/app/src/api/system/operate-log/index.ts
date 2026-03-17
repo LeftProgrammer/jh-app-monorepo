@@ -1,5 +1,5 @@
-import type { PageParam, PageResult } from '@/http/types'
-import { http } from '@/http/http'
+import type { PageParam, PageResult } from '../../../http/types'
+import { http } from '../../../http/http'
 
 /** 操作日志信息 */
 export interface OperateLog {

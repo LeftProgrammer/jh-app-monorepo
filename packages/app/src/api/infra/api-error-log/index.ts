@@ -1,5 +1,5 @@
-import type { PageParam, PageResult } from '@/http/types'
-import { http } from '@/http/http'
+import type { PageParam, PageResult } from '../../../http/types'
+import { http } from '../../../http/http'
 
 /** API 错误日志信息 */
 export interface ApiErrorLog {

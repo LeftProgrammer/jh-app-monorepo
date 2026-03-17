@@ -1,6 +1,6 @@
 /**
  * HTTP 模块类型定义
- * 
+ *
  * @description 提供 HTTP 请求和响应相关的 TypeScript 类型定义，确保类型安全
  * @export CustomRequestOptions - 自定义请求选项类型
  * @export IResponse - 通用响应格式类型

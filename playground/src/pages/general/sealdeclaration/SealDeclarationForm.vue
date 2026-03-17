@@ -183,7 +183,7 @@ import SealDeclarationApi from "@/api/general/seal-declaration";
 ;
 import UserPicker from "@/components/system-select/user-picker.vue";
 ;
-import { useGlobalState } from "@/store/global";
+import { useGlobalState } from "@/store";
 import { useUserStore } from "@/store";
 
 const props = defineProps<{

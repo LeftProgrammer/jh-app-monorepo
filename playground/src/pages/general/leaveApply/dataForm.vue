@@ -191,7 +191,7 @@ import UserPicker from "@/components/system-select/user-picker.vue";
 ;
 import { useUserStore } from "@/store";
 import dayjs from "dayjs";
-import { useGlobalState } from "@/store/global";
+import { useGlobalState } from "@/store";
 
 const props = defineProps<{
   id?: number | string;

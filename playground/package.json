@@ -43,7 +43,9 @@
     "@dcloudio/uni-mp-weixin": "3.0.0-4070620250821001",
     "@dcloudio/uni-mp-xhs": "3.0.0-4070620250821001",
     "@dcloudio/uni-quickapp-webview": "3.0.0-4070620250821001",
-    "@jinghe-sanjiaoroad-app/framework": "workspace:*"
+    "@jinghe-sanjiaoroad-app/framework": "workspace:*",
+    "pinia": "2.0.36",
+    "pinia-plugin-persistedstate": "3.2.1"
   },
   "devDependencies": {
     "@dcloudio/types": "^3.4.8",

@@ -136,7 +136,7 @@
 <script lang="ts" setup>
 import type { MenuGroup, MenuItem } from "../index";
 import { useToast } from "wot-design-uni";
-import { useUserStore } from "@/store/user";
+import { useUserStore } from "@/store";
 import { navigateBackPlus } from "@/utils";
 import { getMenuGroups, getMenuItemByKey } from "../index";
 import { parseUrl, setTabParams } from "@/utils";

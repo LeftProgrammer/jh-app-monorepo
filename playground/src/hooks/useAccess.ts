@@ -1,4 +1,4 @@
-import { useUserStore } from '@/store/user'
+import { useUserStore } from '@/store'
 
 /**
  * 权限控制 Hook

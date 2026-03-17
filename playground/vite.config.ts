@@ -181,8 +181,11 @@ export default defineConfig(({ command, mode }) => {
       alias: {
         '@': path.join(process.cwd(), './src'),
         '@img': path.join(process.cwd(), './src/static/images'),
+        '@jinghe-sanjiaoroad-app/framework': path.join(process.cwd(), '../packages/app/src'),
       },
     },
+    // 关闭缓存
+    cacheDir: false,
     server: {
       host: '0.0.0.0',
       hmr: true,

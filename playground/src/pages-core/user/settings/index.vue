@@ -84,7 +84,7 @@ import { onMounted, ref } from "vue";
 import { useToast } from "wot-design-uni";
 ;
 import appUpdate from "@/utils/appUpdate";
-import { useDictStore } from "@/store/dict";
+import { useDictStore } from "@/store";
 ;
 import { useMessage } from "wot-design-uni";
 

@@ -1,5 +1,5 @@
-import type { PageParam, PageResult } from '@/http/types'
-import { http } from '@/http/http'
+import type { PageParam, PageResult } from '../../../http/types'
+import { http } from '../../../http/http'
 
 /** 岗位信息 */
 export interface Post {

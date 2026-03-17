@@ -82,7 +82,7 @@
 import { reactive, ref } from "vue";
 import { useToast } from "wot-design-uni";
 import { CODE_LOGIN_PAGE, FORGET_PASSWORD_PAGE, REGISTER_PAGE } from "@/router";
-import { useTokenStore } from "@/store/token";
+import { useTokenStore } from "@/store";
 import { ensureDecodeURIComponent, redirectAfterLogin } from "@/utils";
 import appUpdate from "@/utils/appUpdate";
 import Header from "./components/header.vue";

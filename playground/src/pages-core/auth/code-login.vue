@@ -56,7 +56,7 @@ import { ensureDecodeURIComponent, isMobile, redirectAfterLogin } from '@/utils'
 import { reactive, ref } from 'vue'
 import { useToast } from 'wot-design-uni'
 import { FORGET_PASSWORD_PAGE, LOGIN_PAGE } from '@/router'
-import { useTokenStore } from '@/store/token'
+import { useTokenStore } from '@/store'
 
 import CodeInput from './components/code-input.vue'
 import Header from './components/header.vue'

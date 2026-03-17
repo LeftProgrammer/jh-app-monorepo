@@ -5,7 +5,7 @@ import process from 'node:process'
 
 /**
  * Manifest 类型定义
- * 
+ *
  * @description UniApp Manifest 的类型定义，支持 plus 和 app-plus 配置
  */
 interface ManifestType {
@@ -25,15 +25,15 @@ interface ManifestType {
 
 /**
  * Manifest 同步 Vite 插件
- * 
+ *
  * @description 在构建后自动同步源 Manifest 中的插件配置到目标 Manifest 文件
  * @export syncManifestPlugin - Manifest 同步插件
  * @usage Vite 构建插件、Manifest 配置同步、原生插件管理
- * 
+ *
  * @example
  * ```typescript
  * import { syncManifestPlugin } from '@jinghe-sanjiaoroad-app/framework/vite-plugins'
- * 
+ *
  * export default defineConfig({
  *   plugins: [
  *     syncManifestPlugin()
@@ -83,8 +83,7 @@ export default function syncManifestPlugin(): Plugin {
             fs.writeFileSync(distAppPath, JSON.stringify(distManifest, null, 2))
             console.log('✅ Manifest plugins 同步成功')
           }
-        }
-        catch (error) {
+        } catch (error) {
           console.error('❌ 同步 manifest plugins 失败:', error)
         }
       },

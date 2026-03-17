@@ -35,13 +35,6 @@ export function getEnvBaseUrl() {
  */
 export function getEnvBaseUrlRoot() {
   const baseUrl = getEnvBaseUrl()
-  // 提取根路径
   const urlObj = new URL(baseUrl)
   return urlObj.origin
 }
-
-/**
- * 是否是双 token 模式
- * 根据环境变量 VITE_AUTH_MODE 判断
- */
-export const isDoubleTokenMode = import.meta.env.VITE_AUTH_MODE === 'double'

@@ -128,7 +128,7 @@ import { useToast } from "wot-design-uni";
 import * as ConsortiumApi from "@/api/pms/document/posted";
 ;
 import { useUserStore } from "@/store";
-import { useGlobalState } from "@/store/global";
+import { useGlobalState } from "@/store";
 
 import UserPicker from "@/components/system-select/user-picker.vue";
 import UnitPicker from "@/components/system-select/unit-picker.vue";

@@ -1,6 +1,6 @@
 /**
  * 应用配置
- * 
+ *
  * @description 提供 uni-app manifest.json 的基础配置
  * @export manifestConfig - 应用配置对象
  * @usage 外部项目可基于此配置进行自定义扩展
@@ -8,22 +8,22 @@
 
 // 基础配置
 export const manifestConfig = {
-  description: "jinghe-sanjiaoroad App 移动端开发框架",
-  versionName: "1.0.0",
-  versionCode: "100",
-  name: "jinghe-sanjiaoroad App Framework",  // 默认名称，外部可覆盖
-  appid: "",               // 默认为空，外部必须设置
-  locale: "zh-Hans",
-  
-  h5: {
+  'description': 'jinghe-sanjiaoroad App 移动端开发框架',
+  'versionName': '1.0.0',
+  'versionCode': '100',
+  'name': 'jinghe-sanjiaoroad App Framework', // 默认名称，外部可覆盖
+  'appid': '', // 默认为空，外部必须设置
+  'locale': 'zh-Hans',
+
+  'h5': {
     router: {
-      base: "/",
+      base: '/',
     },
   },
-  
-  "app-plus": {
+
+  'app-plus': {
     usingComponents: true,
-    nvueStyleCompiler: "uni-app" as any, // 修复类型问题
+    nvueStyleCompiler: 'uni-app' as any, // 修复类型问题
     compilerVersion: 3,
     compatible: {
       ignoreVersion: true,
@@ -39,7 +39,7 @@ export const manifestConfig = {
       android: {
         minSdkVersion: 21,
         targetSdkVersion: 30,
-        abiFilters: ["armeabi-v7a", "arm64-v8a"],
+        abiFilters: ['armeabi-v7a', 'arm64-v8a'],
         permissions: [
           '<uses-permission android:name="android.permission.INTERNET"/>',
           '<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>',
@@ -64,43 +64,43 @@ export const manifestConfig = {
       sdkConfigs: {},
       icons: {
         android: {
-          hdpi: "static/app/icons/72x72.png",
-          xhdpi: "static/app/icons/96x96.png",
-          xxhdpi: "static/app/icons/144x144.png",
-          xxxhdpi: "static/app/icons/192x192.png",
+          hdpi: 'static/app/icons/72x72.png',
+          xhdpi: 'static/app/icons/96x96.png',
+          xxhdpi: 'static/app/icons/144x144.png',
+          xxxhdpi: 'static/app/icons/192x192.png',
         },
         ios: {
-          appstore: "static/app/icons/1024x1024.png",
+          appstore: 'static/app/icons/1024x1024.png',
           ipad: {
-            app: "static/app/icons/76x76.png",
-            "app@2x": "static/app/icons/152x152.png",
-            notification: "static/app/icons/20x20.png",
-            "notification@2x": "static/app/icons/40x40.png",
-            "proapp@2x": "static/app/icons/167x167.png",
-            settings: "static/app/icons/29x29.png",
-            "settings@2x": "static/app/icons/58x58.png",
-            spotlight: "static/app/icons/40x40.png",
-            "spotlight@2x": "static/app/icons/80x80.png",
+            'app': 'static/app/icons/76x76.png',
+            'app@2x': 'static/app/icons/152x152.png',
+            'notification': 'static/app/icons/20x20.png',
+            'notification@2x': 'static/app/icons/40x40.png',
+            'proapp@2x': 'static/app/icons/167x167.png',
+            'settings': 'static/app/icons/29x29.png',
+            'settings@2x': 'static/app/icons/58x58.png',
+            'spotlight': 'static/app/icons/40x40.png',
+            'spotlight@2x': 'static/app/icons/80x80.png',
           },
           iphone: {
-            "app@2x": "static/app/icons/120x120.png",
-            "app@3x": "static/app/icons/180x180.png",
-            "notification@2x": "static/app/icons/40x40.png",
-            "notification@3x": "static/app/icons/60x60.png",
-            "settings@2x": "static/app/icons/58x58.png",
-            "settings@3x": "static/app/icons/87x87.png",
-            "spotlight@2x": "static/app/icons/80x80.png",
-            "spotlight@3x": "static/app/icons/120x120.png",
+            'app@2x': 'static/app/icons/120x120.png',
+            'app@3x': 'static/app/icons/180x180.png',
+            'notification@2x': 'static/app/icons/40x40.png',
+            'notification@3x': 'static/app/icons/60x60.png',
+            'settings@2x': 'static/app/icons/58x58.png',
+            'settings@3x': 'static/app/icons/87x87.png',
+            'spotlight@2x': 'static/app/icons/80x80.png',
+            'spotlight@3x': 'static/app/icons/120x120.png',
           },
         },
       },
     },
   },
-  
-  quickapp: {},
-  
-  "mp-weixin": {
-    appid: "",  // 外部项目需要设置
+
+  'quickapp': {},
+
+  'mp-weixin': {
+    appid: '', // 外部项目需要设置
     setting: {
       urlCheck: false,
       es6: true,
@@ -112,44 +112,44 @@ export const manifestConfig = {
     mergeVirtualHostAttributes: true,
     usingComponents: true,
   },
-  
-  "mp-alipay": {
+
+  'mp-alipay': {
     usingComponents: true,
-    styleIsolation: "shared",
+    styleIsolation: 'shared',
     optimization: {
       subPackages: true,
     },
     compileOptions: {
-      globalObjectMode: "enable",
+      globalObjectMode: 'enable',
       transpile: {
         script: {
-          ignore: ["node_modules/**"],
+          ignore: ['node_modules/**'],
         },
       },
     },
   },
-  
-  "mp-baidu": {
+
+  'mp-baidu': {
     usingComponents: true,
   },
-  
-  "mp-toutiao": {
+
+  'mp-toutiao': {
     usingComponents: true,
   },
-  
-  uniStatistics: {
+
+  'uniStatistics': {
     enable: false,
   },
-  
-  vueVersion: "3",
-};
+
+  'vueVersion': '3',
+}
 
 // 导出说明：
 // manifestConfig - 基础配置对象，用于外部自定义扩展
 // 使用方式：
 // import { manifestConfig } from '@jinghe-sanjiaoroad-app/framework/config'
 // import { defineManifestConfig } from "@uni-helper/vite-plugin-uni-manifest"
-// 
+//
 // export default defineManifestConfig({
 //   ...manifestConfig,
 //   name: '我的应用',

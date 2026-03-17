@@ -1,8 +1,8 @@
 import type { CustomTabBarItem } from './types'
-import { useGlobalState } from '@/store/global'
-import { useTokenStore } from '@/store/token'
-import { activeRouterConfig } from '@/router/config'
-import { judgeIsExcludePath } from '@/router/interceptor'
+import { activeRouterConfig } from '../../router/config'
+import { judgeIsExcludePath } from '../../router/interceptor'
+import { useGlobalState } from '../../store/global'
+import { useTokenStore } from '../../store/token'
 
 /**
  * Tabbar 钩子函数配置
@@ -26,27 +26,27 @@ export interface TabbarHooks {
 export const defaultTabbarHooks: Required<TabbarHooks> = {
   beforeNavigate: async (index: number, item: CustomTabBarItem) => {
     const tokenStore = useTokenStore()
-    
+
     // 默认权限检查逻辑
-    const hasPermission = tokenStore.hasLogin || 
-      (activeRouterConfig.isNeedLoginMode && judgeIsExcludePath(item.pagePath)) || 
-      (!activeRouterConfig.isNeedLoginMode && !judgeIsExcludePath(item.pagePath))
-    
+    const hasPermission = tokenStore.hasLogin
+      || (activeRouterConfig.isNeedLoginMode && judgeIsExcludePath(item.pagePath))
+      || (!activeRouterConfig.isNeedLoginMode && !judgeIsExcludePath(item.pagePath))
+
     return hasPermission
   },
-  
+
   afterNavigate: () => {},
-  
+
   onBulgeClick: () => {
     uni.showToast({
-      title: "点击了中间的鼓包tabbarItem",
-      icon: "none"
+      title: '点击了中间的鼓包tabbarItem',
+      icon: 'none',
     })
   },
-  
+
   getBadge: (item: CustomTabBarItem) => {
     const globalState = useGlobalState()
-    
+
     if (typeof item.badge === 'number') {
       return item.badge
     }
@@ -55,7 +55,7 @@ export const defaultTabbarHooks: Required<TabbarHooks> = {
     }
     return undefined
   },
-  
+
   getCustomStyles: () => ({}),
 }
 
@@ -81,41 +81,43 @@ export function createTabbarHooks(hooks: TabbarHooks = {}) {
  */
 export function useTabbarHooks(config: { items: CustomTabBarItem[], hooks?: TabbarHooks }) {
   const hooks = createTabbarHooks(config.hooks)
-  
+
   // 当前选中状态
   const currentIndex = ref(0)
-  
+
   // 处理鼓包点击
   const handleBulgeClick = () => {
     hooks.onBulgeClick?.()
   }
-  
+
   // 处理项目点击
   const handleItemClick = async (index: number, item: CustomTabBarItem) => {
-    if (index === currentIndex.value) return
-    
+    if (index === currentIndex.value)
+      return
+
     if (item.isBulge) {
       handleBulgeClick()
       return
     }
-    
+
     // 执行前置钩子
     const canNavigate = await hooks.beforeNavigate?.(index, item)
-    if (canNavigate === false) return
-    
+    if (canNavigate === false)
+      return
+
     // 更新状态
     currentIndex.value = index
-    
+
     // 导航
     const url = item.pagePath.startsWith('/') ? item.pagePath : `/${item.pagePath}`
     uni.switchTab({ url })
   }
-  
+
   // 获取颜色
   const getItemColor = (index: number, activeColor: string, inactiveColor: string) => {
     return currentIndex.value === index ? activeColor : inactiveColor
   }
-  
+
   // 获取图标
   const getItemIcon = (index: number, item: CustomTabBarItem) => {
     if (item.iconType === 'image' && item.iconActive) {
@@ -123,19 +125,23 @@ export function useTabbarHooks(config: { items: CustomTabBarItem[], hooks?: Tabb
     }
     return item.icon
   }
-  
+
   // 获取角标
   const getItemBadge = (item: CustomTabBarItem, enableBadge: boolean) => {
-    if (!enableBadge) return undefined
-    
+    if (!enableBadge)
+      return undefined
+
     const badge = hooks.getBadge?.(item)
-    if (!badge) return undefined
-    
-    if (badge === 'dot') return 'dot'
-    if (typeof badge === 'number') return badge > 99 ? '99+' : badge
+    if (!badge)
+      return undefined
+
+    if (badge === 'dot')
+      return 'dot'
+    if (typeof badge === 'number')
+      return badge > 99 ? '99+' : badge
     return badge
   }
-  
+
   return {
     currentIndex,
     handleItemClick,

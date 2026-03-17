@@ -13,8 +13,9 @@ import type { IDoubleTokenRes } from '../api/types/login'
 import type { CustomRequestOptions, IResponse } from './types'
 import { isMpWeixin } from '@uni-helper/uni-env'
 import { nextTick } from 'vue'
+import { isDoubleTokenMode } from '../config/framework'
 import { useTokenStore } from '../store/token'
-import { getLastPage, isDoubleTokenMode } from '../utils'
+import { getLastPage } from '../utils'
 import { ApiEncrypt } from '../utils/encrypt'
 import { toLoginPage } from '../utils/toLoginPage'
 import { ResultEnum } from './tools/enum'
@@ -54,7 +55,7 @@ export function http<T>(options: CustomRequestOptions) {
 
         if (isTokenExpired) {
           const tokenStore = useTokenStore()
-          if (!isDoubleTokenMode) {
+          if (!isDoubleTokenMode()) {
             // 未启用双token策略，清理用户信息，跳转到登录页
             tokenStore.logout()
             toLoginPage()

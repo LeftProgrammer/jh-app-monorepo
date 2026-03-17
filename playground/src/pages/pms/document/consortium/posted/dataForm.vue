@@ -253,7 +253,7 @@ import UserPicker from "@/components/system-select/user-picker.vue";
 import UnitPicker from "@/components/system-select/unit-picker.vue";
 ;
 import { useUserStore } from "@/store";
-import { useGlobalState } from "@/store/global";
+import { useGlobalState } from "@/store";
 import { create } from "@/api/pms/document/posted";
 
 const props = defineProps<{

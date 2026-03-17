@@ -65,7 +65,7 @@
 
 <script lang="ts" setup>
 import type { MenuGroup, MenuItem } from "../index";
-import { useUserStore } from "@/store/user";
+import { useUserStore } from '@/store';
 import { getMenuGroups, getMenuItemByKey } from "../index";
 import MenuGrid from "./menu-grid.vue";
 import { useToast } from "wot-design-uni";

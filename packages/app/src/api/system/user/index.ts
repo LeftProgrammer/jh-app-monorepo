@@ -1,5 +1,5 @@
-import type { PageParam, PageResult } from '@/http/types'
-import { http } from '@/http/http'
+import type { PageParam, PageResult } from '../../../http/types'
+import { http } from '../../../http/http'
 
 /** 用户信息 */
 export interface User {
@@ -25,7 +25,10 @@ export interface User {
 export function getUserPage(params: PageParam) {
   return http.get<PageResult<User>>('/system/user/page', params)
 }
-
+/** 获取用户分页列表 */
+export function getUserList() {
+  return http.get<PageResult<User>>('/system/user/list')
+}
 /** 获取用户详情 */
 export function getUser(id: number) {
   return http.get<User>(`/system/user/get?id=${id}`)
@@ -58,12 +61,17 @@ export function updateUserStatus(id: number, status: number) {
 
 /** 获取用户拥有的角色列表 */
 export function getUserRoleIds(userId: number) {
-  return http.get<number[]>(`/system/permission/list-user-roles?userId=${userId}`)
+  return http.get<number[]>(
+    `/system/permission/list-user-roles?userId=${userId}`,
+  )
 }
 
 /** 分配用户角色 */
 export function assignUserRole(userId: number, roleIds: number[]) {
-  return http.post<boolean>('/system/permission/assign-user-role', { userId, roleIds })
+  return http.post<boolean>('/system/permission/assign-user-role', {
+    userId,
+    roleIds,
+  })
 }
 
 /** 获取用户精简列表 */

@@ -15,9 +15,9 @@
 </template>
 
 <script lang="ts" setup>
-import type { ProjectUnit } from "@/api/system/unit";
+import type { ProjectUnit } from "../../api/system/unit";
 import { onMounted, ref, watch } from "vue";
-import { getList } from "@/api/system/unit";
+import { getList } from "../../api/system/unit";
 
 const props = withDefaults(
   defineProps<{

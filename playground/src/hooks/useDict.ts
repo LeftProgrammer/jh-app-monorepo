@@ -1,5 +1,5 @@
-import type { DictItem } from '@/store/dict'
-import { useDictStore } from '@/store/dict'
+import type { DictItem } from '@/store'
+import { useDictStore } from '@/store'
 
 type ColorType = 'error' | 'info' | 'primary' | 'success' | 'warning'
 

@@ -22,7 +22,7 @@ import {
   getTenantSimpleList,
 
 } from '@/api/login'
-import { useUserStore } from '@/store/user'
+import { useUserStore } from '@/store'
 
 const toast = useToast()
 const userStore = useUserStore()

@@ -75,7 +75,7 @@ import { useToast } from "wot-design-uni";
 import { getUserProfile } from "@/api/system/user/profile";
 import { LOGIN_PAGE } from "@/router";
 import { useUserStore } from "@/store";
-import { useTokenStore } from "@/store/token";
+import { useTokenStore } from "@/store";
 import { useMessage } from "wot-design-uni";
 
 definePage({
