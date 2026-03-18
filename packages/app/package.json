@@ -13,8 +13,8 @@
   "exports": {
     ".": "./src/index.ts",
     "./components": "./src/components/index.ts",
-    "./components/tabbar": "./src/components/tabbar/index.ts",
-    "./components/tabbar/config": "./src/components/tabbar/config.ts",
+    "./components/jh-tabbar": "./src/components/jh-tabbar/index.ts",
+    "./components/jh-tabbar/config": "./src/components/jh-tabbar/config.ts",
     "./components/*": "./src/components/*",
     "./store": "./src/store/index.ts",
     "./http": "./src/http/index.ts",

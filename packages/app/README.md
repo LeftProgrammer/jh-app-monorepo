@@ -1,6 +1,66 @@
 # @jinghe-sanjiaoroad-app/framework
 
-## 📦 导入指南
+## � 快速开始
+
+### 安装
+```bash
+pnpm add @jinghe-sanjiaoroad-app/framework
+```
+
+### 配置 easycom（推荐）
+
+在 `pages.json` 中配置 easycom，实现组件自动引入：
+
+```json
+{
+  "easycom": {
+    "autoscan": true,
+    "custom": {
+      "^jh-(.*)": "@jinghe-sanjiaoroad-app/framework/src/components/jh-$1/jh-$1.vue",
+      "^wd-(.*)": "wot-design-uni/components/wd-$1/wd-$1.vue"
+    }
+  }
+}
+```
+
+配置后，可直接在模板中使用组件，无需手动 import：
+
+```vue
+<template>
+  <!-- 自动引入，无需 import -->
+  <jh-dict-tag type="status" :value="1" />
+  <jh-file-upload v-model:file-id="fileId" />
+  <jh-unit-picker v-model="unitId" />
+  <jh-user-picker v-model="userId" />
+  <jh-tabbar :config="config" :tabbar-list="list" :tabbar-store="store" />
+</template>
+```
+
+### 组件列表
+
+| 组件名 | 说明 | 路径 |
+|--------|------|------|
+| `jh-dict-tag` | 字典标签 | `jh-dict-tag/jh-dict-tag.vue` |
+| `jh-file-upload` | 文件上传 | `jh-file-upload/jh-file-upload.vue` |
+| `jh-unit-picker` | 单位选择器 | `jh-unit-picker/jh-unit-picker.vue` |
+| `jh-user-picker` | 用户选择器 | `jh-user-picker/jh-user-picker.vue` |
+| `jh-tabbar` | 自定义 Tabbar | `jh-tabbar/jh-tabbar.vue` |
+
+### 手动导入（可选）
+
+如果不使用 easycom，也可以手动导入：
+
+```typescript
+// 从主入口导入
+import { JhDictTag, JhFileUpload, JhTabbar } from '@jinghe-sanjiaoroad-app/framework'
+
+// 或从子路径导入（推荐，避免加载整个包）
+import { JhTabbar, createTabbarConfig, createTabbarStore } from '@jinghe-sanjiaoroad-app/framework/components/jh-tabbar'
+```
+
+---
+
+## �📦 导入指南
 
 ### 页面模块
 ```typescript
