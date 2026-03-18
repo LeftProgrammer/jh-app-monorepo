@@ -43,7 +43,7 @@
 
 <script lang="ts" setup>
 import type { ProcessInstanceCopy } from "@/api/bpm/processInstance";
-import type { LoadMoreState } from "@/http/types";
+import type { LoadMoreState } from "../../../http";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { formatDate } from "@/utils";
 import { onMounted, ref } from "vue";

@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view class="yd-page-container">
     <!-- 顶部导航栏 -->
     <wd-navbar
@@ -80,7 +80,7 @@
 import { useToast } from "wot-design-uni";
 import { navigateBackPlus } from "@/utils";
 import { getPage, deleteById } from "@/api/pms/document/received";
-import type { LoadMoreState } from "@/http/types";
+import type { LoadMoreState } from "@/http";
 import { DICT_TYPE } from "@/utils";
 import { formatDate } from "@/utils";
 import { useUserStore } from "@/store";

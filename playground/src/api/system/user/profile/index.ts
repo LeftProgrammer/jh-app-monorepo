@@ -1,4 +1,4 @@
-import { http } from '@/http/http'
+import { http } from '@/http'
 
 /** 用户个人中心信息 */
 export interface UserProfileVO {

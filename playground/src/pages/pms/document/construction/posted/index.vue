@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view class="yd-page-container">
     <!-- 顶部导航栏 -->
     <wd-navbar
@@ -70,7 +70,7 @@
 ;
 import { formatDate, navigateBackPlus } from '@/utils'
 import { getPage } from "@/api/pms/document/posted";
-import type { LoadMoreState } from "@/http/types";
+import type { LoadMoreState } from "@/http";
 import { useUserStore } from "@/store";
 import { DICT_TYPE } from "@/utils";
 ;

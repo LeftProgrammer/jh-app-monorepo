@@ -1,5 +1,5 @@
 import { useToast } from 'wot-design-uni'
-import { http } from '@/http/http'
+import { http } from '@/http'
 import { useTokenStore, useUserStore } from '@/store'
 
 /** 文件信息 */

@@ -4,7 +4,7 @@ import type {
   ICaptcha,
   IDoubleTokenRes,
 } from './types/login'
-import { http } from '@/http/http'
+import { http } from '@/http'
 
 /**
  * 登录表单

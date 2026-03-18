@@ -78,7 +78,7 @@
 import { DICT_TYPE, formatDateTime, navigateBackPlus } from '@/utils'
 import type { UserGroup } from '@/api/bpm/user-group'
 import type { SimpleUser } from '@/api/system/user'
-import type { LoadMoreState } from '@/http/types'
+import type { LoadMoreState } from '@/http'
 import { onReachBottom } from '@dcloudio/uni-app'
 import { onMounted, ref } from 'vue'
 import { getUserGroupPage } from '@/api/bpm/user-group'

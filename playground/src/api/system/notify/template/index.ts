@@ -1,5 +1,5 @@
-import type { PageParam, PageResult } from '@/http/types'
-import { http } from '@/http/http'
+﻿import type { PageParam, PageResult } from '@/http'
+import { http } from '@/http'
 
 /** 站内信模板信息 */
 export interface NotifyTemplate {

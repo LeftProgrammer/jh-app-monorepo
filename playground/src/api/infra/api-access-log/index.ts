@@ -1,5 +1,5 @@
-import type { PageParam, PageResult } from '@/http/types'
-import { http } from '@/http/http'
+﻿import type { PageParam, PageResult } from '@/http'
+import { http } from '@/http'
 
 /** API 访问日志信息 */
 export interface ApiAccessLog {

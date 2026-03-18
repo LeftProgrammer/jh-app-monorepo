@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view class="yd-page-container">
     <!-- 顶部导航栏 -->
     <wd-navbar
@@ -39,7 +39,7 @@
 
 <script lang="ts" setup>
 import { navigateBackPlus } from "@/utils";
-import type { LoadMoreState } from "@/http/types";
+import type { LoadMoreState } from "@/http";
 import { getPage } from "@/api/general/news";
 import { getFileByIds } from "@/api/infra/file";
 

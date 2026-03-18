@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view class="yd-page-container">
     <!-- 顶部导航栏 -->
     <wd-navbar
@@ -79,7 +79,7 @@
 ;
 import { formatDate, formatDateTimeHour, navigateBackPlus } from '@/utils'
 import { getPage, deleteById } from "@/api/general/camp/safety";
-import type { LoadMoreState } from "@/http/types";
+import type { LoadMoreState } from "@/http";
 import { useUserStore } from "@/store";
 import { DICT_TYPE } from "@/utils";
 ;

@@ -96,7 +96,7 @@
 import { deepClone, DICT_TYPE, formatDate, navigateBackPlus } from '@/utils'
 import { computed, onMounted, ref } from "vue"
 import InspectionApi from "@/api/pms/safety/safeInspection/inspection"
-import type { LoadMoreState } from "@/http/types"
+import type { LoadMoreState } from "@/http"
 import { getDictLabel, getStrDictOptions } from '@/hooks'
 import { useUserStore } from "@/store"
 import { useMessage } from "wot-design-uni"

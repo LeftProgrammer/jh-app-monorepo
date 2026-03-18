@@ -1,4 +1,4 @@
-import { http } from '@/http/http'
+import { http } from '@/http'
 
 /** 部门信息 */
 export interface Dept {

@@ -1,4 +1,4 @@
-import { http } from '@/http/http'
+import { http } from '@/http'
 
 /** 菜单信息 */
 export interface Menu {

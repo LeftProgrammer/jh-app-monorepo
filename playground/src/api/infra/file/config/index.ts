@@ -1,5 +1,5 @@
-import type { PageParam, PageResult } from '@/http/types'
-import { http } from '@/http/http'
+﻿import type { PageParam, PageResult } from '@/http'
+import { http } from '@/http'
 
 /** 文件客户端配置 */
 export interface FileClientConfig {

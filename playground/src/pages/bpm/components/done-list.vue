@@ -43,7 +43,7 @@
 <script lang="ts" setup>
 import { DICT_TYPE, formatDate, formatDateTime } from '@/utils'
 import type { Task } from "@/api/bpm/task";
-import type { LoadMoreState } from "@/http/types";
+import type { LoadMoreState } from "@/http";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { onMounted, ref } from "vue";
 import { getTaskDonePage } from "@/api/bpm/task";

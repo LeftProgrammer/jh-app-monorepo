@@ -11,7 +11,6 @@
  */
 import type { IDoubleTokenRes } from '../api/types/login'
 import type { CustomRequestOptions, IResponse } from './types'
-import { isMpWeixin } from '@uni-helper/uni-env'
 import { nextTick } from 'vue'
 import { isDoubleTokenMode } from '../config/framework'
 import { useTokenStore } from '../store/token'
@@ -30,9 +29,9 @@ export function http<T>(options: CustomRequestOptions) {
     uni.request({
       ...options,
       dataType: 'json',
-      // 使用运行时检测替代条件编译，以支持 npm 包发布
-      // 微信小程序不支持 responseType 参数
-      ...(!isMpWeixin && { responseType: 'json' }),
+      // #ifndef MP-WEIXIN
+      responseType: 'json',
+      // #endif
       // 响应成功
       success: async (res) => {
         let responseData = res.data as IResponse<T>

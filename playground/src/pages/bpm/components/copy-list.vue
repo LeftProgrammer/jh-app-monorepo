@@ -44,7 +44,7 @@
 <script lang="ts" setup>
 import { formatDate, formatDateTime } from '@/utils'
 import type { ProcessInstanceCopy } from "@/api/bpm/processInstance";
-import type { LoadMoreState } from "@/http/types";
+import type { LoadMoreState } from "@/http";
 import { onReachBottom } from "@dcloudio/uni-app";
 ;
 import { onMounted, ref } from "vue";

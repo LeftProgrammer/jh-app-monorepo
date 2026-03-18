@@ -71,7 +71,7 @@
 <script lang="ts" setup>
 import { DICT_TYPE, navigateBackPlus } from '@/utils'
 import type { ProcessListener } from '@/api/bpm/process-listener'
-import type { LoadMoreState } from '@/http/types'
+import type { LoadMoreState } from '@/http'
 import { onReachBottom } from '@dcloudio/uni-app'
 import { onMounted, ref } from 'vue'
 import { getProcessListenerPage } from '@/api/bpm/process-listener'

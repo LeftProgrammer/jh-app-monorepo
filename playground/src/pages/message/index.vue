@@ -123,7 +123,7 @@
 <script lang="ts" setup>
 import { DICT_TYPE, formatDate } from '@/utils'
 import type { NotifyMessage } from "@/api/system/notify/message";
-import type { LoadMoreState } from "@/http/types";
+import type { LoadMoreState } from "@/http";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { useUserStore } from "@/store";
 import { onMounted, ref } from "vue";

@@ -63,7 +63,7 @@
 <script lang="ts" setup>
 import { DICT_TYPE, formatDateTime, navigateBackPlus } from '@/utils'
 import type { ProcessExpression } from '@/api/bpm/process-expression'
-import type { LoadMoreState } from '@/http/types'
+import type { LoadMoreState } from '@/http'
 import { onReachBottom } from '@dcloudio/uni-app'
 import { onMounted, ref } from 'vue'
 import { getProcessExpressionPage } from '@/api/bpm/process-expression'

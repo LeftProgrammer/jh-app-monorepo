@@ -1,5 +1,5 @@
 import { useToast } from 'wot-design-uni'
-import { http } from '@/http/http'
+import { http } from '../../../http'
 import { getBaseUrl } from '../../../config/framework'
 import { useTokenStore } from '../../../store/token'
 import { useUserStore } from '../../../store/user'

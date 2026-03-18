@@ -1,4 +1,4 @@
-import { http } from '@/http/http'
+import { http } from '@/http'
 
 /** 流程定义 */
 export interface ProcessDefinition {

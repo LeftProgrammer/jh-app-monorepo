@@ -69,7 +69,7 @@
 <script lang="ts" setup>
 import { DICT_TYPE, formatDateTime, navigateBackPlus } from '@/utils'
 import type { Category } from '@/api/bpm/category'
-import type { LoadMoreState } from '@/http/types'
+import type { LoadMoreState } from '@/http'
 import { onReachBottom } from '@dcloudio/uni-app'
 import { onMounted, ref } from 'vue'
 import { getCategoryPage } from '@/api/bpm/category'

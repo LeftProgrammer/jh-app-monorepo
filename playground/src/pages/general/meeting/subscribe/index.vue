@@ -88,7 +88,7 @@
 ;
 import { DICT_TYPE, formatDate, getNavbarHeight, navigateBackPlus } from '@/utils'
 import SubscribeApi from "@/api/general/meeting";
-import type { LoadMoreState } from "@/http/types";
+import type { LoadMoreState } from "@/http";
 ;
 import { useUserStore } from "@/store";
 import { useMessage, useToast } from "wot-design-uni";

@@ -93,7 +93,7 @@
 <script lang="ts" setup>
 import { BpmProcessInstanceStatus, DICT_TYPE, formatDateTime, navigateBackPlus } from '@/utils'
 import type { Leave } from '@/api/bpm/oa/leave'
-import type { LoadMoreState } from '@/http/types'
+import type { LoadMoreState } from '@/http'
 import { onReachBottom } from '@dcloudio/uni-app'
 import { computed, onMounted, ref } from 'vue'
 import { getLeavePage } from '@/api/bpm/oa/leave'

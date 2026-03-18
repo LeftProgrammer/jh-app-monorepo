@@ -1,5 +1,5 @@
-import type { PageParam, PageResult } from "@/http/types";
-import { http } from "@/http/http";
+﻿import type { PageParam, PageResult } from "@/http";
+import { http } from "@/http";
 
 /** 安全整改信息 */
 export interface Rectification {

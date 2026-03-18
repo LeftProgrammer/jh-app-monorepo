@@ -1,4 +1,4 @@
-import { http } from '@/http/http'
+import { http } from '@/http'
 
 /** 数据源配置信息 */
 export interface DataSourceConfig {

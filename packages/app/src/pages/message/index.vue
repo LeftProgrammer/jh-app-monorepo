@@ -73,7 +73,7 @@
 
 <script lang="ts" setup>
 import type { NotifyMessage } from '@/api/system/notify/message'
-import type { LoadMoreState } from '@/http/types'
+import type { LoadMoreState } from '../../http'
 import { onReachBottom } from '@dcloudio/uni-app'
 import { onMounted, ref } from 'vue'
 import { useToast } from 'wot-design-uni'

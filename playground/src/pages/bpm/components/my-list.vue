@@ -61,7 +61,7 @@
 <script lang="ts" setup>
 import { DICT_TYPE, formatPast } from '@/utils'
 import type { ProcessInstance } from "@/api/bpm/processInstance";
-import type { LoadMoreState } from "@/http/types";
+import type { LoadMoreState } from "@/http";
 import { onReachBottom } from "@dcloudio/uni-app";
 import { computed, onMounted, ref } from "vue";
 import { useMessage, useToast } from "wot-design-uni";

@@ -1,5 +1,5 @@
-import type { PageParam, PageResult } from '@/http/types'
-import { http } from '@/http/http'
+import type { PageParam, PageResult } from '../../../../http'
+import { http } from '../../../../http'
 
 export function create(data: any) {
   return http.post<number>('/camp/safety/create', data)

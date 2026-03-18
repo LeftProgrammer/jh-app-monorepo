@@ -96,7 +96,7 @@
 <script lang="ts" setup>
 import { DICT_TYPE, formatDateTime, navigateBackPlus } from '@/utils'
 import type { ProcessInstance } from '@/api/bpm/processInstance'
-import type { LoadMoreState } from '@/http/types'
+import type { LoadMoreState } from '@/http'
 import { onReachBottom } from '@dcloudio/uni-app'
 import { onMounted, ref } from 'vue'
 import { useToast } from 'wot-design-uni'

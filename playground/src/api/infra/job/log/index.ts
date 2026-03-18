@@ -1,5 +1,5 @@
-import type { PageParam, PageResult } from '@/http/types'
-import { http } from '@/http/http'
+﻿import type { PageParam, PageResult } from '@/http'
+import { http } from '@/http'
 
 // TODO @AI：不用 baseUrl 方式
 const baseUrl = '/infra/job-log'
