@@ -1,66 +1,66 @@
-// APP更新
-import type { CustomRequestOptions } from '../http/types'
+/**
+ * APP 更新模块
+ *
+ * @description 提供 APP 版本检查和更新功能，通过字典表获取版本信息
+ * @usage 仅在 APP 端使用
+ */
+import { getStaticBaseUrl } from '../config/framework'
+import { useDictStore } from '../store/dict'
+import { DICT_TYPE } from './constants'
 
 /**
- * APP 版本信息接口
+ * 计算文件大小显示
+ * @param size 文件大小（字节）
  */
-export interface AppVersionInfo {
-  version: string
-  note: string
-  fileSize?: number
-}
-
-/**
- * 获取最新版本信息
- * @param appId 应用ID
- * @param httpGet HTTP GET 请求函数，由调用方注入
- */
-export async function getLatestVersion(
-  appId: string,
-  httpGet: <T>(url: string, config?: CustomRequestOptions) => Promise<T>,
-): Promise<AppVersionInfo | null> {
-  try {
-    return await httpGet<AppVersionInfo>(`/infra/app-client-version/get-latest-version?appId=${appId}`)
-  } catch (error) {
-    console.error('获取最新版本失败:', error)
-    return null
+function calculateFileSize(size: number): string {
+  if (size < 1024) {
+    return `${size}B`
+  } else if (size < 1024 * 1024) {
+    return `${(size / 1024).toFixed(2)}KB`
+  } else {
+    return `${(size / 1024 / 1024).toFixed(2)}MB`
   }
 }
 
 /**
  * APP 更新检查和下载
- * @param appId 应用ID
- * @param httpGet HTTP GET 请求函数，由调用方注入
- * @param baseUrl 服务器基础地址，默认从环境变量获取
+ *
+ * @description 从字典表获取版本信息，检查是否需要更新，如需更新则下载并安装
+ * @param staticBaseUrl 静态资源基础地址，默认从框架配置获取
+ *
+ * @example
+ * // 在 App.vue 的 onLaunch 中调用
+ * import appUpdate from '@/utils/appUpdate'
+ * appUpdate()
  */
-export default async function appUpdate(
-  appId: string,
-  httpGet: <T>(url: string, config?: CustomRequestOptions) => Promise<T>,
-  baseUrl?: string,
-) {
-  const serverBaseUrl = baseUrl || (import.meta as any).env?.VITE_SERVER_BASEURL || ''
+export default function appUpdate(staticBaseUrl?: string) {
+  const baseUrl = staticBaseUrl || getStaticBaseUrl()
 
-  // 查询最新版本
-  const latestVersion = await getLatestVersion(appId, httpGet)
-  if (!latestVersion) {
+  const dictStore = useDictStore()
+  const APP_UPDATE = dictStore.getDictOptions(DICT_TYPE.APP_UPDATE)
+
+  const androidVersion = APP_UPDATE.find(x => x.label === 'version')?.value
+  const appName = APP_UPDATE.find(x => x.label === 'name')?.value
+  const apkSize = APP_UPDATE.find(x => x.label === 'size')?.value
+  const appMsg = APP_UPDATE.find(x => x.label === 'msg')?.value
+
+  // 版本信息不完整，跳过更新检查
+  if (!androidVersion || !appName) {
+    console.warn('[appUpdate] 字典表中缺少版本信息')
     return
   }
-
-  console.log('appUpdate', latestVersion)
-  const androidVersion = latestVersion.version
-  const appMsg = latestVersion.note
-  const apkSize = latestVersion.fileSize
 
   plus.runtime.getProperty(plus.runtime.appid, (wgtinfo) => {
     const client_version = wgtinfo.version
     const flag_update = client_version < androidVersion
 
     if (flag_update) {
-      console.log('需要更新')
+      console.log('[appUpdate] 需要更新')
     } else {
-      console.log('不需要更新')
+      console.log('[appUpdate] 不需要更新')
       return
     }
+
     uni.showModal({
       title: '更新提示',
       content: `当前版本：V${client_version}\n最新版本：V${androidVersion}\n内容：${appMsg}`,
@@ -69,7 +69,7 @@ export default async function appUpdate(
       success: (res) => {
         if (res.confirm) {
           plus.nativeUI.toast('正在准备环境，请稍后!')
-          const url = `${serverBaseUrl}/infra/app-client-version/download-latest-version?appId=${appId}`
+          const url = `${baseUrl}/static/app/${appName}.apk`
           const dtask = plus.downloader.createDownload(
             url,
             {
@@ -78,17 +78,16 @@ export default async function appUpdate(
             },
             (d, status) => {
               if (status === 200) {
-                const path = d.filename
-                plus.runtime.install(path)
+                const path = d.filename // 下载apk
+                plus.runtime.install(path) // 自动安装apk文件
               } else {
                 plus.nativeUI.alert(`版本更新失败:${status}`)
               }
             },
           )
           try {
-            dtask.start()
-            let prg = 0
-            const showLoading = plus.nativeUI.showWaiting('正在下载')
+            dtask.start() // 开启下载的任务
+            const showLoading = plus.nativeUI.showWaiting('正在下载') // 创建一个showWaiting对象
             dtask.addEventListener('statechanged', (task) => {
               switch (task.state) {
                 case 1:
@@ -100,16 +99,17 @@ export default async function appUpdate(
                 case 3: {
                   let title = ''
                   if (apkSize) {
-                    prg = Math.floor((Number(task.downloadedSize) / apkSize) * 100)
+                    const prg = Math.floor((Number(task.downloadedSize) / Number(apkSize)) * 100)
                     title = `正在下载：${prg}%`
                   } else {
-                    title = `已下载：${(Number(task.downloadedSize) / 1024 / 1024).toFixed(2)}MB`
+                    title = `已下载：${calculateFileSize(Number(task.downloadedSize))}`
                   }
                   showLoading.setTitle(title)
                   break
                 }
                 case 4:
                   plus.nativeUI.closeWaiting()
+                  // 下载完成
                   break
               }
             })

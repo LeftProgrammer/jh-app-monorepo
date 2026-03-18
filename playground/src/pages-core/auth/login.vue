@@ -61,8 +61,7 @@ import { reactive, ref } from "vue";
 import { useToast } from "wot-design-uni";
 import { getCodeLoginPage, getForgetPasswordPage, getRegisterPage } from '@/router'
 import { useTokenStore } from "@/store";
-import { ensureDecodeURIComponent, redirectAfterLogin } from "@/utils";
-import appUpdate from "@/utils/appUpdate";
+import { appUpdate, ensureDecodeURIComponent, redirectAfterLogin } from "@/utils";
 import Header from "./components/header.vue";
 import TenantPicker from "./components/tenant-picker.vue";
 import Verify from "./components/verifition/verify.vue";

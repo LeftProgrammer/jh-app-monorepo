@@ -79,14 +79,11 @@
 </template>
 
 <script lang="ts" setup>
-import { DICT_TYPE, navigateBackPlus } from '@/utils'
-import { onMounted, ref } from "vue";
-import { useToast } from "wot-design-uni";
-;
-import appUpdate from "@/utils/appUpdate";
-import { useDictStore } from "@/store";
-;
-import { useMessage } from "wot-design-uni";
+import { onMounted, ref } from 'vue'
+import { useMessage, useToast } from 'wot-design-uni'
+
+import { useDictStore } from '@/store'
+import { appUpdate, DICT_TYPE, navigateBackPlus } from '@/utils'
 
 definePage({
   style: {

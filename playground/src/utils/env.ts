@@ -3,8 +3,6 @@
  *
  * 这些函数依赖项目特定的环境变量配置，因此放在项目级别而非框架包中
  */
-import { isMpWeixin } from '@uni-helper/uni-env'
-
 /**
  * 根据微信小程序当前环境，判断应该获取的 baseUrl
  *
@@ -15,12 +13,10 @@ export function getEnvBaseUrl() {
   let baseUrl = env.VITE_SERVER_BASEURL
 
   // #ifdef MP-WEIXIN
-  if (isMpWeixin()) {
-    const { miniProgram: { envVersion } } = uni.getAccountInfoSync()
-    const envKey = `VITE_SERVER_BASEURL__WEIXIN_${envVersion.toUpperCase()}`
-    const envBaseUrl = env[envKey]
-    baseUrl = envBaseUrl || baseUrl
-  }
+  const { miniProgram: { envVersion } } = uni.getAccountInfoSync()
+  const envKey = `VITE_SERVER_BASEURL__WEIXIN_${envVersion.toUpperCase()}`
+  const envBaseUrl = env[envKey]
+  baseUrl = envBaseUrl || baseUrl
   // #endif
 
   return baseUrl

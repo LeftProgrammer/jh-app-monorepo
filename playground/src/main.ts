@@ -4,8 +4,8 @@ import App from './App.vue'
 import { initFramework } from './config/framework'
 import { requestInterceptor } from './http/interceptor'
 import store from './store'
+import { isPageTabbar, tabbarStore } from './tabbar/store'
 import { getAllPages, HOME_PAGE } from './utils'
-
 import '@/style/index.scss'
 import 'virtual:uno.css'
 
@@ -55,6 +55,8 @@ initFramework({
   // 路由依赖注入
   routerDeps: {
     getAllPages,
+    tabbarStore,
+    isPageTabbar,
   },
 })
 
