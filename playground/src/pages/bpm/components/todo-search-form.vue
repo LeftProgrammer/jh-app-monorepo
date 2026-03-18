@@ -110,10 +110,7 @@ import type { ProcessDefinition } from "@/api/bpm/definition";
 import { computed, onMounted, reactive, ref, nextTick } from "vue";
 import { getCategorySimpleList } from "@/api/bpm/category";
 import { getProcessDefinitionList } from "@/api/bpm/definition";
-import { getDictLabel, getIntDictOptions } from "@/hooks/useDict";
-;
-;
-;
+import { getDictLabel, getIntDictOptions } from '@/hooks'
 
 const emit = defineEmits<{
   search: [data: Record<string, any>];

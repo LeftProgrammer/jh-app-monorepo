@@ -94,15 +94,12 @@
 
 <script lang="ts" setup>
 import { deepClone, DICT_TYPE, formatDate, navigateBackPlus } from '@/utils'
-import { computed, onMounted, ref } from "vue";
-; // 确保提供 deepClone
-import InspectionApi from "@/api/pms/safety/safeInspection/inspection"; // 你的 API
-import type { LoadMoreState } from "@/http/types";
-; // 你的字典常量
-import { getDictLabel, getStrDictOptions } from "@/hooks/useDict"; // 你的字典 hook
-import { useUserStore } from "@/store"; // 你的用户 store
-; // 你的日期格式化工具
-import { useMessage } from "wot-design-uni";
+import { computed, onMounted, ref } from "vue"
+import InspectionApi from "@/api/pms/safety/safeInspection/inspection"
+import type { LoadMoreState } from "@/http/types"
+import { getDictLabel, getStrDictOptions } from '@/hooks'
+import { useUserStore } from "@/store"
+import { useMessage } from "wot-design-uni"
 
 definePage({
   style: {

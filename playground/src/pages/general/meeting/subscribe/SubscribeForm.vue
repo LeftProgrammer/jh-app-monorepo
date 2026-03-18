@@ -332,17 +332,13 @@
 
 <script lang="ts" setup>
 import { deepClone, DICT_TYPE, formatDate, getNavbarHeight, navigateBackPlus } from '@/utils'
-import { useToast } from "wot-design-uni";
-import SubscribeApi from "@/api/general/meeting";
-;
-import UserPicker from "@/components/system-select/user-picker.vue";
-;
-import { useUserStore } from "@/store";
-import { getDictLabel } from "@/hooks/useDict";
-;
-import { useGlobalState } from "@/store";
-;
-import dayjs from "dayjs";
+import { useToast } from "wot-design-uni"
+import SubscribeApi from "@/api/general/meeting"
+import UserPicker from "@/components/system-select/user-picker.vue"
+import { useUserStore } from "@/store"
+import { getDictLabel } from '@/hooks'
+import { useGlobalState } from "@/store"
+import dayjs from "dayjs"
 
 const props = defineProps<{
   id?: number | string;

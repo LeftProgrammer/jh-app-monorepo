@@ -73,7 +73,7 @@ import type { LoadMoreState } from '@/http/types'
 import { onReachBottom } from '@dcloudio/uni-app'
 import { onMounted, ref } from 'vue'
 import { getCategoryPage } from '@/api/bpm/category'
-import { useAccess } from '@/hooks/useAccess'
+import { useAccess } from '@/hooks'
 
 import SearchForm from './components/search-form.vue'
 

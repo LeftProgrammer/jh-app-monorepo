@@ -96,7 +96,7 @@ import type { ProcessListener } from '@/api/bpm/process-listener'
 import { computed, onMounted, ref } from 'vue'
 import { useToast } from 'wot-design-uni'
 import { createProcessListener, getProcessListener, updateProcessListener } from '@/api/bpm/process-listener'
-import { getIntDictOptions, getStrDictOptions } from '@/hooks/useDict'
+import { getIntDictOptions, getStrDictOptions } from '@/hooks'
 
 const props = defineProps<{
   id?: number | any

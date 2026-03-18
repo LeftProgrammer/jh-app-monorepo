@@ -83,7 +83,7 @@ import { onReachBottom } from '@dcloudio/uni-app'
 import { onMounted, ref } from 'vue'
 import { getUserGroupPage } from '@/api/bpm/user-group'
 import { getSimpleUserList } from '@/api/system/user'
-import { useAccess } from '@/hooks/useAccess'
+import { useAccess } from '@/hooks'
 
 import SearchForm from './components/search-form.vue'
 

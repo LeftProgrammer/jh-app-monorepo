@@ -50,7 +50,7 @@ import type { ProcessExpression } from '@/api/bpm/process-expression'
 import { onMounted, ref } from 'vue'
 import { useToast } from 'wot-design-uni'
 import { deleteProcessExpression, getProcessExpression } from '@/api/bpm/process-expression'
-import { useAccess } from '@/hooks/useAccess'
+import { useAccess } from '@/hooks'
 
 const props = defineProps<{
   id?: number | any

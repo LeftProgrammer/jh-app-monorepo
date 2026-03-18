@@ -4,7 +4,6 @@
  * @export useUpload - 文件上传 Hook
  * @usage 图片上传、文件上传、上传状态管理
  */
-import { isMpWeixin } from '@uni-helper/uni-env'
 import { ref } from 'vue'
 import { useToast } from 'wot-design-uni'
 import { getBaseUrl } from '../config/framework'
@@ -103,14 +102,14 @@ export default function useUpload<T extends TfileType>(options: TOptions<T> = {}
         // App的File有以下字段：{path: "file:///Users/feige/xxx/gallery/1522437259-compressed-IMG_0006.jpg", size: 48976}
         let tempFilePath = ''
         let size = 0
-        // 使用运行时检测替代条件编译，以支持 npm 包发布
-        if (isMpWeixin) {
-          tempFilePath = res.tempFiles[0].tempFilePath
-          size = res.tempFiles[0].size
-        } else {
-          tempFilePath = res.tempFilePaths[0]
-          size = res.tempFiles[0].size
-        }
+        // #ifdef MP-WEIXIN
+        tempFilePath = res.tempFiles[0].tempFilePath
+        size = res.tempFiles[0].size
+        // #endif
+        // #ifndef MP-WEIXIN
+        tempFilePath = res.tempFilePaths[0]
+        size = res.tempFiles[0].size
+        // #endif
         handleFileChoose({ tempFilePath, size })
       },
       fail: (err: any) => {
@@ -121,15 +120,16 @@ export default function useUpload<T extends TfileType>(options: TOptions<T> = {}
     }
 
     if (fileType === 'image') {
-      // 使用运行时检测替代条件编译，以支持 npm 包发布
-      if (isMpWeixin) {
-        uni.chooseMedia({
-          ...chooseFileOptions,
-          mediaType: ['image'],
-        })
-      } else {
-        uni.chooseImage(chooseFileOptions)
-      }
+      // #ifdef MP-WEIXIN
+      uni.chooseMedia({
+        ...chooseFileOptions,
+        mediaType: ['image'],
+      })
+      // #endif
+
+      // #ifndef MP-WEIXIN
+      uni.chooseImage(chooseFileOptions)
+      // #endif
     } else {
       uni.chooseFile({
         ...chooseFileOptions,

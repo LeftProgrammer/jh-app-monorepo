@@ -112,15 +112,12 @@
 
 <script lang="ts" setup>
 import { deepClone, DICT_TYPE, formatDate, navigateBackPlus } from '@/utils'
-import { computed, ref } from "vue";
-;
-import RectificationApi from "@/api/pms/safety/safeInspection/rectification";
-import type { LoadMoreState } from "@/http/types";
-;
-import { getDictLabel } from "@/hooks/useDict";
-import { useUserStore } from "@/store";
-;
-import { useMessage } from "wot-design-uni";
+import { computed, ref } from "vue"
+import RectificationApi from "@/api/pms/safety/safeInspection/rectification"
+import type { LoadMoreState } from "@/http/types"
+import { getDictLabel } from '@/hooks'
+import { useUserStore } from "@/store"
+import { useMessage } from "wot-design-uni"
 
 definePage({
   style: {

@@ -121,7 +121,7 @@ import { computed, onMounted, reactive, ref } from 'vue'
 import { getCategorySimpleList } from '@/api/bpm/category'
 import { getProcessDefinitionList } from '@/api/bpm/definition'
 import UserPicker from '@/components/system-select/user-picker.vue'
-import { getDictLabel, getIntDictOptions } from '@/hooks/useDict'
+import { getDictLabel, getIntDictOptions } from '@/hooks'
 
 const emit = defineEmits<{
   search: [data: Record<string, any>]

@@ -80,7 +80,7 @@ import type { Category } from '@/api/bpm/category'
 import { computed, onMounted, ref } from 'vue'
 import { useToast } from 'wot-design-uni'
 import { createCategory, getCategory, updateCategory } from '@/api/bpm/category'
-import { getIntDictOptions } from '@/hooks/useDict'
+import { getIntDictOptions } from '@/hooks'
 
 const props = defineProps<{
   id?: number | any

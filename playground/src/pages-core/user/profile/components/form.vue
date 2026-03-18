@@ -62,7 +62,7 @@ import { DICT_TYPE, isBlank, isEmail, isMobile } from '@/utils'
 import { computed, ref, watch } from 'vue'
 import { useToast } from 'wot-design-uni'
 import { updateUserProfile } from '@/api/system/user/profile'
-import { getIntDictOptions } from '@/hooks/useDict'
+import { getIntDictOptions } from '@/hooks'
 
 const props = defineProps<{
   modelValue: boolean

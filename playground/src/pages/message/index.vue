@@ -133,9 +133,7 @@ import {
   updateAllNotifyMessageRead,
   updateNotifyMessageRead
 } from "@/api/system/notify/message";
-import { getDictLabel } from "@/hooks/useDict";
-;
-;
+import { getDictLabel } from '@/hooks'
 import DetailPopup from "./components/detail-popup.vue";
 import SearchForm from "./components/search-form.vue";
 import { useGlobalState } from "@/store";

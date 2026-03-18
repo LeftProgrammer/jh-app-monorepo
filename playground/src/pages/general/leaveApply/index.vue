@@ -85,15 +85,12 @@
 </template>
 
 <script lang="ts" setup>
-;
 import { deepClone, DICT_TYPE, formatDate, navigateBackPlus } from '@/utils'
-import LeaveApplyApi from "@/api/general/leaveApply";
-import type { LoadMoreState } from "@/http/types";
-;
-import { getDictLabel } from "@/hooks/useDict";
-import { useUserStore } from "@/store";
-;
-import { useMessage } from "wot-design-uni";
+import LeaveApplyApi from "@/api/general/leaveApply"
+import type { LoadMoreState } from "@/http/types"
+import { getDictLabel } from '@/hooks'
+import { useUserStore } from "@/store"
+import { useMessage } from "wot-design-uni"
 
 definePage({
   style: {

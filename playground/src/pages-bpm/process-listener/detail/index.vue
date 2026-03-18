@@ -57,7 +57,7 @@ import type { ProcessListener } from '@/api/bpm/process-listener'
 import { onMounted, ref } from 'vue'
 import { useToast } from 'wot-design-uni'
 import { deleteProcessListener, getProcessListener } from '@/api/bpm/process-listener'
-import { useAccess } from '@/hooks/useAccess'
+import { useAccess } from '@/hooks'
 
 const props = defineProps<{
   id?: number | any

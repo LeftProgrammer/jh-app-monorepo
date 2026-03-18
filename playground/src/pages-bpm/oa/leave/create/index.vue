@@ -79,9 +79,7 @@ import type { Leave } from "@/api/bpm/oa/leave";
 import { ref } from "vue";
 import { useMessage, useToast } from "wot-design-uni";
 import { createLeave } from "@/api/bpm/oa/leave";
-import { getIntDictOptions } from "@/hooks/useDict";
-;
-;
+import { getIntDictOptions } from '@/hooks'
 
 definePage({
   style: {

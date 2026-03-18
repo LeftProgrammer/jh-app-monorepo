@@ -85,7 +85,7 @@
 <script lang="ts" setup>
 import { DICT_TYPE, formatDate, formatDateRange, getNavbarHeight } from '@/utils'
 import { computed, reactive, ref } from 'vue'
-import { getDictLabel, getIntDictOptions } from '@/hooks/useDict'
+import { getDictLabel, getIntDictOptions } from '@/hooks'
 
 const emit = defineEmits<{
   search: [data: Record<string, any>]

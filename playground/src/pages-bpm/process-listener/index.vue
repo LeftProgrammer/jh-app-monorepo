@@ -75,7 +75,7 @@ import type { LoadMoreState } from '@/http/types'
 import { onReachBottom } from '@dcloudio/uni-app'
 import { onMounted, ref } from 'vue'
 import { getProcessListenerPage } from '@/api/bpm/process-listener'
-import { useAccess } from '@/hooks/useAccess'
+import { useAccess } from '@/hooks'
 
 import SearchForm from './components/search-form.vue'
 

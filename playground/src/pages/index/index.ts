@@ -1,4 +1,4 @@
-import { useAccess } from '@/hooks/useAccess'
+import { useAccess } from '@/hooks'
 
 /**
  * 工作台菜单数据

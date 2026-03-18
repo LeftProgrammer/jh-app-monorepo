@@ -61,9 +61,7 @@
 import { DICT_TYPE, formatDateTime } from '@/utils'
 import type { NotifyMessage } from "@/api/system/notify/message";
 import { ref } from "vue";
-import { getDictLabel } from "@/hooks/useDict";
-;
-;
+import { getDictLabel } from '@/hooks'
 
 const visible = ref(false);
 const formData = ref<NotifyMessage>();

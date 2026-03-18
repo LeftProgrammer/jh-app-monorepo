@@ -71,7 +71,7 @@ import { computed, onMounted, ref } from 'vue'
 import { useToast } from 'wot-design-uni'
 import { createUserGroup, getUserGroup, updateUserGroup } from '@/api/bpm/user-group'
 import { UserPicker } from '@/components/system-select'
-import { getIntDictOptions } from '@/hooks/useDict'
+import { getIntDictOptions } from '@/hooks'
 
 const props = defineProps<{
   id?: number | any

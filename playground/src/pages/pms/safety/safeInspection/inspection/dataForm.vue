@@ -167,13 +167,10 @@
 <script lang="ts" setup>
 import { deepClone, DICT_TYPE, formatDate, getNavbarHeight, navigateBackPlus } from '@/utils'
 import { computed, reactive, ref, onMounted } from "vue";
-import { useToast } from "wot-design-uni";
-; // 确保提供 deepClone
-import InspectionApi from "@/api/pms/safety/safeInspection/inspection"; // 你的 API
-; // 你的字典常量
-import { getStrDictOptions } from "@/hooks/useDict"; // 你的字典 hook
-import { useUserStore } from "@/store"; // 你的用户 store
-; // 你的日期格式化工具
+import { useToast } from "wot-design-uni"
+import InspectionApi from "@/api/pms/safety/safeInspection/inspection"
+import { getStrDictOptions } from '@/hooks'
+import { useUserStore } from "@/store"
 
 defineOptions({ name: "InspectionForm" });
 

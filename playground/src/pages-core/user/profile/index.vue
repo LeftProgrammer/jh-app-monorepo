@@ -85,12 +85,9 @@ import type { UserProfileVO } from "@/api/system/user/profile";
 import { onMounted, ref } from "vue";
 import { useToast } from "wot-design-uni";
 import { getUserProfile, updateUserProfile } from "@/api/system/user/profile";
-import { getDictLabel } from "@/hooks/useDict";
-import { useUserStore } from "@/store";
-;
-;
-;
-import Form from "./components/form.vue";
+import { getDictLabel } from '@/hooks'
+import { useUserStore } from "@/store"
+import Form from "./components/form.vue"
 import { getFileByIds } from "@/api/infra/file";
 
 definePage({

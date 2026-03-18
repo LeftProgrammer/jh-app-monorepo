@@ -63,7 +63,7 @@ import type { ProcessExpression } from '@/api/bpm/process-expression'
 import { computed, onMounted, ref } from 'vue'
 import { useToast } from 'wot-design-uni'
 import { createProcessExpression, getProcessExpression, updateProcessExpression } from '@/api/bpm/process-expression'
-import { getIntDictOptions } from '@/hooks/useDict'
+import { getIntDictOptions } from '@/hooks'
 
 const props = defineProps<{
   id?: number | any

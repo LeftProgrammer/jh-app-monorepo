@@ -49,7 +49,7 @@
 <script lang="ts" setup>
 import { DICT_TYPE, getNavbarHeight } from '@/utils'
 import { computed, reactive, ref } from 'vue'
-import { getDictLabel, getStrDictOptions } from '@/hooks/useDict'
+import { getDictLabel, getStrDictOptions } from '@/hooks'
 
 const emit = defineEmits<{
   search: [data: Record<string, any>]

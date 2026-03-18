@@ -61,7 +61,7 @@ import { onMounted, ref } from 'vue'
 import { useToast } from 'wot-design-uni'
 import { deleteUserGroup, getUserGroup } from '@/api/bpm/user-group'
 import { getSimpleUserList } from '@/api/system/user'
-import { useAccess } from '@/hooks/useAccess'
+import { useAccess } from '@/hooks'
 
 const props = defineProps<{
   id?: number | any

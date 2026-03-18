@@ -48,7 +48,7 @@ import type { Category } from '@/api/bpm/category'
 import { onMounted, ref } from 'vue'
 import { useToast } from 'wot-design-uni'
 import { deleteCategory, getCategory } from '@/api/bpm/category'
-import { useAccess } from '@/hooks/useAccess'
+import { useAccess } from '@/hooks'
 
 const props = defineProps<{
   id?: number | any

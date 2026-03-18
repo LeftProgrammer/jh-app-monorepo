@@ -1,27 +1,42 @@
 /**
  * 组合函数模块
  * @description 提供常用的 Vue 3 组合函数
- * @usage 按命名空间导入，避免命名冲突
+ * @usage 直接导入需要的函数或 Hook
+ *
+ * @example
+ * // 导入 Hook
+ * import { useAccess, useRequest, useScroll, useUpload } from '@jinghe-sanjiaoroad-app/framework/hooks'
+ *
+ * // 导入字典工具函数
+ * import { getDictLabel, getDictOptions, getIntDictOptions, getStrDictOptions } from '@jinghe-sanjiaoroad-app/framework/hooks'
  */
 
-// 权限相关
-export * as hooksAccess from './useAccess'
-
-// 便捷的默认导出（主要 Hook）
+// ============ 权限相关 ============
 export { default as useAccess } from './useAccess'
 
-// 字典相关
-export * as hooksDict from './useDict'
+// ============ 字典相关 ============
+// 导出所有字典工具函数（常用）
+export {
+  getBoolDictOptions,
+  getDictLabel,
+  getDictObj,
+  getDictOptions,
+  getIntDictOptions,
+  getStrDictOptions,
+} from './useDict'
 
-export { default as useDict } from './useDict'
+// 导出类型
+export type {
+  DictDataType,
+  NumberDictDataType,
+  StringDictDataType,
+} from './useDict'
 
-// 请求相关
-export * as hooksRequest from './useRequest'
-
+// ============ 请求相关 ============
 export { default as useRequest } from './useRequest'
-// 滚动相关
-export * as hooksScroll from './useScroll'
-export { default as useScroll } from './useScroll'
-// 上传相关
-export * as hooksUpload from './useUpload'
+
+// ============ 滚动相关 ============
+export { useScroll } from './useScroll'
+
+// ============ 上传相关 ============
 export { default as useUpload } from './useUpload'

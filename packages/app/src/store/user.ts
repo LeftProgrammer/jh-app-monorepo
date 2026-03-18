@@ -40,7 +40,9 @@ export const useUserStore = defineStore(
       if (!avatar)
         return
       const file = await getFileByIds(avatar)
-      userInfo.value.avatar = file[0].url
+      if (file && file.length > 0 && file[0]?.url) {
+        userInfo.value.avatar = file[0].url
+      }
       // console.log('设置用户头像', avatar)
       // console.log('userInfo', userInfo.value)
     }

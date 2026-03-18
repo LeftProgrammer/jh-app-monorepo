@@ -144,5 +144,5 @@ export default {
   getIntDictOptions,
   getStrDictOptions,
   getBoolDictOptions,
-  getDictOptions
+  getDictOptions,
 }

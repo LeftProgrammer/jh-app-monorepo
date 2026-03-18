@@ -27,7 +27,7 @@ import {
   type UploadRemoveEvent
 } from 'wot-design-uni/components/wd-upload/types'
 
-import { useAttrs, computed, ref, watch, defineEmits } from 'vue'
+import { useAttrs, computed, ref, watch } from 'vue'
 import { isImageUrl, isVideoUrl } from 'wot-design-uni/components/common/util'
 const { VITE_SERVER_BASEURL } = import.meta.env;
 
