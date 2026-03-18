@@ -1,148 +1,132 @@
 <script setup lang="ts">
-import { computed, ref, onMounted } from 'vue';
-import type { CustomTabBarItem } from "./types";
-import { 
-  createTabbarConfig, 
-  type TabbarPackageConfig
-} from "./config";
-import { 
-  createTabbarHooks,
-  type TabbarHooks
-} from "./hooks";
-import { 
-  createTabbarStore
-} from "./store";
+/**
+ * 通用 Tabbar 组件
+ *
+ * 完整封装了 tabbar 的所有逻辑，外部只需提供配置即可使用
+ */
+import type {
+  CustomTabBarItem,
+  TabbarFullConfig,
+  TabbarStoreInterface,
+} from './types'
 
+// ===================== Props =====================
 interface Props {
   /** Tabbar 配置 */
-  config?: TabbarPackageConfig
-  /** Tabbar 钩子 */
-  hooks?: TabbarHooks
+  config: TabbarFullConfig
+  /** Tabbar 列表（响应式） */
+  tabbarList: CustomTabBarItem[]
+  /** Tabbar Store */
+  tabbarStore: TabbarStoreInterface
+  /** 角标获取函数（从外部状态获取） */
+  getBadgeValue?: (key: string) => number | undefined
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  config: () => ({}),
-  hooks: () => ({}),
+  getBadgeValue: () => undefined,
 })
 
-// 合并配置
-const config = computed(() => createTabbarConfig(props.config))
-
-// 创建钩子
-const tabbarHooks = computed(() => createTabbarHooks(props.hooks))
-
-// 创建状态
-const { tabbarList, tabbarStore } = createTabbarStore(
-  config.value.items,
-  config.value.features.bulge
-)
-
-// 当前选中状态
-const currentIndex = ref(tabbarStore.curIdx)
+// ===================== Emits =====================
+const emit = defineEmits<{
+  /** 鼓包点击事件 */
+  (e: 'bulge-click'): void
+  /** 项目点击事件 */
+  (e: 'item-click', index: number, item: CustomTabBarItem): void
+}>()
 
 // #ifdef MP-WEIXIN
-defineOptions({ virtualHost: true });
+defineOptions({ virtualHost: true })
 // #endif
 
-/**
- * 鼓包点击事件
- */
+// ===================== 事件处理 =====================
 function handleClickBulge() {
-  tabbarHooks.value.onBulgeClick?.()
+  emit('bulge-click')
+  props.config.onBulgeClick()
 }
 
-/**
- * 项目点击事件
- */
-async function handleClick(index: number) {
-  if (index === currentIndex.value) return
-  
-  const item = tabbarList[index]
-  
+function handleClick(index: number) {
+  // 点击原来的不做操作
+  if (index === props.tabbarStore.curIdx) {
+    return
+  }
+
+  const item = props.tabbarList[index]
+
   if (item.isBulge) {
     handleClickBulge()
     return
   }
-  
-  // 执行前置钩子
-  const canNavigate = await tabbarHooks.value.beforeNavigate?.(index, item)
-  if (canNavigate === false) return
-  
-  // 更新状态
-  tabbarStore.setCurIdx(index)
-  currentIndex.value = index
-  
-  // 导航
+
+  // 触发导航前回调
+  const shouldNavigate = props.config.beforeNavigate(index, item)
+  if (shouldNavigate === false) {
+    return
+  }
+
+  // 触发点击事件
+  emit('item-click', index, item)
+
+  // 更新状态并导航
+  props.tabbarStore.setCurIdx(index)
   const url = item.pagePath
-  if (config.value.features.cache) {
+  if (props.config.tabbarCacheEnable) {
     uni.switchTab({ url })
-  } else {
+  }
+  else {
     uni.navigateTo({ url })
   }
 }
 
-/**
- * 获取颜色
- */
-const getColorByIndex = (index: number) => {
-  return currentIndex.value === index 
-    ? config.value.theme.activeColor 
-    : config.value.theme.inactiveColor
-}
-
-/**
- * 获取图标
- */
-function getImageByIndex(index: number, item: CustomTabBarItem) {
-  if (!item.iconActive) {
-    console.warn("image 模式下，需要配置 iconActive")
-    return item.icon
-  }
-  return currentIndex.value === index ? item.iconActive : item.icon
-}
-
-/**
- * 获取角标
- */
-const getTotal = computed(() => {
-  return (item: CustomTabBarItem) => {
-    if (!config.value.features.badge) return undefined
-    
-    const badge = tabbarHooks.value.getBadge?.(item)
-    if (!badge) return undefined
-    
-    if (typeof badge === 'number') return badge > 99 ? "99+" : badge
-    return badge
-  }
-})
-
-// 隐藏原生 tabbar
+// ===================== 隐藏原生 tabbar =====================
 // #ifndef MP-WEIXIN || MP-ALIPAY
-onMounted(() => {
-  if (config.value.features.hideNative) {
-    uni.hideTabBar({
-      fail: (err: any) => console.log("hideTabBar fail: ", err),
-      success: () => console.log('hideTabBar success')
-    })
+onLoad(() => {
+  if (props.config.needHideNativeTabbar) {
+    uni.hideTabBar({ fail: console.log })
   }
 })
 // #endif
 
+// #ifdef MP-ALIPAY
 onMounted(() => {
-  // 支付宝小程序需要在 onMounted 中隐藏
-  // #ifdef MP-ALIPAY
-  if (config.value.features.hideNative) {
-    uni.hideTabBar({
-      fail: (err: any) => console.log("hideTabBar fail: ", err),
-      success: () => console.log('hideTabBar success')
-    })
+  if (props.config.customTabbarEnable) {
+    uni.hideTabBar({ fail: console.log })
   }
-  // #endif
 })
+// #endif
+
+// ===================== 辅助函数 =====================
+function getColorByIndex(index: number) {
+  return props.tabbarStore.curIdx === index
+    ? props.config.theme.activeColor
+    : props.config.theme.inactiveColor
+}
+
+function getImageByIndex(index: number, item: CustomTabBarItem) {
+  if (!item.iconActive) {
+    console.warn('image 模式下，需要配置 iconActive (高亮时的图片），否则无法切换高亮图片')
+    return item.icon
+  }
+  return props.tabbarStore.curIdx === index ? item.iconActive : item.icon
+}
+
+function getBadgeDisplay(badge: any) {
+  if (!badge) return undefined
+  if (badge === 'dot') return 'dot'
+
+  // 如果是数字直接返回
+  if (typeof badge === 'number') {
+    return badge > 99 ? '99+' : badge
+  }
+
+  // 如果是字符串，从外部获取值
+  const val = props.getBadgeValue?.(badge) ?? props.config.getBadgeValue(badge)
+  if (!val) return undefined
+  return val > 99 ? '99+' : val
+}
 </script>
 
 <template>
-  <view v-if="config.strategy === 2 || config.strategy === 3" class="h-50px pb-safe">
+  <view v-if="config.customTabbarEnable" class="h-50px pb-safe">
     <view class="border-and-fixed bg-white" @touchmove.stop.prevent>
       <view class="h-50px flex items-center">
         <view
@@ -155,7 +139,7 @@ onMounted(() => {
           <view v-if="item.isBulge" class="relative">
             <!-- 中间鼓包按钮 -->
             <view class="bulge">
-              <image class="mt-6rpx h-200rpx w-200rpx" src="/static/tabbar/scan.png" />
+              <image class="mt-6rpx h-200rpx w-200rpx" :src="config.bulgeImage" />
             </view>
           </view>
           <view v-else class="relative px-3 text-center">
@@ -176,15 +160,15 @@ onMounted(() => {
               {{ item.text }}
             </view>
             <!-- 角标显示 -->
-            <view v-if="getTotal(item)">
-              <template v-if="getTotal(item) === 'dot'">
+            <view v-if="item.badge">
+              <template v-if="item.badge === 'dot'">
                 <view class="absolute right-0 top-0 h-2 w-2 rounded-full bg-#f56c6c" />
               </template>
-              <template v-else>
+              <template v-else-if="getBadgeDisplay(item.badge)">
                 <view
                   class="absolute top-0 box-border h-5 min-w-5 center rounded-full bg-#f56c6c px-1 text-center text-xs text-white -right-3"
                 >
-                  {{ getTotal(item) }}
+                  {{ getBadgeDisplay(item.badge) }}
                 </view>
               </template>
             </view>

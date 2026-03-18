@@ -59,7 +59,7 @@ import { useToast } from 'wot-design-uni'
 import { getTaskTodoPage } from '@/api/bpm/task'
 import { getMyNotifyMessagePage } from '@/api/system/notify/message'
 import { useUserStore } from '@/store'
-import { isTabBarPage } from '@/tabbar/config'
+import { isPageTabbar } from '@/tabbar/store'
 import { parseUrl, setTabParams } from '@/utils'
 
 defineOptions({
@@ -108,7 +108,7 @@ const description = computed(() => {
 function routerTo(url: string) {
   const { path, query } = parseUrl(url)
   // 判断是否是 tabBar 页面
-  if (isTabBarPage(path)) {
+  if (isPageTabbar(path)) {
     if (Object.keys(query).length > 0) {
       setTabParams(query)
     }

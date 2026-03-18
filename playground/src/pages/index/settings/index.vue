@@ -140,7 +140,7 @@ import { useUserStore } from "@/store";
 import { navigateBackPlus } from "@/utils";
 import { getMenuGroups, getMenuItemByKey } from "../index";
 import { parseUrl, setTabParams } from "@/utils";
-import { isTabBarPage } from "@/tabbar/config";
+import { isPageTabbar } from "@/tabbar/store";
 defineOptions({
   name: "FavoriteSettings"
 });
@@ -233,7 +233,7 @@ function handleClick(menu: MenuItem) {
   const { path, query } = parseUrl(menu.url);
 
   // 判断是否是 tabBar 页面
-  if (isTabBarPage(path)) {
+  if (isPageTabbar(path)) {
     // tabBar 页面：通过 globalData 传参，使用 switchTab 跳转
     if (Object.keys(query).length > 0) {
       setTabParams(query);

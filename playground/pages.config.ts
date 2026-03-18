@@ -1,5 +1,6 @@
-import { defineUniPages } from "@uni-helper/vite-plugin-uni-pages";
-import { tabBar } from "./src/tabbar/config";
+import { defineUniPages } from '@uni-helper/vite-plugin-uni-pages'
+// 使用框架包的子路径导入，不会加载整个框架包
+import { tabBar } from './src/tabbar/config'
 
 export default defineUniPages({
   globalStyle: {

@@ -22,11 +22,18 @@ import type {
   PageMetaDatum,
   SubPackages,
 } from '@uni-helper/vite-plugin-uni-pages'
-import { isTabBarPage as _isTabBarPage } from '../components/tabbar/config'
-import { getHomePage as _getConfiguredHomePage, getBaseUrl } from '../config/framework'
+import { getHomePage as _getConfiguredHomePage, getBaseUrl, getRouterDeps } from '../config/framework'
 
-// 导出 isPageTabbar，供外部使用
-export const isPageTabbar = _isTabBarPage
+// isPageTabbar 从路由依赖中获取（由外部项目注入）
+export function isPageTabbar(path: string): boolean {
+  const deps = getRouterDeps()
+  if (deps.isPageTabbar) {
+    return deps.isPageTabbar(path)
+  }
+  // 默认返回 false，需要外部项目注入 isPageTabbar 函数
+  console.warn('[Framework] isPageTabbar 未配置，请在 initFramework 中注入 routerDeps.isPageTabbar')
+  return false
+}
 
 export type PageInstance = Page.PageInstance<AnyObject, object> & {
   $page: Page.PageInstance<AnyObject, object> & { fullPath: string }
@@ -203,7 +210,7 @@ export function redirectAfterLogin(redirectUrl?: string) {
     path = `/${path}`
   }
   const { path: _path } = parseUrlToObj(path)
-  if (_isTabBarPage(_path)) {
+  if (isPageTabbar(_path)) {
     uni.switchTab({ url: path })
   } else {
     uni.navigateBack()
@@ -236,7 +243,7 @@ export function navigateBackPlus(fallbackUrl?: string) {
   }
   // 解析路径，判断是否是 tabbar 页面
   const { path } = parseUrlToObj(targetUrl)
-  if (_isTabBarPage(path)) {
+  if (isPageTabbar(path)) {
     uni.switchTab({ url: targetUrl })
   } else {
     uni.reLaunch({ url: targetUrl })
