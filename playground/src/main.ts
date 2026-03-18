@@ -6,7 +6,7 @@ import { requestInterceptor } from '@/http'
 import store from './store'
 import { isPageTabbar, tabbarStore } from './tabbar/store'
 import { getAllPages, HOME_PAGE } from './utils'
-import '@/style/index.scss'
+import '@jinghe-sanjiaoroad-app/framework/style'
 import 'virtual:uno.css'
 
 // 初始化框架配置（必须在使用框架功能之前调用）

@@ -15,10 +15,6 @@ import {
 // 动态导入 pages.json（由 vite 插件生成）
 import { pages, subPackages } from '@/pages.json'
 
-// ============ 项目级环境配置工具 ============
-// 这些函数依赖项目特定的环境变量，因此在项目级实现
-export { getEnvBaseUrl, getEnvBaseUrlRoot } from './env'
-
 // ============ 需要注入 pages.json 的函数 ============
 
 /**
@@ -43,6 +39,39 @@ export function getHomePage() {
  * 动态计算自 pages.json，与原始项目保持一致
  */
 export const HOME_PAGE = getHomePage()
+
+// ============ 项目级环境配置工具 ============
+/**
+ * 根据微信小程序当前环境，判断应该获取的 baseUrl
+ *
+ * 支持动态环境切换：开发版、测试版、正式版使用不同的 API 地址
+ */
+export function getEnvBaseUrl() {
+  const env = import.meta.env
+  let baseUrl = env.VITE_SERVER_BASEURL
+
+  // #ifdef MP-WEIXIN
+  const { miniProgram: { envVersion } } = uni.getAccountInfoSync()
+  const envKey = `VITE_SERVER_BASEURL__WEIXIN_${envVersion.toUpperCase()}`
+  const envBaseUrl = env[envKey]
+  baseUrl = envBaseUrl || baseUrl
+  // #endif
+
+  return baseUrl
+}
+
+/**
+ * 根据环境变量，获取基础路径的根路径，比如 http://localhost:48080
+ *
+ * add by 芋艿：用于类似 websocket 这种需要根路径的场景
+ *
+ * @return 根路径
+ */
+export function getEnvBaseUrlRoot() {
+  const baseUrl = getEnvBaseUrl()
+  const urlObj = new URL(baseUrl)
+  return urlObj.origin
+}
 
 // ============ 透传框架包所有工具函数 ============
 export * from '@jinghe-sanjiaoroad-app/framework/utils'
