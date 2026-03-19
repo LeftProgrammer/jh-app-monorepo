@@ -13,6 +13,7 @@ export default defineUniPages({
   easycom: {
     autoscan: true,
     custom: {
+      "^jh-(.*)": "@jinghe-sanjiaoroad-app/framework/src/components/jh-$1/jh-$1.vue",
       "^fg-(.*)": "@/components/fg-$1/fg-$1.vue",
       "^wd-(.*)": "wot-design-uni/components/wd-$1/wd-$1.vue",
       "^(?!z-paging-refresh|z-paging-load-more)z-paging(.*)":

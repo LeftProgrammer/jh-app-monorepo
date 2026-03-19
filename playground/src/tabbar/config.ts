@@ -13,11 +13,11 @@ import type {
   CustomTabBarItem,
   NativeTabBarItem,
   TabbarFullConfig,
-} from '@jinghe-sanjiaoroad-app/framework/components/tabbar/config'
+} from '@jinghe-sanjiaoroad-app/framework/components/jh-tabbar/config'
 import {
   createTabbarConfig,
   TABBAR_STRATEGY_MAP,
-} from '@jinghe-sanjiaoroad-app/framework/components/tabbar/config'
+} from '@jinghe-sanjiaoroad-app/framework/components/jh-tabbar/config'
 
 // ===================== 项目配置 =====================
 

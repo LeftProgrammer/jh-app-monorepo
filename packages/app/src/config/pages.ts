@@ -1,4 +1,4 @@
-import { tabBar } from '../components/tabbar/config'
+import { tabBar } from '../components/jh-tabbar/config'
 
 /**
  * 页面配置

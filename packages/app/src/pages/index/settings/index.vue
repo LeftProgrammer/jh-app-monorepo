@@ -96,7 +96,7 @@ import { useUserStore } from "../../../store/user";
 import { navigateBackPlus } from "../../../utils";
 import { getMenuGroups, getMenuItemByKey } from "../menu-config";
 import { parseUrl, setTabParams } from "../../../utils/url";
-import { isTabBarPage } from "../../../components/tabbar/config";
+import { isTabBarPage } from "../../../components/jh-tabbar/config";
 
 defineOptions({
   name: "FavoriteSettings"

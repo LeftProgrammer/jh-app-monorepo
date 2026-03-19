@@ -59,7 +59,7 @@ import { useUserStore } from "../../../store/user";
 import { getMenuGroups, getMenuItemByKey } from "../menu-config";
 import { useToast } from "wot-design-uni";
 import { parseUrl, setTabParams } from "../../../utils/url";
-import { isTabBarPage } from "../../../components/tabbar/config";
+import { isTabBarPage } from "../../../components/jh-tabbar/config";
 
 defineOptions({
   name: "MenuSection"

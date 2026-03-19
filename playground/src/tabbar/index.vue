@@ -4,7 +4,7 @@
  *
  * 直接使用框架包的 Tabbar 组件，只需提供角标获取函数
  */
-import { Tabbar } from '@jinghe-sanjiaoroad-app/framework/components/tabbar'
+import { JhTabbar } from '@jinghe-sanjiaoroad-app/framework/components/jh-tabbar'
 import { useGlobalState } from '@/store'
 import { tabbarConfig } from './config'
 import { tabbarList, tabbarStore } from './store'
@@ -18,7 +18,7 @@ function getBadgeValue(key: string) {
 </script>
 
 <template>
-  <Tabbar
+  <JhTabbar
     :config="tabbarConfig"
     :tabbar-list="tabbarList"
     :tabbar-store="tabbarStore"

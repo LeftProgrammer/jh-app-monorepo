@@ -16,7 +16,7 @@
 export { createTabbarConfig, isTabBarPage } from './config'
 
 // === 组件导出 ===
-export { default as Tabbar } from './index.vue'
+export { default as JhTabbar } from './jh-tabbar.vue'
 
 // === Store 导出 ===
 export { createTabbarStore } from './store'
