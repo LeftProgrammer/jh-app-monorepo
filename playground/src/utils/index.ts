@@ -5,6 +5,7 @@
  * - 大部分工具函数直接从框架包透传
  * - getAllPages/getHomePage 需要注入 pages.json，在此处覆盖实现
  * - getEnvBaseUrl 依赖项目环境变量，在此处实现
+ * - registerComponent 需要在项目级别使用 import.meta.glob，在此处覆盖实现
  */
 import type { PageMetaDatum } from '@uni-helper/vite-plugin-uni-pages'
 import {
@@ -39,6 +40,24 @@ export function getHomePage() {
  * 动态计算自 pages.json，与原始项目保持一致
  */
 export const HOME_PAGE = getHomePage()
+
+// ============ 项目级 registerComponent ============
+// H5 环境下使用 import.meta.glob 动态加载组件
+// 必须在项目级别定义，因为 import.meta.glob 路径是相对于当前文件的
+const modules = import.meta.glob('../pages/**/*.{vue,tsx}')
+
+/**
+ * 注册一个异步组件
+ * 覆盖框架包实现，内置 import.meta.glob 模块映射
+ * @param componentPath 例:/bpm/oa/leave/detail
+ */
+export function registerComponent(componentPath: string) {
+  for (const item in modules) {
+    if (item.includes(componentPath)) {
+      return defineAsyncComponent(modules[item] as Parameters<typeof defineAsyncComponent>[0])
+    }
+  }
+}
 
 // ============ 项目级环境配置工具 ============
 /**

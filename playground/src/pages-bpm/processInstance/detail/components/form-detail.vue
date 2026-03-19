@@ -68,8 +68,7 @@ const BusinessFormComponent = computed(() => {
   const componentPath = props.processDefinition?.formCustomCreatePath;
   let component;
   // #ifdef H5
-  const h5Modules = import.meta.glob('../../../../../pages/**/*.{vue,tsx}')
-  component = registerComponent(componentPath, h5Modules as Record<string, () => Promise<unknown>>)
+  component = registerComponent(componentPath)
   // #endif
 
   // #ifndef H5
