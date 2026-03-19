@@ -1,6 +1,6 @@
 import { useToast } from 'wot-design-uni'
-import { http } from '../../../http'
 import { getBaseUrl } from '../../../config/framework'
+import { http } from '../../../http'
 import { useTokenStore } from '../../../store/token'
 import { useUserStore } from '../../../store/user'
 
@@ -55,7 +55,7 @@ export function getFile(id: number) {
 /** 获取文件详情多个 */
 export function getFileByIds(ids: string | number) {
   return http.post<FileVO>(`/infra/file/getList`, {
-    data: { ids: ids ? String(ids).split(',') : [] },
+    ids: ids ? String(ids).split(',') : [],
   })
 }
 

@@ -1,4 +1,4 @@
-﻿import type { PageParam, PageResult } from "@/http";
+import type { PageParam, PageResult } from "@/http";
 import { http } from "@/http";
 
 /** 站内信消息信息 */
@@ -61,4 +61,8 @@ export function updateAllNotifyMessageRead() {
 /** 获取当前用户的未读站内信数量 */
 export function getUnreadNotifyMessageCount() {
   return http.get<number>("/system/notify-message/get-unread-count");
+}
+/** 删除 */
+export function messageDeleteList(ids) {
+  return http.delete<number>(`/system/notify-message/delete-list?ids=${ids}`);
 }

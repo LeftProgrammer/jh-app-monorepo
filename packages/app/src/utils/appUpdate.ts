@@ -34,6 +34,13 @@ function calculateFileSize(size: number): string {
  * appUpdate()
  */
 export default function appUpdate(staticBaseUrl?: string) {
+  // #ifndef APP-PLUS
+  // 非 App 端直接返回，不执行更新检查
+  console.log('[appUpdate] 非 App 端，跳过更新检查')
+  return
+  // #endif
+
+  // #ifdef APP-PLUS
   const baseUrl = staticBaseUrl || getStaticBaseUrl()
 
   const dictStore = useDictStore()
@@ -125,4 +132,5 @@ export default function appUpdate(staticBaseUrl?: string) {
       },
     })
   })
+  // #endif
 }
