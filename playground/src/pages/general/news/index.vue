@@ -41,7 +41,7 @@
 import { navigateBackPlus } from "@/utils";
 import type { LoadMoreState } from "@/http";
 import { getPage } from "@/api/general/news";
-import { getFileByIds } from "@/api/infra/file";
+import { getFileByIds } from "@jinghe-sanjiaoroad-app/framework/api/infra/file";
 
 definePage({
   style: {

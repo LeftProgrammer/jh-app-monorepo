@@ -59,7 +59,7 @@
 
 <script setup name="VerifySlide">
 import { computed, getCurrentInstance, nextTick, onMounted, reactive, ref, toRefs, watch } from 'vue'
-import { checkCaptcha, getCode } from '@/api/login'
+import { checkCaptcha, getCode } from '../../../../../api/login'
 /**
  * VerifySlide
  * @description 滑块

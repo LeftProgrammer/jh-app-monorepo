@@ -88,7 +88,7 @@ import { getUserProfile, updateUserProfile } from "@/api/system/user/profile";
 import { getDictLabel } from '@/hooks'
 import { useUserStore } from "@/store"
 import Form from "./components/form.vue"
-import { getFileByIds } from "@/api/infra/file";
+import { getFileByIds } from "@jinghe-sanjiaoroad-app/framework/api/infra/file";
 
 definePage({
   style: {

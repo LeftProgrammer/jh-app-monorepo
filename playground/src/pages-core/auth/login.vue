@@ -34,7 +34,7 @@
         class="mb-46rpx"
         show-password
       />
-      <wd-checkbox v-model="RememberMe" shape="square" class="!mb-80rpx">
+      <wd-checkbox v-model="rememberMe" shape="square" class="!mb-80rpx">
         记住密码
       </wd-checkbox>
       <wd-button
@@ -57,144 +57,85 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from "vue";
-import { useToast } from "wot-design-uni";
-import { getCodeLoginPage, getForgetPasswordPage, getRegisterPage } from '@/router'
-import { useTokenStore } from "@/store";
-import { appUpdate, ensureDecodeURIComponent, redirectAfterLogin } from "@/utils";
-import Header from "./components/header.vue";
-import TenantPicker from "./components/tenant-picker.vue";
-import Verify from "./components/verifition/verify.vue";
-const title = import.meta.env.VITE_APP_TITLE; // 应用标题
-import { useSystemState } from "@/store";
+import { reactive, ref } from 'vue'
+import { getAppTitle } from '@jinghe-sanjiaoroad-app/framework/config/framework'
+import { useSystemState, useTokenStore } from '@/store'
+import { appUpdate, ensureDecodeURIComponent, redirectAfterLogin } from '@/utils'
+import { useToast } from 'wot-design-uni'
 
 defineOptions({
-  name: "LoginPage",
-  style: {
-    navigationStyle: "custom"
-  }
-});
+  name: 'LoginPage',
+})
 
 definePage({
   style: {
-    navigationStyle: "custom"
-  }
-});
-const systemStore = useSystemState();
-const version = ref("");
-const RememberMe = ref(true);
-const toast = useToast();
-const loading = ref(false); // 加载状态
-const redirectUrl = ref<string>(); // 重定向地址
-const tenantPickerRef = ref<InstanceType<typeof TenantPicker>>(); // 租户选择器引用
-const captchaEnabled = import.meta.env.VITE_APP_CAPTCHA_ENABLE === "true"; // 验证码开关
-const verifyRef = ref();
-const captchaType = ref("blockPuzzle"); // 滑块验证码 blockPuzzle|clickWord
+    navigationStyle: 'custom',
+  },
+  excludeLoginPath: true,
+})
+
+const title = getAppTitle()
+const systemStore = useSystemState()
+const tokenStore = useTokenStore()
+const toast = useToast()
+
+const version = ref('')
+const rememberMe = ref(true)
+const loading = ref(false)
+const redirectUrl = ref<string>()
 
 const formData = reactive({
-  username: systemStore.systemConfig.username || "",
-  password: systemStore.systemConfig.password || "",
-  captchaVerification: "" // 验证码校验值
-}); // 表单数据
+  username: systemStore.systemConfig.username || '',
+  password: systemStore.systemConfig.password || '',
+})
 
-/** 页面加载时处理重定向 */
 onLoad((options) => {
   if (options?.redirect) {
-    redirectUrl.value = ensureDecodeURIComponent(options.redirect);
+    redirectUrl.value = ensureDecodeURIComponent(options.redirect)
   }
-});
+})
+
 onMounted(() => {
   // #ifdef APP-PLUS
   plus.runtime.getProperty(plus.runtime.appid, (wgtinfo) => {
-    version.value = wgtinfo.version;
-  });
+    version.value = wgtinfo.version
+  })
   // #endif
-});
-/** 获取验证码 */
-async function getCode() {
-  // 情况一，未开启：则直接登录
-  if (!captchaEnabled) {
-    await verifySuccess({});
-  } else {
-    // 情况二，已开启：则展示验证码；只有完成验证码的情况，才进行登录
-    // 弹出验证码
-    verifyRef.value.show();
-  }
-}
+})
 
-/** 登录处理 */
 async function handleLogin() {
-  // if (!tenantPickerRef.value?.validate()) {
-  //   return;
-  // }
   if (!formData.username) {
-    toast.warning("请输入账号");
-    return;
+    toast.warning('请输入账号')
+    return
   }
   if (!formData.password) {
-    toast.warning("请输入密码");
-    return;
+    toast.warning('请输入密码')
+    return
   }
-  await getCode();
-}
 
-async function verifySuccess(params: any) {
-  loading.value = true;
+  loading.value = true
   try {
-    // 调用登录接口
-    const tokenStore = useTokenStore();
-    formData.captchaVerification = params.captchaVerification;
     await tokenStore.login({
-      type: "username",
-      ...formData
-    });
-    // 处理跳转
-    redirectAfterLogin(redirectUrl.value, true);
-    if (RememberMe.value) {
+      type: 'username',
+      ...formData,
+    })
+    redirectAfterLogin(redirectUrl.value, true)
+    if (rememberMe.value) {
       systemStore.setSystemInfo({
         username: formData.username,
-        password: formData.password
-      });
+        password: formData.password,
+      })
     }
     setTimeout(() => {
-      appUpdate();
-    }, 2000);
+      appUpdate()
+    }, 2000)
   } finally {
-    loading.value = false;
+    loading.value = false
   }
-}
-
-/** 跳转到注册页面 */
-function goToRegister() {
-  uni.navigateTo({ url: getRegisterPage() })
-}
-
-/** 跳转到验证码登录 */
-function goToSmsLogin() {
-  uni.navigateTo({ url: getCodeLoginPage() })
-}
-
-/** 跳转到忘记密码 */
-function goToForgetPassword() {
-  uni.navigateTo({ url: getForgetPasswordPage() })
-}
-
-/** 微信登录 */
-// TODO @芋艿：后续开发
-function handleWechatLogin() {
-  toast.info("微信登录功能开发中");
-}
-
-/** 钉钉登录 */
-// TODO @芋艿：后续开发
-function handleDingTalkLogin() {
-  toast.info("钉钉登录功能开发中");
 }
 </script>
 
 <style lang="scss" scoped>
-.login-container {
-}
 .login-form {
   box-shadow: 0rpx 6rpx 19rpx 0rpx rgba(172, 196, 219, 0.3);
 }

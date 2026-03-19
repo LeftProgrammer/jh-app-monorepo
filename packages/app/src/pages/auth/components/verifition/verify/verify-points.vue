@@ -53,7 +53,7 @@
 
 <script setup type="text/babel" name="VerifyPoints">
 import { getCurrentInstance, nextTick, onMounted, reactive, ref, toRefs } from 'vue'
-import { checkCaptcha, getCode } from '@/api/login'
+import { checkCaptcha, getCode } from '../../../../../api/login'
 /**
  * VerifyPoints
  * @description 点选

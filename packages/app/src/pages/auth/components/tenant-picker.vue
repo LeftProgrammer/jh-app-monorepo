@@ -14,15 +14,14 @@
 </template>
 
 <script lang="ts" setup>
-import type { TenantVO } from '@/api/login'
+import type { TenantVO } from '../../../api/login'
 import { computed, onMounted, ref } from 'vue'
 import { useToast } from 'wot-design-uni'
 import {
   getTenantByWebsite,
   getTenantSimpleList,
-
-} from '@/api/login'
-import { useUserStore } from '@/store'
+} from '../../../api/login'
+import { useUserStore } from '../../../store'
 
 const toast = useToast()
 const userStore = useUserStore()

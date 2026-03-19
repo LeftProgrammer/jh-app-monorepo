@@ -8,5 +8,7 @@
 </template>
 
 <script lang="ts" setup>
-const title = import.meta.env.VITE_APP_TITLE // 应用标题
+import { getAppTitle } from '../../../config/framework'
+
+const title = getAppTitle() // 从框架配置获取应用标题
 </script>

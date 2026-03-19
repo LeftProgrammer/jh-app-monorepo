@@ -32,6 +32,8 @@ import { computed, ref, watchEffect } from 'vue'
 import VerifyPoints from './verify/verify-points.vue'
 import VerifySlide from './verify/verify-slide.vue'
 
+// 注意：子组件中的 @/api/login 需要在框架包中使用相对路径
+
 defineOptions({
   options: {
     styleIsolation: 'shared', // 关键配置

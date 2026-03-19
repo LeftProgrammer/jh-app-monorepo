@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <view class="input-item">
     <wd-icon name="lock-on" size="20px" color="#1890ff" />
     <wd-input
@@ -25,8 +25,8 @@
 <script lang="ts" setup>
 import { onUnmounted, ref } from 'vue'
 import { useToast } from 'wot-design-uni'
-import { sendSmsCode } from '@/api/login'
-import { isMobile } from '@/utils'
+import { sendSmsCode } from '../../../api/login'
+import { isMobile } from '../../../utils'
 
 defineOptions({
   name: 'CodeInput',

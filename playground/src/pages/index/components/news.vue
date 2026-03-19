@@ -33,7 +33,7 @@
 
 <script lang="ts" setup>
 import { getPage } from "@/api/general/news";
-import { getFileByIds } from "@/api/infra/file";
+import { getFileByIds } from "@jinghe-sanjiaoroad-app/framework/api/infra/file";
 defineOptions({
   name: "HomeNews"
 });

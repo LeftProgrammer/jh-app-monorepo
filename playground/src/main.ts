@@ -11,6 +11,7 @@ import 'virtual:uno.css'
 
 // 初始化框架配置（必须在使用框架功能之前调用）
 initFramework({
+  appTitle: import.meta.env.VITE_APP_TITLE,
   isDoubleTokenMode: import.meta.env.VITE_AUTH_MODE === 'double',
   baseUrl: import.meta.env.VITE_SERVER_BASEURL,
   debugLog: import.meta.env.DEV,

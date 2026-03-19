@@ -24,7 +24,15 @@
     "./api": "./src/api/index.ts",
     "./config": "./src/config/index.ts",
     "./config/framework": "./src/config/framework.ts",
-    "./vite-plugins": "./src/vite-plugins/index.ts",
+    "./vite-plugins": {
+      "types": "./dist/vite-plugins/index.d.ts",
+      "import": "./dist/vite-plugins/index.mjs",
+      "require": "./dist/vite-plugins/index.cjs"
+    },
+    "./pages/auth": "./src/pages/auth/index.ts",
+    "./pages/auth/components": "./src/pages/auth/components/index.ts",
+    "./pages/auth/views": "./src/pages/auth/views/index.ts",
+    "./pages/auth/styles/*": "./src/pages/auth/styles/*",
     "./style": "./src/style/index.scss",
     "./package.json": "./package.json"
   },
@@ -78,7 +86,7 @@
     "dayjs": "1.11.10",
     "diagram-js": "12.8.0",
     "jsencrypt": "^3.5.4",
-    "wot-design-uni": "^1.13.0"
+    "wot-design-uni": "^1.14.0"
   },
   "devDependencies": {
     "@dcloudio/types": "^3.4.8",

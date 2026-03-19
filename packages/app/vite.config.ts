@@ -43,7 +43,8 @@ export default defineConfig(({ mode }) => {
         name: 'JhApp',
         formats: ['es', 'cjs'],
         fileName: (format, entryName) => {
-          const extension = format === 'es' ? 'esm.js' : 'cjs.js'
+          // 使用 .mjs 扩展名确保 Node.js 正确识别 ES 模块
+          const extension = format === 'es' ? 'mjs' : 'cjs'
           return entryName === 'index' ? `index.${extension}` : `${entryName}.${extension}`
         },
       },

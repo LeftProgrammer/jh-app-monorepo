@@ -18,7 +18,7 @@ import type {
   UploadRemoveEvent,
   UploadSuccessEvent,
 } from 'wot-design-uni/components/wd-upload/types'
-import { computed, defineEmits, ref, useAttrs, watch } from 'vue'
+import { computed, ref, useAttrs, watch } from 'vue'
 
 import { isImageUrl, isVideoUrl } from 'wot-design-uni/components/common/util'
 import { getFileByIds } from '../../api/infra/file'

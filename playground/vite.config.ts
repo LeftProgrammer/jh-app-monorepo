@@ -1,5 +1,7 @@
 import path from 'node:path'
 import process from 'node:process'
+// 使用框架包的 vite-plugins（通过 package.json exports 配置，指向编译后的 JS 文件）
+import { createCopyNativeResourcesPlugin, syncManifestPlugin } from '@jinghe-sanjiaoroad-app/framework/vite-plugins'
 import Uni from '@uni-helper/plugin-uni'
 import Components from '@uni-helper/vite-plugin-uni-components'
 import { WotResolver } from '@uni-helper/vite-plugin-uni-components/resolvers'
@@ -26,8 +28,6 @@ import AutoImport from 'unplugin-auto-import/vite'
 import { defineConfig, loadEnv } from 'vite'
 import ViteRestart from 'vite-plugin-restart'
 import openDevTools from './scripts/open-dev-tools'
-import { createCopyNativeResourcesPlugin } from './vite-plugins/copy-native-resources'
-import syncManifestPlugin from './vite-plugins/sync-manifest-plugins'
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
@@ -184,8 +184,6 @@ export default defineConfig(({ command, mode }) => {
         '@jinghe-sanjiaoroad-app/framework': path.join(process.cwd(), '../packages/app/src'),
       },
     },
-    // 关闭缓存
-    cacheDir: false,
     server: {
       host: '0.0.0.0',
       hmr: true,

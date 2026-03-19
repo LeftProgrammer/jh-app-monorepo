@@ -113,6 +113,8 @@ export interface RouterDeps {
  * @description 定义所有需要外部项目传入的配置项
  */
 export interface FrameworkConfig {
+  /** 应用标题 */
+  appTitle?: string
   /** 是否为双 Token 模式（true=双token，false=单token） */
   isDoubleTokenMode?: boolean
   /** API 基础地址 */
@@ -155,6 +157,7 @@ const defaultRouterConfig: RouterConfig = {
 }
 
 const defaultConfig: FrameworkConfig = {
+  appTitle: '',
   isDoubleTokenMode: false,
   baseUrl: '',
   debugLog: false,
@@ -275,6 +278,13 @@ export function getBaseUrl(): string {
  */
 export function isDebugLog(): boolean {
   return _frameworkConfig.debugLog ?? false
+}
+
+/**
+ * 获取应用标题
+ */
+export function getAppTitle(): string {
+  return _frameworkConfig.appTitle ?? ''
 }
 
 // ============================================================
