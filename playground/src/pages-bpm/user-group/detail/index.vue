@@ -27,7 +27,7 @@
           </view>
         </wd-cell>
         <wd-cell title="状态">
-          <dict-tag :type="DICT_TYPE.COMMON_STATUS" :value="formData?.status" />
+          <jh-dict-tag :type="DICT_TYPE.COMMON_STATUS" :value="formData?.status" />
         </wd-cell>
         <wd-cell title="创建时间" :value="formatDateTime(formData?.createTime)" />
       </wd-cell-group>

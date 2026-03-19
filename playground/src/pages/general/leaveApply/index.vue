@@ -33,7 +33,7 @@
           <view class="flex-1 text-#1D2129 text-31rpx text-ellipsis">
             {{ item.createName }}的请假申请
           </view>
-          <dict-tag :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS" :value="item.status" />
+          <jh-dict-tag :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS" :value="item.status" />
         </view>
         <wd-divider class="!p-0 !my-16rpx" />
         <view class="flex items-center justify-between mb-19rpx text-27rpx gap-31rpx">

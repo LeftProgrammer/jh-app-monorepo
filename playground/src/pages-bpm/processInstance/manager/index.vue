@@ -28,7 +28,7 @@
                 {{ item.categoryName || '-' }}
               </view>
             </view>
-            <DictTag :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS" :value="item.status" />
+            <jh-dict-tag :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS" :value="item.status" />
           </view>
           <view class="mb-12rpx flex items-center">
             <view class="mr-8rpx h-48rpx w-48rpx flex items-center justify-center rounded-full bg-[#1890ff] text-20rpx text-white">
@@ -104,7 +104,6 @@ import {
   cancelProcessInstanceByAdmin,
   getProcessInstanceManagerPage,
 } from '@/api/bpm/processInstance'
-import DictTag from '@/components/dict-tag/dict-tag.vue'
 
 import SearchForm from './components/search-form.vue'
 

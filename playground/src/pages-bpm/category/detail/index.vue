@@ -15,7 +15,7 @@
         <wd-cell title="分类标志" :value="formData?.code" />
         <wd-cell title="分类描述" :value="formData?.description || '-'" />
         <wd-cell title="分类状态">
-          <dict-tag :type="DICT_TYPE.COMMON_STATUS" :value="formData?.status" />
+          <jh-dict-tag :type="DICT_TYPE.COMMON_STATUS" :value="formData?.status" />
         </wd-cell>
         <wd-cell title="分类排序" :value="formData?.sort" />
         <wd-cell title="创建时间" :value="formatDateTime(formData?.createTime)" />

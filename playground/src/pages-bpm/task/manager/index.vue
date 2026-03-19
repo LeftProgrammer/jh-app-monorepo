@@ -28,7 +28,7 @@
                 当前任务：{{ item.name }}
               </view>
             </view>
-            <DictTag :type="DICT_TYPE.BPM_TASK_STATUS" :value="item.status" />
+            <jh-dict-tag :type="DICT_TYPE.BPM_TASK_STATUS" :value="item.status" />
           </view>
           <view class="mb-12rpx flex items-center">
             <view class="mr-8rpx h-48rpx w-48rpx flex items-center justify-center rounded-full bg-[#1890ff] text-20rpx text-white">
@@ -80,7 +80,6 @@ import type { LoadMoreState } from '@/http'
 import { onReachBottom } from '@dcloudio/uni-app'
 import { onMounted, ref } from 'vue'
 import { getTaskManagerPage } from '@/api/bpm/task'
-import DictTag from '@/components/dict-tag/dict-tag.vue'
 
 import SearchForm from './components/search-form.vue'
 

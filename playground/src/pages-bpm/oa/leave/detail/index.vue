@@ -15,13 +15,13 @@
     <view>
       <wd-cell-group :border="!embedded">
         <wd-cell title="请假类型">
-          <dict-tag :type="DICT_TYPE.BPM_OA_LEAVE_TYPE" :value="formData.type" />
+          <jh-dict-tag :type="DICT_TYPE.BPM_OA_LEAVE_TYPE" :value="formData.type" />
         </wd-cell>
         <wd-cell title="开始时间" :value="formatDateTime(formData.startTime) || '-'" />
         <wd-cell title="结束时间" :value="formatDateTime(formData.endTime) || '-'" />
         <wd-cell title="请假原因" :value="formData.reason || '-'" />
         <wd-cell title="审批状态">
-          <dict-tag
+          <jh-dict-tag
             :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS"
             :value="formData.status"
           />

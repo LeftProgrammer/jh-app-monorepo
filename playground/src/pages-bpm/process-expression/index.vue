@@ -24,7 +24,7 @@
               {{ item.name }}
             </view>
             <view class="shrink-0">
-              <dict-tag :type="DICT_TYPE.COMMON_STATUS" :value="item.status" />
+              <jh-dict-tag :type="DICT_TYPE.COMMON_STATUS" :value="item.status" />
             </view>
           </view>
           <view class="mb-12rpx text-28rpx text-[#666]">

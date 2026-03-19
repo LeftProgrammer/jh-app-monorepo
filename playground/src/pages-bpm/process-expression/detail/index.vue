@@ -13,7 +13,7 @@
         <wd-cell title="编号" :value="formData?.id" />
         <wd-cell title="表达式名字" :value="formData?.name" />
         <wd-cell title="表达式状态">
-          <dict-tag :type="DICT_TYPE.COMMON_STATUS" :value="formData?.status" />
+          <jh-dict-tag :type="DICT_TYPE.COMMON_STATUS" :value="formData?.status" />
         </wd-cell>
         <wd-cell title="表达式">
           <view class="break-all">

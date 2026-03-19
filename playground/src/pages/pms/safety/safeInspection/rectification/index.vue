@@ -35,7 +35,7 @@
             {{ item.name }}
           </view>
           <!-- 流程状态 -->
-          <dict-tag
+          <jh-dict-tag
             :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS"
             :value="item.status || -99"
           />

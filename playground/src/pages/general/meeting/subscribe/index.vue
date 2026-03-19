@@ -35,7 +35,7 @@
           <view class="flex-1 text-ellipsis text-#1D2129 text-31rpx">
             {{ item.name }}
           </view>
-          <dict-tag :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS" :value="item.status" />
+          <jh-dict-tag :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS" :value="item.status" />
         </view>
         <wd-divider class="!p-0 !my-16rpx" />
         <view

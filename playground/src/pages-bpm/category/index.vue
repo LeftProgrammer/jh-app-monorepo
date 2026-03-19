@@ -23,7 +23,7 @@
             <view class="text-32rpx text-[#333] font-semibold">
               {{ item.name }}
             </view>
-            <dict-tag :type="DICT_TYPE.COMMON_STATUS" :value="item.status" />
+            <jh-dict-tag :type="DICT_TYPE.COMMON_STATUS" :value="item.status" />
           </view>
           <view class="mb-12rpx flex items-center text-28rpx text-[#666]">
             <text class="mr-8rpx shrink-0 text-[#999]">分类标志：</text>

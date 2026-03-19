@@ -21,7 +21,7 @@
             {{ item.code }}
           </view>
           <!-- 检查结果标签 -->
-          <dict-tag :type="DICT_TYPE.INSPECTION_RESULT" :value="item.inspectionResult" />
+          <jh-dict-tag :type="DICT_TYPE.INSPECTION_RESULT" :value="item.inspectionResult" />
         </view>
         <wd-divider class="!p-0 !my-16rpx" />
 

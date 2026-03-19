@@ -13,14 +13,14 @@
         <wd-cell title="编号" :value="formData?.id" />
         <wd-cell title="监听器名字" :value="formData?.name" />
         <wd-cell title="监听器类型">
-          <dict-tag :type="DICT_TYPE.BPM_PROCESS_LISTENER_TYPE" :value="formData?.type" />
+          <jh-dict-tag :type="DICT_TYPE.BPM_PROCESS_LISTENER_TYPE" :value="formData?.type" />
         </wd-cell>
         <wd-cell title="监听器状态">
-          <dict-tag :type="DICT_TYPE.COMMON_STATUS" :value="formData?.status" />
+          <jh-dict-tag :type="DICT_TYPE.COMMON_STATUS" :value="formData?.status" />
         </wd-cell>
         <wd-cell title="监听事件" :value="formData?.event" />
         <wd-cell title="值类型">
-          <dict-tag :type="DICT_TYPE.BPM_PROCESS_LISTENER_VALUE_TYPE" :value="formData?.valueType" />
+          <jh-dict-tag :type="DICT_TYPE.BPM_PROCESS_LISTENER_VALUE_TYPE" :value="formData?.valueType" />
         </wd-cell>
         <wd-cell title="值">
           <view class="break-all">

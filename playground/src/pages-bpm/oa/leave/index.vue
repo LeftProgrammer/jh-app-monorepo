@@ -21,9 +21,9 @@
         <view class="bpm-card-content">
           <view class="bpm-card-header">
             <view class="bpm-card-title">
-              <dict-tag :type="DICT_TYPE.BPM_OA_LEAVE_TYPE" :value="item.type" />
+              <jh-dict-tag :type="DICT_TYPE.BPM_OA_LEAVE_TYPE" :value="item.type" />
             </view>
-            <dict-tag :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS" :value="item.status" />
+            <jh-dict-tag :type="DICT_TYPE.BPM_PROCESS_INSTANCE_STATUS" :value="item.status" />
           </view>
           <view class="bpm-summary">
             <view class="bpm-summary-item">

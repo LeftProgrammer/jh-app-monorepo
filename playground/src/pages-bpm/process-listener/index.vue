@@ -24,12 +24,12 @@
               {{ item.name }}
             </view>
             <view class="shrink-0">
-              <dict-tag :type="DICT_TYPE.COMMON_STATUS" :value="item.status" />
+              <jh-dict-tag :type="DICT_TYPE.COMMON_STATUS" :value="item.status" />
             </view>
           </view>
           <view class="mb-12rpx flex items-center text-28rpx text-[#666]">
             <text class="mr-8rpx shrink-0 text-[#999]">监听器类型：</text>
-            <dict-tag :type="DICT_TYPE.BPM_PROCESS_LISTENER_TYPE" :value="item.type" />
+            <jh-dict-tag :type="DICT_TYPE.BPM_PROCESS_LISTENER_TYPE" :value="item.type" />
           </view>
           <view class="mb-12rpx flex items-center text-28rpx text-[#666]">
             <text class="mr-8rpx text-[#999]">监听事件：</text>
@@ -37,7 +37,7 @@
           </view>
           <view class="mb-12rpx flex items-center text-28rpx text-[#666]">
             <text class="mr-8rpx text-[#999]">值类型：</text>
-            <dict-tag :type="DICT_TYPE.BPM_PROCESS_LISTENER_VALUE_TYPE" :value="item.valueType" />
+            <jh-dict-tag :type="DICT_TYPE.BPM_PROCESS_LISTENER_VALUE_TYPE" :value="item.valueType" />
           </view>
           <view class="mb-12rpx text-28rpx text-[#666]">
             <text class="mr-8rpx text-[#999]">值：</text>
