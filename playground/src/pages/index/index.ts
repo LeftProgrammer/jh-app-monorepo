@@ -165,6 +165,22 @@ const menuGroupsData: MenuGroup[] = [
       },
     ],
   },
+  {
+    key: "quality",
+    name: "质量管理",
+    menus: [
+      {
+        key: "quality-records",
+        name: "质量检查",
+        url: "/pages/pms/quality/inspection/records/index",
+      },
+      {
+        key: "quality-issue",
+        name: "质量整改",
+        url: "/pages/pms/quality/inspection/issue/index",
+      },
+    ],
+  },
 ];
 
 /**
