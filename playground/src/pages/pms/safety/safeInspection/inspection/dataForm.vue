@@ -83,7 +83,7 @@
           @confirm="handleInspectionResultChange"
         />
 
-        <UserPicker
+        <jh-user-picker
           v-model="formData.inspector"
           label="检查人员"
           label-width="200rpx"
@@ -102,7 +102,7 @@
           placeholder="自动带出"
         />
 
-        <UnitPicker
+        <jh-unit-picker
           v-model="formData.reportingUnit"
           label="检查单位"
           label-width="200rpx"

@@ -71,13 +71,12 @@
           <jh-file-upload v-model:file-id="formData.otherFile" :disabled="disabled" />
         </wd-cell>
 
-        <UnitPicker
+        <jh-unit-picker
           v-model="formData.receivingUnit"
           label="收文单位"
           label-width="100px"
           prop="receivingUnit"
           :readonly="disabled"
-          type="checkbox"
         />
 
         <wd-input
@@ -101,21 +100,21 @@
       </wd-cell-group>
 
       <wd-cell-group border title="审批信息">
-        <UserPicker
+        <jh-user-picker
           v-model="formData.user1"
           :readonly="disabled"
           label="项目经理/常务副经理"
           label-width="140px"
           prop="user1"
         />
-        <UserPicker
+        <jh-user-picker
           v-model="formData.user2"
           :readonly="disabled"
           label="拟办"
           label-width="140px"
           prop="user2"
         />
-        <UserPicker
+        <jh-user-picker
           v-model="formData.user3"
           :readonly="disabled"
           multiple
@@ -132,9 +131,6 @@
 import { DICT_TYPE, formatDate, navigateBackPlus } from '@/utils'
 import { useToast } from "wot-design-uni";
 import * as ReceivedApi from "@/api/pms/document/received";
-import UserPicker from "@/components/system-select/user-picker.vue";
-import UnitPicker from "@/components/system-select/unit-picker.vue";
-;
 import { useUserStore } from "@/store";
 ;
 import { useGlobalState } from "@/store";

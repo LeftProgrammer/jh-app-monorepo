@@ -62,7 +62,7 @@
         <wd-cell title="其他附件" title-width="100px" prop="otherFile">
           <jh-file-upload v-model:file-id="formData.otherFile" :disabled="disabled" />
         </wd-cell>
-        <UnitPicker
+        <jh-unit-picker
           v-model="formData.receivingUnit"
           label="收文单位"
           label-width="100px"
@@ -170,14 +170,14 @@
         </wd-cell>
       </wd-cell-group>
       <wd-cell-group border title="审批信息">
-        <UserPicker
+        <jh-user-picker
           v-model="formData.user1"
           :readonly="disabled"
           label="核稿人审批"
           label-width="100px"
           prop="user1"
         />
-        <UserPicker
+        <jh-user-picker
           v-if="formData?.isReview == 1"
           v-model="formData.user3"
           :readonly="!(todoTask?.name == '拟稿人处理' && formData?.status == 1)"
@@ -186,28 +186,28 @@
           prop="user3"
           type="checkbox"
         />
-        <UserPicker
+        <jh-user-picker
           v-model="formData.user2"
           :readonly="disabled"
           label="分管领导审批"
           label-width="100px"
           prop="user2"
         />
-        <UserPicker
+        <jh-user-picker
           v-model="formData.user5"
           :readonly="disabled"
           label="项目经理签发"
           label-width="100px"
           prop="user5"
         />
-        <UserPicker
+        <jh-user-picker
           v-model="formData.user6"
           :readonly="disabled"
           label="文书提交"
           label-width="100px"
           prop="user6"
         />
-        <UserPicker
+        <jh-user-picker
           v-model="formData.user7"
           :readonly="disabled"
           label="文件签收"
@@ -216,7 +216,7 @@
           multiple
           type="checkbox"
         />
-        <UserPicker
+        <jh-user-picker
           label="回文通知人员"
           label-width="100px"
           multiple
@@ -248,9 +248,6 @@ import { deepClone, DICT_TYPE, formatDate, navigateBackPlus } from '@/utils'
 import { useToast } from "wot-design-uni";
 import { get, PostedVO } from "@/api/pms/document/posted";
 ;
-;
-import UserPicker from "@/components/system-select/user-picker.vue";
-import UnitPicker from "@/components/system-select/unit-picker.vue";
 ;
 import { useUserStore } from "@/store";
 import { useGlobalState } from "@/store";

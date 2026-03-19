@@ -11,7 +11,7 @@
         <view class="yd-search-form-label">
           发起人
         </view>
-        <UserPicker
+        <jh-user-picker
           v-model="formData.startUserId"
           type="radio"
           placeholder="请选择发起人"
@@ -120,7 +120,6 @@ import type { ProcessDefinition } from '@/api/bpm/definition'
 import { computed, onMounted, reactive, ref } from 'vue'
 import { getCategorySimpleList } from '@/api/bpm/category'
 import { getProcessDefinitionList } from '@/api/bpm/definition'
-import UserPicker from '@/components/system-select/user-picker.vue'
 import { getDictLabel, getIntDictOptions } from '@/hooks'
 
 const emit = defineEmits<{

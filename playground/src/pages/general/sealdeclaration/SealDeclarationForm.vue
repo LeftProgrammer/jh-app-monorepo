@@ -127,7 +127,7 @@
         </wd-cell>
       </wd-cell-group>
       <wd-cell-group border title="审批信息">
-        <UserPicker
+        <jh-user-picker
           v-if="formData.isPosted === 0"
           v-model="formData.user1"
           :label="formData.category === 'bmyz' ? '部门领导审核' : '项目经理审批'"
@@ -136,7 +136,7 @@
           align-right
           :readonly="disabled"
         />
-        <UserPicker
+        <jh-user-picker
           v-if="formData.isPosted === 0"
           v-model="formData.user2"
           :label="formData.category === 'bmyz' ? '分管领导审核' : '总包分管副总审核'"
@@ -146,7 +146,7 @@
           :readonly="disabled"
         />
 
-        <UserPicker
+        <jh-user-picker
           v-if="formData.isPosted === 0"
           v-model="formData.user3"
           label-width="140px"
@@ -155,7 +155,7 @@
           align-right
           :readonly="disabled"
         />
-        <UserPicker
+        <jh-user-picker
           v-model="formData.user4"
           label-width="120px"
           label="用印管理员审批"
@@ -180,8 +180,6 @@ import { deepClone, DICT_TYPE, formatDate, navigateBackPlus } from '@/utils'
 import { useToast } from "wot-design-uni";
 import SealDeclarationApi from "@/api/general/seal-declaration";
 ;
-;
-import UserPicker from "@/components/system-select/user-picker.vue";
 ;
 import { useGlobalState } from "@/store";
 import { useUserStore } from "@/store";

@@ -70,7 +70,7 @@
         </wd-cell>
 
         <!-- 收文单位：PC UnitSelect multiple -> App UnitPicker checkbox -->
-        <UnitPicker
+        <jh-unit-picker
           v-model="formData.receivingUnit"
           :readonly="disabled"
           label="收文单位"
@@ -107,7 +107,7 @@
 
       <wd-cell-group border title="审批信息">
         <!-- PC 里只有 user7：文件签收 -->
-        <UserPicker
+        <jh-user-picker
           v-model="formData.user7"
           :readonly="disabled"
           label="文件签收"
@@ -137,8 +137,6 @@ import { useToast } from "wot-design-uni";
 ;
 ;
 
-import UserPicker from "@/components/system-select/user-picker.vue";
-import UnitPicker from "@/components/system-select/unit-picker.vue";
 
 import * as ConsortiumApi from "@/api/pms/document/posted"; // 对应 PC 的 ConsortiumApi
 import { useGlobalState, useUserStore } from "@/store";

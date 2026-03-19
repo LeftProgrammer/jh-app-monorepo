@@ -98,21 +98,21 @@
       </wd-cell-group>
 
       <wd-cell-group border title="审批信息">
-        <UserPicker
+        <jh-user-picker
           v-model="formData.user1"
           :readonly="disabled"
           label="整改负责人"
           label-width="120px"
           prop="user1"
         />
-        <UserPicker
+        <jh-user-picker
           v-model="formData.user2"
           label="上报人验收"
           disabled
           label-width="120px"
           prop="user2"
         />
-        <UserPicker
+        <jh-user-picker
           v-if="todoTask?.name !== '问题整改' && formData.id"
           v-model="formData.user3"
           :readonly="todoTask?.name !== '上报人验收'"
@@ -140,8 +140,6 @@ import * as ConsortiumApi from "@/api/general/camp/safety";
 ;
 import { useUserStore } from "@/store";
 
-import UserPicker from "@/components/system-select/user-picker.vue";
-;
 import { useGlobalState } from "@/store";
 
 defineOptions({ name: "safetyFormCreateApp" });

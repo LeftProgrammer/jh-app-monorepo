@@ -62,7 +62,7 @@
       <view class="fixed w-100% h-100% box-border px-16rpx pt-30%" @click.stop="">
         <view class="bg-#fff rounded-8rpx p-32rpx">
           <view class="text-#1D2129 text-36rpx text-center mb-40rpx">办理详情</view>
-          <UserPicker
+          <jh-user-picker
             v-if="approveForm.type === 'delegate'"
             v-model="approveForm.delegateUserId"
             label="委托人办理"

@@ -65,7 +65,7 @@
           <jh-file-upload v-model:file-id="formData.otherFile" :disabled="disabled" />
         </wd-cell>
 
-        <UnitPicker
+        <jh-unit-picker
           v-model="formData.receivingUnit"
           label="收文单位"
           label-width="100px"
@@ -98,7 +98,7 @@
       </wd-cell-group>
 
       <wd-cell-group border title="审批信息">
-        <UserPicker
+        <jh-user-picker
           v-model="formData.user7"
           :readonly="disabled"
           label="文件签收"
@@ -130,9 +130,6 @@ import * as ConsortiumApi from "@/api/pms/document/posted";
 import { useUserStore } from "@/store";
 import { useGlobalState } from "@/store";
 
-import UserPicker from "@/components/system-select/user-picker.vue";
-import UnitPicker from "@/components/system-select/unit-picker.vue";
-;
 
 defineOptions({ name: "DocumentConstructionPostedCreateApp" });
 

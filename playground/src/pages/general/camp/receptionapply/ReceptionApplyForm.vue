@@ -131,14 +131,14 @@
       </wd-cell-group>
 
       <wd-cell-group border title="审批信息">
-        <UserPicker
+        <jh-user-picker
           v-model="formData.user1"
           :readonly="disabled"
           label="物业管理员审批"
           label-width="120px"
           prop="user1"
         />
-        <UserPicker
+        <jh-user-picker
           v-if="todoTask?.name === '物业管理审批' || formData.user2"
           v-model="formData.user2"
           :readonly="todoTask?.name != '物业管理审批' || type !== 'todo'"
@@ -170,9 +170,6 @@ import * as ConsortiumApi from "@/api/general/camp/receptionapply";
 ;
 import { useUserStore } from "@/store";
 
-import UserPicker from "@/components/system-select/user-picker.vue";
-import UnitPicker from "@/components/system-select/unit-picker.vue";
-;
 import { useGlobalState } from "@/store";
 
 defineOptions({ name: "ReceptionApplyFormCreateApp" });

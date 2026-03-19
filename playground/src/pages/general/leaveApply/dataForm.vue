@@ -139,7 +139,7 @@
         </wd-cell>
       </wd-cell-group>
       <wd-cell-group border title="审批信息">
-        <UserPicker
+        <jh-user-picker
           v-if="showUser1"
           v-model="formData.user1"
           :label="user1Label"
@@ -149,7 +149,7 @@
           align-right
           :readonly="disabled"
         />
-        <UserPicker
+        <jh-user-picker
           v-if="showUser2"
           v-model="formData.user2"
           :label="user2Label"
@@ -160,7 +160,7 @@
           :readonly="disabled"
         />
 
-        <UserPicker
+        <jh-user-picker
           v-model="formData.comprehensiveManagement"
           label-width="120px"
           label="知会综合管理部"
@@ -186,8 +186,6 @@ import { deepClone, DICT_TYPE, formatDate, navigateBackPlus } from '@/utils'
 import { useToast } from "wot-design-uni";
 import LeaveApplyApi from "@/api/general/leaveApply";
 ;
-;
-import UserPicker from "@/components/system-select/user-picker.vue";
 ;
 import { useUserStore } from "@/store";
 import dayjs from "dayjs";

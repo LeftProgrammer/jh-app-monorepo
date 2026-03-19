@@ -207,7 +207,7 @@
 
       <!-- 审批信息 -->
       <wd-cell-group border title="审批信息">
-        <UserPicker
+        <jh-user-picker
           v-model="formData.dispatcher"
           label="隐患分发人"
           label-width="200rpx"
@@ -215,7 +215,7 @@
           align-right
           :readonly="disabled"
         />
-        <UserPicker
+        <jh-user-picker
           v-model="formData.rectifier"
           label="隐患整改人"
           label-width="200rpx"
@@ -223,7 +223,7 @@
           align-right
           :readonly="disabled"
         />
-        <UserPicker
+        <jh-user-picker
           v-model="formData.checker"
           label="隐患复核人"
           label-width="200rpx"

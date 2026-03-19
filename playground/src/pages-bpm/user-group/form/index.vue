@@ -27,7 +27,7 @@
             clearable
             placeholder="请输入描述"
           />
-          <UserPicker
+          <jh-user-picker
             ref="userPickerRef"
             v-model="formData.userIds"
             label="成员"
@@ -70,7 +70,6 @@ import type { UserGroup } from '@/api/bpm/user-group'
 import { computed, onMounted, ref } from 'vue'
 import { useToast } from 'wot-design-uni'
 import { createUserGroup, getUserGroup, updateUserGroup } from '@/api/bpm/user-group'
-import { UserPicker } from '@/components/system-select'
 import { getIntDictOptions } from '@/hooks'
 
 const props = defineProps<{

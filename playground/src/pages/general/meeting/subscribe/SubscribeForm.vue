@@ -82,7 +82,7 @@
           label-width="200rpx"
           prop="meetTime"
         />
-        <UserPicker
+        <jh-user-picker
           v-model="formData.personCharge"
           label="主持人"
           label-width="100px"
@@ -173,7 +173,7 @@
             :disabled="disabled || isApproved"
           />
         </wd-cell>
-        <UserPicker
+        <jh-user-picker
           v-if="formData.haveLeader === 1"
           v-model="formData.leader"
           prop="leader"
@@ -213,7 +213,7 @@
       <view class="mb-16rpx bg-#fff p-16rpx">
         <view class="flex justify-between items-center">
           <view>参会人员</view>
-          <UserPicker
+          <jh-user-picker
             v-if="!disabled && !isApproved"
             ref="personRef"
             :use-default-slot="true"
@@ -222,7 +222,7 @@
             @confirm="personConfirm"
           >
             <wd-button icon="add-circle" type="text">添加</wd-button>
-          </UserPicker>
+          </jh-user-picker>
         </view>
         <div
           v-for="(item, index) in personRecords"
@@ -246,7 +246,7 @@
         </div>
       </view>
       <wd-cell-group border title="审批信息">
-        <UserPicker
+        <jh-user-picker
           v-model="formData.user1"
           label="物业管理审批"
           label-width="100px"
@@ -334,7 +334,6 @@
 import { deepClone, DICT_TYPE, formatDate, getNavbarHeight, navigateBackPlus } from '@/utils'
 import { useToast } from "wot-design-uni"
 import SubscribeApi from "@/api/general/meeting"
-import UserPicker from "@/components/system-select/user-picker.vue"
 import { useUserStore } from "@/store"
 import { getDictLabel } from '@/hooks'
 import { useGlobalState } from "@/store"
