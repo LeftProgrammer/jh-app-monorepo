@@ -18,6 +18,4 @@ export {
 export type { FrameworkConfig } from './framework'
 
 // 构建配置
-export { manifestConfig } from './manifest'
-export { pagesConfig } from './pages'
 export { unoConfig } from './uno'

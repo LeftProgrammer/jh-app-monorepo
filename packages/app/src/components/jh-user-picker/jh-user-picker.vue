@@ -100,14 +100,6 @@ watch(
   { immediate: true }
 );
 
-/** 加载用户列表 */
-// async function loadUserList() {
-//   userList.value = (await getSimpleUserList()).map((x) => {
-//     x.id = String(x.id);
-//     return x;
-//   });
-// }
-
 /** 选择确认 */
 function handleConfirm({ value }: { value: any }) {
   const ids = props.type === "radio" ? value : value.join(",");
@@ -119,7 +111,5 @@ function handleConfirm({ value }: { value: any }) {
 }
 
 /** 初始化 */
-onMounted(() => {
-  // loadUserList();
-});
+onMounted(() => {});
 </script>
