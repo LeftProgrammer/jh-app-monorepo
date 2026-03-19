@@ -1,5 +1,5 @@
 /**
- * Tabbar 组件模块
+ * jh-tabbar 组件模块
  *
  * 完整封装了 tabbar 的所有功能，包括：
  * - 配置：策略选择、项目列表、主题配置
@@ -9,7 +9,7 @@
  * 使用方式：
  * 1. 在项目中创建 tabbar 配置文件，调用 createTabbarConfig 创建配置
  * 2. 调用 createTabbarStore 创建 store
- * 3. 在 App.vue 中使用 Tabbar 组件
+ * 3. 在 App.vue 中使用 jh-tabbar 组件（easycom 自动引入）
  */
 
 // === 配置导出 ===
