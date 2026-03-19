@@ -27,8 +27,6 @@ export default defineConfig(({ mode }) => {
         ],
         exclude: ['src/**/*.test.ts', 'src/**/*.spec.ts', 'src/pages/**/*', 'src/api/**/*'],
         rollupTypes: false,
-        // 禁用 source map，减少文件数量
-        declarationMap: false,
       }),
     ],
     build: {

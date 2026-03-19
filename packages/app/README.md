@@ -16,7 +16,7 @@ pnpm add @jinghe-sanjiaoroad-app/framework
   "easycom": {
     "autoscan": true,
     "custom": {
-      "^jh-(.*)": "@jinghe-sanjiaoroad-app/framework/src/components/jh-$1/jh-$1.vue",
+      "^jh-(.*)": "@jinghe-sanjiaoroad-app/framework/components/jh-$1/jh-$1.vue",
       "^wd-(.*)": "wot-design-uni/components/wd-$1/wd-$1.vue"
     }
   }
