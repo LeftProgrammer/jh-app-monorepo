@@ -123,7 +123,7 @@
         />
 
         <wd-cell title="盖章文件" title-width="100px" prop="file">
-          <file-upload v-model:file-id="formData.file" :disabled="disabled" />
+          <jh-file-upload v-model:file-id="formData.file" :disabled="disabled" />
         </wd-cell>
       </wd-cell-group>
       <wd-cell-group border title="审批信息">

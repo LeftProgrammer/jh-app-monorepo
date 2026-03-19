@@ -199,7 +199,7 @@
           title-width="100px"
           prop="picture"
         >
-          <file-upload v-model:file-id="formData.picture" :disabled="disabled" />
+          <jh-file-upload v-model:file-id="formData.picture" :disabled="disabled" />
         </wd-cell>
         <wd-cell
           v-if="formData.status === 2"
@@ -207,7 +207,7 @@
           title-width="100px"
           prop="accessoryFile"
         >
-          <file-upload v-model:file-id="formData.accessoryFile" :disabled="disabled" />
+          <jh-file-upload v-model:file-id="formData.accessoryFile" :disabled="disabled" />
         </wd-cell>
       </wd-cell-group>
       <view class="mb-16rpx bg-#fff p-16rpx">

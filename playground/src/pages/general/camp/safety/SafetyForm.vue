@@ -93,7 +93,7 @@
           label-width="200rpx"
         />
         <wd-cell title="图片上传" title-width="100px" prop="file">
-          <file-upload v-model:file-id="formData.file" :disabled="disabled" />
+          <jh-file-upload v-model:file-id="formData.file" :disabled="disabled" />
         </wd-cell>
       </wd-cell-group>
 

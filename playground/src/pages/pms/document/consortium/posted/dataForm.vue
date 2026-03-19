@@ -57,10 +57,10 @@
           show-word-limit
         />
         <wd-cell title="正文附件" title-width="100px" prop="file">
-          <file-upload v-model:file-id="formData.file" :disabled="disabled" />
+          <jh-file-upload v-model:file-id="formData.file" :disabled="disabled" />
         </wd-cell>
         <wd-cell title="其他附件" title-width="100px" prop="otherFile">
-          <file-upload v-model:file-id="formData.otherFile" :disabled="disabled" />
+          <jh-file-upload v-model:file-id="formData.otherFile" :disabled="disabled" />
         </wd-cell>
         <UnitPicker
           v-model="formData.receivingUnit"
@@ -149,7 +149,7 @@
             formData?.status === 2
           "
         >
-          <file-upload
+          <jh-file-upload
             v-model:file-id="formData.sealFile"
             :disabled="!(todoTask?.name === '文书提交' && formData?.status === 1)"
           />
@@ -163,7 +163,7 @@
           title-width="100px"
           prop="palindromeFile"
         >
-          <file-upload
+          <jh-file-upload
             v-model:file-id="formData.palindromeFile"
             :disabled="!(todoTask?.name === '文件签收' && formData?.status === 1)"
           />

@@ -58,11 +58,11 @@
         />
 
         <wd-cell title="正文附件" title-width="100px" prop="file">
-          <file-upload v-model:file-id="formData.file" :disabled="disabled" />
+          <jh-file-upload v-model:file-id="formData.file" :disabled="disabled" />
         </wd-cell>
 
         <wd-cell title="其他附件" title-width="100px" prop="otherFile">
-          <file-upload v-model:file-id="formData.otherFile" :disabled="disabled" />
+          <jh-file-upload v-model:file-id="formData.otherFile" :disabled="disabled" />
         </wd-cell>
 
         <UnitPicker

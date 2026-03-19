@@ -122,7 +122,7 @@
           show-word-limit
         />
         <wd-cell title="隐患图片" title-width="200rpx" prop="dangerFiles">
-          <file-upload v-model:file-id="formData.dangerFiles" :disabled="disabled" />
+          <jh-file-upload v-model:file-id="formData.dangerFiles" :disabled="disabled" />
         </wd-cell>
       </wd-cell-group>
 
@@ -164,7 +164,7 @@
           placeholder="请选择整改完成时间"
         />
         <wd-cell title="整改图片" title-width="200rpx" prop="reportFiles">
-          <file-upload v-model:file-id="formData.reportFiles" :disabled="!isRectifier" />
+          <jh-file-upload v-model:file-id="formData.reportFiles" :disabled="!isRectifier" />
         </wd-cell>
       </wd-cell-group>
 
