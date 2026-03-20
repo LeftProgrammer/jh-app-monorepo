@@ -36,6 +36,8 @@
     "./pages/user": "./src/pages/user/index.ts",
     "./pages/user/components": "./src/pages/user/components/index.ts",
     "./pages/user/views": "./src/pages/user/views/index.ts",
+    "./pages/error": "./src/pages/error/index.ts",
+    "./pages/message": "./src/pages/message/index.ts",
     "./style": "./src/style/index.scss",
     "./package.json": "./package.json"
   },

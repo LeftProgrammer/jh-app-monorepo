@@ -50,13 +50,13 @@
             最新版本：v{{ latestVersion }}
           </view>
           <wd-button
-            v-if="!isChecked && version === latestVersion"
+            v-if="!isCheck && version === latestVersion"
             plain
             @click="checkUpdate"
           >
             检查更新
           </wd-button>
-          <view v-if="isChecked && version === latestVersion" class="text-31rpx text-#009688">
+          <view v-if="isCheck && version === latestVersion" class="text-31rpx text-#009688">
             已是最新版
           </view>
           <wd-button v-if="version !== latestVersion" plain @click="handleUpdate">
@@ -65,6 +65,8 @@
         </view>
       </view>
     </wd-overlay>
+
+    <wd-message-box />
   </view>
 </template>
 
@@ -76,32 +78,39 @@ import {
   getAppTitle,
 } from '../../../config/framework'
 import { appUpdate } from '../../../utils'
+import { useDictStore } from '../../../store/dict'
 
 defineOptions({
   name: 'UserSettingsPage',
 })
 
+// APP 更新字典 key
+const APP_UPDATE_DICT_TYPE = 'app_update'
+
 const props = withDefaults(defineProps<{
-  /** 返回页面路径 */
+  /** 返回页面路径，不传则使用 navigateBack */
   backUrl?: string
-  /** 获取最新版本号的函数 */
-  getLatestVersion?: () => Promise<string> | string
-  /** 执行更新的函数 */
-  onUpdate?: () => void
 }>(), {
   backUrl: '',
 })
 
 const toast = useToast()
 const message = useMessage()
+const dictStore = useDictStore()
 
 const logo = getAppLogo()
 const appTitle = getAppTitle()
 const version = ref('')
-const latestVersion = ref('')
 const storageSize = ref('')
 const showVersion = ref(false)
-const isChecked = ref(false)
+const isCheck = ref(false)
+const latestVersion = ref('')
+
+/** 从字典获取最新版本号 */
+function getLatestVersionFromDict() {
+  const APP_UPDATE = dictStore.getDictOptions(APP_UPDATE_DICT_TYPE)
+  return APP_UPDATE.find(x => x.label === 'version')?.value || ''
+}
 
 function handleBack() {
   if (props.backUrl) {
@@ -115,7 +124,6 @@ function getAppVersion() {
   // #ifdef APP-PLUS
   plus.runtime.getProperty(plus.runtime.appid, (wgtinfo) => {
     version.value = wgtinfo.version
-    latestVersion.value = wgtinfo.version
   })
   // #endif
 }
@@ -127,7 +135,7 @@ function getStorageSize() {
 
 function handleShowVersion() {
   showVersion.value = true
-  isChecked.value = false
+  isCheck.value = false
 }
 
 function handleClearCache() {
@@ -145,28 +153,28 @@ function handleClearCache() {
         toast.error('缓存清除失败')
       }
     })
-    .catch(() => {})
+    .catch(() => {
+      console.log('点击了取消按钮')
+    })
 }
 
 async function checkUpdate() {
-  isChecked.value = true
-  if (props.getLatestVersion) {
-    const ver = await props.getLatestVersion()
-    if (ver) {
-      latestVersion.value = ver
-    }
+  isCheck.value = true
+  // 重新加载字典数据
+  await dictStore.loadDictCache()
+  const ver = getLatestVersionFromDict()
+  if (ver) {
+    latestVersion.value = ver
   }
 }
 
 function handleUpdate() {
-  if (props.onUpdate) {
-    props.onUpdate()
-  } else {
-    appUpdate()
-  }
+  appUpdate()
 }
 
 onMounted(() => {
+  // 从字典获取初始最新版本号
+  latestVersion.value = getLatestVersionFromDict()
   getStorageSize()
   getAppVersion()
 })

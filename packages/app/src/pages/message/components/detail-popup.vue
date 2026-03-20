@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <wd-popup
     v-model="visible"
     position="bottom"
@@ -30,9 +30,7 @@
         <view class="flex items-start">
           <text class="w-160rpx shrink-0 text-28rpx text-[#999]">消息类型</text>
           <text class="text-28rpx text-[#333]">
-            {{
-              getDictLabel(DICT_TYPE.SYSTEM_NOTIFY_TEMPLATE_TYPE, formData.templateType)
-            }}
+            {{ getTemplateTypeLabel ? getTemplateTypeLabel(formData.templateType) : formData.templateType }}
           </text>
         </view>
         <view class="flex items-start">
@@ -58,24 +56,41 @@
 </template>
 
 <script lang="ts" setup>
-import { DICT_TYPE, formatDateTime } from '@/utils'
-import type { NotifyMessage } from "@/api/system/notify/message";
-import { ref } from "vue";
-import { getDictLabel } from '@/hooks'
+import { ref } from 'vue'
+import { formatDateTime } from '../../../utils'
 
-const visible = ref(false);
-const formData = ref<NotifyMessage>();
+defineOptions({
+  name: 'MessageDetailPopup',
+})
+
+export interface NotifyMessage {
+  id: number
+  senderName?: string
+  createTime?: Date | string | number
+  templateType?: number
+  templateContent?: string
+  readStatus?: boolean
+  readTime?: Date | string | number
+}
+
+defineProps<{
+  /** 获取消息类型标签的函数 */
+  getTemplateTypeLabel?: (type: number) => string
+}>()
+
+const visible = ref(false)
+const formData = ref<NotifyMessage>()
 
 /** 打开弹窗 */
 function open(data: NotifyMessage) {
-  formData.value = data;
-  visible.value = true;
+  formData.value = data
+  visible.value = true
 }
 
 /** 关闭弹窗 */
 function close() {
-  visible.value = false;
+  visible.value = false
 }
 
-defineExpose({ open, close });
+defineExpose({ open, close })
 </script>

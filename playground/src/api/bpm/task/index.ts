@@ -71,3 +71,8 @@ export function getTaskListByProcessInstanceId(processInstanceId: string) {
 export function getTaskManagerPage(params: PageParam) {
   return http.get<PageResult<Task>>("/bpm/task/manager-page", params);
 }
+
+/** 获取流程默认人 */
+export function getDataByModelKey(modelKey: String) {
+  return http.get(`/bpm/person-config/getDataByModelKey?modelKey=${modelKey}`);
+}

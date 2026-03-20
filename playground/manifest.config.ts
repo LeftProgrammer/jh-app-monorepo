@@ -29,8 +29,8 @@ export default defineManifestConfig({
   name: VITE_APP_TITLE,
   appid: VITE_UNI_APPID,
   description: "",
-  versionName: "1.0.5",
-  versionCode: "105",
+  versionName: "1.0.6",
+  versionCode: "106",
   transformPx: false,
   locale: VITE_FALLBACK_LOCALE, // 'zh-Hans'
   h5: {
@@ -45,6 +45,13 @@ export default defineManifestConfig({
     compilerVersion: 3,
     compatible: {
       ignoreVersion: true,
+    },
+    safearea: {
+      background: "#FFFFFF",
+      backgroundDark: "#000000",
+      bottom: {
+        offset: "none",
+      },
     },
     splashscreen: {
       alwaysShowBeforeRender: true,

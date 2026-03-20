@@ -2,8 +2,8 @@
   "name": "绵竹抽蓄项目管理平台",
   "appid": "__UNI__BB3564C",
   "description": "",
-  "versionName": "1.0.5",
-  "versionCode": "105",
+  "versionName": "1.0.6",
+  "versionCode": "106",
   "transformPx": false,
   "app-plus": {
     "usingComponents": true,
@@ -80,6 +80,13 @@
     },
     "compatible": {
       "ignoreVersion": true
+    },
+    "safearea": {
+      "background": "#FFFFFF",
+      "backgroundDark": "#000000",
+      "bottom": {
+        "offset": "none"
+      }
     }
   },
   "app-harmony": {
