@@ -43,7 +43,7 @@
 <script lang="ts" setup>
 import type { Task } from '../../../api/bpm/task'
 import { onReachBottom } from '@dcloudio/uni-app'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { getTaskTodoPage } from '../../../api/bpm/task'
 import { formatDate } from '../../../utils'
 import '../styles/index.scss'
@@ -121,6 +121,11 @@ function handleDetail(item: Task) {
 /** 触底加载更多 */
 onReachBottom(() => {
   loadMore()
+})
+
+/** 初始化加载数据 */
+onMounted(() => {
+  getList()
 })
 
 /** 暴露方法供外部调用 */

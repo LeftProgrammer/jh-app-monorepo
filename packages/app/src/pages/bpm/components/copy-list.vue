@@ -50,7 +50,7 @@
 <script lang="ts" setup>
 import type { ProcessInstanceCopy } from '../../../api/bpm/processInstance'
 import { onReachBottom } from '@dcloudio/uni-app'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { getProcessInstanceCopyPage } from '../../../api/bpm/processInstance'
 import { formatDate } from '../../../utils'
 import '../styles/index.scss'
@@ -128,6 +128,11 @@ function handleDetail(item: ProcessInstanceCopy) {
 /** 触底加载更多 */
 onReachBottom(() => {
   loadMore()
+})
+
+/** 初始化加载数据 */
+onMounted(() => {
+  getList()
 })
 
 /** 暴露方法供外部调用 */

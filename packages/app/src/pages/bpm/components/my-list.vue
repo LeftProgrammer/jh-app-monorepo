@@ -67,7 +67,7 @@
 <script lang="ts" setup>
 import type { ProcessInstance } from '../../../api/bpm/processInstance'
 import { onReachBottom } from '@dcloudio/uni-app'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useMessage, useToast } from 'wot-design-uni'
 import { getProcessInstanceMyPage, urgeCreate } from '../../../api/bpm/processInstance'
 import { formatPast } from '../../../utils'
@@ -178,6 +178,11 @@ function handleDetail(item: ProcessInstance) {
 /** 触底加载更多 */
 onReachBottom(() => {
   loadMore()
+})
+
+/** 初始化加载数据 */
+onMounted(() => {
+  getList()
 })
 
 /** 暴露方法供外部调用 */
