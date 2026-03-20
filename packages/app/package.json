@@ -38,6 +38,7 @@
     "./pages/user/views": "./src/pages/user/views/index.ts",
     "./pages/error": "./src/pages/error/index.ts",
     "./pages/message": "./src/pages/message/index.ts",
+    "./pages/bpm": "./src/pages/bpm/index.ts",
     "./style": "./src/style/index.scss",
     "./package.json": "./package.json"
   },
