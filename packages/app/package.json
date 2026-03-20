@@ -33,6 +33,9 @@
     "./pages/auth/components": "./src/pages/auth/components/index.ts",
     "./pages/auth/views": "./src/pages/auth/views/index.ts",
     "./pages/auth/styles/*": "./src/pages/auth/styles/*",
+    "./pages/user": "./src/pages/user/index.ts",
+    "./pages/user/components": "./src/pages/user/components/index.ts",
+    "./pages/user/views": "./src/pages/user/views/index.ts",
     "./style": "./src/style/index.scss",
     "./package.json": "./package.json"
   },

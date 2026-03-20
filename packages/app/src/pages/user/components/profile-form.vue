@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <wd-popup
     v-model="visible"
     position="bottom"
@@ -22,7 +22,11 @@
       <!-- 性别选择 -->
       <template v-else-if="field === 'sex'">
         <wd-radio-group v-model="formValue" cell>
-          <wd-radio v-for="dict in getIntDictOptions(DICT_TYPE.SYSTEM_USER_SEX)" :key="dict.value" :value="dict.value">
+          <wd-radio
+            v-for="dict in sexOptions"
+            :key="dict.value"
+            :value="dict.value"
+          >
             {{ dict.label }}
           </wd-radio>
         </wd-radio-group>
@@ -58,16 +62,20 @@
 </template>
 
 <script lang="ts" setup>
-import { DICT_TYPE, isBlank, isEmail, isMobile } from '@/utils'
 import { computed, ref, watch } from 'vue'
 import { useToast } from 'wot-design-uni'
-import { updateUserProfile } from '@/api/system/user/profile'
-import { getIntDictOptions } from '@/hooks'
+import { updateUserProfile } from '../../../api/system/user/profile'
+import { isBlank, isEmail, isMobile } from '../../../utils'
+
+defineOptions({
+  name: 'UserProfileForm',
+})
 
 const props = defineProps<{
   modelValue: boolean
   field: 'nickname' | 'sex' | 'mobile' | 'email'
   value: string | number
+  sexOptions?: { label: string; value: number }[]
 }>()
 
 const emit = defineEmits<{
@@ -80,8 +88,8 @@ const visible = computed({
   get: () => props.modelValue,
   set: val => emit('update:modelValue', val),
 })
-const formValue = ref<string | number>('') // 表单值
-const submitting = ref(false) // 提交中状态
+const formValue = ref<string | number>('')
+const submitting = ref(false)
 
 const title = computed(() => {
   switch (props.field) {
@@ -98,7 +106,11 @@ const title = computed(() => {
   }
 })
 
-/** 监听弹窗打开，初始化值 */
+const sexOptions = computed(() => props.sexOptions || [
+  { label: '男', value: 1 },
+  { label: '女', value: 2 },
+])
+
 watch(
   () => props.modelValue,
   (val) => {
@@ -108,14 +120,11 @@ watch(
   },
 )
 
-/** 处理关闭 */
 function handleClose() {
   visible.value = false
 }
 
-/** 处理确认 */
 async function handleConfirm() {
-  // 参数校验
   if (props.field === 'sex' && !formValue.value) {
     toast.warning('请选择性别')
     return
@@ -133,7 +142,6 @@ async function handleConfirm() {
     return
   }
 
-  // 调用更新接口
   submitting.value = true
   try {
     await updateUserProfile({ [props.field]: formValue.value })

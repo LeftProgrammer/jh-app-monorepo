@@ -1,13 +1,9 @@
 ﻿<template>
-  <AuthCodeLoginPage :captcha-enabled="captchaEnabled" />
+  <AuthCodeLoginPage />
 </template>
 
 <script lang="ts" setup>
 import { AuthCodeLoginPage } from '@jinghe-sanjiaoroad-app/framework/pages/auth'
-
-defineOptions({
-  name: 'SmsLoginPage',
-})
 
 definePage({
   style: {
@@ -15,6 +11,4 @@ definePage({
   },
   excludeLoginPath: true,
 })
-
-const captchaEnabled = import.meta.env.VITE_APP_CAPTCHA_ENABLE === 'true'
 </script>

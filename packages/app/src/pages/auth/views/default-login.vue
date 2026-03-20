@@ -1,6 +1,6 @@
 <template>
   <view class="login-container bg-#F8FCFD h-100vh position-relative">
-    <image :src="bgImage" class="w-100% h-37%" />
+    <image :src="props.bgImage" class="w-100% h-37%" />
     <!-- 顶部阴影 -->
     <view
       class="top-bg position-absolute rounded-34px left-12% h-10% right-12% top-24% index-8"
@@ -10,7 +10,7 @@
     >
       <view class="text-#1D2129 text-34rpx text-center mb-69rpx">{{ title }}</view>
       <view class="flex items-center mb-30rpx">
-        <image :src="userIcon" class="w-46rpx h-46rpx mr-23rpx" />
+        <image :src="props.userIcon" class="w-46rpx h-46rpx mr-23rpx" />
         <text class="text-#1D2129 text-31rpx">账号</text>
       </view>
       <wd-input
@@ -22,7 +22,7 @@
         placeholder="请输入账号"
       />
       <view class="flex items-center mb-30rpx">
-        <image :src="passwordIcon" class="w-46rpx h-46rpx mr-23rpx" />
+        <image :src="props.passwordIcon" class="w-46rpx h-46rpx mr-23rpx" />
         <text class="text-31rpx text-#1D2129">密码</text>
       </view>
       <wd-input
@@ -35,7 +35,7 @@
         show-password
       />
       <!-- 验证码 -->
-      <view v-if="captchaEnabled">
+      <view v-if="captchaEnabledComputed">
         <Verify
           ref="verifyRef"
           :captcha-type="captchaType"
@@ -60,7 +60,7 @@
     </view>
     <!-- 当前版本 -->
     <view
-      v-if="showVersion"
+      v-if="props.showVersion"
       class="text-#C9CDD4 text-23rpx position-absolute left-50% bottom-5% translate-x--50%"
     >
       当前版本：{{ version }}
@@ -69,11 +69,16 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import { useToast } from 'wot-design-uni'
 import { useTokenStore } from '../../../store/token'
-import { getAppTitle, getHomePage } from '../../../config/framework'
+import {
+  getAppTitle,
+  getHomePage,
+  isCaptchaEnabled,
+} from '../../../config/framework'
 import { useSystemState } from '../../../store'
+import { appUpdate } from '../../../utils'
 import Verify from '../components/verifition/verify.vue'
 
 defineOptions({
@@ -87,18 +92,23 @@ const props = withDefaults(defineProps<{
   userIcon?: string
   /** 密码图标 */
   passwordIcon?: string
-  /** 验证码开关 */
+  /** 验证码开关，不传则使用框架配置 */
   captchaEnabled?: boolean
   /** 是否显示版本号 */
   showVersion?: boolean
-  /** 登录成功后的回调，用于额外处理（如检查更新等），内部已处理记住密码和跳转 */
-  onSuccess?: () => Promise<void> | void
+  /** 登录成功后的回调 */
+  onSuccess?: () => void | Promise<void>
 }>(), {
   bgImage: '/static/images/login/login-bg.png',
   userIcon: '/static/images/login/user.png',
   passwordIcon: '/static/images/login/password.png',
-  captchaEnabled: false,
+  captchaEnabled: undefined,
   showVersion: true,
+})
+
+// 验证码开关：优先使用 props，否则使用框架配置
+const captchaEnabledComputed = computed(() => {
+  return props.captchaEnabled !== undefined ? props.captchaEnabled : isCaptchaEnabled()
 })
 
 const toast = useToast()
@@ -137,7 +147,7 @@ onMounted(() => {
 
 /** 获取验证码 */
 async function getCode() {
-  if (!props.captchaEnabled) {
+  if (!captchaEnabledComputed.value) {
     await verifySuccess({})
   } else {
     verifyRef.value.show()
@@ -183,9 +193,13 @@ async function verifySuccess(params: any) {
     const url = redirectUrl.value || getHomePage()
     uni.reLaunch({ url })
 
-    // 外部额外处理（如检查更新）
+    // 执行登录成功后的回调（外部传入）
     if (props.onSuccess) {
       await props.onSuccess()
+    } else {
+       setTimeout(() => {
+        appUpdate();
+      }, 2000);
     }
   } finally {
     loading.value = false

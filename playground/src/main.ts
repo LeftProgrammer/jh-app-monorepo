@@ -13,8 +13,24 @@ import 'virtual:uno.css'
 initFramework({
   appTitle: import.meta.env.VITE_APP_TITLE,
   appLogo: '/static/logo.svg',
+  // 认证模式，'single' | 'double' ==> 单token | 双token
   isDoubleTokenMode: import.meta.env.VITE_AUTH_MODE === 'double',
+  // 后台请求地址
   baseUrl: import.meta.env.VITE_SERVER_BASEURL,
+  // 静态资源基础 URL
+  staticBaseUrl: import.meta.env.VITE_STATIC_BASEURL,
+  // 代理配置（仅 H5 环境生效）
+  proxyEnable: import.meta.env.VITE_APP_PROXY_ENABLE === 'true',
+  proxyPrefix: import.meta.env.VITE_APP_PROXY_PREFIX || '/api',
+  // 验证码开关
+  captchaEnable: import.meta.env.VITE_APP_CAPTCHA_ENABLE === 'true',
+  // 上传类型
+  uploadType: (import.meta.env.VITE_UPLOAD_TYPE as 'server' | 'client') || 'server',
+  // 租户配置
+  tenantEnable: import.meta.env.VITE_APP_TENANT_ENABLE === 'true',
+  // 默认账户密码
+  defaultTenantId: import.meta.env.VITE_APP_DEFAULT_LOGIN_TENANT_ID || '',
+  // debug
   debugLog: import.meta.env.DEV,
   // API 加密配置
   apiEncrypt: {
@@ -23,23 +39,6 @@ initFramework({
     algorithm: import.meta.env.VITE_APP_API_ENCRYPT_ALGORITHM as 'AES' | 'RSA',
     requestKey: import.meta.env.VITE_APP_API_ENCRYPT_REQUEST_KEY,
     responseKey: import.meta.env.VITE_APP_API_ENCRYPT_RESPONSE_KEY,
-  },
-  // 上传配置
-  upload: {
-    type: (import.meta.env.VITE_UPLOAD_TYPE as 'server' | 'client') || 'server',
-  },
-  // 静态资源配置
-  static: {
-    baseUrl: import.meta.env.VITE_STATIC_BASEURL,
-  },
-  // 代理配置（仅 H5 环境生效）
-  proxy: {
-    enable: import.meta.env.VITE_APP_PROXY_ENABLE === 'true',
-    prefix: import.meta.env.VITE_APP_PROXY_PREFIX || '/api',
-  },
-  // 租户配置
-  tenant: {
-    enable: import.meta.env.VITE_APP_TENANT_ENABLE === 'true',
   },
   // 路由配置
   router: {

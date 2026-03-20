@@ -32,42 +32,6 @@ export interface ApiEncryptConfig {
 }
 
 /**
- * 上传配置接口
- */
-export interface UploadConfig {
-  /** 上传类型: 'server' | 'client' */
-  type?: 'server' | 'client'
-}
-
-/**
- * 静态资源配置接口
- */
-export interface StaticConfig {
-  /** 静态资源基础 URL */
-  baseUrl?: string
-}
-
-/**
- * HTTP 代理配置接口
- */
-export interface ProxyConfig {
-  /** 是否启用代理（仅 H5 环境生效） */
-  enable?: boolean
-  /** 代理前缀 */
-  prefix?: string
-}
-
-/**
- * 租户配置接口
- */
-export interface TenantConfig {
-  /** 是否启用租户 */
-  enable?: boolean
-  /** 默认租户 ID */
-  id?: string | number
-}
-
-/**
  * 路由配置接口
  */
 export interface RouterConfig {
@@ -125,14 +89,20 @@ export interface FrameworkConfig {
   debugLog?: boolean
   /** API 加密配置 */
   apiEncrypt?: ApiEncryptConfig
-  /** 上传配置 */
-  upload?: UploadConfig
-  /** 静态资源配置 */
-  static?: StaticConfig
-  /** HTTP 代理配置 */
-  proxy?: ProxyConfig
-  /** 租户配置 */
-  tenant?: TenantConfig
+  /** 上传类型: 'server' | 'client' */
+  uploadType?: 'server' | 'client'
+  /** 静态资源基础 URL */
+  staticBaseUrl?: string
+  /** 是否启用代理（仅 H5 环境生效） */
+  proxyEnable?: boolean
+  /** 代理前缀 */
+  proxyPrefix?: string
+  /** 是否启用租户 */
+  tenantEnable?: boolean
+  /** 默认租户 ID（用于登录时的默认选择） */
+  defaultTenantId?: string | number
+  /** 是否启用验证码 */
+  captchaEnable?: boolean
   /** 路由配置 */
   router?: RouterConfig
   /** 路由依赖注入 */
@@ -163,6 +133,13 @@ const defaultConfig: FrameworkConfig = {
   appLogo: '/static/logo.svg',
   isDoubleTokenMode: false,
   baseUrl: '',
+  uploadType: 'server',
+  staticBaseUrl: '',
+  proxyEnable: false,
+  proxyPrefix: '/api',
+  tenantEnable: false,
+  defaultTenantId: '',
+  captchaEnable: false,
   debugLog: false,
   apiEncrypt: {
     enable: false,
@@ -170,20 +147,6 @@ const defaultConfig: FrameworkConfig = {
     algorithm: 'AES',
     requestKey: '',
     responseKey: '',
-  },
-  upload: {
-    type: 'server',
-  },
-  static: {
-    baseUrl: '',
-  },
-  proxy: {
-    enable: false,
-    prefix: '/api',
-  },
-  tenant: {
-    enable: false,
-    id: '',
   },
   router: { ...defaultRouterConfig },
 }
@@ -351,7 +314,7 @@ export function getApiEncryptResponseKey(): string {
  * 获取上传类型
  */
 export function getUploadType(): 'server' | 'client' {
-  return _frameworkConfig.upload?.type ?? 'server'
+  return _frameworkConfig.uploadType ?? 'server'
 }
 
 // ============================================================
@@ -362,7 +325,7 @@ export function getUploadType(): 'server' | 'client' {
  * 获取静态资源基础 URL
  */
 export function getStaticBaseUrl(): string {
-  return _frameworkConfig.static?.baseUrl ?? ''
+  return _frameworkConfig.staticBaseUrl ?? ''
 }
 
 // ============================================================
@@ -373,14 +336,14 @@ export function getStaticBaseUrl(): string {
  * 是否启用代理
  */
 export function isProxyEnabled(): boolean {
-  return _frameworkConfig.proxy?.enable ?? false
+  return _frameworkConfig.proxyEnable ?? false
 }
 
 /**
  * 获取代理前缀
  */
 export function getProxyPrefix(): string {
-  return _frameworkConfig.proxy?.prefix ?? '/api'
+  return _frameworkConfig.proxyPrefix ?? '/api'
 }
 
 // ============================================================
@@ -391,14 +354,14 @@ export function getProxyPrefix(): string {
  * 是否启用租户
  */
 export function isTenantEnabled(): boolean {
-  return _frameworkConfig.tenant?.enable ?? false
+  return _frameworkConfig.tenantEnable ?? false
 }
 
 /**
- * 获取租户 ID
+ * 获取默认租户 ID（用于登录时的默认选择）
  */
-export function getTenantId(): string | number {
-  return _frameworkConfig.tenant?.id ?? ''
+export function getDefaultTenantId(): string | number {
+  return _frameworkConfig.defaultTenantId ?? ''
 }
 
 // ============================================================
@@ -499,4 +462,15 @@ export function getLoginPageList(): string[] {
     getCodeLoginPage(),
     getForgetPasswordPage(),
   ]
+}
+
+// ============================================================
+// 验证码配置访问器
+// ============================================================
+
+/**
+ * 是否启用验证码
+ */
+export function isCaptchaEnabled(): boolean {
+  return _frameworkConfig.captchaEnable ?? false
 }

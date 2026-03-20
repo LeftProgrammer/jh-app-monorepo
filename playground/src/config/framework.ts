@@ -11,6 +11,7 @@ export {
   getApiEncryptConfig,
   getBaseUrl,
   getCodeLoginPage,
+  getDefaultTenantId,
   getExcludeLoginPathList,
   getForgetPasswordPage,
   getFrameworkConfig,
@@ -24,7 +25,6 @@ export {
   getRouterConfig,
   getRouterDeps,
   getStaticBaseUrl,
-  getTenantId,
   getUploadType,
   isApiEncryptEnabled,
   isDebugLog,
@@ -38,10 +38,6 @@ export {
 export type {
   ApiEncryptConfig,
   FrameworkConfig,
-  ProxyConfig,
   RouterConfig,
   RouterDeps,
-  StaticConfig,
-  TenantConfig,
-  UploadConfig,
 } from '@jinghe-sanjiaoroad-app/framework/config/framework'

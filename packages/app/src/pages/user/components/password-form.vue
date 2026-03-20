@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <wd-popup
     v-model="visible"
     position="bottom"
@@ -43,8 +43,12 @@
 <script lang="ts" setup>
 import { computed, reactive, ref, watch } from 'vue'
 import { useToast } from 'wot-design-uni'
-import { updateUserPassword } from '@/api/system/user/profile'
-import { isBlank } from '@/utils'
+import { updateUserPassword } from '../../../api/system/user/profile'
+import { isBlank } from '../../../utils'
+
+defineOptions({
+  name: 'UserPasswordForm',
+})
 
 const props = defineProps<{
   modelValue: boolean
@@ -68,7 +72,6 @@ const formData = reactive({
 })
 const submitting = ref(false)
 
-/** 监听弹窗打开，重置表单 */
 watch(
   () => props.modelValue,
   (val) => {
@@ -80,14 +83,11 @@ watch(
   },
 )
 
-/** 处理关闭 */
 function handleClose() {
   visible.value = false
 }
 
-/** 处理确认 */
 async function handleConfirm() {
-  // 参数校验
   if (isBlank(formData.oldPassword)) {
     toast.warning('请输入旧密码')
     return
@@ -105,7 +105,6 @@ async function handleConfirm() {
     return
   }
 
-  // 调用更新接口
   submitting.value = true
   try {
     await updateUserPassword({
