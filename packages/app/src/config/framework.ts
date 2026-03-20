@@ -115,6 +115,8 @@ export interface RouterDeps {
 export interface FrameworkConfig {
   /** 应用标题 */
   appTitle?: string
+  /** 应用 Logo 路径 */
+  appLogo?: string
   /** 是否为双 Token 模式（true=双token，false=单token） */
   isDoubleTokenMode?: boolean
   /** API 基础地址 */
@@ -158,6 +160,7 @@ const defaultRouterConfig: RouterConfig = {
 
 const defaultConfig: FrameworkConfig = {
   appTitle: '',
+  appLogo: '/static/logo.svg',
   isDoubleTokenMode: false,
   baseUrl: '',
   debugLog: false,
@@ -285,6 +288,13 @@ export function isDebugLog(): boolean {
  */
 export function getAppTitle(): string {
   return _frameworkConfig.appTitle ?? ''
+}
+
+/**
+ * 获取应用 Logo 路径
+ */
+export function getAppLogo(): string {
+  return _frameworkConfig.appLogo ?? '/static/logo.svg'
 }
 
 // ============================================================

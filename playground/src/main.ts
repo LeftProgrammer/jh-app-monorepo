@@ -12,6 +12,7 @@ import 'virtual:uno.css'
 // 初始化框架配置（必须在使用框架功能之前调用）
 initFramework({
   appTitle: import.meta.env.VITE_APP_TITLE,
+  appLogo: '/static/logo.svg',
   isDoubleTokenMode: import.meta.env.VITE_AUTH_MODE === 'double',
   baseUrl: import.meta.env.VITE_SERVER_BASEURL,
   debugLog: import.meta.env.DEV,
@@ -42,8 +43,8 @@ initFramework({
   },
   // 路由配置
   router: {
-    loginPage: '/pages-core/auth/login',
     homePage: HOME_PAGE,
+    loginPage: '/pages-core/auth/login',
     notFoundPage: '/pages-core/error/404',
     registerPage: '/pages-core/auth/register',
     codeLoginPage: '/pages-core/auth/code-login',

@@ -21,20 +21,21 @@ import {
   getTenantByWebsite,
   getTenantSimpleList,
 } from '../../../api/login'
+import { getTenantId as getDefaultTenantId, isTenantEnabled } from '../../../config/framework'
 import { useUserStore } from '../../../store'
 
 const toast = useToast()
 const userStore = useUserStore()
 
 const tenantEnabled = computed(
-  () => import.meta.env.VITE_APP_TENANT_ENABLE === 'true',
-) // 租户开关：通过环境变量控制
+  () => isTenantEnabled(),
+) // 租户开关：通过框架配置控制
 const tenantList = ref<TenantVO[]>([]) // 租户列表数据
 
 const tenantId = computed(
   () =>
     userStore.tenantId
-    || Number(import.meta.env.VITE_APP_DEFAULT_LOGIN_TENANT_ID)
+    || Number(getDefaultTenantId())
     || undefined,
 ) // 当前选中的租户
 

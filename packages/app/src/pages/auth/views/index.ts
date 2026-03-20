@@ -5,7 +5,8 @@
  * 但内部可以使用这些封装好的页面组件
  */
 
-export { default as AuthLoginPage } from './login.vue'
 export { default as AuthCodeLoginPage } from './code-login.vue'
-export { default as AuthRegisterPage } from './register.vue'
+export { default as AuthDefaultLoginPage } from './default-login.vue'
 export { default as AuthForgetPasswordPage } from './forget-password.vue'
+export { default as AuthLoginPage } from './login.vue'
+export { default as AuthRegisterPage } from './register.vue'
