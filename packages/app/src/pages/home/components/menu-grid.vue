@@ -46,7 +46,7 @@ const props = withDefaults(defineProps<{
   iconPrefix?: string
 }>(), {
   column: 5,
-  iconPrefix: '/static/images/menus/',
+  iconPrefix: '/static/framework/menus/',
 })
 
 const emit = defineEmits<{

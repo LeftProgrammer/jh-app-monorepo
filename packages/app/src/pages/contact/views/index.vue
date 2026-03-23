@@ -112,9 +112,9 @@ import { findChildren, handleTree } from '../../../utils/tree'
 import { navigateBackPlus } from '../../../utils'
 import ContactBreadcrumb from '../components/breadcrumb.vue'
 import type { BreadcrumbItem } from '../components/breadcrumb.vue'
-// 内置默认图标
-import deptIconDefault from '../../../static/images/contact/contact.png'
-import phoneIconDefault from '../../../static/images/contact/phone.png'
+// 默认图标路径（外部项目需将图片放在 /static/framework/contact/ 下）
+const deptIconDefault = '/static/framework/contact/contact.png'
+const phoneIconDefault = '/static/framework/contact/phone.png'
 
 defineOptions({
   name: 'ContactPage',

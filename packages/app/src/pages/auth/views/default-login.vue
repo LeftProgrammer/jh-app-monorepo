@@ -99,9 +99,9 @@ const props = withDefaults(defineProps<{
   /** 登录成功后的回调 */
   onSuccess?: () => void | Promise<void>
 }>(), {
-  bgImage: '/static/images/login/login-bg.png',
-  userIcon: '/static/images/login/user.png',
-  passwordIcon: '/static/images/login/password.png',
+  bgImage: '/static/framework/login/login-bg.png',
+  userIcon: '/static/framework/login/user.png',
+  passwordIcon: '/static/framework/login/password.png',
   captchaEnabled: undefined,
   showVersion: true,
 })

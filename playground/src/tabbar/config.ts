@@ -85,7 +85,7 @@ export const tabbarConfig: TabbarFullConfig = createTabbarConfig({
   customItems: customTabbarList,
   nativeItems: nativeTabbarList,
   bulgeEnable: false,
-  bulgeImage: '/static/tabbar/scan.png',
+  bulgeImage: '/static/framework/tabbar/scan.png',
   onBulgeClick: () => {
     uni.showToast({ title: '点击了中间的鼓包', icon: 'none' })
   },

@@ -121,9 +121,9 @@ const props = withDefaults(defineProps<{
   searchPlaceholder: '搜索常用',
   favoriteTitle: '首页功能',
   column: 5,
-  iconPrefix: '/static/images/menus/',
-  addIconSrc: '/static/images/home/plus.png',
-  removeIconSrc: '/static/images/home/subtract.png',
+  iconPrefix: '/static/framework/menus/',
+  addIconSrc: '/static/framework/home/plus.png',
+  removeIconSrc: '/static/framework/home/subtract.png',
 })
 
 const userStore = useUserStore()

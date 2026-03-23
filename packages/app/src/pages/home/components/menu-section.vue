@@ -68,7 +68,7 @@ const props = withDefaults(defineProps<{
   column: 5,
   rows: 2,
   height: '280rpx',
-  iconPrefix: '/static/images/menus/',
+  iconPrefix: '/static/framework/menus/',
   showMore: true,
   moreText: '更多',
   moreKey: 'more',

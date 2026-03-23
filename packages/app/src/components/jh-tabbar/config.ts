@@ -42,7 +42,7 @@ export function createTabbarConfig(options: TabbarConfigOptions): TabbarFullConf
   const bulgeEnable = options.bulgeEnable ?? false
   const theme = { ...defaultTheme, ...options.theme }
   const tabBarConfig = { ...defaultTabBarConfig, ...options.tabBarConfig }
-  const bulgeImage = options.bulgeImage ?? '/static/tabbar/scan.png'
+  const bulgeImage = options.bulgeImage ?? '/static/framework/tabbar/scan.png'
   const getBadgeValue = options.getBadgeValue ?? (() => undefined)
   const onBulgeClick = options.onBulgeClick ?? (() => {
     uni.showToast({ title: '点击了中间的鼓包', icon: 'none' })

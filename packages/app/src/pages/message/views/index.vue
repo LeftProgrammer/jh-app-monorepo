@@ -40,14 +40,14 @@
         <view class="p-36rpx flex items-center">
           <wd-badge is-dot class="mr-13px" :hidden="item.readStatus">
             <image
-              src="/src/static/images/message/icon2.png"
+              :src="systemMsgIcon"
               class="w-42px h-42px"
               mode="scaleToFill"
               v-if="item.templateType === 2"
             />
             <image
               v-else
-              src="/src/static/images/message/icon1.png"
+              :src="otherMsgIcon"
               class="w-42px h-42px"
               mode="scaleToFill"
             />
@@ -101,6 +101,16 @@ import DetailPopup from '../components/detail-popup.vue'
 
 defineOptions({
   name: 'MessagePage',
+})
+
+const props = withDefaults(defineProps<{
+  /** 系统消息图标 */
+  systemMsgIcon?: string
+  /** 业务消息图标 */
+  otherMsgIcon?: string
+}>(), {
+  systemMsgIcon: '/static/framework/message/icon2.png',
+  otherMsgIcon: '/static/framework/message/icon1.png',
 })
 
 export type LoadMoreState = 'loading' | 'finished' | 'error'

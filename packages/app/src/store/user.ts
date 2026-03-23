@@ -22,7 +22,7 @@ const userInfoState: IUserInfoRes = {
   phone: '',
   username: '',
   nickname: '',
-  avatar: '/static/images/default-avatar.png', // TODO @芋艿：CDN 化
+  avatar: '/static/framework/default-avatar.png',
 }
 
 export const useUserStore = defineStore(

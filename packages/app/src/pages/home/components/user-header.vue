@@ -92,13 +92,13 @@ const props = withDefaults(defineProps<{
   /** 路由跳转函数（可选，默认使用 uni.navigateTo） */
   navigateTo?: (url: string) => void
 }>(), {
-  bannerSrc: '/static/images/home/banner.png',
+  bannerSrc: '/static/framework/home/banner.png',
   todoLabel: '待办任务',
-  todoIconSrc: '/static/images/home/todo.png',
-  todoArrowIconSrc: '/static/images/home/todo-icon.png',
+  todoIconSrc: '/static/framework/home/todo.png',
+  todoArrowIconSrc: '/static/framework/home/todo-icon.png',
   messageLabel: '未读消息',
-  messageIconSrc: '/static/images/home/copy.png',
-  messageArrowIconSrc: '/static/images/home/copy-icon.png',
+  messageIconSrc: '/static/framework/home/copy.png',
+  messageArrowIconSrc: '/static/framework/home/copy-icon.png',
   todoUrl: '/pages/bpm/index?tab=todo',
   messageUrl: '/pages/message/index',
 })

@@ -12,13 +12,13 @@ type ColorType = 'error' | 'info' | 'primary' | 'success' | 'warning'
 export interface DictDataType {
   dictType?: string
   label: string
-  value: number | string
+  value: boolean | number | string
   colorType?: string
   cssClass?: string
 }
 
 export interface NumberDictDataType extends DictDataType {
-  value: number | string
+  value: number
 }
 
 export interface StringDictDataType extends DictDataType {
@@ -60,7 +60,7 @@ export function getIntDictOptions(dictType: string): NumberDictDataType[] {
   dictOptions.forEach((dict: DictDataType) => {
     dictOption.push({
       ...dict,
-      value: dict.value,
+      value: Number.parseInt(`${dict.value}`),
     })
   })
   return dictOption

@@ -25,7 +25,7 @@ export * as http from './http'
 export * as router from './router'
 
 // 路由拦截器直接导出，方便外部项目使用
-export { routeInterceptor, judgeIsExcludePath } from './router'
+export { judgeIsExcludePath, routeInterceptor } from './router'
 
 // 命名空间导出 - 避免命名冲突，支持按需使用
 // 状态管理

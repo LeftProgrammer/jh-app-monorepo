@@ -109,12 +109,11 @@ export interface FrameworkConfig {
   routerDeps?: RouterDeps
 }
 
-/**
- * 默认配置
- */
-/**
- * 默认路由配置
- */
+// ============================================================
+// 默认配置
+// ============================================================
+
+/** 默认路由配置 */
 const defaultRouterConfig: RouterConfig = {
   loginPage: '/pages/login/index',
   homePage: '/pages/index/index',
@@ -128,9 +127,10 @@ const defaultRouterConfig: RouterConfig = {
   loginPageEnableInMp: true,
 }
 
+/** 默认框架配置 */
 const defaultConfig: FrameworkConfig = {
   appTitle: '',
-  appLogo: '/static/logo.svg',
+  appLogo: '/static/framework/logo.svg',
   isDoubleTokenMode: false,
   baseUrl: '',
   uploadType: 'server',
@@ -151,14 +151,14 @@ const defaultConfig: FrameworkConfig = {
   router: { ...defaultRouterConfig },
 }
 
-/**
- * 框架配置单例（内部使用）
- */
+// ============================================================
+// 配置单例
+// ============================================================
+
+/** 框架配置单例（内部使用） */
 let _frameworkConfig: FrameworkConfig = { ...defaultConfig }
 
-/**
- * 配置是否已初始化标记
- */
+/** 配置是否已初始化标记 */
 let _initialized = false
 
 /**
@@ -176,7 +176,13 @@ let _initialized = false
  * })
  */
 export function initFramework(config: FrameworkConfig): void {
-  _frameworkConfig = { ...defaultConfig, ...config }
+  _frameworkConfig = {
+    ...defaultConfig,
+    ...config,
+    // 嵌套对象深度合并，避免外部传入部分字段时丢失默认值
+    apiEncrypt: { ...defaultConfig.apiEncrypt, ...config.apiEncrypt },
+    router: { ...defaultRouterConfig, ...config.router },
+  }
   _initialized = true
 
   if (_frameworkConfig.debugLog) {
@@ -185,9 +191,9 @@ export function initFramework(config: FrameworkConfig): void {
 }
 
 /**
- * 获取框架配置
+ * 获取框架配置（只读副本）
  * @description 包内部使用此方法获取配置，不直接读取环境变量
- * @returns 当前框架配置
+ * @returns 当前框架配置的浅拷贝
  */
 export function getFrameworkConfig(): FrameworkConfig {
   if (!_initialized) {
@@ -221,240 +227,172 @@ export function resetFrameworkConfig(): void {
 }
 
 // ============================================================
-// 便捷访问器（包内部常用配置的快捷方式）
+// 便捷访问器 - 基础配置
 // ============================================================
 
-/**
- * 是否为双 Token 模式
- * @description 包内部使用此 getter 获取配置值
- */
+/** 是否为双 Token 模式 */
 export function isDoubleTokenMode(): boolean {
   return _frameworkConfig.isDoubleTokenMode ?? false
 }
 
-/**
- * 获取 API 基础地址
- */
+/** 获取 API 基础地址 */
 export function getBaseUrl(): string {
   return _frameworkConfig.baseUrl ?? ''
 }
 
-/**
- * 是否开启调试日志
- */
+/** 是否开启调试日志 */
 export function isDebugLog(): boolean {
   return _frameworkConfig.debugLog ?? false
 }
 
-/**
- * 获取应用标题
- */
+/** 获取应用标题 */
 export function getAppTitle(): string {
   return _frameworkConfig.appTitle ?? ''
 }
 
-/**
- * 获取应用 Logo 路径
- */
+/** 获取应用 Logo 路径 */
 export function getAppLogo(): string {
-  return _frameworkConfig.appLogo ?? '/static/logo.svg'
+  return _frameworkConfig.appLogo ?? '/static/framework/logo.svg'
 }
 
-// ============================================================
-// API 加密配置访问器
-// ============================================================
-
-/**
- * 获取 API 加密配置
- */
-export function getApiEncryptConfig(): ApiEncryptConfig {
-  return _frameworkConfig.apiEncrypt ?? defaultConfig.apiEncrypt!
-}
-
-/**
- * 是否启用 API 加密
- */
-export function isApiEncryptEnabled(): boolean {
-  return _frameworkConfig.apiEncrypt?.enable ?? false
-}
-
-/**
- * 获取加密请求头名称
- */
-export function getApiEncryptHeader(): string {
-  return _frameworkConfig.apiEncrypt?.header ?? 'X-Api-Encrypt'
-}
-
-/**
- * 获取加密算法
- */
-export function getApiEncryptAlgorithm(): 'AES' | 'RSA' {
-  return _frameworkConfig.apiEncrypt?.algorithm ?? 'AES'
-}
-
-/**
- * 获取请求加密密钥
- */
-export function getApiEncryptRequestKey(): string {
-  return _frameworkConfig.apiEncrypt?.requestKey ?? ''
-}
-
-/**
- * 获取响应解密密钥
- */
-export function getApiEncryptResponseKey(): string {
-  return _frameworkConfig.apiEncrypt?.responseKey ?? ''
-}
-
-// ============================================================
-// 上传配置访问器
-// ============================================================
-
-/**
- * 获取上传类型
- */
+/** 获取上传类型 */
 export function getUploadType(): 'server' | 'client' {
   return _frameworkConfig.uploadType ?? 'server'
 }
 
-// ============================================================
-// 静态资源配置访问器
-// ============================================================
-
-/**
- * 获取静态资源基础 URL
- */
+/** 获取静态资源基础 URL */
 export function getStaticBaseUrl(): string {
   return _frameworkConfig.staticBaseUrl ?? ''
 }
 
 // ============================================================
-// 代理配置访问器
+// 便捷访问器 - API 加密
 // ============================================================
 
-/**
- * 是否启用代理
- */
+/** 获取 API 加密配置 */
+export function getApiEncryptConfig(): ApiEncryptConfig {
+  return _frameworkConfig.apiEncrypt ?? defaultConfig.apiEncrypt!
+}
+
+/** 是否启用 API 加密 */
+export function isApiEncryptEnabled(): boolean {
+  return _frameworkConfig.apiEncrypt?.enable ?? false
+}
+
+/** 获取加密请求头名称 */
+export function getApiEncryptHeader(): string {
+  return _frameworkConfig.apiEncrypt?.header ?? 'X-Api-Encrypt'
+}
+
+/** 获取加密算法 */
+export function getApiEncryptAlgorithm(): 'AES' | 'RSA' {
+  return _frameworkConfig.apiEncrypt?.algorithm ?? 'AES'
+}
+
+/** 获取请求加密密钥 */
+export function getApiEncryptRequestKey(): string {
+  return _frameworkConfig.apiEncrypt?.requestKey ?? ''
+}
+
+/** 获取响应解密密钥 */
+export function getApiEncryptResponseKey(): string {
+  return _frameworkConfig.apiEncrypt?.responseKey ?? ''
+}
+
+// ============================================================
+// 便捷访问器 - 代理 & 租户 & 验证码
+// ============================================================
+
+/** 是否启用代理（仅 H5 环境生效） */
 export function isProxyEnabled(): boolean {
   return _frameworkConfig.proxyEnable ?? false
 }
 
-/**
- * 获取代理前缀
- */
+/** 获取代理前缀 */
 export function getProxyPrefix(): string {
   return _frameworkConfig.proxyPrefix ?? '/api'
 }
 
-// ============================================================
-// 租户配置访问器
-// ============================================================
-
-/**
- * 是否启用租户
- */
+/** 是否启用租户 */
 export function isTenantEnabled(): boolean {
   return _frameworkConfig.tenantEnable ?? false
 }
 
-/**
- * 获取默认租户 ID（用于登录时的默认选择）
- */
+/** 获取默认租户 ID */
 export function getDefaultTenantId(): string | number {
   return _frameworkConfig.defaultTenantId ?? ''
 }
 
+/** 是否启用验证码 */
+export function isCaptchaEnabled(): boolean {
+  return _frameworkConfig.captchaEnable ?? false
+}
+
 // ============================================================
-// 路由配置访问器
+// 便捷访问器 - 路由
 // ============================================================
 
-/**
- * 获取路由配置
- */
+/** 获取完整路由配置 */
 export function getRouterConfig(): RouterConfig {
   return _frameworkConfig.router ?? defaultRouterConfig
 }
 
-/**
- * 获取路由依赖
- */
+/** 获取路由依赖注入 */
 export function getRouterDeps(): RouterDeps {
   return _frameworkConfig.routerDeps ?? {}
 }
 
-/**
- * 获取登录页路径
- */
+/** 获取登录页路径 */
 export function getLoginPage(): string {
   return _frameworkConfig.router?.loginPage ?? defaultRouterConfig.loginPage!
 }
 
-/**
- * 获取首页路径
- */
+/** 获取首页路径 */
 export function getHomePage(): string {
   return _frameworkConfig.router?.homePage ?? defaultRouterConfig.homePage!
 }
 
-/**
- * 获取 404 页面路径
- */
+/** 获取 404 页面路径 */
 export function getNotFoundPage(): string {
   return _frameworkConfig.router?.notFoundPage ?? defaultRouterConfig.notFoundPage!
 }
 
-/**
- * 获取注册页路径
- */
+/** 获取注册页路径 */
 export function getRegisterPage(): string {
   return _frameworkConfig.router?.registerPage ?? defaultRouterConfig.registerPage!
 }
 
-/**
- * 获取短信登录页路径
- */
+/** 获取短信登录页路径 */
 export function getCodeLoginPage(): string {
   return _frameworkConfig.router?.codeLoginPage ?? defaultRouterConfig.codeLoginPage!
 }
 
-/**
- * 获取忘记密码页路径
- */
+/** 获取忘记密码页路径 */
 export function getForgetPasswordPage(): string {
   return _frameworkConfig.router?.forgetPasswordPage ?? defaultRouterConfig.forgetPasswordPage!
 }
 
-/**
- * 获取仅 PC 端访问提示页路径
- */
+/** 获取仅 PC 端访问提示页路径 */
 export function getOnlyPcPage(): string {
   return _frameworkConfig.router?.onlyPcPage ?? defaultRouterConfig.onlyPcPage!
 }
 
-/**
- * 是否为白名单登录模式
- */
+/** 是否为白名单登录模式 */
 export function isNeedLoginMode(): boolean {
   return _frameworkConfig.router?.isNeedLoginMode ?? defaultRouterConfig.isNeedLoginMode!
 }
 
-/**
- * 获取排除登录路径列表
- */
+/** 获取排除登录路径列表 */
 export function getExcludeLoginPathList(): string[] {
   return _frameworkConfig.router?.excludeLoginPathList ?? []
 }
 
-/**
- * 小程序是否启用自定义登录页
- */
+/** 小程序是否启用自定义登录页 */
 export function isLoginPageEnableInMp(): boolean {
   return _frameworkConfig.router?.loginPageEnableInMp ?? defaultRouterConfig.loginPageEnableInMp!
 }
 
-/**
- * 获取登录页列表
- */
+/** 获取所有登录相关页面路径列表 */
 export function getLoginPageList(): string[] {
   return [
     getLoginPage(),
@@ -462,15 +400,4 @@ export function getLoginPageList(): string[] {
     getCodeLoginPage(),
     getForgetPasswordPage(),
   ]
-}
-
-// ============================================================
-// 验证码配置访问器
-// ============================================================
-
-/**
- * 是否启用验证码
- */
-export function isCaptchaEnabled(): boolean {
-  return _frameworkConfig.captchaEnable ?? false
 }

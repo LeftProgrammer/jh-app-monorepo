@@ -48,7 +48,7 @@
         <view class="flex items-center justify-center">
           <image
             v-if="item.status !== 1"
-            :src="`/static/images/task/status-${item.status}.png`"
+            :src="`${statusIconPrefix}status-${item.status}.png`"
             class="h-95rpx w-110rpx"
           />
           <wd-icon name="arrow-right" size="31rpx" color="#009688" />
@@ -80,8 +80,11 @@ defineOptions({
 const props = withDefaults(defineProps<{
   /** 详情页路径模板，{id} 会被替换为实际 ID */
   detailUrl?: string
+  /** 任务状态图标路径前缀，实际路径为 `${prefix}status-${status}.png` */
+  statusIconPrefix?: string
 }>(), {
   detailUrl: '/pages-bpm/detail/index?id={id}&type=my',
+  statusIconPrefix: '/static/framework/task/',
 })
 
 export type LoadMoreState = 'loading' | 'finished' | 'error'
