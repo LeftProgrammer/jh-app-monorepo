@@ -40,7 +40,7 @@ const emit = defineEmits<{
 const unitList = ref<ProjectUnit[]>([]);
 const selectedId = ref<string | string[]>([]);
 
-/** 根据用户 ID 获取昵称 */
+/** 根据单位 ID 获取单位名称 */
 function getUnitname(unitId: string | undefined): string {
   if (!unitId) {
     return "";

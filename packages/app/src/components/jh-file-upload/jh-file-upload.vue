@@ -27,6 +27,8 @@ import { getFileByIds } from '../../api/infra/file'
 const props = defineProps<{
   fileId?: string | number | (string | number)[]
   action?: string
+  /** 是否返回完整文件对象列表（默认返回逗号分隔的 id 字符串） */
+  returnObject?: boolean
 }>()
 const emit = defineEmits<{
   (e: 'update:fileId', value: (string | number | UploadFileItem)[]): void
@@ -95,7 +97,6 @@ function handleUploadChange(e: UploadChangeEvent) {
 watch(
   () => props.fileId,
   async (newIds) => {
-    console.log('watch props.fileId', newIds)
     if (!newIds && newIds !== 0) {
       resolvedFileList.value = []
       return

@@ -55,12 +55,10 @@ const props = withDefaults(
   {
     type: "radio",
     label: "",
-    title: "",
     placeholder: "请选择",
     useDefaultSlot: false,
     clearable: true,
     labelWidth: "180rpx",
-    titleWidth: "180rpx",
     prop: ""
   }
 );
@@ -110,6 +108,4 @@ function handleConfirm({ value }: { value: any }) {
   emit("confirm", ids, ids ? users : []);
 }
 
-/** 初始化 */
-onMounted(() => {});
 </script>
