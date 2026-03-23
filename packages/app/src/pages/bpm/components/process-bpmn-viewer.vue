@@ -8,38 +8,36 @@
 </template>
 
 <script lang="ts" setup>
-import ProcessViewer from "./ProcessViewer.vue";
+import { ref, watch } from 'vue'
+import ProcessViewer from './process-viewer/index.vue'
 
-defineOptions({ name: "BpmProcessInstanceBpmnViewer" });
+defineOptions({ name: 'BpmProcessBpmnViewer' })
 
 const props = defineProps({
-  bpmnXml: { type: String }, // BPMN XML
-  modelView: { type: Object }
-});
+  bpmnXml: { type: String },
+  modelView: { type: Object },
+})
 
 const view = ref({
-  bpmnXml: ""
-}); // BPMN 流程图数据
+  bpmnXml: '',
+})
 
-/** 只有 loading 完成时，才去加载流程列表 */
 watch(
   () => props.modelView,
   async (newModelView) => {
-    // 加载最新
     if (newModelView) {
-      //@ts-ignore
-      view.value = newModelView;
+      // @ts-ignore
+      view.value = newModelView
     }
-  }
-);
+  },
+)
 
-/** 监听 bpmnXml */
 watch(
   () => props.bpmnXml,
   (value) => {
-    view.value.bpmnXml = value;
-  }
-);
+    view.value.bpmnXml = value || ''
+  },
+)
 </script>
 
 <style lang="scss" scoped>

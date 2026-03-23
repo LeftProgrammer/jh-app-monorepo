@@ -47,6 +47,7 @@ export interface ProcessInstance {
 export interface ApprovalDetail {
   processInstance: ProcessInstance
   processDefinition: ProcessDefinition
+  todoTask?: any
 }
 
 /** 抄送流程实例 */

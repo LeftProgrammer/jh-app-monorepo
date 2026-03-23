@@ -1,4 +1,4 @@
-﻿<template>
+<template>
 	<view class="h-100% w-100% position-relative">
 		<view id="bpmnCanvas" class="process-viewer w-100% h-100%" :prop="xml" :change:prop="bpmnCanvas.handleXmlChange"
 			:view-prop="view" :change:view-prop="bpmnCanvas.handleViewChange" @touchstart="bpmnCanvas.handleTouchStart"
@@ -15,6 +15,11 @@
 
 <script setup>
 	import "./theme/index.scss";
+
+	defineOptions({
+		name: 'BpmProcessViewer',
+	})
+
 	const props = defineProps({
 		xml: {
 			type: String,
@@ -28,10 +33,16 @@
 </script>
 <script lang="renderjs" module="bpmnCanvas">
 	import BpmnViewer from "bpmn-js/lib/Viewer";
-	import {
-		BpmProcessInstanceStatus
-	} from '@/utils'
 	import MoveCanvasModule from "diagram-js/lib/navigation/movecanvas";
+
+	// BPM 流程实例状态枚举
+	const BpmProcessInstanceStatus = {
+		RUNNING: 1,
+		APPROVE: 2,
+		REJECT: 3,
+		CANCEL: 4,
+		RETURN: 5,
+	}
 
 	export default {
 		props: ['xml', 'view'],
@@ -69,7 +80,6 @@
 		methods: {
 			// 监听 xml 变化
 			handleXmlChange(newVal) {
-				// console.log("🚀 ~ newVal:", newVal)
 				this.currentXml = newVal;
 				if (this.bpmnViewer) {
 					this.initPage();
@@ -84,7 +94,6 @@
 			},
 			// 监听 view 变化
 			handleViewChange(newVal) {
-				// console.log("🚀 ~ newVal:", newVal)
 				if (newVal && typeof newVal === 'string') {
 					try {
 						this.currentView = JSON.parse(newVal);
@@ -251,8 +260,6 @@
 
 				const touches = event.touches;
 				if (touches.length !== 1) return;
-
-				//   event.preventDefault();
 
 				const touch = touches[0];
 				const deltaX = touch.clientX - this.lastTouchX;
