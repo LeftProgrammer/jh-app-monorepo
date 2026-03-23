@@ -11,3 +11,4 @@ export { default as BpmProcessViewer } from './components/process-viewer/index.v
 export { default as BpmTodoList } from './components/todo-list.vue'
 export { default as BpmDetailPage } from './views/detail.vue'
 export { default as BpmPage } from './views/index.vue'
+export type { BpmTabConfig } from './views/index.vue'
