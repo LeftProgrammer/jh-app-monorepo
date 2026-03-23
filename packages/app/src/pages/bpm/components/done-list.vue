@@ -62,7 +62,7 @@ const props = withDefaults(defineProps<{
   /** 详情页路径模板，{id} 会被替换为实际 ID */
   detailUrl?: string
 }>(), {
-  detailUrl: '/pages-bpm/processInstance/detail/index?id={id}&type=done',
+  detailUrl: '/pages-bpm/detail/index?id={id}&type=done',
 })
 
 export type LoadMoreState = 'loading' | 'finished' | 'error'

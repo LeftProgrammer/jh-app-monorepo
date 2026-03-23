@@ -1,5 +1,31 @@
 // 全局要用的类型放到这里
 
+// 图片模块类型声明
+declare module '*.png' {
+  const src: string
+  export default src
+}
+
+declare module '*.jpg' {
+  const src: string
+  export default src
+}
+
+declare module '*.jpeg' {
+  const src: string
+  export default src
+}
+
+declare module '*.gif' {
+  const src: string
+  export default src
+}
+
+declare module '*.svg' {
+  const src: string
+  export default src
+}
+
 declare global {
   interface IResData<T> {
     code: number

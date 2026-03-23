@@ -58,10 +58,10 @@ const props = withDefaults(defineProps<{
   /** 初始 tab 类型 */
   initialTab?: 'todo' | 'done' | 'my' | 'copy'
 }>(), {
-  todoDetailUrl: '/pages-bpm/processInstance/detail/index?id={id}&type=todo',
-  doneDetailUrl: '/pages-bpm/processInstance/detail/index?id={id}&type=done',
-  myDetailUrl: '/pages-bpm/processInstance/detail/index?id={id}&type=my',
-  copyDetailUrl: '/pages-bpm/processInstance/detail/index?id={id}&type=copy',
+  todoDetailUrl: '/pages-bpm/detail/index?id={id}&type=todo',
+  doneDetailUrl: '/pages-bpm/detail/index?id={id}&type=done',
+  myDetailUrl: '/pages-bpm/detail/index?id={id}&type=my',
+  copyDetailUrl: '/pages-bpm/detail/index?id={id}&type=copy',
   initialTab: 'todo',
 })
 
