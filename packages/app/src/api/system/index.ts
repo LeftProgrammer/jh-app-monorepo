@@ -2,6 +2,7 @@
 export * from './dept'
 export * from './dict/data'
 export * from './dict/type'
+export * from './news'
 export * from './notice'
 export * from './notify/message'
 export * from './notify/template'

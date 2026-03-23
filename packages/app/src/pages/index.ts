@@ -8,3 +8,4 @@
 
 export * as bpm from './bpm'
 export * as contact from './contact'
+export * as home from './home'

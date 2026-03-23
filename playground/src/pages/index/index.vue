@@ -1,38 +1,33 @@
 <template>
   <view class="yd-page-container px-16rpx">
-    <!-- 顶部导航栏 -->
-    <!-- <wd-navbar
-      title="工作台"
-      placeholder safe-area-inset-top fixed
-    /> -->
     <!-- 用户信息头部 -->
-    <UserHeader />
+    <HomeUserHeader />
     <!-- 菜单区域 -->
-    <MenuSection />
+    <HomeMenuSection :menu-groups="menuGroups" />
     <!-- 项目新闻 -->
-    <HomeNews />
-    <!-- Banner 轮播图 -->
-    <!-- <HomeBanner /> -->
+    <HomeNewsList />
   </view>
 </template>
 
 <script lang="ts" setup>
-import HomeBanner from "./components/banner.vue";
-import HomeNews from "./components/news.vue";
-import MenuSection from "./components/menu-section.vue";
-import UserHeader from "./components/user-header.vue";
+import { HomeMenuSection, HomeNewsList, HomeUserHeader } from '@jinghe-sanjiaoroad-app/framework/pages/home'
+import { getMenuGroups } from './index'
 
 defineOptions({
-  name: "Home"
-});
+  name: 'Home',
+})
 
 definePage({
-  type: "home",
+  type: 'home',
   style: {
-    navigationStyle: "custom"
-  }
-});
+    navigationStyle: 'custom',
+  },
+})
+
+/** 菜单分组（带权限过滤） */
+const menuGroups = computed(() => getMenuGroups())
 </script>
+
 <style lang="scss" scoped>
 .yd-page-container {
   background: linear-gradient(
