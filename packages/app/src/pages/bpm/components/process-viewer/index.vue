@@ -1,8 +1,11 @@
 <template>
 	<view class="h-100% w-100% position-relative">
-		<view id="bpmnCanvas" class="process-viewer w-100% h-100%" :prop="xml" :change:prop="bpmnCanvas.handleXmlChange"
-			:view-prop="view" :change:view-prop="bpmnCanvas.handleViewChange" @touchstart="bpmnCanvas.handleTouchStart"
-			@touchmove="bpmnCanvas.handleTouchMove" @touchend="bpmnCanvas.handleTouchEnd" />
+		<view id="bpmnCanvas" class="process-viewer w-100% h-100%" 
+			:prop="actualXml" :change:prop="bpmnCanvas.handleXmlChange"
+			:view-prop="actualView" :change:view-prop="bpmnCanvas.handleViewChange" 
+			@touchstart="bpmnCanvas.handleTouchStart"
+			@touchmove="bpmnCanvas.handleTouchMove" 
+			@touchend="bpmnCanvas.handleTouchEnd" />
 		<view
 			class="absolute index-8 top-0 right-0 bg-#fff flex justify-center items-center gap-32rpx px-16rpx py-16rpx rounded-8px"
 			style="z-index: 10">
@@ -21,15 +24,26 @@
 	})
 
 	const props = defineProps({
+		/** BPMN XML 字符串 */
 		xml: {
 			type: String,
-			required: true
+			default: ''
 		},
+		/** 流程视图数据（包含 bpmnXml、processInstance、tasks 等） */
 		view: {
 			type: Object,
-			require: true
+			default: () => ({})
+		},
+		/** 流程模型视图（简化用法，等同于 view） */
+		modelView: {
+			type: Object,
+			default: null
 		}
 	});
+
+	// 兼容 modelView 和 view 两种传参方式
+	const actualView = computed(() => props.modelView || props.view);
+	const actualXml = computed(() => props.xml || actualView.value?.bpmnXml || '');
 </script>
 <script lang="renderjs" module="bpmnCanvas">
 	import BpmnViewer from "bpmn-js/lib/Viewer";

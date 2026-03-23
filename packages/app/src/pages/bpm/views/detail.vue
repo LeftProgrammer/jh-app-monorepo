@@ -42,7 +42,7 @@
         </view>
       </wd-tab>
       <wd-tab title="流程图">
-        <BpmProcessBpmnViewer
+        <BpmProcessViewer
           :model-view="processModelView"
           :style="{
             height: `calc(100vh - ${getNavbarHeight()}px - 50px - 60px - 16rpx)`,
@@ -153,11 +153,11 @@ import { useGlobalState } from '../../../store/global'
 import { useUserStore } from '../../../store/user'
 import { getNavbarHeight, navigateBackPlus } from '../../../utils'
 import BpmFormDetail from '../components/form-detail.vue'
-import BpmProcessBpmnViewer from '../components/process-bpmn-viewer.vue'
+import BpmProcessViewer from '../components/process-viewer/index.vue'
 import BpmProcessTaskList from '../components/process-task-list.vue'
 
 defineOptions({
-  name: 'BpmProcessDetailPage',
+  name: 'BpmDetailPage',
 })
 
 const props = withDefaults(defineProps<{

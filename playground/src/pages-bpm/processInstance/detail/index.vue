@@ -1,5 +1,5 @@
 ﻿<template>
-  <BpmProcessDetailPage
+  <BpmDetailPage
     :process-instance-id="processInstanceId"
     :type="type"
     :form-modules="formModules"
@@ -10,7 +10,7 @@
 <script lang="ts" setup>
 import type { Component } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
-import { BpmProcessDetailPage } from '@jinghe-sanjiaoroad-app/framework/pages/bpm'
+import { BpmDetailPage } from '@jinghe-sanjiaoroad-app/framework/pages/bpm'
 import { ref } from 'vue'
 // ============ 业务表单组件（小程序不支持动态组件，必须静态导入） ============
 import ReceptionApplyForm from '@/pages/general/camp/receptionapply/ReceptionApplyForm.vue'
