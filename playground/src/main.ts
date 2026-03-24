@@ -9,7 +9,7 @@ import '@jinghe-sanjiaoroad-app/framework/style'
 import 'virtual:uno.css'
 
 // 提前触发 defineTabbar()，确保路由拦截器可访问 tabbar 配置
-import './tabbar/config'
+// import './tabbar/config'
 
 // 初始化框架配置（必须在使用框架功能之前调用）
 initFramework({

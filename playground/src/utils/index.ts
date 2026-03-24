@@ -11,10 +11,14 @@ import type { PageMetaDatum } from '@uni-helper/vite-plugin-uni-pages'
 import {
   getAllPages as _getAllPages,
   getHomePage as _getHomePage,
+  isPageTabbar,
 } from '@jinghe-sanjiaoroad-app/framework/utils'
 
 // 动态导入 pages.json（由 vite 插件生成）
 import { pages, subPackages } from '@/pages.json'
+
+// 显式 re-export（export * 遇到同名 getAllPages/getHomePage 时会导致 TS 类型推断异常）
+export { isPageTabbar }
 
 // ============ 需要注入 pages.json 的函数 ============
 
