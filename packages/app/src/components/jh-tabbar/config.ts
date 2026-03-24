@@ -4,24 +4,23 @@ import type {
   NativeTabBarItem,
   TabbarConfigOptions,
   TabbarFullConfig,
-  TabbarStrategy,
 } from './types'
 import { TABBAR_STRATEGY_MAP } from './types'
 
 // 导出类型和常量
 export { TABBAR_STRATEGY_MAP }
-export type { CustomTabBarItem, NativeTabBarItem, TabbarConfigOptions, TabbarFullConfig, TabbarStrategy }
+export type { CustomTabBarItem, NativeTabBarItem, TabbarConfigOptions, TabbarFullConfig }
 
 /** 默认主题 */
 const defaultTheme = {
-  activeColor: 'var(--wot-color-theme, #1890ff)',
+  activeColor: '#009688',
   inactiveColor: '#666',
 }
 
 /** 默认 tabBar 配置 */
 const defaultTabBarConfig: Partial<TabBar> = {
   color: '#999999',
-  selectedColor: '#018d71',
+  selectedColor: '#009688',
   backgroundColor: '#F8F8F8',
   borderStyle: 'black',
   height: '50px',
@@ -72,7 +71,7 @@ export function createTabbarConfig(options: TabbarConfigOptions): TabbarFullConf
   const tabBar: TabBar | undefined = tabbarCacheEnable
     ? {
         ...tabBarConfig,
-        custom: strategy === TABBAR_STRATEGY_MAP.CUSTOM_TABBAR_WITH_CACHE,
+        custom: strategy === TABBAR_STRATEGY_MAP.CUSTOM_TABBAR_WITH_CACHE, // 仅微信小程序生效，H5/App 通过 hideTabBar 处理
         list: _tabbarListForPages as TabBar['list'],
       }
     : undefined
@@ -95,19 +94,4 @@ export function createTabbarConfig(options: TabbarConfigOptions): TabbarFullConf
     tabbarList,
     tabBar,
   }
-}
-
-/**
- * 判断路径是否是 tabBar 页面
- */
-export function isTabBarPage(
-  path: string,
-  tabbarList: (CustomTabBarItem | NativeTabBarItem)[],
-  strategy: TabbarStrategy,
-): boolean {
-  if (strategy === TABBAR_STRATEGY_MAP.NO_TABBAR) {
-    return false
-  }
-  const normalizedPath = path.startsWith('/') ? path.slice(1) : path
-  return tabbarList.some(item => item.pagePath === normalizedPath)
 }

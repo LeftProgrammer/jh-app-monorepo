@@ -22,17 +22,17 @@ import type {
   PageMetaDatum,
   SubPackages,
 } from '@uni-helper/vite-plugin-uni-pages'
+import { useTabbarStore } from '../components/jh-tabbar/store'
 import { getHomePage as _getConfiguredHomePage, getBaseUrl, getRouterDeps } from '../config/framework'
 
-// isPageTabbar 从路由依赖中获取（由外部项目注入）
+// isPageTabbar（框架内部自动获取，未配置 tabbar 时返回 false）
 export function isPageTabbar(path: string): boolean {
-  const deps = getRouterDeps()
-  if (deps.isPageTabbar) {
-    return deps.isPageTabbar(path)
+  try {
+    return useTabbarStore().isPageTabbar(path)
   }
-  // 默认返回 false，需要外部项目注入 isPageTabbar 函数
-  console.warn('[Framework] isPageTabbar 未配置，请在 initFramework 中注入 routerDeps.isPageTabbar')
-  return false
+  catch {
+    return false
+  }
 }
 
 export type PageInstance = Page.PageInstance<AnyObject, object> & {

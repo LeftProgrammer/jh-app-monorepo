@@ -64,9 +64,9 @@ export interface RouterConfig {
 export interface RouterDeps {
   /** 获取所有页面（含可选过滤 key），用于支持 excludeLoginPath 动态收集 */
   getAllPages?: (key?: string) => Array<{ path: string }>
-  /** tabbarStore 实例，用于处理 tabbar index 的自动更新 */
+  /** @deprecated 框架内部已自动从 useTabbarStore() 获取，无需手动注入 */
   tabbarStore?: { setAutoCurIdx: (path: string) => void }
-  /** 判断路径是否是 tabbar 页面 */
+  /** @deprecated 框架内部已自动从 useTabbarStore() 获取，无需手动注入 */
   isPageTabbar?: (path: string) => boolean
   /** 跳转到登录页的函数 */
   toLoginPage?: (options?: { mode?: 'navigateTo' | 'reLaunch', queryString?: string }) => void

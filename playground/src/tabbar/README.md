@@ -1,84 +1,73 @@
 # tabbar 说明
 
-## tabbar 4种策略
+## 目录结构
 
-`tabbar` 分为 `4 种` 情况：
+```
+tabbar/
+├── config.ts    # 配置：defineTabbar() 一步完成
+├── index.vue    # 组件入口（可扩展项目特有逻辑）
+└── README.md    # 本文件
+```
 
-- 0 `无 tabbar`，只有一个页面入口，底部无 `tabbar` 显示；常用语临时活动页。
+## 使用流程
 
-- 1 `原生 tabbar`，使用 `switchTab` 切换 `tabbar`，`tabbar` 页面有缓存。
-  - 优势：原生自带的 `tabbar`，最先渲染，有缓存。
-  - 劣势：只能使用 2 组图片来切换选中和非选中状态，修改颜色只能重新换图片（或者用 iconfont）。
+框架已封装所有 tabbar 逻辑，项目只需 2 步：
 
-- 2 `有缓存自定义 tabbar`，使用 `switchTab` 切换 `tabbar`，`tabbar` 页面有缓存。使用了第三方 UI 库的 `tabbar` 组件，并隐藏了原生 `tabbar` 的显示。
-  - 优势：可以随意配置自己想要的 `svg icon`，切换字体颜色方便。有缓存。可以实现各种花里胡哨的动效等。
-  - 劣势：首次点击 `tabbar` 会闪烁。
+### 1. 配置 — `config.ts`
 
-- 3 `无缓存自定义 tabbar`，使用 `navigateTo` 切换 `tabbar`，`tabbar` 页面无缓存。使用了第三方 UI 库的 `tabbar` 组件。
-  - 优势：可以随意配置自己想要的 svg icon，切换字体颜色方便。可以实现各种花里胡哨的动效等。
-  - 劣势：首次点击 `tababr` 会闪烁，无缓存。
+调用 `defineTabbar()` 传入 tabbar 列表和回调即可，内部自动注册。
 
-> 注意：花里胡哨的效果需要自己实现，本模版不提供。
+该文件同时被 `pages.config.ts`（构建时）和 `index.vue`（运行时）引用，build-time safe。
 
-## tabbar 配置说明
+### 2. 组件 — `index.vue` → `App.ku.vue`
 
-- 如果使用的是 `原生tabbar`，需要配置 `nativeTabbarList`，每个 `item` 需要配置 `path`、`text`、`iconPath`、`selectedIconPath` 等属性。
-- 如果使用的是  `自定义tabbar`，需要配置 `customTabbarList`，每个 `item` 需要配置 `path`、`text`、`icon` 、`iconType` 等属性（如果是 `image` 图片还需要配置2种图片）。
+`index.vue` 通过 `import './config'` 触发配置注册，再渲染 `<jh-tabbar />`。
+在 `App.ku.vue` 中以 `<FgTabbar />` 条件渲染。
+如需项目特有的定制逻辑（动画、权限等），在 `index.vue` 中扩展即可。
 
-## 文件说明
+> **`main.ts` 无需任何 tabbar 代码。**
 
-`config.ts` 专门配置 `nativeTabbarList` 和 `customTabbarList` 的相关信息，请按照文件里面的注释配置相关项。
+## 4 种策略
 
-使用 `原生tabbar` 时，不需要关心下面2个文件：
+| 值 | 名称 | 缓存 | 说明 |
+|----|------|------|------|
+| 0 | `NO_TABBAR` | - | 无 tabbar，常用于临时活动页 |
+| 1 | `NATIVE_TABBAR` | 有 | 原生 tabbar（switchTab），最先渲染，但只能用图片切换 |
+| 2 | `CUSTOM_TABBAR_WITH_CACHE` | 有 | 自定义 tabbar + switchTab 缓存，推荐 |
+| 3 | `CUSTOM_TABBAR_WITHOUT_CACHE` | 无 | 自定义 tabbar + navigateTo，无缓存 |
 
-- `store.ts` ，专门给 `自定义 tabbar` 提供状态管理，代码几乎不需要修改。
-- `index.vue` ，专门给 `自定义 tabbar` 提供渲染逻辑，代码可以稍微修改，以符合自己的需求。
+## 配置说明
 
-## 自定义tabbar的不同类型的配置
+- **原生 tabbar** — 配置 `nativeTabbarList`，每项需 `pagePath`、`text`、`iconPath`、`selectedIconPath`
+- **自定义 tabbar** — 配置 `customTabbarList`，每项需 `pagePath`、`text`、`icon`、`iconType`
 
-- uniUi 图标
+## 自定义 tabbar 图标类型
 
- ```js
-  {
-    // ... 其他配置
-    "iconType": "uniUi",
-    "icon": "home",
-  }
-  ```
+### uiLib（wot-design-uni）
 
-- unocss 图标
+```js
+{ iconType: 'uiLib', icon: 'home' }
+```
 
- ```js
-  {
-    // ... 其他配置
-    // 注意 unocss 图标需要如下处理：（二选一）
-    // 1）在fg-tabbar.vue页面上引入一下并注释掉（见tabbar/index.vue代码第2行）
-    // 2）配置到 unocss.config.ts 的 safelist 中
-    iconType: 'unocss',
-    icon: 'i-carbon-code',
-  }
-  ```
+### unocss
 
-- iconfont 图标
+```js
+// 需要在 uno.config.ts 的 safelist 中添加图标类名
+{ iconType: 'unocss', icon: 'i-carbon-code' }
+```
 
- ```js
-  {
-    // ... 其他配置
-    // 注意 iconfont 图标需要额外加上 'iconfont'，如下
-    iconType: 'iconfont',
-    icon: 'iconfont icon-my',
-  }
-  ```
+图标可到 https://icon-sets.iconify.design/carbon/ 选择。
 
-- image 本地图片
+### iconfont
 
- ```js
-  {
-    // ... 其他配置
-    // 使用 ‘image’时，需要配置 icon + iconActive 2张图片（不推荐）
-    // 既然已经用了自定义tabbar了，就不建议用图片了，所以不推荐
-    iconType: 'image',
-    icon: '/static/tabbar/home.png',
-    iconActive: '/static/tabbar/homeHL.png',
-  }
-  ```
+```js
+// 需要额外加上 'iconfont' 前缀
+{ iconType: 'iconfont', icon: 'iconfont icon-my' }
+```
+
+### image（不推荐）
+
+```js
+// 需要配置 icon + iconActive 2 张图片
+{ iconType: 'image', icon: '/static/tabbar/home.png', iconActive: '/static/tabbar/homeHL.png' }
+```

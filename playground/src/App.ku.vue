@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import { useTabbarStore } from '@jinghe-sanjiaoroad-app/framework/components/jh-tabbar'
 import { ref } from 'vue'
 import { useThemeStore } from '@/store'
 import FgTabbar from '@/tabbar/index.vue'
-import { isPageTabbar } from './tabbar/store'
 import { currRoute } from './utils'
 
+const { isPageTabbar } = useTabbarStore()
 const themeStore = useThemeStore()
 
 const isCurrentPageTabbar = ref(true)

@@ -4,27 +4,11 @@
  *
  * 完整封装了 tabbar 的所有逻辑，外部只需提供配置即可使用
  */
-import type {
-  CustomTabBarItem,
-  TabbarFullConfig,
-  TabbarStoreInterface,
-} from './types'
+import type { CustomTabBarItem } from './types'
+import { useTabbarStore } from './store'
 
-// ===================== Props =====================
-interface Props {
-  /** Tabbar 配置 */
-  config: TabbarFullConfig
-  /** Tabbar 列表（响应式） */
-  tabbarList: CustomTabBarItem[]
-  /** Tabbar Store */
-  tabbarStore: TabbarStoreInterface
-  /** 角标获取函数（从外部状态获取） */
-  getBadgeValue?: (key: string) => number | undefined
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  getBadgeValue: () => undefined,
-})
+// ===================== Store =====================
+const { config, tabbarList, tabbarStore } = useTabbarStore()
 
 // ===================== Emits =====================
 const emit = defineEmits<{
@@ -41,16 +25,16 @@ defineOptions({ virtualHost: true })
 // ===================== 事件处理 =====================
 function handleClickBulge() {
   emit('bulge-click')
-  props.config.onBulgeClick()
+  config.onBulgeClick()
 }
 
 function handleClick(index: number) {
   // 点击原来的不做操作
-  if (index === props.tabbarStore.curIdx) {
+  if (index === tabbarStore.curIdx) {
     return
   }
 
-  const item = props.tabbarList[index]
+  const item = tabbarList[index]
 
   if (item.isBulge) {
     handleClickBulge()
@@ -58,7 +42,7 @@ function handleClick(index: number) {
   }
 
   // 触发导航前回调
-  const shouldNavigate = props.config.beforeNavigate(index, item)
+  const shouldNavigate = config.beforeNavigate(index, item)
   if (shouldNavigate === false) {
     return
   }
@@ -67,9 +51,9 @@ function handleClick(index: number) {
   emit('item-click', index, item)
 
   // 更新状态并导航
-  props.tabbarStore.setCurIdx(index)
+  tabbarStore.setCurIdx(index)
   const url = item.pagePath
-  if (props.config.tabbarCacheEnable) {
+  if (config.tabbarCacheEnable) {
     uni.switchTab({ url })
   }
   else {
@@ -79,26 +63,27 @@ function handleClick(index: number) {
 
 // ===================== 隐藏原生 tabbar =====================
 // #ifndef MP-WEIXIN || MP-ALIPAY
-onLoad(() => {
-  if (props.config.needHideNativeTabbar) {
-    uni.hideTabBar({ fail: console.log })
+// 微信小程序通过 custom:true 原生处理，无需手动 hide
+onMounted(() => {
+  if (config.needHideNativeTabbar) {
+    uni.hideTabBar({ fail: () => {} })
   }
 })
 // #endif
-
 // #ifdef MP-ALIPAY
+// 支付宝特殊：所有自定义 tabbar 策略都需要手动 hide，且必须在 onMounted 中调用
 onMounted(() => {
-  if (props.config.customTabbarEnable) {
-    uni.hideTabBar({ fail: console.log })
+  if (config.customTabbarEnable) {
+    uni.hideTabBar({ fail: () => {} })
   }
 })
 // #endif
 
 // ===================== 辅助函数 =====================
 function getColorByIndex(index: number) {
-  return props.tabbarStore.curIdx === index
-    ? props.config.theme.activeColor
-    : props.config.theme.inactiveColor
+  return tabbarStore.curIdx === index
+    ? config.theme.activeColor
+    : config.theme.inactiveColor
 }
 
 function getImageByIndex(index: number, item: CustomTabBarItem) {
@@ -106,7 +91,7 @@ function getImageByIndex(index: number, item: CustomTabBarItem) {
     console.warn('image 模式下，需要配置 iconActive (高亮时的图片），否则无法切换高亮图片')
     return item.icon
   }
-  return props.tabbarStore.curIdx === index ? item.iconActive : item.icon
+  return tabbarStore.curIdx === index ? item.iconActive : item.icon
 }
 
 function getBadgeDisplay(badge: any) {
@@ -118,8 +103,8 @@ function getBadgeDisplay(badge: any) {
     return badge > 99 ? '99+' : badge
   }
 
-  // 如果是字符串，从外部获取值
-  const val = props.getBadgeValue?.(badge) ?? props.config.getBadgeValue(badge)
+  // 如果是字符串 key，从 config.getBadgeValue 获取值
+  const val = config.getBadgeValue(badge)
   if (!val) return undefined
   return val > 99 ? '99+' : val
 }

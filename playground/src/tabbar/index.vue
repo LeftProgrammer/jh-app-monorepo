@@ -2,26 +2,12 @@
 /**
  * 自定义 Tabbar 组件
  *
- * 直接使用框架包的 Tabbar 组件，只需提供角标获取函数
+ * 基于框架包 jh-tabbar，零 props 开箱即用。
+ * 如需项目特定的定制（事件监听、动画、权限等），在此文件中扩展。
  */
-import { JhTabbar } from '@jinghe-sanjiaoroad-app/framework/components/jh-tabbar'
-import { useGlobalState } from '@/store'
-import { tabbarConfig } from './config'
-import { tabbarList, tabbarStore } from './store'
-
-const globalState = useGlobalState()
-
-// 角标获取函数（项目特定逻辑，从全局状态获取）
-function getBadgeValue(key: string) {
-  return globalState.globalConfig[key] || 0
-}
+import './config' // 触发 defineTabbar() 注册配置
 </script>
 
 <template>
-  <JhTabbar
-    :config="tabbarConfig"
-    :tabbar-list="tabbarList"
-    :tabbar-store="tabbarStore"
-    :get-badge-value="getBadgeValue"
-  />
+  <jh-tabbar />
 </template>

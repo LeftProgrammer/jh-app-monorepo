@@ -21,8 +21,8 @@
  * export { routeInterceptor } from '@jinghe-sanjiaoroad-app/framework/router'
  */
 /* eslint-disable brace-style */
-import type { RouterConfig, RouterDeps } from '../config/framework'
 import { isMp } from '@uni-helper/uni-env'
+import { useTabbarStore } from '../components/jh-tabbar/store'
 import {
   getExcludeLoginPathList,
   getHomePage,
@@ -37,25 +37,32 @@ import { useTokenStore } from '../store/token'
 import { getAllPages as _getAllPages, getLastPage, parseUrlToObj } from '../utils/index'
 import { toLoginPage as _toLoginPage } from '../utils/toLoginPage'
 
-// tabbarStore 和 isPageTabbar 从路由依赖中获取（由外部项目注入）
-// 提供默认的空实现，避免未注入时报错
-const defaultTabbarStore = {
-  curIdx: 0,
-  prevIdx: 0,
-  setCurIdx: () => {},
-  setTabbarItemBadge: () => {},
-  setAutoCurIdx: () => {},
-  restorePrevIdx: () => {},
+// ============================================================
+// Tabbar 集成（框架内部直接获取，无需外部注入）
+// ============================================================
+
+const _defaultTabbarStore = {
+  setAutoCurIdx: (_path: string) => {},
 }
 
-function getTabbarStore() {
-  const deps = getRouterDeps()
-  return deps.tabbarStore ?? defaultTabbarStore
+/** 获取 tabbarStore（未配置 tabbar 时返回空实现） */
+function _getTabbarStore() {
+  try {
+    return useTabbarStore().tabbarStore
+  }
+  catch {
+    return _defaultTabbarStore
+  }
 }
 
-function getIsPageTabbar() {
-  const deps = getRouterDeps()
-  return deps.isPageTabbar ?? (() => false)
+/** 判断是否 tabbar 页面（未配置 tabbar 时返回 false） */
+function _isPageTabbar(path: string): boolean {
+  try {
+    return useTabbarStore().isPageTabbar(path)
+  }
+  catch {
+    return false
+  }
 }
 
 // 重新导出类型
@@ -114,8 +121,7 @@ const _navigateToInterceptor = {
     const loginPageEnableInMp = isLoginPageEnableInMp()
     const _isNeedLoginMode = isNeedLoginMode()
 
-    const _tabbarStore = deps.tabbarStore ?? getTabbarStore()
-    const _isPageTabbar = deps.isPageTabbar ?? getIsPageTabbar()
+    const tabbarStore = _getTabbarStore()
     const toLoginPageFn = deps.toLoginPage ?? _toLoginPage
     const getAllPagesFn = deps.getAllPages ?? ((key?: string) => _getAllPages(undefined, key))
 
@@ -145,7 +151,7 @@ const _navigateToInterceptor = {
       path = url
     }
 
-    _tabbarStore.setAutoCurIdx(path)
+    tabbarStore.setAutoCurIdx(path)
 
     if (isMp && !loginPageEnableInMp) {
       return true

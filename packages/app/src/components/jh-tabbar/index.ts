@@ -1,28 +1,49 @@
 /**
  * jh-tabbar 组件模块
  *
- * 完整封装了 tabbar 的所有功能，包括：
- * - 配置：策略选择、项目列表、主题配置
- * - 组件：可配置的 Tabbar Vue 组件
- * - 状态管理：tabbar 状态、角标管理
+ * 使用方式（2 步）：
+ * 1. tabbar/config.ts — defineTabbar({ customItems, ... }) 创建配置并注册
+ * 2. tabbar/index.vue — import './config' + <jh-tabbar />
  *
- * 使用方式：
- * 1. 在项目中创建 tabbar 配置文件，调用 createTabbarConfig 创建配置
- * 2. 调用 createTabbarStore 创建 store
- * 3. 在 App.vue 中使用 jh-tabbar 组件（easycom 自动引入）
+ * main.ts 无需任何 tabbar 代码，路由拦截器内部自动获取。
  */
+import type { TabbarConfigOptions, TabbarFullConfig } from './types'
+import { createTabbarConfig } from './config'
+import { initTabbarStore } from './store'
 
-// === 配置导出 ===
-export { createTabbarConfig, isTabBarPage } from './config'
+// === 主 API ===
 
-// === 组件导出 ===
+/**
+ * 定义并注册 Tabbar 配置（一步完成）
+ *
+ * 内部自动调用 createTabbarConfig + initTabbarStore，
+ * 返回完整配置（含 tabBar 供 pages.config.ts 使用）。
+ *
+ * @example
+ * ```ts
+ * import { defineTabbar } from '@jinghe-sanjiaoroad-app/framework/components/jh-tabbar'
+ *
+ * const { tabBar } = defineTabbar({
+ *   customItems: [...],
+ *   getBadgeValue: (key) => store.badges[key],
+ * })
+ * export { tabBar } // 供 pages.config.ts
+ * ```
+ */
+export function defineTabbar(options: TabbarConfigOptions): TabbarFullConfig {
+  const config = createTabbarConfig(options)
+  initTabbarStore(config)
+  return config
+}
+
+// === 组件 ===
 export { default as JhTabbar } from './jh-tabbar.vue'
 
-// === Store 导出 ===
-export { createTabbarStore } from './store'
-export type { TabbarStoreReturn } from './store'
+// === Store（运行时访问） ===
+export { useTabbarStore } from './store'
+export type { UseTabbarStoreReturn } from './store'
 
-// === 类型导出 ===
+// === 类型 & 常量 ===
 export type {
   CustomTabBarItem,
   CustomTabBarItemBadge,

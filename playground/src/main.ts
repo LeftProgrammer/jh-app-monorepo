@@ -4,7 +4,6 @@ import { requestInterceptor } from '@/http'
 import App from './App.vue'
 import { initFramework } from './config/framework'
 import store from './store'
-import { isPageTabbar, tabbarStore } from './tabbar/store'
 import { getAllPages, HOME_PAGE } from './utils'
 import '@jinghe-sanjiaoroad-app/framework/style'
 import 'virtual:uno.css'
@@ -53,11 +52,9 @@ initFramework({
     excludeLoginPathList: [],
     loginPageEnableInMp: true,
   },
-  // 路由依赖注入
+  // 路由依赖注入（tabbar 相关已由框架内部自动处理）
   routerDeps: {
     getAllPages,
-    tabbarStore,
-    isPageTabbar,
   },
 })
 
