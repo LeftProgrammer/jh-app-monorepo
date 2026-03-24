@@ -5,6 +5,7 @@ definePage({
   style: {
     navigationStyle: 'custom',
   },
+  excludeLoginPath: true,
 })
 </script>
 

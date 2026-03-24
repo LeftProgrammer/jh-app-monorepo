@@ -1,9 +1,5 @@
-import type { MenuGroup, MenuItem } from '@jinghe-sanjiaoroad-app/framework/pages/home'
-import { filterMenuGroupsByPermission, getAllMenuItems } from '@jinghe-sanjiaoroad-app/framework/pages/home'
-import { useAccess } from '@/hooks'
-
-// 重新导出类型供组件使用
-export type { MenuGroup, MenuItem }
+import type { MenuGroup } from '@jinghe-sanjiaoroad-app/framework/pages/home'
+import { useMenuGroups } from '@jinghe-sanjiaoroad-app/framework/pages/home'
 
 /**
  * 工作台菜单配置数据
@@ -169,19 +165,7 @@ const menuGroupsData: MenuGroup[] = [
 ];
 
 /**
- * 获取所有菜单分组数据（带权限过滤）
+ * 首页菜单 composable 实例
+ * 使用框架提供的 useMenuGroups 封装权限过滤和查询逻辑
  */
-export function getMenuGroups(): MenuGroup[] {
-  const { hasAccessByCodes } = useAccess()
-  return filterMenuGroupsByPermission(menuGroupsData, hasAccessByCodes)
-}
-
-/** 根据 key 获取菜单项 */
-export function getMenuItemByKey(key: string): MenuItem | undefined {
-  return getAllMenuItems(getMenuGroups()).find(item => item.key === key)
-}
-
-/** 根据 keys 获取菜单列表 */
-export function getMenusByKeys(keys: string[]): MenuItem[] {
-  return keys.map(key => getMenuItemByKey(key)).filter(Boolean) as MenuItem[]
-}
+export const { menuGroups, getMenuItemByKey, getMenusByKeys } = useMenuGroups(menuGroupsData)

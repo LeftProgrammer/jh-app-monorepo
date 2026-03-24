@@ -43,7 +43,7 @@ function handleBack() {
   if (props.backUrl) {
     uni.navigateTo({ url: props.backUrl })
   } else {
-    uni.navigateBack({ fail: () => uni.switchTab({ url: '/pages/index/index' }) })
+    uni.navigateBack({ fail: () => uni.switchTab({ url: '/pages/home/index' }) })
   }
 }
 </script>

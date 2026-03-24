@@ -9,7 +9,7 @@
  * initFramework({
  *   router: {
  *     loginPage: '/pages-core/auth/login',
- *     homePage: '/pages/index/index',
+ *     homePage: '/pages/home/index',
  *     isNeedLoginMode: true,
  *   },
  *   routerDeps: { getAllPages }

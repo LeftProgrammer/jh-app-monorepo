@@ -23,7 +23,7 @@ import type {
   SubPackages,
 } from '@uni-helper/vite-plugin-uni-pages'
 import { useTabbarStore } from '../components/jh-tabbar/store'
-import { getHomePage as _getConfiguredHomePage, getBaseUrl, getRouterDeps } from '../config/framework'
+import { getHomePage as _getConfiguredHomePage, getBaseUrl } from '../config/framework'
 
 // isPageTabbar（框架内部自动获取，未配置 tabbar 时返回 false）
 export function isPageTabbar(path: string): boolean {
@@ -187,14 +187,14 @@ export function getBaseUrlRoot() {
 /**
  * 获取首页路径
  * 通过 page.json 里面的 type 为 home 的页面获取，如果没有，则默认是第一个页面
- * 通常为 /pages/index/index
+ * 通常为 /pages/home/index
  *
  * @param pagesConfig 页面配置对象
  * @returns 首页路径
  */
 export function getHomePage(pagesConfig: { pages: PageMetaDatum[] }): string {
   const homePage = pagesConfig.pages.find(page => page.type === 'home')
-  return `/${homePage?.path || pagesConfig.pages[0]?.path || 'pages/index/index'}`
+  return `/${homePage?.path || pagesConfig.pages[0]?.path || 'pages/home/index'}`
 }
 
 /**

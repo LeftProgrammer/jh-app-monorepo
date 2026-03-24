@@ -1,18 +1,16 @@
 <script setup lang="ts">
-import { useTabbarStore } from '@jinghe-sanjiaoroad-app/framework/components/jh-tabbar'
 import { ref } from 'vue'
 import { useThemeStore } from '@/store'
-import FgTabbar from '@/tabbar/index.vue'
-import { currRoute } from './utils'
+import AppTabbar from '@/tabbar/index.vue'
+import { currRoute, isPageTabbar } from './utils'
 
-const { isPageTabbar } = useTabbarStore()
 const themeStore = useThemeStore()
 
 const isCurrentPageTabbar = ref(true)
 onShow(() => {
   console.log('App.ku.vue onShow', currRoute())
   const { path } = currRoute()
-  // “蜡笔小开心”提到本地是 '/pages/index/index'，线上是 '/' 导致线上 tabbar 不见了
+  // “蜡笔小开心”提到本地是 '/pages/home/index'，线上是 '/' 导致线上 tabbar 不见了
   // 所以这里需要判断一下，如果是 '/' 就当做首页，也要显示 tabbar
   if (path === '/') {
     isCurrentPageTabbar.value = true
@@ -40,7 +38,7 @@ defineExpose({
 
     <KuRootView />
 
-    <FgTabbar v-if="isCurrentPageTabbar" />
+    <AppTabbar v-if="isCurrentPageTabbar" />
     <wd-toast />
     <wd-message-box />
   </wd-config-provider>

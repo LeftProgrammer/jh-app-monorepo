@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onHide, onLaunch, onShow } from '@dcloudio/uni-app'
-import { navigateToInterceptor } from '@/router'
+import { navigateToInterceptor } from '@jinghe-sanjiaoroad-app/framework/router'
 
 onLaunch((options) => {
   console.log('App.vue onLaunch', options)

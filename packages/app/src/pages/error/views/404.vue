@@ -28,6 +28,8 @@
 </template>
 
 <script lang="ts" setup>
+import { getHomePage } from '../../../config/framework'
+
 defineOptions({
   name: 'Error404Page',
 })
@@ -40,10 +42,18 @@ const props = withDefaults(defineProps<{
 })
 
 function handleBack() {
-  if (props.backUrl) {
-    uni.navigateTo({ url: props.backUrl })
-  } else {
-    uni.navigateBack({ fail: () => uni.switchTab({ url: '/pages/index/index' }) })
+  const pages = getCurrentPages()
+  // 情况一：有上一页，直接返回
+  if (pages.length > 1) {
+    uni.navigateBack()
+    return
   }
+  // 情况二：有 backUrl，跳转到指定页面
+  if (props.backUrl) {
+    uni.reLaunch({ url: props.backUrl })
+    return
+  }
+  // 情况三：没有上一页也没有 backUrl，跳转首页
+  uni.switchTab({ url: getHomePage() })
 }
 </script>

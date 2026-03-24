@@ -2,12 +2,11 @@
  * Tabbar 配置文件
  *
  * - pages.config.ts 使用 tabBar 导出（构建时）
- * - index.vue 通过 import './config' 触发注册（运行时）
+ * - main.ts 通过 import './tabbar/config' 触发注册（运行时）
  *
  * 温馨提示：本文件的任何代码更改了之后，都需要重新运行，否则 pages.json 不会更新导致配置不生效
  */
 import { defineTabbar } from '@jinghe-sanjiaoroad-app/framework/components/jh-tabbar'
-import { useGlobalState } from '@/store'
 
 /**
  * 定义并注册 tabbar 配置（一步完成）
@@ -20,7 +19,7 @@ const { tabBar } = defineTabbar({
   customItems: [
     {
       text: '首页',
-      pagePath: 'pages/index/index',
+      pagePath: 'pages/home/index',
       iconType: 'unocss',
       icon: 'i-carbon-home',
     },
@@ -49,7 +48,7 @@ const { tabBar } = defineTabbar({
     {
       iconPath: 'static/tabbar/home.png',
       selectedIconPath: 'static/tabbar/homeHL.png',
-      pagePath: 'pages/index/index',
+      pagePath: 'pages/home/index',
       text: '首页',
     },
     {
@@ -59,9 +58,7 @@ const { tabBar } = defineTabbar({
       text: '个人',
     },
   ],
-  // 角标取值：框架渲染时调用此函数，key 来自 customItems 中的 badge 字段
-  // 如不需要角标，删除此行即可（框架默认不显示）
-  getBadgeValue: (key: string) => useGlobalState().globalConfig[key] || 0,
+  // getBadgeValue 在 index.vue 中设置（运行时才能访问 @/store）
 })
 
 // 供 pages.config.ts 使用

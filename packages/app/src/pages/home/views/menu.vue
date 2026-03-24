@@ -84,7 +84,7 @@ import { useUserStore } from '../../../store'
 import { defaultNavigateTo, getAllMenuItems } from '../utils'
 
 defineOptions({
-  name: 'HomeSettings',
+  name: 'HomeMenuPage',
 })
 
 const props = withDefaults(defineProps<{

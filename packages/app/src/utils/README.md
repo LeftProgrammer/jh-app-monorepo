@@ -104,8 +104,8 @@ console.log('查询参数:', route.query)
 import { isPageTabbar } from '@jinghe-sanjiaoroad-app/framework/utils'
 
 // 检查是否为 Tabbar 页面
-const isTabbar = isPageTabbar('/pages/index/index', [
-  '/pages/index/index',
+const isTabbar = isPageTabbar('/pages/home/index', [
+  '/pages/home/index',
   '/pages/user/index'
 ])
 ```

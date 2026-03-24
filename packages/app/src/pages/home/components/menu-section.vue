@@ -72,7 +72,7 @@ const props = withDefaults(defineProps<{
   showMore: true,
   moreText: '更多',
   moreKey: 'more',
-  settingsUrl: '/pages/index/menu-settings/index',
+  settingsUrl: '/pages/home/menu',
 })
 
 const userStore = useUserStore()

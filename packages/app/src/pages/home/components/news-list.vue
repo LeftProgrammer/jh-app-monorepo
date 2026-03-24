@@ -103,7 +103,7 @@ const props = withDefaults(defineProps<{
   emptyText: '暂无数据',
   showBottomSpace: true,
   moreUrl: '/pages/general/news/index',
-  detailUrl: '/pages/general/news/detail?id=:id',
+  detailUrl: '',
 })
 
 const emit = defineEmits<{

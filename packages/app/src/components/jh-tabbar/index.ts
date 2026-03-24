@@ -1,11 +1,10 @@
 /**
  * jh-tabbar 组件模块
  *
- * 使用方式（2 步）：
+ * 使用方式（3 步）：
  * 1. tabbar/config.ts — defineTabbar({ customItems, ... }) 创建配置并注册
- * 2. tabbar/index.vue — import './config' + <jh-tabbar />
- *
- * main.ts 无需任何 tabbar 代码，路由拦截器内部自动获取。
+ * 2. main.ts — import './tabbar/config' 确保路由拦截器之前完成初始化
+ * 3. tabbar/index.vue — <jh-tabbar /> 使用组件
  */
 import type { TabbarConfigOptions, TabbarFullConfig } from './types'
 import { createTabbarConfig } from './config'
@@ -37,7 +36,8 @@ export function defineTabbar(options: TabbarConfigOptions): TabbarFullConfig {
 }
 
 // === 组件 ===
-export { default as JhTabbar } from './jh-tabbar.vue'
+// jh-tabbar 组件通过 easycom 自动注册，模板中直接 <jh-tabbar /> 即可
+// 不在此处 re-export .vue 文件，避免 pages.config.ts 构建时 Node 无法解析 .vue
 
 // === Store（运行时访问） ===
 export { useTabbarStore } from './store'

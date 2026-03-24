@@ -182,7 +182,7 @@ import { createTabbarConfig, TABBAR_STRATEGY_MAP } from '@jinghe-sanjiaoroad-app
 const tabbarConfig = createTabbarConfig({
   strategy: TABBAR_STRATEGY_MAP.CUSTOM_TABBAR_WITH_CACHE,
   customItems: [
-    { text: '首页', pagePath: 'pages/index/index', iconType: 'image', icon: '/static/tabbar/home.png', iconActive: '/static/tabbar/home-active.png' },
+    { text: '首页', pagePath: 'pages/home/index', iconType: 'image', icon: '/static/tabbar/home.png', iconActive: '/static/tabbar/home-active.png' },
     { text: '任务', pagePath: 'pages/bpm/index', iconType: 'image', icon: '/static/tabbar/task.png', iconActive: '/static/tabbar/task-active.png', badge: 'todoTotal' },
     { text: '我的', pagePath: 'pages/my/index', iconType: 'image', icon: '/static/tabbar/my.png', iconActive: '/static/tabbar/my-active.png' },
   ],

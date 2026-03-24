@@ -14,7 +14,7 @@ const manifest = { }
 const pages = {
   pages: [
     {
-      path: 'pages/index/index',
+      path: 'pages/home/index',
       type: 'home',
       style: {
         navigationStyle: 'custom',

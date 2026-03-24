@@ -116,7 +116,7 @@ export interface FrameworkConfig {
 /** 默认路由配置 */
 const defaultRouterConfig: RouterConfig = {
   loginPage: '/pages/login/index',
-  homePage: '/pages/index/index',
+  homePage: '/pages/home/index',
   notFoundPage: '/pages/error/404',
   registerPage: '/pages/register/index',
   codeLoginPage: '/pages/code-login/index',
