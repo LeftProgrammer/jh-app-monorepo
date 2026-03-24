@@ -23,7 +23,6 @@
     "./router": "./src/router/index.ts",
     "./api": "./src/api/index.ts",
     "./config": "./src/config/index.ts",
-    "./config/framework": "./src/config/framework.ts",
     "./vite-plugins": {
       "types": "./dist/vite-plugins/index.d.ts",
       "import": "./dist/vite-plugins/index.mjs",

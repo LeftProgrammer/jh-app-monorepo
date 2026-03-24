@@ -6,7 +6,7 @@ import {
   getApiEncryptRequestKey,
   getApiEncryptResponseKey,
   isApiEncryptEnabled,
-} from '../config/framework'
+} from '../config'
 
 /**
  * API 加解密工具类

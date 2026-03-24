@@ -4,7 +4,7 @@
  * @description 提供 APP 版本检查和更新功能，通过字典表获取版本信息
  * @usage 仅在 APP 端使用
  */
-import { getStaticBaseUrl } from '../config/framework'
+import { getStaticBaseUrl } from '../config'
 import { useDictStore } from '../store/dict'
 import { DICT_TYPE } from './constants'
 

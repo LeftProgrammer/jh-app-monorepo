@@ -12,7 +12,7 @@
 import type { IDoubleTokenRes } from '../api/types/login'
 import type { CustomRequestOptions, IResponse } from './types'
 import { nextTick } from 'vue'
-import { isDoubleTokenMode } from '../config/framework'
+import { isDoubleTokenMode } from '../config'
 import { useTokenStore } from '../store/token'
 import { getLastPage } from '../utils'
 import { ApiEncrypt } from '../utils/encrypt'

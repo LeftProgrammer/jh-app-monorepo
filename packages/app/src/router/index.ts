@@ -2,7 +2,7 @@
  * 路由模块统一导出
  *
  * @description 提供路由拦截器和路由特有工具
- *              配置访问器请从 config/framework 导入
+ *              配置访问器请从 config 导入
  *
  * @example
  * // 外部项目 main.ts 中配置
@@ -19,8 +19,8 @@
  * import { routeInterceptor } from '@jinghe-sanjiaoroad-app/framework/router'
  * app.use(routeInterceptor)
  *
- * // 获取路由配置（从 config/framework 导入）
- * import { getLoginPage, isNeedLoginMode } from '@jinghe-sanjiaoroad-app/framework/config/framework'
+ * // 获取路由配置（从 config 导入）
+ * import { getLoginPage, isNeedLoginMode } from '@jinghe-sanjiaoroad-app/framework/config'
  */
 
 // 类型导出

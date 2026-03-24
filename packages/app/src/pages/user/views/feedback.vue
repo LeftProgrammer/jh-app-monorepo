@@ -52,7 +52,7 @@ import type { FormInstance } from 'wot-design-uni/components/wd-form/types'
 import type { UploadFile, UploadMethod } from 'wot-design-uni/components/wd-upload/types'
 import { ref } from 'vue'
 import { useToast } from 'wot-design-uni'
-import { getBaseUrl } from '../../../config/framework'
+import { getBaseUrl } from '../../../config'
 
 defineOptions({
   name: 'UserFeedbackPage',

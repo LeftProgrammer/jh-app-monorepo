@@ -32,7 +32,7 @@ import {
   isDebugLog,
   isLoginPageEnableInMp,
   isNeedLoginMode,
-} from '../config/framework'
+} from '../config'
 import { useTokenStore } from '../store/token'
 import { getAllPages as _getAllPages, getLastPage, parseUrlToObj } from '../utils/index'
 import { toLoginPage as _toLoginPage } from '../utils/toLoginPage'
@@ -66,7 +66,7 @@ function _isPageTabbar(path: string): boolean {
 }
 
 // 重新导出类型
-export type { RouterConfig, RouterDeps } from '../config/framework'
+export type { RouterConfig, RouterDeps } from '../config'
 
 /** @deprecated 使用 isDebugLog() 替代 */
 export const FG_LOG_ENABLE = false

@@ -12,9 +12,9 @@ export * as api from './api'
 export * from './components'
 
 // 框架初始化（核心，必须在项目入口最先调用）
-export { initFramework } from './config/framework'
+export { initFramework } from './config'
 
-export type { FrameworkConfig } from './config/framework'
+export type { FrameworkConfig } from './config'
 // 组合函数
 export * from './hooks'
 

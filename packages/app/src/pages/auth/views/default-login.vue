@@ -76,7 +76,7 @@ import {
   getAppTitle,
   getHomePage,
   isCaptchaEnabled,
-} from '../../../config/framework'
+} from '../../../config'
 import { useSystemState } from '../../../store'
 import { appUpdate } from '../../../utils'
 import Verify from '../components/verifition/verify.vue'

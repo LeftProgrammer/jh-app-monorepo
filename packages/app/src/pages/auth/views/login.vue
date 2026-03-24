@@ -74,7 +74,7 @@ import {
   getForgetPasswordPage,
   getHomePage,
   getRegisterPage,
-} from '../../../config/framework'
+} from '../../../config'
 import AuthHeader from '../components/header.vue'
 import TenantPicker from '../components/tenant-picker.vue'
 import Verify from '../components/verifition/verify.vue'

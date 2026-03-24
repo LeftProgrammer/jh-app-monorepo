@@ -21,7 +21,7 @@ import {
   getTenantByWebsite,
   getTenantSimpleList,
 } from '../../../api/login'
-import { getDefaultTenantId, isTenantEnabled } from '../../../config/framework'
+import { getDefaultTenantId, isTenantEnabled } from '../../../config'
 import { useUserStore } from '../../../store'
 
 const toast = useToast()

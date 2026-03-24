@@ -9,7 +9,7 @@
 /* eslint-disable brace-style */ // 原因：unibest 官方维护的代码，尽量不要大概，避免难以合并
 import type { CustomRequestOptions } from './types'
 import { isH5 } from '@uni-helper/uni-env'
-import { getBaseUrl, getProxyPrefix, isProxyEnabled, isTenantEnabled } from '../config/framework'
+import { getBaseUrl, getProxyPrefix, isProxyEnabled, isTenantEnabled } from '../config'
 import { useTokenStore, useUserStore } from '../store'
 import { ApiEncrypt } from '../utils/encrypt'
 import { stringifyQuery } from './tools/queryString'

@@ -95,7 +95,7 @@
 import { reactive, ref } from 'vue'
 import { useToast } from 'wot-design-uni'
 import { redirectAfterLogin } from '../../../utils'
-import { getLoginPage } from '../../../config/framework'
+import { getLoginPage } from '../../../config'
 import { useTokenStore } from '../../../store'
 import AuthHeader from '../components/header.vue'
 import TenantPicker from '../components/tenant-picker.vue'

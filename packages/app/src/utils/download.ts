@@ -3,7 +3,7 @@
  */
 
 import { isH5, isMpWeixin } from '@uni-helper/uni-env'
-import { getStaticBaseUrl } from '../config/framework'
+import { getStaticBaseUrl } from '../config'
 
 /** 保存图片到相册 */
 export async function saveImageToAlbum(url: string, fileName?: string): Promise<void> {

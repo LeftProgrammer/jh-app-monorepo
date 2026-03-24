@@ -27,7 +27,7 @@ import {
   smsLogin,
 } from '../api/login'
 import { isDoubleTokenRes, isSingleTokenRes } from '../api/types/login'
-import { isDoubleTokenMode } from '../config/framework'
+import { isDoubleTokenMode } from '../config'
 import { useDictStore } from './dict'
 import { useGlobalState } from './global'
 import { useUserStore } from './user'

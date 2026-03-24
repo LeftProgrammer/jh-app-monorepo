@@ -28,7 +28,7 @@
 </template>
 
 <script lang="ts" setup>
-import { getHomePage } from '../../../config/framework'
+import { getHomePage } from '../../../config'
 
 defineOptions({
   name: 'Error404Page',

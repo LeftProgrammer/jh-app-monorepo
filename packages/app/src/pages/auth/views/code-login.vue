@@ -55,7 +55,7 @@
 import { reactive, ref } from 'vue'
 import { useToast } from 'wot-design-uni'
 import { isMobile, ensureDecodeURIComponent, redirectAfterLogin } from '../../../utils'
-import { getLoginPage, getForgetPasswordPage } from '../../../config/framework'
+import { getLoginPage, getForgetPasswordPage } from '../../../config'
 import { useTokenStore } from '../../../store'
 import AuthHeader from '../components/header.vue'
 import CodeInput from '../components/code-input.vue'

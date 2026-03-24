@@ -19,7 +19,7 @@ import type { Ref } from 'vue'
 import { ref } from 'vue'
 import { useToast } from 'wot-design-uni'
 import * as FileApi from '../api/infra/file'
-import { getUploadType } from '../config/framework'
+import { getUploadType } from '../config'
 
 /** 上传类型 */
 const UPLOAD_TYPE = {

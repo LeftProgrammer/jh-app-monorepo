@@ -6,7 +6,7 @@
  */
 import { ref } from 'vue'
 import { useToast } from 'wot-design-uni'
-import { getBaseUrl } from '../config/framework'
+import { getBaseUrl } from '../config'
 
 type TfileType = 'image' | 'file'
 type TImage = 'png' | 'jpg' | 'jpeg' | 'webp' | '*'

@@ -76,7 +76,7 @@ import { useMessage, useToast } from 'wot-design-uni'
 import {
   getAppLogo,
   getAppTitle,
-} from '../../../config/framework'
+} from '../../../config'
 import { appUpdate } from '../../../utils'
 import { useDictStore } from '../../../store/dict'
 

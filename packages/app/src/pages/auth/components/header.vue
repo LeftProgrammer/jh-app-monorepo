@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts" setup>
-import { getAppLogo, getAppTitle } from '../../../config/framework'
+import { getAppLogo, getAppTitle } from '../../../config'
 
 const title = getAppTitle()
 const logo = getAppLogo()

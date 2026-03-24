@@ -23,7 +23,7 @@ import type {
   SubPackages,
 } from '@uni-helper/vite-plugin-uni-pages'
 import { useTabbarStore } from '../components/jh-tabbar/store'
-import { getHomePage as _getConfiguredHomePage, getBaseUrl } from '../config/framework'
+import { getHomePage as _getConfiguredHomePage, getBaseUrl } from '../config'
 
 // isPageTabbar（框架内部自动获取，未配置 tabbar 时返回 false）
 export function isPageTabbar(path: string): boolean {
@@ -154,12 +154,12 @@ export function getCurrentPageI18nKey(pagesConfig: { pages: PageMetaDatum[] }) {
  *
  * @example
  * // 框架包内部或简单场景使用
- * import { getBaseUrl } from '@jinghe-sanjiaoroad-app/framework/config/framework'
+ * import { getBaseUrl } from '@jinghe-sanjiaoroad-app/framework/config'
  * const baseUrl = getBaseUrl()
  *
  * // 项目级需要微信环境区分时，在项目 utils 中实现 getEnvBaseUrl()
  */
-export { getBaseUrl } from '../config/framework'
+export { getBaseUrl } from '../config'
 
 /**
  * 获取基础路径的根路径

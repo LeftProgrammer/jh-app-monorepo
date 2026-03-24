@@ -73,7 +73,7 @@
 import { computed, onMounted, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useMessage, useToast } from 'wot-design-uni'
-import { getLoginPage } from '../../../config/framework'
+import { getLoginPage } from '../../../config'
 import { useUserStore } from '../../../store/user'
 import { useTokenStore } from '../../../store/token'
 import { getUserProfile } from '../../../api/system/user/profile'
