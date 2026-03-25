@@ -19,13 +19,9 @@ import {
 } from '@jinghe-sanjiaoroad-app/framework/hooks'
 ```
 
----
-
 ## useAccess - 权限控制
 
 基于角色和权限码的权限判断。
-
-**返回值：**
 
 | 方法 | 类型 | 说明 |
 |------|------|------|
@@ -39,13 +35,7 @@ const canEdit = hasAccessByRoles(['admin', 'editor'])
 const canView = hasAccessByCodes(['user:view'])
 ```
 
-```vue
-<template>
-  <button v-if="hasAccessByRoles(['admin'])">删除</button>
-</template>
-```
-
-**依赖：** `useUserStore`（`roles`、`permissions`）。
+依赖：`useUserStore`（`roles`、`permissions`）。
 
 ---
 
@@ -63,19 +53,15 @@ const canView = hasAccessByCodes(['user:view'])
 | `getBoolDictOptions(type)` | `DictDataType[]` | 获取字典选项，value 强制转为 `boolean` |
 
 ```ts
-import { getDictLabel, getIntDictOptions } from '@jinghe-sanjiaoroad-app/framework/hooks'
-
-// 获取标签
 const statusText = getDictLabel('user_status', 1) // => '正常'
 
-// 获取选项列表（用于 picker/radio）
 const statusOptions = getIntDictOptions('user_status')
 // => [{ label: '正常', value: 1, colorType: 'success' }, ...]
 ```
 
-**导出类型：** `DictDataType`、`NumberDictDataType`、`StringDictDataType`
+导出类型：`DictDataType`、`NumberDictDataType`、`StringDictDataType`
 
-**依赖：** `useDictStore`。
+依赖：`useDictStore`。
 
 ---
 
@@ -101,12 +87,6 @@ const statusOptions = getIntDictOptions('user_status')
 | `run` | `(args?: P) => Promise<T \| undefined>` | 手动触发请求 |
 
 ```ts
-// 立即执行
-const { loading, data, error } = useRequest(
-  async () => await api.getUsers(),
-  { immediate: true }
-)
-
 // 手动触发
 const { loading, data, run } = useRequest(
   async (params) => await api.searchUsers(params)
@@ -148,16 +128,6 @@ const { list, loading, finished, refresh, loadMore } = useScroll<User>({
 })
 ```
 
-```vue
-<template>
-  <scroll-view @scrolltolower="loadMore">
-    <view v-for="item in list" :key="item.id">{{ item.name }}</view>
-    <view v-if="loading">加载中...</view>
-    <view v-if="finished">没有更多了</view>
-  </scroll-view>
-</template>
-```
-
 ---
 
 ## useUpload - 文件上传
@@ -188,18 +158,12 @@ const { list, loading, finished, refresh, loadMore } = useScroll<User>({
 const { loading, data, run } = useUpload({
   fileType: 'image',
   maxSize: 10 * 1024 * 1024,
-  success: (res) => {
-    formData.fileId = res.id
-  },
+  success: (res) => console.log('上传成功', res),
 })
-
-// 点击按钮触发
 run()
 ```
 
-**上传地址：** `${getBaseUrl()}/upload`（来自框架配置）。
-
-**依赖：** `wot-design-uni`（useToast）、`getBaseUrl`。
+上传地址：`${getBaseUrl()}/infra/file/upload-file`，自动携带鉴权 header。
 
 ---
 
@@ -213,6 +177,5 @@ hooks/
 ├── useRequest.ts    # 异步请求管理
 ├── useScroll.ts     # 滚动分页
 ├── useUpload.ts     # 文件上传
-└── README.md        # 本文档
+└── README.md
 ```
-

@@ -1,382 +1,198 @@
-# 工具函数模块使用指南
-
-## 概述
-
-提供常用的工具函数，包括页面处理、路由辅助、日期格式化、加解密等功能，为 uni-app 开发提供便利的工具支持。
+# 工具函数模块
 
 ## 模块结构
 
-### 📋 核心工具
+| 文件 | 说明 |
+|------|------|
+| `index.ts` | 统一导出入口 + 页面/路由核心工具 |
+| `constants.ts` | 常量聚合导出 |
+| `constants/` | 业务枚举常量（BPM、Infra、System、Dict） |
+| `date.ts` | 日期格式化（基于 dayjs） |
+| `debounce.ts` | 防抖函数（fork from es-toolkit） |
+| `download.ts` | 文件下载 / 保存到相册 / 静态资源 URL |
+| `encrypt.ts` | API 加解密（AES / RSA） |
+| `routerHelper.ts` | 异步组件注册 `registerComponent` |
+| `systemInfo.ts` | 系统信息 / 安全区域（带缓存） |
+| `toLoginPage.ts` | 跳转登录页（带防抖） |
+| `tree.ts` | 树形数据处理（`handleTree` / `findChildren`） |
+| `uploadFile.ts` | 文件上传（支持 server / client 直连模式） |
+| `url.ts` | tabBar 页面参数传递 |
+| `validator.ts` | 表单验证（手机号、邮箱、IP） |
+| `appUpdate.ts` | 应用版本更新检查 |
+| `updateManager.wx.ts` | 微信小程序热更新 |
 
-- **index.ts** - 统一导出入口
-- **pageHelper.ts** - 页面处理工具
-- **routerHelper.ts** - 路由辅助工具
-- **date.ts** - 日期格式化工具
-- **encrypt.ts** - 加解密工具
-- **constants/** - 常量定义
-- **validator.ts** - 验证器工具
-- **systemInfo.ts** - 系统信息工具
-- **uploadFile.ts** - 文件上传工具
-- **download.ts** - 下载工具
-- **debounce.ts** - 防抖工具
-- **tree.ts** - 树形数据处理工具
-- **appUpdate.ts** - 应用更新工具
-- **toLoginPage.ts** - 登录页跳转工具
-- **url.ts** - URL 处理工具
-
-## 导出方式
-
-### 🎯 直接导出
+## 导入方式
 
 ```typescript
-// 导入所有工具函数
-import { 
-  getPageConfig,
-  isPageTabbar,
-  getLastPage,
-  currRoute,
+// 按需导入（推荐）
+import {
   formatDate,
-  deepClone
+  deepClone,
+  isPageTabbar,
+  currRoute,
+  getLastPage,
 } from '@jinghe-sanjiaoroad-app/framework/utils'
 ```
 
-### 🎯 命名空间导出
+## 常用 API
+
+### 页面 / 路由
 
 ```typescript
-// 按分类导入工具函数
-import { 
-  utilsPage,
-  utilsDate,
-  utilsEncrypt,
-  utilsConstants,
-  utilsValidator,
-  utilsRouter,
-  utilsSystem,
-  utilsUpload,
-  utilsDownload,
-  utilsDebounce,
-  utilsTree,
-  utilsUpdate,
-  utilsLogin
+import {
+  currRoute,
+  getLastPage,
+  isPageTabbar,
+  parseUrlToObj,
+  getAllPages,
+  getHomePage,
+  redirectAfterLogin,
+  navigateBackPlus,
+  getNavbarHeight,
 } from '@jinghe-sanjiaoroad-app/framework/utils'
-
-// 使用
-const { isPageTabbar } = utilsPage
-const { formatDate } = utilsDate
-const { AES } = utilsEncrypt
-```
-
-## 使用指南
-
-### 📱 页面处理工具
-
-#### **页面配置**
-```typescript
-import { getPageConfig } from '@jinghe-sanjiaoroad-app/framework/utils'
-
-// 获取页面配置
-const config = getPageConfig({
-  pages: [
-    { path: 'index/index', type: 'home' },
-    { path: 'login/login' }
-  ],
-  subPackages: [
-    { root: 'sub1', pages: [{ path: 'page1' }] }
-  ]
-})
-```
-
-#### **页面状态**
-```typescript
-import { getLastPage, currRoute } from '@jinghe-sanjiaoroad-app/framework/utils'
-
-// 获取最后页面
-const lastPage = getLastPage()
 
 // 获取当前路由
-const route = currRoute()
-console.log('当前路径:', route.path)
-console.log('查询参数:', route.query)
-```
-
-#### **Tabbar 判断**
-```typescript
-import { isPageTabbar } from '@jinghe-sanjiaoroad-app/framework/utils'
-
-// 检查是否为 Tabbar 页面
-const isTabbar = isPageTabbar('/pages/home/index', [
-  '/pages/home/index',
-  '/pages/user/index'
-])
-```
-
-### 📅 日期处理工具
-
-#### **日期格式化**
-```typescript
-import { formatDate } from '@jinghe-sanjiaoroad-app/framework/utils'
-
-// 格式化日期
-const formattedDate = formatDate(new Date(), 'YYYY-MM-DD HH:mm:ss')
-const today = formatDate() // 默认格式 YYYY-MM-DD
-const time = formatDate(Date.now(), 'HH:mm:ss')
-```
-
-### 🔐 加解密工具
-
-#### **AES 加密**
-```typescript
-import { AES } from '@jinghe-sanjiaoroad-app/framework/utils'
-
-// AES 加密
-const encrypted = AES.encrypt('hello world', 'secret-key')
-const decrypted = AES.decrypt(encrypted, 'secret-key')
-
-// 支持环境变量配置
-// VITE_APP_API_ENCRYPT_ENABLE=true 时自动启用
-```
-
-#### **RSA 加密**
-```typescript
-import { RSA } from '@jinghe-sanjiaoroad-app/framework/utils'
-
-// RSA 加密
-const rsa = new RSA()
-const encrypted = rsa.encrypt('hello world', publicKey)
-const decrypted = rsa.decrypt(encrypted, privateKey)
-```
-
-### 🎯 常量工具
-
-#### **业务常量**
-```typescript
-import { utilsConstants } from '@jinghe-sanjiaoroad-app/framework/utils'
-
-// BPM 枚举
-const { BPM_ENUM } = utilsConstants
-
-// 系统枚举
-const { SYSTEM_ENUM } = utilsConstants
-
-// 字典枚举
-const { DICT_ENUM } = utilsConstants
-```
-
-### 🔧 系统信息工具
-
-#### **获取导航栏高度**
-```typescript
-import { getNavbarHeight } from '@jinghe-sanjiaoroad-app/framework/utils'
-
-// 获取导航栏高度（考虑状态栏和胶囊按钮）
-const navbarHeight = getNavbarHeight()
-```
-
-#### **环境配置**
-```typescript
-import { getEnvBaseUrl, isDoubleTokenMode } from '@jinghe-sanjiaoroad-app/framework/utils'
-
-// 获取环境基准地址
-const baseUrl = getEnvBaseUrl()
-
-// 检查是否双 Token 模式
-const isDouble = isDoubleTokenMode()
-```
-
-### 📤 文件上传工具
-
-#### **文件上传**
-```typescript
-import { utilsUpload } from '@jinghe-sanjiaoroad-app/framework/utils'
-
-// 使用上传工具
-const { uploadFile } = utilsUpload
-```
-
-### 📥 下载工具
-
-#### **文件下载**
-```typescript
-import { utilsDownload } from '@jinghe-sanjiaoroad-app/framework/utils'
-
-// 使用下载工具
-const { downloadFile } = utilsDownload
-```
-
-### 🌳 树形数据处理
-
-#### **树形操作**
-```typescript
-import { utilsTree } from '@jinghe-sanjiaoroad-app/framework/utils'
-
-// 使用树形工具
-const { treeToList, listToTree } = utilsTree
-```
-
-### 🔄 防抖工具
-
-#### **防抖处理**
-```typescript
-import { utilsDebounce } from '@jinghe-sanjiaoroad-app/framework/utils'
-
-// 使用防抖工具
-const { debounce } = utilsDebounce
-```
-
-### 🔙 验证器工具
-
-#### **表单验证**
-```typescript
-import { utilsValidator } from '@jinghe-sanjiaoroad-app/framework/utils'
-
-// 使用验证器
-const { validateEmail, validatePhone } = utilsValidator
-```
-
-### 🔄 应用更新工具
-
-#### **更新检查**
-```typescript
-import { utilsUpdate } from '@jinghe-sanjiaoroad-app/framework/utils'
-
-// 使用更新工具
-const { checkUpdate, downloadUpdate } = utilsUpdate
-```
-
-### 🏠 登录页跳转
-
-#### **登录跳转**
-```typescript
-import { utilsLogin } from '@jinghe-sanjiaoroad-app/framework/utils'
-
-// 跳转到登录页
-const { toLoginPage } = utilsLogin
-```
-
-### 🔗 URL 处理工具
-
-#### **URL 解析**
-```typescript
-import { parseUrlToObj, ensureDecodeURIComponent } from '@jinghe-sanjiaoroad-app/framework/utils'
+const { path, query } = currRoute()
 
 // 解析 URL
-const urlObj = parseUrlToObj('/pages/login?redirect=%2Fhome')
-// 结果: { path: '/pages/login', query: { redirect: '/home' } }
+parseUrlToObj('/pages/login?redirect=%2Fhome')
+// => { path: '/pages/login', query: { redirect: '/home' } }
 
-// URL 解码
-const decodedUrl = ensureDecodeURIComponent('%2Fpages%2Flogin')
+// 登录后跳转（自动判断 tabbar 页面）
+redirectAfterLogin(query.redirect)
+
+// 增强返回（无上一页时跳首页）
+navigateBackPlus('/pages/fallback/index')
 ```
 
-### 🎯 深拷贝工具
+### 日期处理
 
-#### **对象深拷贝**
+```typescript
+import { formatDate, formatDateTime, formatPast } from '@jinghe-sanjiaoroad-app/framework/utils'
+
+formatDate(new Date(), 'YYYY-MM-DD')     // '2025-01-01'
+formatDateTime(Date.now())                // '2025-01-01 12:00:00'
+formatPast('2025-01-01 10:00:00')         // '2小时前'
+```
+
+### 文件上传
+
+```typescript
+import { uploadFileFromPath, createUploadTask } from '@jinghe-sanjiaoroad-app/framework/utils'
+
+// 从路径上传（自动选择 server/client 模式）
+const url = await uploadFileFromPath(filePath, 'avatar')
+
+// 创建带 UI 交互的上传任务
+const { loading, data, run } = createUploadTask('/infra/file/upload-file', {}, {
+  maxSize: 10,
+  onSuccess: (res) => console.log('上传成功', res),
+})
+run() // 弹出选择器并上传
+```
+
+### 文件下载 / 静态资源
+
+```typescript
+import {
+  saveImageToAlbum,
+  formatFileSize,
+  frameworkStaticUrl,
+  staticUrl,
+} from '@jinghe-sanjiaoroad-app/framework/utils'
+
+// 保存图片到相册（多端兼容）
+await saveImageToAlbum('https://example.com/image.png')
+
+// 格式化文件大小
+formatFileSize(1024 * 1024) // '1.00 MB'
+
+// 静态资源 URL
+frameworkStaticUrl('/logo.svg')  // 框架内部资源
+staticUrl('/banner.png')         // 项目资源
+```
+
+### 防抖
+
+```typescript
+import { debounce } from '@jinghe-sanjiaoroad-app/framework/utils'
+
+const debouncedSearch = debounce((keyword: string) => {
+  // 搜索逻辑
+}, 300)
+
+debouncedSearch('hello')
+debouncedSearch.cancel()  // 取消
+debouncedSearch.flush()   // 立即执行
+```
+
+### 树形数据
+
+```typescript
+import { handleTree, findChildren } from '@jinghe-sanjiaoroad-app/framework/utils'
+
+// 扁平数组 → 树形结构
+const tree = handleTree(flatList)
+
+// 查找子节点
+const children = findChildren(tree, parentId)
+```
+
+### 表单验证
+
+```typescript
+import { isMobile, isEmail, isIp, isBlank } from '@jinghe-sanjiaoroad-app/framework/utils'
+
+isMobile('13800138000')  // true
+isEmail('test@example.com')  // true
+isBlank('')  // true
+```
+
+### 系统信息
+
+```typescript
+import { getSystemInfo, getSafeAreaInsets } from '@jinghe-sanjiaoroad-app/framework/utils'
+
+const sysInfo = getSystemInfo()  // 带缓存
+const insets = getSafeAreaInsets()  // 安全区域边距
+```
+
+### 登录跳转
+
+```typescript
+import { toLoginPage } from '@jinghe-sanjiaoroad-app/framework/utils'
+
+// 带防抖的登录跳转
+toLoginPage({ queryString: '?redirect=/pages/home/index' })
+
+// 立即跳转（跳过防抖）
+toLoginPage.flush()
+```
+
+### 深拷贝
+
 ```typescript
 import { deepClone } from '@jinghe-sanjiaoroad-app/framework/utils'
 
-// 深拷贝对象
-const original = { a: 1, b: { c: 2 } }
-const cloned = deepClone(original)
-
-// 支持循环引用
-const circular = { a: 1 }
-circular.self = circular
-const clonedCircular = deepClone(circular) // 正确处理循环引用
+const cloned = deepClone(original)  // 支持循环引用、Map、Set、Date、RegExp
 ```
 
-## 最佳实践
+### tabBar 参数传递
 
-### ✅ 推荐用法
-
-#### **1. 按需导入**
 ```typescript
-// 只导入需要的工具函数
-import { formatDate, deepClone } from '@jinghe-sanjiaoroad-app/framework/utils'
+import { setTabParams, getAndClearTabParams } from '@jinghe-sanjiaoroad-app/framework/utils'
+
+// 跳转前设置参数
+setTabParams({ type: 'todo' })
+uni.switchTab({ url: '/pages/bpm/index' })
+
+// 目标页 onShow 中获取
+const params = getAndClearTabParams()  // { type: 'todo' }
 ```
 
-#### **2. 命名空间导入**
-```typescript
-// 按分类导入，避免命名冲突
-import { utilsDate, utilsEncrypt } from '@jinghe-sanjiaoroad-app/framework/utils'
-const { formatDate } = utilsDate
-const { AES } = utilsEncrypt
-```
+## 注意事项
 
-#### **3. 类型安全**
-```typescript
-// 所有工具函数都有完整的 TypeScript 类型定义
-const date: string = formatDate(new Date())
-const cloned: User = deepClone(user)
-```
-
-### ⚠️ 注意事项
-
-#### **1. 环境变量**
-```typescript
-// 加密功能通过环境变量控制
-VITE_APP_API_ENCRYPT_ENABLE=true  // 启用 API 加密
-VITE_APP_API_ENCRYPT_ALGORITHM=AES  // 加密算法
-VITE_APP_API_ENCRYPT_REQUEST_KEY=xxx  // 请求密钥
-VITE_APP_API_ENCRYPT_RESPONSE_KEY=xxx  // 响应密钥
-```
-
-#### **2. 平台兼容**
-```typescript
-// 部分工具函数考虑了平台差异
-// 微信小程序特殊处理
-// H5、App 端通用处理
-```
-
-#### **3. 性能优化**
-```typescript
-// deepClone 使用 WeakMap 优化性能
-// 防抖工具避免频繁执行
-// 树形数据转换使用高效算法
-```
-
-## 故障排除
-
-### 🔧 常见问题
-
-#### **1. 加密功能不工作**
-```typescript
-// 检查环境变量配置
-console.log('加密启用:', import.meta.env.VITE_APP_API_ENCRYPT_ENABLE)
-console.log('加密算法:', import.meta.env.VITE_APP_API_ENCRYPT_ALGORITHM)
-```
-
-#### **2. 页面路由获取失败**
-```typescript
-// 确保 pages.json 配置正确
-// 检查页面栈是否为空
-const pages = getCurrentPages()
-if (pages.length === 0) {
-  console.warn('页面栈为空')
-}
-```
-
-#### **3. 深拷贝循环引用**
-```typescript
-// 使用内置的 WeakMap 处理
-// 不要手动传递 WeakMap 参数
-const cloned = deepClone(obj) // 自动处理循环引用
-```
-
-## 依赖说明
-
-### 📦 内部依赖
-- `@uni-helper/vite-plugin-uni-pages` - 页面类型定义
-- `@uni-helper/uni-env` - 环境判断
-- `crypto-js` - 加密库
-- `jsencrypt` - RSA 加密库
-- `dayjs` - 日期处理库
-
-### 📦 外部依赖
-- `uni-app` - uni-app 框架
-- TypeScript - 类型支持
-
-## 更新日志
-
-### 📝 版本记录
-- **v1.0.0** - 初始版本，包含基础工具函数
-- **v1.1.0** - 添加分类导出和命名空间支持
-- **v1.2.0** - 完善文档和使用示例
+- `getAllPages` / `getHomePage` 需要传入 `pages.json` 配置，外部项目应在 `utils/index.ts` 中覆盖实现
+- `registerComponent` 需要传入 `import.meta.glob` 结果，必须在项目级调用
+- 加密配置通过 `initFramework({ apiEncrypt: { ... } })` 传入，不直接读取环境变量
+- `toLoginPage` 有 500ms 防抖，H5 首次加载可能不触发，属于已知行为
