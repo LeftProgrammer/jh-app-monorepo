@@ -1,7 +1,6 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "composite": true,
     "baseUrl": ".",
     "rootDir": "src",
     "paths": {
@@ -12,6 +11,7 @@
     "noImplicitAny": false,
     "declaration": true,
     "declarationMap": true,
+    "emitDeclarationOnly": true,
     "outDir": "dist",
     "sourceMap": true,
     "skipLibCheck": true
