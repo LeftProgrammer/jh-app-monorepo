@@ -4,11 +4,16 @@
  * @usage 直接导入需要的函数或 Hook
  *
  * @example
- * // 导入 Hook
- * import { useAccess, useRequest, useScroll, useUpload } from '@jinghe-sanjiaoroad-app/framework/hooks'
+ * // 权限控制
+ * import { useAccess } from '@jinghe-sanjiaoroad-app/framework/hooks'
+ * const { hasPermission, hasRole } = useAccess()
+ *
+ * // 模板中使用（全平台兼容，包括小程序）
+ * // <button v-if="hasPermission('system:user:update')">编辑</button>
+ * // <button v-if="hasRole('admin')">管理</button>
  *
  * // 导入字典工具函数
- * import { getDictLabel, getDictOptions, getIntDictOptions, getStrDictOptions } from '@jinghe-sanjiaoroad-app/framework/hooks'
+ * import { getDictLabel, getDictOptions } from '@jinghe-sanjiaoroad-app/framework/hooks'
  */
 
 // ============ 权限相关 ============
@@ -26,11 +31,7 @@ export {
 } from './useDict'
 
 // 导出类型
-export type {
-  DictDataType,
-  NumberDictDataType,
-  StringDictDataType,
-} from './useDict'
+export type { DictDataType, NumberDictDataType, StringDictDataType } from './useDict'
 
 // ============ 请求相关 ============
 export { default as useRequest } from './useRequest'

@@ -6,7 +6,7 @@
  * @export userStores - 用户模块命名空间
  * @usage 用户信息管理、权限控制、部门管理
  */
-import type { AuthPermissionInfo, IUserInfoRes } from '../api/types/login'
+import type { AuthMenuItem, AuthPermissionInfo, IUserInfoRes } from '../api/types/login'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { getFileByIds } from '../api/infra/file'
@@ -33,12 +33,12 @@ export const useUserStore = defineStore(
     const tenantId = ref<number | null>(null) // 租户编号
     const roles = ref<string[]>([]) // 角色标识列表
     const permissions = ref<string[]>([]) // 权限标识列表
+    const menus = ref<AuthMenuItem[]>([]) // 后端返回的菜单树
     const favoriteMenus = ref<string[]>([]) // 常用菜单 key 列表
     const userList = ref<any[]>([]) // 存储所有用户
 
     const setUserAvatar = async (avatar: string) => {
-      if (!avatar)
-        return
+      if (!avatar) return
       const file = await getFileByIds(avatar)
       if (file && file.length > 0 && file[0]?.url) {
         userInfo.value.avatar = file[0].url
@@ -62,12 +62,13 @@ export const useUserStore = defineStore(
       userInfo.value.phone = dept?.phone
       userInfo.value.departmentName = dept?.departmentName
       const users: any = await getUserList()
-      userList.value = (users || []).map((x) => {
+      userList.value = (users || []).map(x => {
         x.id = String(x.id)
         return x
       })
       roles.value = val.roles
       permissions.value = val.permissions
+      menus.value = val.menus || []
     }
 
     /** 删除用户信息 */
@@ -76,6 +77,7 @@ export const useUserStore = defineStore(
       userList.value = []
       roles.value = []
       permissions.value = []
+      menus.value = []
       uni.removeStorageSync('user')
     }
 
@@ -102,6 +104,7 @@ export const useUserStore = defineStore(
       tenantId,
       roles,
       permissions,
+      menus,
       favoriteMenus,
       clearUserInfo,
       fetchUserInfo,
@@ -113,5 +116,5 @@ export const useUserStore = defineStore(
   },
   {
     persist: true,
-  },
+  }
 )

@@ -1,3 +1,4 @@
+import { computed } from 'vue'
 import { useUserStore } from '../store/user'
 
 /**
@@ -5,37 +6,49 @@ import { useUserStore } from '../store/user'
  * @description 提供基于角色和权限码的权限判断方法
  * @export useAccess - 权限控制 Hook
  * @usage 权限验证和角色判断
+ *
+ * @example
+ * const { hasPermission, hasRole } = useAccess()
+ *
+ * // 在模板中配合 v-if 使用（全平台兼容）
+ * // <button v-if="hasPermission('system:user:update')">编辑</button>
+ * // <button v-if="hasRole('admin')">管理</button>
+ *
+ * // 多个权限码（满足其一即可）
+ * // <button v-if="hasPermission('system:user:update', 'system:user:create')">操作</button>
+ *
+ * // 在逻辑中使用
+ * if (hasPermission('system:user:delete')) { ... }
  */
 function useAccess() {
   const userStore = useUserStore()
 
+  /** 用户权限码集合（响应式） */
+  const permissionSet = computed(() => new Set(userStore.permissions))
+  /** 用户角色集合（响应式） */
+  const roleSet = computed(() => new Set(userStore.roles))
+
   /**
-   * 基于角色判断是否有权限
-   * @description 通过用户的角色列表判断是否具有指定角色
-   * @param roles 需要判断的角色列表
-   * @returns 是否具有指定角色中的任意一个
+   * 判断是否有指定权限码（满足其一即可）
+   * @param codes 权限码，支持传入多个参数
    */
-  function hasAccessByRoles(roles: string[]): boolean {
-    const userRoleSet = new Set(userStore.roles)
-    const intersection = roles.filter(item => userRoleSet.has(item))
-    return intersection.length > 0
+  function hasPermission(...codes: string[]): boolean {
+    if (codes.length === 0) return true
+    return codes.some(code => permissionSet.value.has(code))
   }
 
   /**
-   * 基于权限码判断是否有权限
-   * @description 通过用户的权限码列表判断是否具有指定权限
-   * @param codes 需要判断的权限码列表
-   * @returns 是否具有指定权限码中的任意一个
+   * 判断是否有指定角色（满足其一即可）
+   * @param roles 角色标识，支持传入多个参数
    */
-  function hasAccessByCodes(codes: string[]): boolean {
-    const userCodesSet = new Set(userStore.permissions)
-    const intersection = codes.filter(item => userCodesSet.has(item))
-    return intersection.length > 0
+  function hasRole(...roles: string[]): boolean {
+    if (roles.length === 0) return true
+    return roles.some(role => roleSet.value.has(role))
   }
 
   return {
-    hasAccessByCodes,
-    hasAccessByRoles,
+    hasPermission,
+    hasRole,
   }
 }
 

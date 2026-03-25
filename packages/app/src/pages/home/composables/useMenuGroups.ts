@@ -2,6 +2,9 @@
  * 菜单分组 composable
  * @description 封装菜单权限过滤和查询逻辑，外部项目只需传入菜单配置数据
  *
+ * 过滤流程：
+ * 后端返回菜单数据（userStore.menus）作为唯一权限来源，按路径匹配过滤本地菜单
+ *
  * @example
  * // 外部项目使用
  * import { useMenuGroups } from '@jinghe-sanjiaoroad-app/framework/pages/home'
@@ -13,8 +16,8 @@
  * const { menuGroups, getMenuItemByKey, getMenusByKeys } = useMenuGroups(menuGroupsData)
  */
 import type { MenuGroup, MenuItem } from '../types'
-import { useAccess } from '../../../hooks'
-import { filterMenuGroupsByPermission, getAllMenuItems } from '../utils'
+import { useUserStore } from '../../../store'
+import { filterMenuGroupsByBackendMenus, flattenAuthMenuPaths, getAllMenuItems } from '../utils'
 
 /**
  * 菜单分组 composable
@@ -22,12 +25,20 @@ import { filterMenuGroupsByPermission, getAllMenuItems } from '../utils'
  * @returns 带权限过滤的菜单分组及查询方法
  */
 export function useMenuGroups(menuGroupsData: MenuGroup[]) {
-  const { hasAccessByCodes } = useAccess()
+  const userStore = useUserStore()
+
+  /** 后端菜单路径集合（响应式） */
+  const backendMenuPaths = computed(() => {
+    const menus = userStore.menus || []
+    if (menus.length === 0) return null // 后端未返回菜单时不过滤，保持向后兼容
+    return new Set(flattenAuthMenuPaths(menus))
+  })
 
   /** 带权限过滤后的菜单分组（响应式） */
-  const menuGroups = computed(() =>
-    filterMenuGroupsByPermission(menuGroupsData, hasAccessByCodes),
-  )
+  const menuGroups = computed(() => {
+    if (!backendMenuPaths.value) return menuGroupsData
+    return filterMenuGroupsByBackendMenus(menuGroupsData, backendMenuPaths.value)
+  })
 
   /** 根据 key 获取菜单项 */
   function getMenuItemByKey(key: string): MenuItem | undefined {

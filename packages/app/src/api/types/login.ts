@@ -39,7 +39,22 @@ export interface AuthPermissionInfo {
   user: IUserInfoRes
   roles: string[]
   permissions: string[]
-  // menus: AppRouteRecordRaw[]; // add by 芋艿：暂时用不到
+  menus: AuthMenuItem[]
+}
+
+/** 后端返回的菜单项 */
+export interface AuthMenuItem {
+  id: number
+  parentId: number
+  name: string
+  path: string
+  component?: string | null
+  componentName?: string | null
+  icon?: string
+  visible?: boolean
+  keepAlive?: boolean
+  alwaysShow?: boolean
+  children?: AuthMenuItem[] | null
 }
 
 // 认证存储数据结构

@@ -1,9 +1,4 @@
-import type {
-  AuthPermissionInfo,
-  IAuthLoginRes,
-  ICaptcha,
-  IDoubleTokenRes,
-} from './types/login'
+import type { AuthPermissionInfo, IAuthLoginRes, ICaptcha, IDoubleTokenRes } from './types/login'
 import { http } from '../http/http'
 
 /**
@@ -114,7 +109,7 @@ export function refreshToken(refreshToken: string) {
 
 /** 获取权限信息 */
 export function getAuthPermissionInfo() {
-  return http.get<AuthPermissionInfo>('/system/auth/get-permission-info')
+  return http.get<AuthPermissionInfo>('/system/auth/get-permission-info', { clientId: 'APP' })
 }
 /** 获取人员台账绑定的单位 */
 export function getDeptByUsername(username: string) {
