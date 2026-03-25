@@ -42,7 +42,7 @@ export default defineConfig(({ mode }) => {
           'hooks/index': resolve(__dirname, 'src/hooks/index.ts'),
           'vite-plugins/index': resolve(__dirname, 'src/vite-plugins/index.ts'),
         },
-        name: 'JhApp',
+        name: 'JhAppFramework',
         formats: ['es', 'cjs'],
         fileName: (format, entryName) => {
           // 使用 .mjs 扩展名确保 Node.js 正确识别 ES 模块
