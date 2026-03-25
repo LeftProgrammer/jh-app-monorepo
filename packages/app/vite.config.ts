@@ -12,6 +12,8 @@ export default defineConfig(({ mode }) => {
       // 启用 DTS 插件，自动生成类型声明
       dts({
         insertTypesEntry: true,
+        // 静默类型诊断输出，类型检查由 vue-tsc --noEmit 负责
+        logLevel: 'silent',
         // 只为入口文件生成类型声明，减少 dist 文件数量
         include: [
           'src/index.ts',
@@ -32,7 +34,7 @@ export default defineConfig(({ mode }) => {
     build: {
       lib: {
         entry: {
-          'index': resolve(__dirname, 'src/index.ts'),
+          index: resolve(__dirname, 'src/index.ts'),
           'components/index': resolve(__dirname, 'src/components/index.ts'),
           'store/index': resolve(__dirname, 'src/store/index.ts'),
           'http/index': resolve(__dirname, 'src/http/index.ts'),
@@ -50,12 +52,12 @@ export default defineConfig(({ mode }) => {
       },
       rollupOptions: {
         // 最简单有效的方案
-        external: (id) => {
+        external: id => {
           // 外部化 pages/ 目录下的所有页面组件，避免被打包进库
           if (
-            id.includes('/src/pages/')
-            || id.includes('\\src\\pages\\')
-            || (/[/\\]pages[/\\]/.test(id) && (id.endsWith('.vue') || id.endsWith('.ts')))
+            id.includes('/src/pages/') ||
+            id.includes('\\src\\pages\\') ||
+            (/[/\\]pages[/\\]/.test(id) && (id.endsWith('.vue') || id.endsWith('.ts')))
           ) {
             return true
           }
@@ -86,17 +88,17 @@ export default defineConfig(({ mode }) => {
             /^[a-z]/,
             /^node:/,
           ]
-          return externals.some(e => typeof e === 'string' ? id === e : e.test(id))
+          return externals.some(e => (typeof e === 'string' ? id === e : e.test(id)))
         },
         output: {
           globals: {
-            'vue': 'Vue',
-            'pinia': 'Pinia',
+            vue: 'Vue',
+            pinia: 'Pinia',
             'vue-router': 'VueRouter',
             'vue-i18n': 'VueI18n',
-            'dayjs': 'dayjs',
+            dayjs: 'dayjs',
             'crypto-js': 'CryptoJS',
-            'jsencrypt': 'JSEncrypt',
+            jsencrypt: 'JSEncrypt',
           },
         },
       },
