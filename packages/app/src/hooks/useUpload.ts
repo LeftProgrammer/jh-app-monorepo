@@ -7,6 +7,8 @@
 import { ref } from 'vue'
 import { useToast } from 'wot-design-uni'
 import { getBaseUrl } from '../config'
+import { useTokenStore } from '../store/token'
+import { useUserStore } from '../store/user'
 
 type TfileType = 'image' | 'file'
 type TImage = 'png' | 'jpg' | 'jpeg' | 'webp' | '*'
@@ -141,10 +143,17 @@ async function uploadFile({
   onError: (err: any) => void
   onComplete: () => void
 }) {
+  const tokenStore = useTokenStore()
+  const userStore = useUserStore()
   uni.uploadFile({
-    url: `${getBaseUrl()}/upload`,
+    url: `${getBaseUrl()}/infra/file/upload-file`,
     filePath: tempFilePath,
     name: 'file',
+    header: {
+      'Accept': '*/*',
+      'tenant-id': userStore.tenantId,
+      'Authorization': `Bearer ${tokenStore.validToken}`,
+    },
     formData,
     success: (uploadFileRes) => {
       try {

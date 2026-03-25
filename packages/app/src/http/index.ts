@@ -10,15 +10,12 @@
  */
 // HTTP 模块统一导出
 export * from './http'
-// 命名空间导出
+// 命名空间导出（方便外部按命名空间使用，避免命名冲突）
 export * as httpCore from './http'
-// 默认导出 HTTP 实例 - 明确命名
-export { default as http } from './http'
 export * from './interceptor'
 export * as httpInterceptor from './interceptor'
 
 export * from './tools/enum'
 export * from './tools/queryString'
 export * from './types'
-
 export * as httpTypes from './types'

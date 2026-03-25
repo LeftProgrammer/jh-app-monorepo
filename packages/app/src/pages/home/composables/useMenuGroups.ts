@@ -13,7 +13,7 @@
  * const { menuGroups, getMenuItemByKey, getMenusByKeys } = useMenuGroups(menuGroupsData)
  */
 import type { MenuGroup, MenuItem } from '../types'
-import useAccess from '../../../hooks/useAccess'
+import { useAccess } from '../../../hooks'
 import { filterMenuGroupsByPermission, getAllMenuItems } from '../utils'
 
 /**

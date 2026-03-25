@@ -24,6 +24,7 @@
 
 // Store 模块导出 - 按字母顺序排列，保持一致性
 export { useDictStore } from './dict'
+export type { DictCache, DictItem } from './dict'
 export * as dictStores from './dict'
 
 export { useGlobalState } from './global'

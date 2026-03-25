@@ -65,12 +65,6 @@ function _isPageTabbar(path: string): boolean {
   }
 }
 
-// 重新导出类型
-export type { RouterConfig, RouterDeps } from '../config'
-
-/** @deprecated 使用 isDebugLog() 替代 */
-export const FG_LOG_ENABLE = false
-
 // ============================================================
 // 内部拦截器实现（使用配置访问器）
 // ============================================================
@@ -81,7 +75,7 @@ let _excludeLoginPathListCache: string[] = []
 /**
  * 判断路径是否需要排除登录
  */
-function _judgeIsExcludePath(path: string): boolean {
+export function judgeIsExcludePath(path: string): boolean {
   const deps = getRouterDeps()
   const getAllPagesFn = deps.getAllPages ?? ((key?: string) => _getAllPages(undefined, key))
   const excludeLoginPathList = getExcludeLoginPathList()
@@ -107,7 +101,7 @@ function _judgeIsExcludePath(path: string): boolean {
 /**
  * 导航拦截器
  */
-const _navigateToInterceptor = {
+export const navigateToInterceptor = {
   invoke({ url, query }: { url: string, query?: Record<string, string> }) {
     if (url === undefined) {
       return
@@ -185,7 +179,7 @@ const _navigateToInterceptor = {
 
     // #region 1/2 默认需要登录的情况(白名单策略)
     if (_isNeedLoginMode) {
-      if (_judgeIsExcludePath(path)) {
+      if (judgeIsExcludePath(path)) {
         return true
       }
       else {
@@ -201,7 +195,7 @@ const _navigateToInterceptor = {
 
     // #region 2/2 默认不需要登录的情况(黑名单策略)
     else {
-      if (_judgeIsExcludePath(path)) {
+      if (judgeIsExcludePath(path)) {
         debugLog && console.log('2 isNeedLogin(黑名单策略) url:', fullPath)
         toLoginPageFn({ queryString: redirectQuery })
         return false
@@ -222,19 +216,9 @@ const _navigateToInterceptor = {
  */
 export const routeInterceptor = {
   install() {
-    uni.addInterceptor('navigateTo', _navigateToInterceptor)
-    uni.addInterceptor('reLaunch', _navigateToInterceptor)
-    uni.addInterceptor('redirectTo', _navigateToInterceptor)
-    uni.addInterceptor('switchTab', _navigateToInterceptor)
+    uni.addInterceptor('navigateTo', navigateToInterceptor)
+    uni.addInterceptor('reLaunch', navigateToInterceptor)
+    uni.addInterceptor('redirectTo', navigateToInterceptor)
+    uni.addInterceptor('switchTab', navigateToInterceptor)
   },
 }
-
-/**
- * 导航拦截器
- */
-export const navigateToInterceptor = _navigateToInterceptor
-
-/**
- * 判断路径是否需要排除登录
- */
-export const judgeIsExcludePath = _judgeIsExcludePath

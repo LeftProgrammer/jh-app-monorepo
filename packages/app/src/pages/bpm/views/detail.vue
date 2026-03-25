@@ -148,7 +148,7 @@ import {
   getTaskListByReturn,
   returnTask,
 } from '../../../api/bpm/task'
-import { getIntDictOptions } from '../../../hooks/useDict'
+import { getIntDictOptions } from '../../../hooks'
 import { useGlobalState } from '../../../store/global'
 import { useUserStore } from '../../../store/user'
 import { getNavbarHeight, navigateBackPlus } from '../../../utils'

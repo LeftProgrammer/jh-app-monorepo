@@ -24,10 +24,16 @@
  */
 
 // 类型导出
-export type { RouterConfig, RouterDeps } from './config'
+export type { RouterConfig, RouterDeps } from '../config'
 
-// 路由特有工具
-export { LOGIN_STRATEGY_MAP } from './config'
+// 登录策略枚举
+/** 登录策略枚举 */
+export const LOGIN_STRATEGY_MAP = {
+  /** 黑名单策略，默认可以进入APP */
+  DEFAULT_NO_NEED_LOGIN: 0,
+  /** 白名单策略，默认不可以进入APP，需要强制登录 */
+  DEFAULT_NEED_LOGIN: 1,
+}
 
 // 路由拦截器
 export {

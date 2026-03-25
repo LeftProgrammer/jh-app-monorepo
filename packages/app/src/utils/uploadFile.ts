@@ -20,6 +20,8 @@ import { ref } from 'vue'
 import { useToast } from 'wot-design-uni'
 import * as FileApi from '../api/infra/file'
 import { getUploadType } from '../config'
+import { useTokenStore } from '../store/token'
+import { useUserStore } from '../store/user'
 
 /** 上传类型 */
 const UPLOAD_TYPE = {
@@ -365,6 +367,8 @@ function uploadFile<T>({
   onComplete,
 }: UploadFileOptions<T>) {
   try {
+    const tokenStore = useTokenStore()
+    const userStore = useUserStore()
     // 创建上传任务
     const uploadTask = uni.uploadFile({
       url,
@@ -372,6 +376,9 @@ function uploadFile<T>({
       name: 'file', // 文件对应的 key
       formData,
       header: {
+        'Accept': '*/*',
+        'tenant-id': userStore.tenantId,
+        'Authorization': `Bearer ${tokenStore.validToken}`,
         // H5环境下不需要手动设置Content-Type，让浏览器自动处理multipart格式
         // #ifndef H5
         'Content-Type': 'multipart/form-data',

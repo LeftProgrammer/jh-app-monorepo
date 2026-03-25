@@ -2,7 +2,7 @@
 import type { TagType } from "wot-design-uni/components/wd-tag/types";
 import { computed } from "vue";
 
-import { getDictObj } from "../../hooks/useDict";
+import { getDictObj } from "../../hooks";
 
 interface DictTagProps {
   type: string; // 字典类型
