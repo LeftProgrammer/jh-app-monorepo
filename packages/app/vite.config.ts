@@ -15,13 +15,13 @@ export default defineConfig(({ mode }) => {
         // 只为入口文件生成类型声明，减少 dist 文件数量
         include: [
           'src/index.ts',
+          'src/config/index.ts',
           'src/utils/index.ts',
           'src/store/index.ts',
           'src/http/index.ts',
           'src/hooks/index.ts',
           'src/components/index.ts',
           'src/router/index.ts',
-          'src/router/config.ts',
           'src/router/interceptor.ts',
           'src/vite-plugins/index.ts',
         ],

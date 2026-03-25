@@ -20,46 +20,44 @@
   },
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "build": "pnpm -r build",
-    "build:app": "pnpm --filter @jinghe-sanjiaoroad-app/framework build",
+    "prepare": "husky",
+
     "dev": "pnpm -r dev",
-    "dev:app": "pnpm --filter @jinghe-sanjiaoroad-app/framework dev",
-    "test": "pnpm -r test",
-    "test:app": "pnpm --filter @jinghe-sanjiaoroad-app/framework test",
+    "build": "pnpm -r build",
     "lint": "pnpm -r lint",
     "lint:fix": "pnpm -r lint:fix",
+    "test": "pnpm -r test",
+    "type-check": "pnpm -r type-check",
+    "clean": "pnpm -r clean && rm -rf node_modules",
+    "clean:cache": "rimraf playground/node_modules/.vite playground/dist packages/app/dist",
+
+    "dev:app": "pnpm --filter @jinghe-sanjiaoroad-app/framework dev",
+    "build:app": "pnpm --filter @jinghe-sanjiaoroad-app/framework build",
     "lint:app": "pnpm --filter @jinghe-sanjiaoroad-app/framework lint",
     "lint:fix:app": "pnpm --filter @jinghe-sanjiaoroad-app/framework lint:fix",
-    "type-check": "pnpm -r type-check",
+    "test:app": "pnpm --filter @jinghe-sanjiaoroad-app/framework test",
     "type-check:app": "pnpm --filter @jinghe-sanjiaoroad-app/framework type-check",
-    "clean": "pnpm -r clean && rm -rf node_modules",
     "clean:app": "pnpm --filter @jinghe-sanjiaoroad-app/framework clean",
+    "check:all": "pnpm lint:app && pnpm type-check:app && pnpm build:app",
+
     "dev:playground": "pnpm --filter jinghe-sanjiaoroad-app-playground dev",
-    "dev:all": "pnpm --parallel --filter @jinghe-sanjiaoroad-app/framework --filter jinghe-sanjiaoroad-app-playground dev",
     "build:playground": "pnpm --filter jinghe-sanjiaoroad-app-playground build",
     "lint:playground": "pnpm --filter jinghe-sanjiaoroad-app-playground lint",
-    "check:playground": "node scripts/test-framework.js",
     "clean:playground": "pnpm --filter jinghe-sanjiaoroad-app-playground clean",
-    "clean:cache": "rimraf playground/node_modules/.vite playground/dist packages/app/dist",
+
+    "dev:all": "pnpm --parallel --filter @jinghe-sanjiaoroad-app/framework --filter jinghe-sanjiaoroad-app-playground dev",
     "rebuild": "pnpm clean:cache && pnpm build:app && pnpm dev:playground",
-    "start": "pnpm dev:app",
-    "check:all": "pnpm lint:app && pnpm type-check:app && pnpm build:app",
-    "prepare:release": "pnpm check:all && pnpm build:app",
-    "check": "node scripts/test-framework.js",
+
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "pnpm build && changeset publish",
-    "release:app": "pnpm build:app && changeset publish",
-    "prepare": "husky install"
+    "release:app": "pnpm build:app && changeset publish"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.1",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
-    "@typescript-eslint/eslint-plugin": "^8.0.0",
-    "@typescript-eslint/parser": "^8.0.0",
     "eslint": "^9.31.0",
-    "eslint-plugin-vue": "^9.0.0",
     "husky": "^9.1.7",
     "lint-staged": "^15.2.10",
     "prettier": "^3.3.0",
@@ -69,7 +67,6 @@
   },
   "lint-staged": {
     "*.{js,ts,vue}": [
-      "eslint --fix",
       "prettier --write"
     ],
     "*.{json,md}": [
@@ -77,17 +74,15 @@
     ]
   },
   "author": {
-    "name": "jinghe-sanjiaoroad-app-team",
-    "email": "team@jinghe-sanjiaoroad-app.com",
-    "url": "https://github.com/LeftProgrammer/jh-app-monorepo"
+    "name": "jinghe-智慧工程"
   },
   "license": "MIT",
-  "homepage": "https://github.com/LeftProgrammer/jh-app-monorepo#readme",
+  "homepage": "",
   "repository": {
     "type": "git",
-    "url": "https://github.com/LeftProgrammer/jh-app-monorepo.git"
+    "url": ""
   },
   "bugs": {
-    "url": "https://github.com/LeftProgrammer/jh-app-monorepo/issues"
+    "url": ""
   }
 }
