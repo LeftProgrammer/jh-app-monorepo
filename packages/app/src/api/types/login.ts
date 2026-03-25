@@ -48,7 +48,7 @@ export interface AuthStorage {
   mode: AuthMode
   tokens: ISingleTokenRes | IDoubleTokenRes
   userInfo?: IUserInfoRes
-  userList?: Array
+  userList?: Array<any>
   loginTime: number // 登录时间戳
 }
 
@@ -96,9 +96,7 @@ export interface IUpdatePassword {
  * @param tokenRes 登录响应数据
  * @returns 是否为单Token响应
  */
-export function isSingleTokenRes(
-  tokenRes: IAuthLoginRes,
-): tokenRes is ISingleTokenRes {
+export function isSingleTokenRes(tokenRes: IAuthLoginRes): tokenRes is ISingleTokenRes {
   return 'token' in tokenRes && !('refreshToken' in tokenRes)
 }
 
@@ -107,8 +105,6 @@ export function isSingleTokenRes(
  * @param tokenRes 登录响应数据
  * @returns 是否为双Token响应
  */
-export function isDoubleTokenRes(
-  tokenRes: IAuthLoginRes,
-): tokenRes is IDoubleTokenRes {
+export function isDoubleTokenRes(tokenRes: IAuthLoginRes): tokenRes is IDoubleTokenRes {
   return 'accessToken' in tokenRes && 'refreshToken' in tokenRes
 }

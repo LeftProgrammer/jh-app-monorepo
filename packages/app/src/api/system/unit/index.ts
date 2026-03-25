@@ -1,4 +1,4 @@
-import type { PageParam, PageResult } from '../../../http/types'
+import type { PageResult } from '../../../http/types'
 import { http } from '../../../http/http'
 
 export interface ProjectUnit {

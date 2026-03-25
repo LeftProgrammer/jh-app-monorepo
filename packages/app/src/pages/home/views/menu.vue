@@ -36,10 +36,7 @@
               :src="removeIconSrc"
               class="w-30rpx h-30rpx position-absolute top-0 right-0"
             />
-            <image
-              class="w-61rpx h-61rpx"
-              :src="getIconSrc(menu)"
-            />
+            <image class="w-61rpx h-61rpx" :src="getIconSrc(menu)" />
             <view class="text-#4E5969 text-23rpx">{{ menu.name }}</view>
           </view>
         </wd-grid-item>
@@ -62,10 +59,7 @@
                 :src="addIconSrc"
                 class="w-30rpx h-30rpx position-absolute top-0 right-0"
               />
-              <image
-                class="w-61rpx h-61rpx"
-                :src="getIconSrc(menu)"
-              />
+              <image class="w-61rpx h-61rpx" :src="getIconSrc(menu)" />
               <view class="text-#4E5969 text-23rpx">{{ menu.name }}</view>
             </view>
           </wd-grid-item>
@@ -87,44 +81,47 @@ defineOptions({
   name: 'HomeMenuPage',
 })
 
-const props = withDefaults(defineProps<{
-  /** 菜单分组列表（必传） */
-  menuGroups: MenuGroup[]
-  /** 常用菜单列表（可选，默认从 store 获取） */
-  favoriteMenus?: MenuItem[]
-  /** 页面标题 */
-  title?: string
-  /** 搜索框占位符 */
-  searchPlaceholder?: string
-  /** 常用功能标题 */
-  favoriteTitle?: string
-  /** 菜单点击处理函数（可选，默认跳转菜单 url） */
-  onMenuClick?: (menu: MenuItem) => void
-  /** 保存常用菜单的回调（可选，默认保存到 store） */
-  onSave?: (keys: string[]) => void
-  /** 列数 */
-  column?: number
-  /** 图标路径前缀 */
-  iconPrefix?: string
-  /** 添加图标路径 */
-  addIconSrc?: string
-  /** 移除图标路径 */
-  removeIconSrc?: string
-  /** 路由跳转函数（可选，默认使用 uni.navigateTo） */
-  navigateTo?: (url: string) => void
-  /** 显示 toast（可选，默认使用 uni.showToast） */
-  showToast?: (message: string) => void
-  /** 显示成功 toast（可选，默认使用 uni.showToast） */
-  showSuccess?: (message: string) => void
-}>(), {
-  title: '全部功能',
-  searchPlaceholder: '搜索常用',
-  favoriteTitle: '首页功能',
-  column: 5,
-  iconPrefix: '/static/framework/menus/',
-  addIconSrc: '/static/framework/home/plus.png',
-  removeIconSrc: '/static/framework/home/subtract.png',
-})
+const props = withDefaults(
+  defineProps<{
+    /** 菜单分组列表（必传） */
+    menuGroups: MenuGroup[]
+    /** 常用菜单列表（可选，默认从 store 获取） */
+    favoriteMenus?: MenuItem[]
+    /** 页面标题 */
+    title?: string
+    /** 搜索框占位符 */
+    searchPlaceholder?: string
+    /** 常用功能标题 */
+    favoriteTitle?: string
+    /** 菜单点击处理函数（可选，默认跳转菜单 url） */
+    onMenuClick?: (menu: MenuItem) => void
+    /** 保存常用菜单的回调（可选，默认保存到 store） */
+    onSave?: (keys: string[]) => void
+    /** 列数 */
+    column?: number
+    /** 图标路径前缀 */
+    iconPrefix?: string
+    /** 添加图标路径 */
+    addIconSrc?: string
+    /** 移除图标路径 */
+    removeIconSrc?: string
+    /** 路由跳转函数（可选，默认使用 uni.navigateTo） */
+    navigateTo?: (url: string) => void
+    /** 显示 toast（可选，默认使用 uni.showToast） */
+    showToast?: (message: string) => void
+    /** 显示成功 toast（可选，默认使用 uni.showToast） */
+    showSuccess?: (message: string) => void
+  }>(),
+  {
+    title: '全部功能',
+    searchPlaceholder: '搜索常用',
+    favoriteTitle: '首页功能',
+    column: 5,
+    iconPrefix: '/static/framework/menus/',
+    addIconSrc: '/static/framework/home/plus.png',
+    removeIconSrc: '/static/framework/home/subtract.png',
+  }
+)
 
 const userStore = useUserStore()
 
@@ -150,9 +147,13 @@ const propFavoriteMenus = computed<MenuItem[]>(() => {
 })
 
 /** 初始化本地常用菜单 */
-watch(propFavoriteMenus, (newVal) => {
-  localFavoriteMenus.value = [...newVal]
-}, { immediate: true })
+watch(
+  propFavoriteMenus,
+  newVal => {
+    localFavoriteMenus.value = [...newVal]
+  },
+  { immediate: true }
+)
 
 /** 过滤后的菜单分组 */
 const filteredMenuGroups = computed(() => {
@@ -195,15 +196,6 @@ function navigate(url: string) {
     props.navigateTo(url)
   } else {
     defaultNavigateTo(url)
-  }
-}
-
-/** 默认 toast */
-function toast(message: string) {
-  if (props.showToast) {
-    props.showToast(message)
-  } else {
-    uni.showToast({ title: message, icon: 'none' })
   }
 }
 

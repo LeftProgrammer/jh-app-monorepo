@@ -12,7 +12,7 @@ export interface NotifyMessage {
   templateCode: string
   templateNickname: string
   templateContent: string
-  templateType: number | Array
+  templateType: number
   templateParams: string
   readStatus: boolean
   readTime: Date
@@ -21,10 +21,7 @@ export interface NotifyMessage {
 
 /** 查询站内信消息列表 */
 export function getNotifyMessagePage(params: PageParam) {
-  return http.get<PageResult<NotifyMessage>>(
-    '/system/notify-message/page',
-    params,
-  )
+  return http.get<PageResult<NotifyMessage>>('/system/notify-message/page', params)
 }
 
 /** 查询站内信消息详情 */
@@ -34,10 +31,7 @@ export function getNotifyMessage(id: number) {
 
 /** 获取我的站内信分页 */
 export function getMyNotifyMessagePage(params: PageParam) {
-  return http.get<PageResult<NotifyMessage>>(
-    '/system/notify-message/my-page',
-    params,
-  )
+  return http.get<PageResult<NotifyMessage>>('/system/notify-message/my-page', params)
 }
 
 /** 获取我的站内信详情 */
@@ -63,6 +57,6 @@ export function getUnreadNotifyMessageCount() {
   return http.get<number>('/system/notify-message/get-unread-count')
 }
 /** 删除 */
-export function messageDeleteList(ids) {
+export function messageDeleteList(ids: string | number) {
   return http.delete<number>(`/system/notify-message/delete-list?ids=${ids}`)
 }

@@ -66,6 +66,7 @@
     "bpmn-js": "17.9.2",
     "diagram-js": "12.8.0",
     "pinia": "2.0.36",
+    "pinia-plugin-persistedstate": "^3.2.1",
     "vue": "^3.4.21"
   },
   "peerDependenciesMeta": {
@@ -89,6 +90,9 @@
     },
     "pinia": {
       "optional": false
+    },
+    "pinia-plugin-persistedstate": {
+      "optional": true
     },
     "vue": {
       "optional": false

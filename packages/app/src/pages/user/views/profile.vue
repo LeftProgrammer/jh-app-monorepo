@@ -46,29 +46,21 @@
       />
     </wd-cell-group>
     <wd-cell-group custom-class="cell-group mt-24rpx" border>
-      <wd-cell
-        title="部门"
-        title-width="120rpx"
-        :value="userProfile?.dept?.name || '-'"
-      />
+      <wd-cell title="部门" title-width="120rpx" :value="userProfile?.dept?.name || '-'" />
       <wd-cell
         title="岗位"
         title-width="120rpx"
-        :value="userProfile?.posts?.map((p) => p.name).join('、') || '-'"
+        :value="userProfile?.posts?.map(p => p.name).join('、') || '-'"
       />
       <wd-cell
         title="角色"
         title-width="120rpx"
-        :value="userProfile?.roles?.map((r) => r.name).join('、') || '-'"
+        :value="userProfile?.roles?.map(r => r.name).join('、') || '-'"
       />
     </wd-cell-group>
 
     <!-- 头像裁剪 -->
-    <wd-img-cropper
-      v-model="showCropper"
-      :img-src="cropperSrc"
-      @confirm="handleCropperConfirm"
-    />
+    <wd-img-cropper v-model="showCropper" :img-src="cropperSrc" @confirm="handleCropperConfirm" />
     <!-- 编辑弹窗 -->
     <ProfileForm
       v-model="formVisible"
@@ -94,20 +86,23 @@ defineOptions({
   name: 'UserProfilePage',
 })
 
-const props = withDefaults(defineProps<{
-  /** 返回页面路径 */
-  backUrl?: string
-  /** 性别选项 */
-  sexOptions?: { label: string; value: number }[]
-  /** 获取性别标签的函数 */
-  getSexLabel?: (sex?: number) => string
-}>(), {
-  backUrl: '',
-  sexOptions: () => [
-    { label: '男', value: 1 },
-    { label: '女', value: 2 },
-  ],
-})
+const props = withDefaults(
+  defineProps<{
+    /** 返回页面路径 */
+    backUrl?: string
+    /** 性别选项 */
+    sexOptions?: { label: string; value: number }[]
+    /** 获取性别标签的函数 */
+    getSexLabel?: (sex?: number) => string
+  }>(),
+  {
+    backUrl: '',
+    sexOptions: () => [
+      { label: '男', value: 1 },
+      { label: '女', value: 2 },
+    ],
+  }
+)
 
 const toast = useToast()
 const userStore = useUserStore()
@@ -142,7 +137,7 @@ async function loadUserProfile() {
   try {
     userProfile.value = await getUserProfile()
     if (userProfile.value.avatar) {
-      const file = await getFileByIds(userProfile.value.avatar)
+      const file = (await getFileByIds(userProfile.value.avatar)) as any
       if (file && file.length > 0) {
         userProfile.value.avatar = file[0].url
       }
@@ -155,7 +150,7 @@ async function loadUserProfile() {
 function handleEditAvatar() {
   uni.chooseImage({
     count: 1,
-    success: (res) => {
+    success: res => {
       cropperSrc.value = res.tempFilePaths[0]
       showCropper.value = true
     },

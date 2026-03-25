@@ -18,10 +18,7 @@
  * @export deepClone - 深拷贝
  * @usage 页面处理、路由辅助、工具函数
  */
-import type {
-  PageMetaDatum,
-  SubPackages,
-} from '@uni-helper/vite-plugin-uni-pages'
+import type { PageMetaDatum, SubPackage } from '@uni-helper/vite-plugin-uni-pages'
 import { useTabbarStore } from '../components/jh-tabbar/store'
 import { getHomePage as _getConfiguredHomePage, getBaseUrl } from '../config'
 
@@ -29,8 +26,7 @@ import { getHomePage as _getConfiguredHomePage, getBaseUrl } from '../config'
 export function isPageTabbar(path: string): boolean {
   try {
     return useTabbarStore().isPageTabbar(path)
-  }
-  catch {
+  } catch {
     return false
   }
 }
@@ -40,7 +36,10 @@ export type PageInstance = Page.PageInstance<AnyObject, object> & {
 }
 
 // 页面处理工具
-export function getPageConfig(pagesConfig?: { pages: PageMetaDatum[], subPackages?: SubPackages[] }) {
+export function getPageConfig(pagesConfig?: {
+  pages: PageMetaDatum[]
+  subPackages?: SubPackage[]
+}) {
   return pagesConfig || { pages: [], subPackages: [] }
 }
 
@@ -94,7 +93,7 @@ export function parseUrlToObj(url: string) {
     }
   }
   const query: Record<string, string> = {}
-  queryStr.split('&').forEach((item) => {
+  queryStr.split('&').forEach(item => {
     const [key, value] = item.split('=')
     // console.log(key, value)
     query[key] = ensureDecodeURIComponent(value) // 这里需要统一 decodeURIComponent 一下，可以兼容h5和微信y
@@ -111,8 +110,8 @@ export function parseUrlToObj(url: string) {
  * @returns 返回包含 path 属性的对象数组
  */
 export function getAllPages(
-  pagesConfig?: { pages: PageMetaDatum[], subPackages?: SubPackages[] },
-  key?: string,
+  pagesConfig?: { pages: PageMetaDatum[]; subPackages?: SubPackage[] },
+  key?: string
 ) {
   // 如果没有传入配置，返回空数组
   if (!pagesConfig) {
@@ -124,7 +123,7 @@ export function getAllPages(
     .map(page => ({ path: `/${page.path}` }))
 
   const subPages = (pagesConfig.subPackages || []).flatMap(pkg =>
-    (pkg.pages || []).map(page => ({ path: `/${pkg.root}/${page.path}` })),
+    (pkg.pages || []).map(page => ({ path: `/${pkg.root}/${page.path}` }))
   )
 
   const result = [...mainPages, ...subPages]
@@ -140,9 +139,7 @@ export function getAllPages(
  */
 export function getCurrentPageI18nKey(pagesConfig: { pages: PageMetaDatum[] }) {
   const routeObj = currRoute()
-  const currPage = pagesConfig.pages.find(
-    page => `/${page.path}` === routeObj.path,
-  )
+  const currPage = pagesConfig.pages.find(page => `/${page.path}` === routeObj.path)
   return currPage?.i18nKey || ''
 }
 
@@ -258,8 +255,7 @@ export function getNavbarHeight() {
   // 小程序：根据胶囊按钮位置计算导航栏高度，确保内容与胶囊垂直居中
   const menuButtonInfo = uni.getMenuButtonBoundingClientRect()
   // 导航栏高度 = (胶囊顶部到状态栏底部的距离) * 2 + 胶囊高度
-  const navBarHeight
-    = (menuButtonInfo.top - statusBarHeight) * 2 + menuButtonInfo.height
+  const navBarHeight = (menuButtonInfo.top - statusBarHeight) * 2 + menuButtonInfo.height
   return statusBarHeight + navBarHeight
   // #endif
   // #ifndef MP-WEIXIN
@@ -302,7 +298,7 @@ export function deepClone<T>(src: T, wm = new WeakMap<object, any>()): T {
   } else if (src instanceof Set) {
     dst = new Set()
     wm.set(src, dst)
-    src.forEach((v) => {
+    src.forEach(v => {
       dst.add(deepClone(v, wm))
     })
     return dst
@@ -317,7 +313,7 @@ export function deepClone<T>(src: T, wm = new WeakMap<object, any>()): T {
   wm.set(src as object, dst)
 
   // 5. 拷贝所有自有属性（含 Symbol 键）
-  Reflect.ownKeys(src as object).forEach((key) => {
+  Reflect.ownKeys(src as object).forEach(key => {
     dst[key] = deepClone((src as any)[key], wm)
   })
 

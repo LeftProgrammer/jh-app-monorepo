@@ -37,6 +37,9 @@ export interface ProcessInstance {
   startUser?: User
   businessKey?: string
   processDefinition?: ProcessDefinition
+  processDefinitionId?: string
+  formVariables?: Record<string, any>
+  tasks?: any[]
   summary?: {
     key: string
     value: string
@@ -57,6 +60,9 @@ export interface ProcessInstanceCopy {
   processInstanceName: string
   startUser: User
   createTime: number
+  processDefinition?: ProcessDefinition
+  createUser?: User
+  status?: number
   summary?: {
     key: string
     value: string
@@ -65,10 +71,7 @@ export interface ProcessInstanceCopy {
 
 /** 查询我发起的流程分页列表 */
 export function getProcessInstanceMyPage(params: PageParam) {
-  return http.get<PageResult<ProcessInstance>>(
-    '/bpm/process-instance/my-page',
-    params,
-  )
+  return http.get<PageResult<ProcessInstance>>('/bpm/process-instance/my-page', params)
 }
 
 /** 新增流程实例 */
@@ -78,10 +81,7 @@ export function urgeCreate(data: any) {
 
 /** 查询抄送我的流程分页列表 */
 export function getProcessInstanceCopyPage(params: PageParam) {
-  return http.get<PageResult<ProcessInstanceCopy>>(
-    '/bpm/process-instance/copy/page',
-    params,
-  )
+  return http.get<PageResult<ProcessInstanceCopy>>('/bpm/process-instance/copy/page', params)
 }
 
 /** 查询流程实例详情 */
@@ -95,10 +95,7 @@ export function getApprovalDetail(params: {
   activityId?: string
   taskId?: string
 }) {
-  return http.get<ApprovalDetail>(
-    '/bpm/process-instance/get-approval-detail',
-    params,
-  )
+  return http.get<ApprovalDetail>('/bpm/process-instance/get-approval-detail', params)
 }
 
 /** 新增流程实例 */
@@ -119,10 +116,7 @@ export function cancelProcessInstanceByStartUser(id: string, reason: string) {
 
 /** 查询管理员流程实例分页 */
 export function getProcessInstanceManagerPage(params: PageParam) {
-  return http.get<PageResult<ProcessInstance>>(
-    '/bpm/process-instance/manager-page',
-    params,
-  )
+  return http.get<PageResult<ProcessInstance>>('/bpm/process-instance/manager-page', params)
 }
 
 /** 管理员取消流程实例 */

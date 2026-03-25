@@ -9,6 +9,15 @@
  * @export LoadMoreState - 加载状态类型（从 wot-design-uni 重新导出）
  * @usage 类型安全、接口定义、分页处理
  */
+/** uni.uploadFile 文件上传参数 */
+export interface IUniUploadFileOptions {
+  file?: File
+  files?: UniApp.UploadFileOptionFiles[]
+  filePath?: string
+  name?: string
+  formData?: any
+}
+
 /**
  * 在 uniapp 的 RequestOptions 和 IUniUploadFileOptions 基础上，添加自定义参数
  */
@@ -20,20 +29,22 @@ export type CustomRequestOptions = UniNamespace.RequestOptions & {
   original?: boolean
   /** 是否API加密 add by panda 25.12.24 */
   isEncrypt?: boolean
-} & UniNamespace.IUniUploadFileOptions // 添加uni.uploadFile参数类型
+} & IUniUploadFileOptions
 
 // 通用响应格式（兼容 msg + message 字段）
-export type IResponse<T = any> = {
-  code: number
-  data: T
-  message: string
-  [key: string]: any // 允许额外属性
-} | {
-  code: number
-  data: T
-  msg: string
-  [key: string]: any // 允许额外属性
-}
+export type IResponse<T = any> =
+  | {
+      code: number
+      data: T
+      message: string
+      [key: string]: any // 允许额外属性
+    }
+  | {
+      code: number
+      data: T
+      msg: string
+      [key: string]: any // 允许额外属性
+    }
 
 /** 分页参数 */
 export interface PageParam {

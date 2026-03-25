@@ -1,5 +1,17 @@
 // 框架全局类型声明
 
+// 补充 pinia-plugin-persistedstate 对 setup store 的类型支持
+// pinia-plugin-persistedstate 只增强了 DefineStoreOptionsBase，但 setup store 使用 DefineSetupStoreOptions
+declare module 'pinia' {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface DefineSetupStoreOptions<Id extends string, SS, S, G, A> {
+    persist?:
+      | boolean
+      | import('pinia-plugin-persistedstate').PersistedStateOptions
+      | import('pinia-plugin-persistedstate').PersistedStateOptions[]
+  }
+}
+
 // 扩展 @uni-helper/vite-plugin-uni-pages 的 definePage 参数类型
 declare module '@uni-helper/vite-plugin-uni-pages' {
   interface UserPageMeta {
@@ -109,7 +121,9 @@ declare global {
      * }
      */
     // eslint-disable-next-line ts/method-signature-style
-    hideLoading<T extends UniNamespace.HideToastOption = UniNamespace.HideToastOption>(options?: T): void
+    hideLoading<T extends UniNamespace.HideToastOption = UniNamespace.HideToastOption>(
+      options?: T
+    ): void
     /**
      * 隐藏消息提示框
      *
@@ -134,7 +148,9 @@ declare global {
      * }
      */
     // eslint-disable-next-line ts/method-signature-style
-    hideToast<T extends UniNamespace.HideLoadingOption = UniNamespace.HideLoadingOption>(options?: T): void
+    hideToast<T extends UniNamespace.HideLoadingOption = UniNamespace.HideLoadingOption>(
+      options?: T
+    ): void
   }
 }
 

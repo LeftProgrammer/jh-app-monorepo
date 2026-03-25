@@ -27,7 +27,7 @@ export default function useUpload<T extends TfileType>(options: TOptions<T> = {}
   const {
     formData = {},
     maxSize = 5 * 1024 * 1024,
-    accept = ['*'],
+    accept: _accept = ['*'],
     fileType = 'image',
     success,
     error: onError,
@@ -38,7 +38,7 @@ export default function useUpload<T extends TfileType>(options: TOptions<T> = {}
   const data = ref<any>(null)
   const toast = useToast()
 
-  const handleFileChoose = ({ tempFilePath, size }: { tempFilePath: string, size: number }) => {
+  const handleFileChoose = ({ tempFilePath, size }: { tempFilePath: string; size: number }) => {
     if (size > maxSize) {
       // 注释 by 芋艿：使用 wd-toast 替代
       // uni.showToast({
@@ -53,7 +53,7 @@ export default function useUpload<T extends TfileType>(options: TOptions<T> = {}
     uploadFile({
       tempFilePath,
       formData,
-      onSuccess: (res) => {
+      onSuccess: res => {
         // 修改这里的解析逻辑，适应不同平台的返回格式
         let parsedData = res
         try {
@@ -68,7 +68,7 @@ export default function useUpload<T extends TfileType>(options: TOptions<T> = {}
         // console.log('上传成功', res)
         success?.(parsedData)
       },
-      onError: (err) => {
+      onError: err => {
         error.value = err
         onError?.(err)
       },
@@ -150,12 +150,12 @@ async function uploadFile({
     filePath: tempFilePath,
     name: 'file',
     header: {
-      'Accept': '*/*',
+      Accept: '*/*',
       'tenant-id': userStore.tenantId,
-      'Authorization': `Bearer ${tokenStore.validToken}`,
+      Authorization: `Bearer ${tokenStore.validToken}`,
     },
     formData,
-    success: (uploadFileRes) => {
+    success: uploadFileRes => {
       try {
         const data = uploadFileRes.data
         onSuccess(data)
@@ -163,7 +163,7 @@ async function uploadFile({
         onError(err)
       }
     },
-    fail: (err) => {
+    fail: err => {
       console.error('Upload failed:', err)
       onError(err)
     },

@@ -5,4 +5,4 @@
 export { default as MessageDetailPopup } from './components/detail-popup.vue'
 export { default as MessagePage } from './views/index.vue'
 
-export type { LoadMoreState, NotifyMessage } from './views/index.vue'
+export type { LoadMoreState } from './views/index.vue'

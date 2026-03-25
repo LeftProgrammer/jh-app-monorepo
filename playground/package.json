@@ -2,6 +2,7 @@
   "name": "jinghe-sanjiaoroad-app-playground",
   "type": "module",
   "version": "1.0.0",
+  "private": true,
   "packageManager": "pnpm@10.10.0",
   "description": "jinghe-sanjiaoroad App 框架示例项目",
   "author": {
@@ -90,7 +91,9 @@
   },
   "pnpm": {
     "peerDependencyRules": {
-      "ignoreMissing": ["vue"]
+      "ignoreMissing": [
+        "vue"
+      ]
     },
     "overrides": {
       "unconfig": "7.3.2"

@@ -54,7 +54,7 @@ export function getFile(id: number) {
 
 /** 获取文件详情多个 */
 export function getFileByIds(ids: string | number) {
-  return http.post<FileVO>(`/infra/file/getList`, {
+  return http.post<FileVO[]>(`/infra/file/getList`, {
     ids: ids ? String(ids).split(',') : [],
   })
 }
@@ -66,12 +66,7 @@ export function deleteFile(id: number) {
 
 /** 过去文件流 */
 export function getFileStream(configId: string, path: string) {
-  return http.get(
-    `/infra/file/${configId}/get/${path}`,
-    {},
-    {},
-    { original: true },
-  )
+  return http.get(`/infra/file/${configId}/get/${path}`, {}, {}, { original: true })
 }
 
 /**
@@ -81,10 +76,7 @@ export function getFileStream(configId: string, path: string) {
  * @param directory 目录（可选）
  * @returns 文件访问 URL
  */
-export function uploadFile(
-  filePath: string,
-  directory?: string,
-): Promise<string> {
+export function uploadFile(filePath: string, directory?: string): Promise<string> {
   const tokenStore = useTokenStore()
   const userStore = useUserStore()
   return new Promise((resolve, reject) => {
@@ -93,12 +85,12 @@ export function uploadFile(
       filePath,
       name: 'file',
       header: {
-        'Accept': '*/*',
+        Accept: '*/*',
         'tenant-id': userStore.tenantId,
-        'Authorization': `Bearer ${tokenStore.validToken}`,
+        Authorization: `Bearer ${tokenStore.validToken}`,
       },
       formData: directory ? { directory } : undefined,
-      success: (res) => {
+      success: res => {
         if (res.statusCode === 200) {
           const result = JSON.parse(res.data)
           if (result.code === 0) {
@@ -112,7 +104,7 @@ export function uploadFile(
           reject(new Error('上传失败'))
         }
       },
-      fail: (err) => {
+      fail: err => {
         console.error('上传失败：', err)
         reject(err)
       },
