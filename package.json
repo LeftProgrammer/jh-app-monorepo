@@ -1,18 +1,20 @@
 {
   "name": "jinghe-sanjiaoroad-app-monorepo",
   "version": "1.0.0",
-  "description": "移动端框架包开发 monorepo 项目",
   "private": true,
   "packageManager": "pnpm@10.10.0",
-  "resolutions": {
-    "bin-wrapper": "npm:bin-wrapper-china"
+  "description": "移动端框架包开发 monorepo 项目",
+  "author": {
+    "name": "jinghe-智慧工程"
   },
-  "pnpm": {
-    "peerDependencyRules": {
-      "ignoreMissing": [
-        "vue"
-      ]
-    }
+  "license": "MIT",
+  "homepage": "",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "bugs": {
+    "url": ""
   },
   "engines": {
     "node": ">=18",
@@ -55,26 +57,18 @@
     "eslint": "^9.31.0",
     "husky": "^9.1.7",
     "lint-staged": "^15.2.10",
-    "prettier": "^3.3.0",
     "typescript": "~5.8.0",
     "vite": "5.2.8",
     "vue-tsc": "^3.0.6"
   },
-  "lint-staged": {
-    "*.{js,ts,vue,json,md,css,scss,html}": [
-      "prettier --write"
-    ]
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "vue"
+      ]
+    }
   },
-  "author": {
-    "name": "jinghe-智慧工程"
-  },
-  "license": "MIT",
-  "homepage": "",
-  "repository": {
-    "type": "git",
-    "url": ""
-  },
-  "bugs": {
-    "url": ""
+  "resolutions": {
+    "bin-wrapper": "npm:bin-wrapper-china"
   }
 }
